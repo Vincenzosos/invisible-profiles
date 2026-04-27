@@ -65,3 +65,8 @@ webapp/.turbo/
 # ---- Zip backups ---------------------------------------------------------
 Overleaf_*.zip
 *.zip
+
+# ---- Day-1 cleanup additions ---------------------------------------------
+.claude/
+*.tmp
+.~lock.*
