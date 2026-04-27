@@ -1,0 +1,17 @@
+{
+  "italy": {
+    "Fragile Resigned": "Marked by severe limitations in daily activities, poor self-rated health, depressive symptoms, high loneliness, and very low quality of life. Digital engagement and outlook on the future are well below the population norm.",
+    "Fragile Depressed": "Poor self-rated health, depressive symptoms, financial strain, and elevated loneliness, though instrumental daily-living capacity is largely preserved.",
+    "Moderate Isolated": "Reasonably healthy and free of depressive symptoms, but with a smaller social circle and limited digital engagement — a quiet, self-contained profile.",
+    "Traditional Social": "Healthy and socially well-integrated, with good quality of life and moderate internet use; financial pressure is low and outlook is positive.",
+    "Connected Active": "Healthier than peers, financially comfortable, digitally engaged, with a strong social network and sharp verbal fluency — the most active and connected profile."
+  },
+  "sweden": {
+    "Fragile": "Severely limited in daily activities, in poor health, depressed and lonely, with very low quality of life and little hope for the future.",
+    "Social Decline": "Above-average health, modest digital engagement, and a sociable profile — most dimensions sit at or above the Swedish norm in the visible quiz answers.",
+    "Moderate": "Worse self-rated health and mild depressive symptoms with lower quality of life than peers, though daily-living capacity is preserved and digital engagement is steady.",
+    "Asset Rich": "Health and quality of life close to the population average, but with a smaller social network, less internet use, and lower verbal fluency than peers.",
+    "Wealthy Digital": "Slightly above average on internet use, cognition, and quality of life, with health and other dimensions close to the Swedish norm.",
+    "Connected Wealthy": "Healthier than peers, digitally engaged, with strong social ties, high verbal fluency, and very high quality of life; depression and loneliness are low."
+  }
+}
