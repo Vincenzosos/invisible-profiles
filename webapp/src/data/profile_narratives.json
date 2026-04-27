@@ -8,9 +8,9 @@
   },
   "sweden": {
     "Fragile": "Severely limited in daily activities, in poor health, depressed and lonely, with very low quality of life and little hope for the future.",
-    "Social Decline": "Above-average health, modest digital engagement, and a sociable profile — most dimensions sit at or above the Swedish norm in the visible quiz answers.",
+    "Social Decline": "Identified in the full 31-variable analysis by a pattern of declining civic and social participation — fewer volunteer activities, weaker organisational ties, reduced community engagement. On the 10 visible answers in this quiz, this group looks healthy and socially active; the decline signal lives in dimensions not asked here.",
     "Moderate": "Worse self-rated health and mild depressive symptoms with lower quality of life than peers, though daily-living capacity is preserved and digital engagement is steady.",
-    "Asset Rich": "Health and quality of life close to the population average, but with a smaller social network, less internet use, and lower verbal fluency than peers.",
+    "Asset Rich": "Wealth-rich on property and savings (variables in the full thesis model that are not part of this short quiz), with health and quality of life close to the Swedish norm. On the visible 10 answers, this group reports a smaller social network, less internet use, and lower verbal fluency than peers.",
     "Wealthy Digital": "Slightly above average on internet use, cognition, and quality of life, with health and other dimensions close to the Swedish norm.",
     "Connected Wealthy": "Healthier than peers, digitally engaged, with strong social ties, high verbal fluency, and very high quality of life; depression and loneliness are low."
   }

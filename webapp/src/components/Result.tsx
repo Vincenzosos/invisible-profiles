@@ -96,6 +96,15 @@ export default function Result({
         </p>
       </article>
 
+      <div className="mt-8 mb-6 p-4 rounded-lg bg-slate-50 border border-slate-200 text-sm text-slate-600 italic">
+        Note: this match comes from a simplified 10-question profiler. The
+        full thesis segmentation uses 31 variables across health, economic,
+        social/digital, cognitive and subjective dimensions. Some profiles
+        are best characterised by variables — e.g. property and financial
+        assets, civic participation, family structure — that are not asked
+        in this short form.
+      </div>
+
       <details
         className="rounded-2xl bg-white border border-slate-200 p-6 shadow-sm group"
         open={showAll}
