@@ -32,20 +32,21 @@ cat("STEP 22: EXPORT K-MEANS CENTROIDS FOR WEBAPP\n")
 cat("============================================================\n\n")
 
 # ---- Load trained K-means objects -----------------------------------------
-km_italy  <- readRDS(file.path(out_dir, "step7_italy_kmeans_k5.rds"))
-km_sweden <- readRDS(file.path(out_dir, "step8_sweden_kmeans_k6.rds"))
+# Steps 7 and 8 save a wrapper list; the kmeans object itself is in $km_model
+# and the cluster labels (in cluster-row order) are in $profile_names.
+italy_wrap   <- readRDS(file.path(out_dir, "step7_italy_kmeans_k5.rds"))
+sweden_wrap  <- readRDS(file.path(out_dir, "step8_sweden_kmeans_k6.rds"))
+km_italy     <- italy_wrap$km_model
+km_sweden    <- sweden_wrap$km_model
 
 italy_std  <- readRDS(file.path(out_dir, "step2_italy_std.rds"))
 sweden_std <- readRDS(file.path(out_dir, "step4_sweden_std.rds"))
 italy_clean  <- readRDS(file.path(out_dir, "step2_italy_clean.rds"))
 sweden_clean <- readRDS(file.path(out_dir, "step4_sweden_clean.rds"))
 
-# ---- Profile labels (canonical, do not rename) -----------------------------
-profile_order_italy  <- c("Fragile Resigned", "Fragile Depressed",
-                          "Moderate Isolated", "Traditional Social",
-                          "Connected Active")
-profile_order_sweden <- c("Fragile", "Social Decline", "Moderate",
-                          "Asset Rich", "Wealthy Digital", "Connected Wealthy")
+# ---- Profile labels (taken from the wrapper, in cluster-row order) ---------
+profile_order_italy  <- italy_wrap$profile_names
+profile_order_sweden <- sweden_wrap$profile_names
 
 # ---- Variable curation: 10-question subset ---------------------------------
 # Five dimensions × representative variables. These are answerable by an

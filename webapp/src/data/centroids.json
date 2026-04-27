@@ -1,0 +1,492 @@
+{
+  "meta": {
+    "generated_on": "2026-04-27 18:14:03",
+    "pipeline": "v9",
+    "italy_n": 2378,
+    "sweden_n": 1787,
+    "italy_k": 5,
+    "sweden_k": 6,
+    "notes": "Centers in z-score space. Use raw_mean and raw_sd to convert user input."
+  },
+  "italy_full": {
+    "profiles": [
+      {
+        "name": "Fragile Resigned",
+        "center": [1.060421, 0.848527, 1.738414, 1.972399, 1.375507, 1.041864, 0.059771, 1.051898, -0.190236, -0.342533, -0.05, -0.250639, -0.252163, -0.636736, -0.270122, -0.24723, -0.309559, 0.833403, -0.227371, -0.028295, -0.39994, -0.754316, 0.829827, -1.00088, 0.88344, -1.024851, -0.824051, -0.504291, -0.585322]
+      },
+      {
+        "name": "Connected Active",
+        "center": [-0.281811, -0.12002, -0.242245, -0.402676, -0.295988, -0.248865, -0.164054, -0.491466, 0.721733, 0.643772, 0.530312, 0.238437, 0.675774, 0.717079, 0.288064, -0.304214, 0.744566, -0.106026, 0.306973, 0.419284, 0.513815, 0.63308, -0.211217, 0.172349, -0.409732, 0.555642, 0.292347, 0.179178, 0.183146]
+      },
+      {
+        "name": "Traditional Social",
+        "center": [-0.404719, -0.203358, -0.277872, -0.415123, -0.407135, -0.42053, 0.045606, -0.611659, 0.411952, 0.545116, 0.387079, 0.150939, 0.43173, 0.531697, 0.429953, 3.285807, 0.501171, -0.134733, 0.500126, 0.136233, 0.6186, 0.509482, -0.300736, 0.254616, -0.390907, 0.655241, 0.262408, 0.125353, 0.307257]
+      },
+      {
+        "name": "Moderate Isolated",
+        "center": [-0.577734, -0.559663, -0.309747, -0.418475, -0.611833, -0.677981, -0.0297, -0.196838, -0.327145, -0.216792, -0.380755, -0.00726, -0.156278, -0.114841, -0.148916, -0.304214, -0.374306, -0.290608, -0.150616, -0.224085, -0.111642, 0.022426, -0.438143, 0.244426, -0.49879, 0.401416, 0.319946, 0.276198, 0.402636]
+      },
+      {
+        "name": "Fragile Depressed",
+        "center": [0.469948, 0.316049, -0.243683, -0.039481, 0.362759, 0.537628, 0.137695, 0.349154, -0.385571, -0.403479, -0.203219, -0.098122, -0.505546, -0.458493, -0.206381, -0.292925, -0.365938, 0.007962, -0.202164, -0.215387, -0.397211, -0.439143, 0.33784, -0.001871, 0.591291, -0.672849, -0.278989, -0.249042, -0.410646]
+      }
+    ],
+    "variables": [
+      {
+        "name": "sphus",
+        "raw_mean": 3.433137,
+        "raw_sd": 0.901518
+      },
+      {
+        "name": "chronic",
+        "raw_mean": 1.873003,
+        "raw_sd": 1.428369
+      },
+      {
+        "name": "adl",
+        "raw_mean": 0.222876,
+        "raw_sd": 0.845656
+      },
+      {
+        "name": "iadl",
+        "raw_mean": 0.619008,
+        "raw_sd": 1.636873
+      },
+      {
+        "name": "mobility",
+        "raw_mean": 2.058452,
+        "raw_sd": 2.561394
+      },
+      {
+        "name": "eurod",
+        "raw_mean": 2.909588,
+        "raw_sd": 2.714237
+      },
+      {
+        "name": "bmi",
+        "raw_mean": 26.188484,
+        "raw_sd": 3.998257
+      },
+      {
+        "name": "phinact",
+        "raw_mean": 0.313709,
+        "raw_sd": 0.464097
+      },
+      {
+        "name": "log_thinc",
+        "raw_mean": 8.988563,
+        "raw_sd": 2.606875
+      },
+      {
+        "name": "log_hnetw",
+        "raw_mean": 11.617081,
+        "raw_sd": 2.008467
+      },
+      {
+        "name": "ypen1",
+        "raw_mean": 9507.183043,
+        "raw_sd": 7372.668051
+      },
+      {
+        "name": "home_own",
+        "raw_mean": 0.903701,
+        "raw_sd": 0.295063
+      },
+      {
+        "name": "fdistress",
+        "raw_mean": 2.582002,
+        "raw_sd": 0.780632
+      },
+      {
+        "name": "internet",
+        "raw_mean": 0.390244,
+        "raw_sd": 0.487907
+      },
+      {
+        "name": "ac035d1",
+        "raw_mean": 0.07275,
+        "raw_sd": 0.259781
+      },
+      {
+        "name": "ac035d5",
+        "raw_mean": 0.08032,
+        "raw_sd": 0.271845
+      },
+      {
+        "name": "ac035d8",
+        "raw_mean": 0.366274,
+        "raw_sd": 0.481887
+      },
+      {
+        "name": "sp002_",
+        "raw_mean": 0.125315,
+        "raw_sd": 0.331146
+      },
+      {
+        "name": "sp008_",
+        "raw_mean": 0.097561,
+        "raw_sd": 0.296783
+      },
+      {
+        "name": "sn_size_w9",
+        "raw_mean": 2.4836,
+        "raw_sd": 1.365458
+      },
+      {
+        "name": "social_integration",
+        "raw_mean": 2.691758,
+        "raw_sd": 1.116115
+      },
+      {
+        "name": "fluency",
+        "raw_mean": 15.051724,
+        "raw_sd": 6.858527
+      },
+      {
+        "name": "memory",
+        "raw_mean": 3.12111,
+        "raw_sd": 0.899006
+      },
+      {
+        "name": "orienti",
+        "raw_mean": 3.815391,
+        "raw_sd": 0.608438
+      },
+      {
+        "name": "loneliness",
+        "raw_mean": 4.473507,
+        "raw_sd": 1.778054
+      },
+      {
+        "name": "casp",
+        "raw_mean": 34.339781,
+        "raw_sd": 6.099217
+      },
+      {
+        "name": "hope_future",
+        "raw_mean": 0.788478,
+        "raw_sd": 0.408474
+      },
+      {
+        "name": "interest",
+        "raw_mean": 1.881833,
+        "raw_sd": 0.452077
+      },
+      {
+        "name": "expect_alive",
+        "raw_mean": 58.481497,
+        "raw_sd": 28.130919
+      }
+    ]
+  },
+  "sweden_full": {
+    "profiles": [
+      {
+        "name": "Fragile",
+        "center": [1.037806, 0.782875, 1.027074, 1.542614, 1.303039, 0.79204, 0.203767, 0.814189, -0.79252, -0.677544, -0.033291, -0.518425, -0.579044, -0.737542, -0.223087, -0.47387, -0.414723, 0.760906, -0.308483, -0.309221, -0.866156, -0.226501, -0.260854, -0.643387, 0.559768, -0.149988, 0.943285, -1.01454, -0.515462, -0.268572, -0.754687]
+      },
+      {
+        "name": "Asset Rich",
+        "center": [-0.058456, -0.288161, -0.225515, -0.310456, -0.172811, -0.27445, 0.013176, -0.122581, -0.707997, -0.818863, 0.027204, -0.654886, -0.288741, -0.387257, -0.161741, -0.349266, -0.096329, -0.050796, -0.188865, -0.532146, -0.812306, -0.317009, -0.296463, -0.460925, 0.290107, -0.116606, 0.062827, 0.054734, 0.124321, -0.001695, -0.15913]
+      },
+      {
+        "name": "Connected Wealthy",
+        "center": [-0.717229, -0.519643, -0.243157, -0.370691, -0.578755, -0.51841, -0.194414, -0.21287, 0.536784, 0.553143, 0.061718, 0.352084, 0.352461, 0.327711, 0.043682, 0.257525, 0.170151, -0.301588, 0.253087, 0.245609, 0.442309, -0.362729, -0.296463, 0.479337, -0.454691, 0.125901, -0.426069, 0.65374, 0.243412, 0.164819, 0.535663]
+      },
+      {
+        "name": "Wealthy Digital",
+        "center": [-0.111646, 0.130778, -0.059142, -0.210546, -0.225203, 0.015762, 0.038212, -0.229946, 0.118062, 0.094467, -0.139267, 0.072683, 0.216394, 0.262706, 0.43461, 0.360006, 0.158873, 0.018081, 0.311698, 0.134443, 0.220805, 0.676639, 3.371263, 0.251957, -0.364767, 0.069067, -0.145029, 0.231304, 0.207614, 0.019166, 0.180597]
+      },
+      {
+        "name": "Social Decline",
+        "center": [-0.506892, -0.162782, -0.165887, -0.315596, -0.290525, -0.065527, -0.195335, -0.229946, 0.373184, 0.337507, -0.028999, 0.269959, 0.04062, 0.332295, 0.255402, 0.343169, 0.220111, -0.150499, 0.332783, 0.270442, 0.371862, 2.755376, -0.296463, 0.403297, -0.262189, 0.051582, -0.184213, 0.231418, 0.184911, 0.089563, 0.381676]
+      },
+      {
+        "name": "Moderate",
+        "center": [0.595519, 0.491353, -0.041142, -0.003663, 0.349496, 0.427717, 0.20058, -0.131174, 0.17651, 0.196862, -0.024667, 0.287474, 0.015869, 0.18302, -0.042356, -0.009404, 0.084204, 0.064542, -0.218176, 0.168563, 0.382632, -0.355251, -0.296463, -0.064804, 0.246968, 0.079238, 0.075858, -0.450191, -0.100778, -0.114788, -0.343803]
+      }
+    ],
+    "variables": [
+      {
+        "name": "sphus",
+        "raw_mean": 2.862899,
+        "raw_sd": 1.065968
+      },
+      {
+        "name": "chronic",
+        "raw_mean": 1.850588,
+        "raw_sd": 1.498246
+      },
+      {
+        "name": "adl",
+        "raw_mean": 0.127029,
+        "raw_sd": 0.507593
+      },
+      {
+        "name": "iadl",
+        "raw_mean": 0.262451,
+        "raw_sd": 0.793277
+      },
+      {
+        "name": "mobility",
+        "raw_mean": 1.132065,
+        "raw_sd": 1.702517
+      },
+      {
+        "name": "eurod",
+        "raw_mean": 2.148293,
+        "raw_sd": 1.821807
+      },
+      {
+        "name": "bmi",
+        "raw_mean": 25.935051,
+        "raw_sd": 4.03035
+      },
+      {
+        "name": "phinact",
+        "raw_mean": 0.036933,
+        "raw_sd": 0.188651
+      },
+      {
+        "name": "log_thinc",
+        "raw_mean": 10.476559,
+        "raw_sd": 0.666209
+      },
+      {
+        "name": "log_hnetw",
+        "raw_mean": 12.56469,
+        "raw_sd": 1.836714
+      },
+      {
+        "name": "ypen1",
+        "raw_mean": 10943.028187,
+        "raw_sd": 6498.01575
+      },
+      {
+        "name": "home_own",
+        "raw_mean": 0.795747,
+        "raw_sd": 0.403268
+      },
+      {
+        "name": "fdistress",
+        "raw_mean": 3.464466,
+        "raw_sd": 0.712429
+      },
+      {
+        "name": "internet",
+        "raw_mean": 0.887521,
+        "raw_sd": 0.316043
+      },
+      {
+        "name": "ac035d1",
+        "raw_mean": 0.134863,
+        "raw_sd": 0.341673
+      },
+      {
+        "name": "ac035d5",
+        "raw_mean": 0.484611,
+        "raw_sd": 0.499903
+      },
+      {
+        "name": "ac035d8",
+        "raw_mean": 0.939564,
+        "raw_sd": 0.23836
+      },
+      {
+        "name": "sp002_",
+        "raw_mean": 0.235031,
+        "raw_sd": 0.424137
+      },
+      {
+        "name": "sp008_",
+        "raw_mean": 0.353665,
+        "raw_sd": 0.478241
+      },
+      {
+        "name": "sn_size_w9",
+        "raw_mean": 3.668719,
+        "raw_sd": 1.713506
+      },
+      {
+        "name": "social_integration",
+        "raw_mean": 3.25014,
+        "raw_sd": 0.895174
+      },
+      {
+        "name": "ac035d4",
+        "raw_mean": 0.117515,
+        "raw_sd": 0.322124
+      },
+      {
+        "name": "ac035d7",
+        "raw_mean": 0.078344,
+        "raw_sd": 0.268787
+      },
+      {
+        "name": "fluency",
+        "raw_mean": 23.318411,
+        "raw_sd": 7.012859
+      },
+      {
+        "name": "memory",
+        "raw_mean": 2.921656,
+        "raw_sd": 0.905697
+      },
+      {
+        "name": "orienti",
+        "raw_mean": 3.864018,
+        "raw_sd": 0.416591
+      },
+      {
+        "name": "loneliness",
+        "raw_mean": 3.730274,
+        "raw_sd": 1.15389
+      },
+      {
+        "name": "casp",
+        "raw_mean": 39.12535,
+        "raw_sd": 4.834896
+      },
+      {
+        "name": "hope_future",
+        "raw_mean": 0.945159,
+        "raw_sd": 0.227732
+      },
+      {
+        "name": "interest",
+        "raw_mean": 1.949077,
+        "raw_sd": 0.34806
+      },
+      {
+        "name": "expect_alive",
+        "raw_mean": 56.663123,
+        "raw_sd": 30.702463
+      }
+    ]
+  },
+  "key_variables": [
+    {
+      "var": "sphus",
+      "dim": "Health",
+      "scale": "1-5",
+      "label": "Self-rated health (1=excellent, 5=poor)"
+    },
+    {
+      "var": "eurod",
+      "dim": "Health",
+      "scale": "0-12",
+      "label": "EURO-D depression score"
+    },
+    {
+      "var": "iadl",
+      "dim": "Health",
+      "scale": "0-7",
+      "label": "Instrumental ADL limitations"
+    },
+    {
+      "var": "fdistress",
+      "dim": "Economic",
+      "scale": "1-4",
+      "label": "Difficulty making ends meet (1=great difficulty, 4=easily)"
+    },
+    {
+      "var": "internet",
+      "dim": "Digital",
+      "scale": "0/1",
+      "label": "Used internet in past 7 days"
+    },
+    {
+      "var": "sn_size_w9",
+      "dim": "Social",
+      "scale": "1-7",
+      "label": "Size of social network (number of confidants)"
+    },
+    {
+      "var": "fluency",
+      "dim": "Cognitive",
+      "scale": "count",
+      "label": "Number of animals named in 60s"
+    },
+    {
+      "var": "casp",
+      "dim": "Subjective",
+      "scale": "12-48",
+      "label": "Quality of life (CASP-12)"
+    },
+    {
+      "var": "loneliness",
+      "dim": "Subjective",
+      "scale": "3-9",
+      "label": "UCLA loneliness scale"
+    },
+    {
+      "var": "hope_future",
+      "dim": "Subjective",
+      "scale": "0/1",
+      "label": "Reports hopes for the future"
+    }
+  ],
+  "italy_subset": {
+    "profiles": [
+      {
+        "name": "Fragile Resigned",
+        "center": [1.060421, 1.041864, 1.972399, -0.252163, -0.636736, -0.028295, -0.754316, -1.024851, 0.88344, -0.824051],
+        "vars": ["sphus", "eurod", "iadl", "fdistress", "internet", "sn_size_w9", "fluency", "casp", "loneliness", "hope_future"]
+      },
+      {
+        "name": "Connected Active",
+        "center": [-0.281811, -0.248865, -0.402676, 0.675774, 0.717079, 0.419284, 0.63308, 0.555642, -0.409732, 0.292347],
+        "vars": ["sphus", "eurod", "iadl", "fdistress", "internet", "sn_size_w9", "fluency", "casp", "loneliness", "hope_future"]
+      },
+      {
+        "name": "Traditional Social",
+        "center": [-0.404719, -0.42053, -0.415123, 0.43173, 0.531697, 0.136233, 0.509482, 0.655241, -0.390907, 0.262408],
+        "vars": ["sphus", "eurod", "iadl", "fdistress", "internet", "sn_size_w9", "fluency", "casp", "loneliness", "hope_future"]
+      },
+      {
+        "name": "Moderate Isolated",
+        "center": [-0.577734, -0.677981, -0.418475, -0.156278, -0.114841, -0.224085, 0.022426, 0.401416, -0.49879, 0.319946],
+        "vars": ["sphus", "eurod", "iadl", "fdistress", "internet", "sn_size_w9", "fluency", "casp", "loneliness", "hope_future"]
+      },
+      {
+        "name": "Fragile Depressed",
+        "center": [0.469948, 0.537628, -0.039481, -0.505546, -0.458493, -0.215387, -0.439143, -0.672849, 0.591291, -0.278989],
+        "vars": ["sphus", "eurod", "iadl", "fdistress", "internet", "sn_size_w9", "fluency", "casp", "loneliness", "hope_future"]
+      }
+    ]
+  },
+  "sweden_subset": {
+    "profiles": [
+      {
+        "name": "Fragile",
+        "center": [1.037806, 0.79204, 1.542614, -0.579044, -0.737542, -0.309221, -0.643387, -1.01454, 0.943285, -0.515462],
+        "vars": ["sphus", "eurod", "iadl", "fdistress", "internet", "sn_size_w9", "fluency", "casp", "loneliness", "hope_future"]
+      },
+      {
+        "name": "Asset Rich",
+        "center": [-0.058456, -0.27445, -0.310456, -0.288741, -0.387257, -0.532146, -0.460925, 0.054734, 0.062827, 0.124321],
+        "vars": ["sphus", "eurod", "iadl", "fdistress", "internet", "sn_size_w9", "fluency", "casp", "loneliness", "hope_future"]
+      },
+      {
+        "name": "Connected Wealthy",
+        "center": [-0.717229, -0.51841, -0.370691, 0.352461, 0.327711, 0.245609, 0.479337, 0.65374, -0.426069, 0.243412],
+        "vars": ["sphus", "eurod", "iadl", "fdistress", "internet", "sn_size_w9", "fluency", "casp", "loneliness", "hope_future"]
+      },
+      {
+        "name": "Wealthy Digital",
+        "center": [-0.111646, 0.015762, -0.210546, 0.216394, 0.262706, 0.134443, 0.251957, 0.231304, -0.145029, 0.207614],
+        "vars": ["sphus", "eurod", "iadl", "fdistress", "internet", "sn_size_w9", "fluency", "casp", "loneliness", "hope_future"]
+      },
+      {
+        "name": "Social Decline",
+        "center": [-0.506892, -0.065527, -0.315596, 0.04062, 0.332295, 0.270442, 0.403297, 0.231418, -0.184213, 0.184911],
+        "vars": ["sphus", "eurod", "iadl", "fdistress", "internet", "sn_size_w9", "fluency", "casp", "loneliness", "hope_future"]
+      },
+      {
+        "name": "Moderate",
+        "center": [0.595519, 0.427717, -0.003663, 0.015869, 0.18302, 0.168563, -0.064804, -0.450191, 0.075858, -0.100778],
+        "vars": ["sphus", "eurod", "iadl", "fdistress", "internet", "sn_size_w9", "fluency", "casp", "loneliness", "hope_future"]
+      }
+    ]
+  }
+}
