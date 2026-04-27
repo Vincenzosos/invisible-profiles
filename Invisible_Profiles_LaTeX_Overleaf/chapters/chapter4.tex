@@ -1,0 +1,115 @@
+\chapter{Segmentation of the Italian Elderly}
+\label{ch:ch4}
+
+This chapter reports the segmentation of the Italian over-65 population from SHARE Wave~9 into five empirical profiles. The analytical pipeline is the one described in Chapter~\ref{ch:ch3}: rank-transformed and z-standardised twenty-nine active variables, K-means clustering with $k=5$ on the standardised-variable matrix, profile characterisation on the original scales. The chapter first summarises the sample and pipeline, then interprets the factor structure, describes the five profiles in detail, and closes with external validation and socio-demographic characterisation.
+
+\section{Analytical sample and pipeline summary}
+\label{sec:ch4-sample}
+
+The analytical sample comprises $n = 2{,}378$ Italian respondents aged sixty-five and over, obtained from the $2{,}399$ first-implicate cases after complete-case listwise deletion on the thirty-one analytical variables (Section~\ref{sec:ch3-sample}). No Italian respondent exceeds the Mahalanobis $\chi^{2}$ cut-off at $p = 0.001$ with thirty-one degrees of freedom, so the multivariate outlier screen leaves the listwise sample intact. Twenty-nine of the thirty-one variables enter the Italian K-means run: \emph{ac035d4} (educational training) and \emph{ac035d7} (political organisations) have zero variance in the Italian sample and are excluded from the PCA, factor-analysis, and clustering computations, as documented in Section~\ref{sec:ch3-variables}.
+
+K-means was initialised with one hundred random restarts, a maximum of five hundred iterations per restart, and a fixed random seed (42) for reproducibility. The converged solution has a within-cluster sum of squares that partitions the sample into five interpretable clusters; the multi-algorithm quality indexes reported in Figure~\ref{fig:ch4-kmeans-diagnostics} confirm that the silhouette and within-cluster $R^{2}$ flatten beyond $k = 5$, so five is the empirically defensible cut-off. No micro-cluster smaller than five per cent of the sample emerges, and the analysis therefore proceeds directly on the full $n = 2{,}378$.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.85\linewidth]{figures/04_italy/fig_06_kmeans_diagnostics_italy.png}
+  \caption{K-means cluster quality diagnostics for Italy across $k = 2,\ldots,10$. Source: v9 pipeline.}
+  \label{fig:ch4-kmeans-diagnostics}
+\end{figure}
+
+\section{Factor structure of the Italian variable space}
+\label{sec:ch4-fa}
+
+Before describing the profiles, it is useful to inspect the latent structure of the 29 Italian active variables. Figure~\ref{fig:ch4-fa-loadings} shows the six-factor principal-axis varimax solution, whose empirical adequacy is documented in Section~\ref{sec:ch3-fa} (KMO $= 0.832$; Bartlett $\chi^{2} = 18{,}755$, $df = 406$, $p < 10^{-300}$). The six factors partition the variable space into thematically coherent blocks: physical fragility (\emph{mobility}, \emph{iadl}, \emph{adl}, \emph{sphus}), subjective wellbeing (\emph{eurod}, \emph{casp}, \emph{loneliness}), digital and cognitive engagement (\emph{internet}, \emph{fluency}, \emph{ac035d5}, \emph{ac035d8}), social network (\emph{social\_integration}, \emph{sn\_size\_w9}), household income (\emph{log\_thinc}, \emph{ypen1}), and household wealth (\emph{log\_hnetw}, \emph{home\_own}). This block structure is the one against which each profile is interpreted in Section~\ref{sec:ch4-profiles}: a profile is not simply "high" or "low" on a single axis, but occupies a characteristic position on each of the six thematic blocks.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.85\linewidth]{figures/04_italy/fig_04_fa_loadings_italy.png}
+  \caption{Factor loadings for the six-factor varimax solution on the 29 Italian active variables. Values with $|\lambda| \geq 0.30$ are shown. Source: v9 pipeline.}
+  \label{fig:ch4-fa-loadings}
+\end{figure}
+
+\section{The five Italian profiles}
+\label{sec:ch4-profiles}
+
+Table~\ref{tab:ch4-profiles} reports the sizes and mean values on eight key variables for each of the five profiles. The naming is substantive: each label anticipates the interpretation that follows.
+
+\begin{table}[ht]
+  \centering
+  \caption{Italian profile sizes and cluster means on key variables ($n = 2{,}378$).}
+  \label{tab:ch4-profiles}
+  \small
+  \begin{tabular}{@{}lrrrrrrrrr@{}}
+    \toprule
+    \textbf{Profile} & \textbf{n} & \textbf{\%} & \textbf{Age} & \textbf{Yedu} & \textbf{Internet} & \textbf{CASP} & \textbf{Lone.} & \textbf{Hope} & \textbf{LifeSat}\\
+    \midrule
+    Fragile Resigned      & 315 & 13.2 & 81.5 &  6.8 & 0.09 & 27.8 & 6.2 & 0.45 & 6.45\\
+    Fragile Depressed     & 636 & 26.7 & 77.3 &  7.2 & 0.17 & 30.7 & 5.4 & 0.68 & 7.17\\
+    Moderate Isolated     & 639 & 26.9 & 72.8 &  8.8 & 0.34 & 36.8 & 3.6 & 0.92 & 8.24\\
+    Traditional Social    & 184 &  7.7 & 73.8 & 10.6 & 0.66 & 38.5 & 3.8 & 0.90 & 8.19\\
+    Connected Active      & 604 & 25.4 & 73.9 & 10.9 & 0.75 & 37.8 & 3.7 & 0.91 & 8.13\\
+    \bottomrule
+  \end{tabular}
+  \par\smallskip
+  \footnotesize \emph{Note.} Internet and Hope are binary indicators (proportion reporting the attribute). CASP-12 ranges 12--48, EURO-D 0--12, loneliness 3--9, life satisfaction 0--10. Profile ordering reflects increasing CASP-12 and decreasing EURO-D depression.
+\end{table}
+
+Figure~\ref{fig:ch4-profile-plot} visualises the five profiles on the full set of twenty-nine standardised active variables. Each line traces one profile; the vertical axis is standardised units of the sample, and variables are grouped by the six factor blocks introduced in Section~\ref{sec:ch4-fa}.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/04_italy/fig_70_profile_handson_italy.png}
+  \caption{Italian profile plot on the 29 active variables, grouped by dominant factor. Ribbons represent 95\% confidence intervals around profile means. Source: v9 pipeline.}
+  \label{fig:ch4-profile-plot}
+\end{figure}
+
+\subsection{Fragile Resigned}
+The smallest of the five profiles ($n = 315$; 13.2\%) is also the oldest (mean age 81.5), the least educated (6.8 years of schooling), and the most socially withdrawn at the subjective level. CASP-12 is 27.8, the lowest of all profiles and more than ten points below the Connected Active mean; the EURO-D depression score (not in Table~\ref{tab:ch4-profiles} but visible in Figure~\ref{fig:ch4-profile-plot}) is the highest observed; internet use is virtually absent (9\%); hope for the future is reported by fewer than half of respondents (45\%). This is the profile that combines physical fragility, cognitive decline, material deprivation and \emph{acceptance} of the condition --- hence the \emph{Resigned} label.
+
+\subsection{Fragile Depressed}
+The largest vulnerable group ($n = 636$; 26.7\%) shares the same physical fragility as the Resigned profile but differs on subjective perception: CASP is 30.7, loneliness is 5.4, and hope is reported by 68\% of respondents. Years of education are slightly higher (7.2) and the age profile is slightly younger (77.3). The key contrast with the Resigned is on the subjective block: these respondents have the same objective conditions but report distress rather than acceptance --- a distinction that is only possible because the subjective block enters the clustering as an input rather than as an outcome. Section~\ref{sec:ch6-subjective} returns to this point as one of the original contributions of the analysis.
+
+\subsection{Moderate Isolated}
+The numerically dominant profile ($n = 639$; 26.9\%) is the empirical hinge of this thesis. Its respondents are in good objective health for their age group (mean age 72.8, internet use 34\%, CASP 36.8, low depression, high hope), but they occupy a structurally isolated position in the social space: the loneliness score is 3.6 and life satisfaction is 8.24 --- yet the social-network indicators (visible in Figure~\ref{fig:ch4-profile-plot}) place them well below the Traditional Social and Connected Active profiles. They are neither depressed nor fragile, yet they lack the dense social infrastructure that the Traditional Social profile enjoys. The consequences of this disjunction for healthcare utilisation are developed in Chapter~\ref{ch:ch7}.
+
+\subsection{Traditional Social}
+The smallest connected profile ($n = 184$; 7.7\%) is defined by strong social integration: CASP is 38.5, hope 90\%, loneliness 3.8, life satisfaction 8.19, internet use 66\%. Respondents are slightly older than Connected Active (73.8 vs 73.9) and similarly well educated (10.6 vs 10.9 years). This profile retains the traditional familistic social fabric --- neighbours, extended kin, local associations --- without being fully digitally integrated. Its reduced size in the v9 pipeline (compared with earlier drafts of the segmentation) reflects the fact that many respondents with middle-range digital integration are now absorbed by the Connected Active profile, leaving Traditional Social as a more compact and semantically cleaner residual.
+
+\subsection{Connected Active}
+The largest well-adjusted profile ($n = 604$; 25.4\%) combines high education (10.9 years), pervasive internet use (75\%), high CASP (37.8), high hope (91\%), and the strongest social-network indicators in the Italian sample. This is the profile that realises the post-pandemic ideal of active ageing: digital inclusion, cognitive engagement, subjective well-being, and institutional reach. It represents about one quarter of the Italian over-65 population and sets the practical benchmark against which the other profiles are evaluated.
+
+\section{External validation}
+\label{sec:ch4-validation}
+
+Life satisfaction (SHARE \emph{ac012\_}, scored 0--10) was not used in clustering and therefore serves as an external validation target. The one-way ANOVA on the five profiles yields a highly significant between-group effect, consistent with the profile gradient visible in the last column of Table~\ref{tab:ch4-profiles} (Fragile Resigned 6.45 $\to$ Moderate Isolated 8.24). Figure~\ref{fig:ch4-lifesat} displays the distribution of life satisfaction by profile; post-hoc Tukey pairwise comparisons confirm that each adjacent pair in the CASP-ordered list differs significantly.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.75\linewidth]{figures/04_italy/fig_12_lifesat_anova_italy.png}
+  \caption{Life satisfaction by Italian profile. ANOVA between-group test reported in the caption of the figure.}
+  \label{fig:ch4-lifesat}
+\end{figure}
+
+\section{Socio-demographic characterisation}
+\label{sec:ch4-demographics}
+
+Figures~\ref{fig:ch4-gender} and~\ref{fig:ch4-age} characterise the five profiles on gender and on age bands. Three patterns deserve comment. First, the Fragile Depressed profile is female-skewed, consistent with the EURO-D literature on gender differences in depressive symptoms in the elderly. Second, the Moderate Isolated profile is the youngest of the vulnerable groups, confirming that social isolation emerges well before physical decline. Third, Connected Active is the youngest and best-educated profile overall, with internet penetration approaching that of the Swedish population (see Chapter~\ref{ch:ch5}).
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.75\linewidth]{figures/04_italy/fig_36_demographics_gender_italy.png}
+  \caption{Gender composition by Italian profile. Source: v9 pipeline.}
+  \label{fig:ch4-gender}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.75\linewidth]{figures/04_italy/fig_37_demographics_age_italy.png}
+  \caption{Age-band composition by Italian profile. Source: v9 pipeline.}
+  \label{fig:ch4-age}
+\end{figure}
+
+\section{Chapter summary}
+\label{sec:ch4-summary}
+
+The Italian over-65 sample partitions into five interpretable profiles that span the axes of physical fragility, subjective well-being, and social-digital integration. Two findings motivate the remainder of the thesis. First, the inclusion of the subjective block as a clustering input separates the Fragile Resigned from the Fragile Depressed profiles, a distinction that a purely objective framework would miss. Second, the Moderate Isolated profile --- sizeable, relatively young, objectively healthy, yet structurally isolated --- is the empirical target of Chapter~\ref{ch:ch7}, where its pattern of healthcare utilisation is compared with the Traditional Social profile under approximately matched clinical conditions. Before that, Chapter~\ref{ch:ch5} applies the same analytical pipeline to Sweden and asks whether the same five-profile structure survives the cross-country comparison.

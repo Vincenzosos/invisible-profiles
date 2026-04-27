@@ -1,0 +1,130 @@
+\documentclass[12pt,a4paper,oneside]{report}
+
+% --- Encoding & language ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+% --- Fonts: Times-like, math-compatible ---
+\usepackage{mathptmx}
+
+% --- Geometry: Bocconi-style margins ---
+\usepackage[
+  left=3.8cm, right=2.54cm, top=3.2cm, bottom=2.54cm
+]{geometry}
+
+% --- Spacing ---
+\usepackage{setspace}
+\setstretch{1.3}
+\setlength{\parindent}{1.27cm}
+
+% --- Tables, figures, math ---
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{caption}
+\captionsetup{font=small, labelfont=bf}
+\usepackage{amsmath, amssymb}
+
+% --- Hyperlinks & TOC ---
+\usepackage[hidelinks, breaklinks=true]{hyperref}
+
+% --- Code listings (R) ---
+\usepackage{xcolor}
+\usepackage{listings}
+\lstset{
+  language=R,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{blue!70!black}\bfseries,
+  commentstyle=\color{green!40!black}\itshape,
+  stringstyle=\color{purple!70!black},
+  numbers=left, numberstyle=\tiny\color{gray}, stepnumber=1, numbersep=8pt,
+  showstringspaces=false,
+  breaklines=true, breakatwhitespace=true,
+  frame=single, framesep=4pt, framerule=0.4pt, rulecolor=\color{gray!30},
+  tabsize=2, columns=fullflexible, keepspaces=true
+}
+% Map R's assignment operator to a proper leftarrow glyph in listings.
+% Note: we do NOT map '%' here (biblatex's apa style and the literate
+% parser cannot both parse a bare '%' inside braces without escaping the
+% LaTeX comment character).
+\lstset{literate={<-}{$\leftarrow$}{2}}
+
+% --- Bibliography (biblatex + biber, APA style) ---
+\usepackage{csquotes}  % required by biblatex when babel/polyglossia is loaded
+\usepackage[
+  style=apa,
+  backend=biber,
+  natbib=true,
+  url=false,
+  doi=false,
+  isbn=false
+]{biblatex}
+\addbibresource{references.bib}
+
+% --- Header / chapter style ---
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\Large\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Large}
+
+% --- Document ---
+\title{Invisible Profiles: A Multidimensional Segmentation of the Elderly Population in Italy and Sweden Using Objective and Subjective Variables --- Evidence from SHARE Wave 9}
+\author{Vincenzo Pio Silvestri}
+\date{Academic Year 2025--2026}
+
+\begin{document}
+
+% ===== Frontmatter =====
+\begin{titlepage}
+  \centering
+  \vspace*{1.5cm}
+  {\Large\bfseries UNIVERSIT\`A COMMERCIALE LUIGI BOCCONI\par}
+  \vspace{0.6cm}
+  {\large Department of Decision Sciences\par}
+  \vspace{0.3cm}
+  {\large \emph{Master of Science in Economics and Management of Innovation and Technology (EMIT)}\par}
+  \vfill
+  {\Huge\bfseries Invisible Profiles\par}
+  \vspace{0.5cm}
+  {\Large\bfseries A Multidimensional Segmentation of the Elderly Population\\
+   in Italy and Sweden Using Objective and Subjective Variables\par}
+  \vspace{0.4cm}
+  {\large\itshape Evidence from SHARE Wave 9\par}
+  \vfill
+  \begin{flushleft}
+    {\large Supervisor: \textbf{Prof. Trentini}\par}
+    \vspace{0.2cm}
+    {\large Course: 20570 --- Data Analytics and Visualization\par}
+    \vspace{0.6cm}
+    {\large Candidate: \textbf{Vincenzo Pio Silvestri}\par}
+    \vspace{0.1cm}
+    {\large Student ID: 3152937\par}
+  \end{flushleft}
+  \vfill
+  {\large Academic Year 2025--2026\par}
+\end{titlepage}
+
+\tableofcontents
+\listoftables
+\listoffigures
+
+% ===== Mainmatter =====
+\include{chapters/chapter1}
+\include{chapters/chapter2}
+\include{chapters/chapter3}
+\include{chapters/chapter4}
+\include{chapters/chapter5}
+\include{chapters/chapter6}
+\include{chapters/chapter7}
+\include{chapters/chapter8}
+
+% ===== Appendix =====
+\appendix
+\include{chapters/appendix}
+
+% ===== Bibliography =====
+\printbibliography[heading=bibintoc, title={Bibliography}]
+
+\end{document}
