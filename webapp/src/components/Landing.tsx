@@ -24,7 +24,7 @@ export default function Landing({ onSelectCountry }: Props) {
         <button
           type="button"
           onClick={() => onSelectCountry('italy')}
-          className="rounded-2xl bg-white border border-zinc-200 px-6 py-12 text-lg font-medium text-slate-900 hover:border-emerald-400 transition-colors"
+          className="rounded-2xl bg-white border border-zinc-200 px-6 py-12 text-lg font-medium text-slate-900 hover:border-blue-400 transition-colors"
         >
           Italy
           <span className="block mt-1 text-xs text-zinc-500 font-normal">
@@ -34,7 +34,7 @@ export default function Landing({ onSelectCountry }: Props) {
         <button
           type="button"
           onClick={() => onSelectCountry('sweden')}
-          className="rounded-2xl bg-white border border-zinc-200 px-6 py-12 text-lg font-medium text-slate-900 hover:border-emerald-400 transition-colors"
+          className="rounded-2xl bg-white border border-zinc-200 px-6 py-12 text-lg font-medium text-slate-900 hover:border-blue-400 transition-colors"
         >
           Sweden
           <span className="block mt-1 text-xs text-zinc-500 font-normal">

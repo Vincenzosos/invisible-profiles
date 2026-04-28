@@ -25,7 +25,7 @@ export default function OpportunityExplorer() {
           you can plug into a CRM. We do not multiply premium × conversion ×
           segment to produce a single addressable € figure: the conversion
           assumption would not survive scrutiny. Instead we report the{' '}
-          <span className="text-emerald-700 font-medium">sourced market premium ranges</span>{' '}
+          <span className="text-blue-700 font-medium">sourced market premium ranges</span>{' '}
           and the segment size in individuals, and leave the multiplication
           to the operator who owns their conversion assumptions.
         </p>
@@ -75,7 +75,7 @@ function PlaybookView({ vertical: v }: { vertical: Vertical }) {
             className={[
               'rounded-2xl border p-6 space-y-3',
               i === 0
-                ? 'bg-emerald-50 border-emerald-200'
+                ? 'bg-blue-50 border-blue-200'
                 : 'bg-white border-zinc-200',
             ].join(' ')}
           >
@@ -114,7 +114,7 @@ function PlaybookView({ vertical: v }: { vertical: Vertical }) {
           <ul className="text-sm text-zinc-700 space-y-1.5 leading-relaxed">
             {v.context_notes.map((n, i) => (
               <li key={i} className="flex items-start gap-2">
-                <span className="text-emerald-700 mt-0.5">▸</span>
+                <span className="text-blue-700 mt-0.5">▸</span>
                 <span>{n}</span>
               </li>
             ))}
@@ -123,12 +123,12 @@ function PlaybookView({ vertical: v }: { vertical: Vertical }) {
       )}
 
       <section className="rounded-2xl bg-slate-900 text-white p-8 space-y-5">
-        <p className="eyebrow text-emerald-400">Plug into your CRM</p>
+        <p className="eyebrow text-blue-400">Plug into your CRM</p>
         <h3 className="display-3 text-white">Targeting criteria</h3>
         <ul className="text-sm space-y-2 max-w-3xl">
           {v.crm_criteria.map((c, i) => (
             <li key={i} className="flex items-start gap-3 text-zinc-200">
-              <span className="text-emerald-400 mt-0.5">▸</span>
+              <span className="text-blue-400 mt-0.5">▸</span>
               <span>{c}</span>
             </li>
           ))}

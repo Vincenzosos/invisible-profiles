@@ -29,7 +29,7 @@ export default function NavBar({ active, onNavigate }: Props) {
             onClick={() => onNavigate('home')}
             className="flex items-baseline gap-3 text-left group"
           >
-            <span className="text-base font-semibold tracking-tight text-slate-900 group-hover:text-emerald-700 transition-colors">
+            <span className="text-base font-semibold tracking-tight text-slate-900 group-hover:text-blue-700 transition-colors">
               Italian Silver Atlas
             </span>
             <span className="hidden sm:inline text-xs text-zinc-500">
@@ -48,7 +48,7 @@ export default function NavBar({ active, onNavigate }: Props) {
                 className={[
                   'px-4 sm:px-5 py-3 text-sm border-b-2 -mb-px transition-colors',
                   isActive
-                    ? 'border-emerald-700 text-slate-900 font-medium'
+                    ? 'border-blue-700 text-slate-900 font-medium'
                     : 'border-transparent text-zinc-600 hover:text-slate-900',
                 ].join(' ')}
               >

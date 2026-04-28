@@ -112,10 +112,10 @@ export default function ClusterDossier({
   const deltaPp = (inClusterPct - benchmarkPct) * 100;
 
   return (
-    <article className="rounded-2xl bg-zinc-50 border border-emerald-300 p-6 space-y-6">
+    <article className="rounded-2xl bg-zinc-50 border border-blue-300 p-6 space-y-6">
       <header className="flex items-baseline justify-between gap-4 flex-wrap">
         <div className="space-y-1">
-          <p className="eyebrow text-emerald-700">Cluster dossier · {country}</p>
+          <p className="eyebrow text-blue-700">Cluster dossier · {country}</p>
           <h3 className="display-2 text-slate-900">{cluster}</h3>
           {passport && (
             <p className="text-base text-zinc-700 italic max-w-2xl">
@@ -133,7 +133,7 @@ export default function ClusterDossier({
                 Math.abs(deltaPp) < 2
                   ? 'text-zinc-500'
                   : deltaPp > 0
-                  ? 'text-emerald-700'
+                  ? 'text-blue-700'
                   : 'text-rose-600',
               ].join(' ')}
             >
@@ -157,7 +157,7 @@ export default function ClusterDossier({
           <ul className="space-y-2">
             {passport.action_signals.map((s, i) => (
               <li key={i} className="text-sm text-zinc-700 leading-relaxed flex gap-3">
-                <span className="text-emerald-700 font-mono text-xs tabular-nums mt-0.5">
+                <span className="text-blue-700 font-mono text-xs tabular-nums mt-0.5">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <span>{s}</span>
@@ -273,7 +273,7 @@ function ConfidenceBar({
     <div className="space-y-1.5">
       <div className="relative h-3 bg-zinc-100 rounded-full overflow-hidden flex">
         <div
-          className="bg-emerald-500"
+          className="bg-blue-500"
           style={{ width: `${pct(counts.confident)}%` }}
         />
         <div
@@ -287,7 +287,7 @@ function ConfidenceBar({
       </div>
       <div className="flex items-center justify-between text-xs text-zinc-600">
         <span>
-          <span className="text-emerald-700 font-medium">
+          <span className="text-blue-700 font-medium">
             {counts.confident}
           </span>{' '}
           confident
@@ -380,7 +380,7 @@ function SignatureRow({
       <div className="col-span-5 space-y-1">
         <div className="relative h-2 bg-zinc-100 rounded-full overflow-hidden">
           <div
-            className="absolute inset-y-0 left-0 bg-emerald-600 rounded-full"
+            className="absolute inset-y-0 left-0 bg-blue-600 rounded-full"
             style={{ width: `${cohortPct.toFixed(1)}%` }}
           />
         </div>
@@ -409,7 +409,7 @@ function FingerprintMini({ f }: { f: HealthcareIndicator }) {
   const cohortDelta = f.cluster - f.national;
   const isImprovement =
     f.orientation === 'higher_is_engaged' ? cohortDelta >= 0 : cohortDelta <= 0;
-  const tone = isImprovement ? 'text-emerald-700' : 'text-rose-600';
+  const tone = isImprovement ? 'text-blue-700' : 'text-rose-600';
   return (
     <div className="grid grid-cols-12 gap-3 items-baseline">
       <div className="col-span-6 text-sm text-zinc-700 truncate">{f.label}</div>
@@ -450,7 +450,7 @@ function GapMini({
       : d.unit === 'score'
       ? `${v >= 0 ? '+' : ''}${v.toFixed(1)}`
       : `${v >= 0 ? '+' : ''}${v.toFixed(2)}`;
-  const tone = gap >= 0 ? 'text-emerald-700' : 'text-rose-600';
+  const tone = gap >= 0 ? 'text-blue-700' : 'text-rose-600';
   return (
     <div className="grid grid-cols-12 gap-3 items-baseline">
       <div className="col-span-5 text-sm text-zinc-700">{d.label}</div>

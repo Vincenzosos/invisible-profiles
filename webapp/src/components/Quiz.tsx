@@ -88,7 +88,7 @@ export default function Quiz({ country, onComplete, onBack }: Props) {
       </div>
       <div className="h-1 w-full bg-zinc-200 rounded-full overflow-hidden">
         <div
-          className="h-full bg-emerald-600 transition-all"
+          className="h-full bg-blue-600 transition-all"
           style={{ width: `${((idx + 1) / total) * 100}%` }}
         />
       </div>
@@ -146,7 +146,7 @@ export default function Quiz({ country, onComplete, onBack }: Props) {
                     })
                   : setAns(Number(e.target.value))
               }
-              className="w-full rounded-xl border border-zinc-300 px-4 py-3 text-lg text-slate-900 focus:outline-none focus:border-emerald-500"
+              className="w-full rounded-xl border border-zinc-300 px-4 py-3 text-lg text-slate-900 focus:outline-none focus:border-blue-500"
               placeholder="Type a number"
             />
           </div>

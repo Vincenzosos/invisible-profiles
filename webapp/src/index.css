@@ -4,7 +4,7 @@
  * Italian Silver Atlas — design tokens
  *
  * Palette: cool warm-white surface (zinc-50) + deep slate-900 text + a
- * single muted accent (emerald-700) for positive highlights and positive
+ * single muted accent (blue-700) for positive highlights and positive
  * gaps. Negative gaps surface in rose-700, sparingly.
  * ------------------------------------------------------------------------ */
 
@@ -16,9 +16,9 @@
   --color-text: oklch(20% 0.02 250);              /* deep slate */
   --color-text-muted: oklch(45% 0.012 240);       /* zinc-600 */
   --color-text-subtle: oklch(58% 0.01 240);       /* zinc-500 */
-  --color-accent: oklch(48% 0.13 165);            /* emerald-700 */
-  --color-accent-soft: oklch(95% 0.04 165);       /* emerald-50 */
-  --color-accent-border: oklch(85% 0.08 165);     /* emerald-200 */
+  --color-accent: oklch(45% 0.18 252);            /* blue-700 */
+  --color-accent-soft: oklch(96% 0.03 252);       /* blue-50 */
+  --color-accent-border: oklch(86% 0.08 252);     /* blue-200 */
   --color-negative: oklch(54% 0.14 18);           /* rose-700 */
 }
 
@@ -48,4 +48,10 @@ html { scroll-behavior: smooth; }
 .hairline {
   height: 1px;
   background: linear-gradient(to right, transparent, var(--color-border-strong), transparent);
+}
+
+/* Slide-in transition used by the Atlas drilldown side panel */
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0.6; }
+  to   { transform: translateX(0);    opacity: 1; }
 }

@@ -94,9 +94,9 @@ export default function Benchmark({ onNavigate }: Props) {
         <button
           type="button"
           onClick={() => onNavigate('methods')}
-          className="block w-full text-left rounded-2xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 hover:border-emerald-400 transition-colors p-8 group"
+          className="block w-full text-left rounded-2xl border border-blue-200 bg-blue-50 hover:bg-blue-100 hover:border-blue-400 transition-colors p-8 group"
         >
-          <p className="eyebrow text-emerald-700">Continue · 03</p>
+          <p className="eyebrow text-blue-700">Continue · 03</p>
           <p className="display-2 text-slate-900 mt-3">
             Now see how it was built.
           </p>
@@ -105,7 +105,7 @@ export default function Benchmark({ onNavigate }: Props) {
             the segmentation: the variables, the choice of k, the 4D-vs-5D
             sensitivity, and the multi-algorithm comparison.
           </p>
-          <p className="mt-6 text-sm font-medium text-emerald-700 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
+          <p className="mt-6 text-sm font-medium text-blue-700 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
             Methodology →
           </p>
         </button>
@@ -167,7 +167,7 @@ function PairCard({ pair }: { pair: Pair }) {
                     className={[
                       'py-2 px-2 text-right tabular-nums font-medium',
                       d.gap_se_minus_it > 0
-                        ? 'text-emerald-700'
+                        ? 'text-blue-700'
                         : d.gap_se_minus_it < 0
                           ? 'text-rose-700'
                           : 'text-zinc-500',

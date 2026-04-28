@@ -83,7 +83,7 @@ export default function Result({
           <p className="eyebrow">Cluster signature</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <p className="text-sm font-medium text-emerald-700 mb-2">
+              <p className="text-sm font-medium text-blue-700 mb-2">
                 Strengths
               </p>
               {traits.strengths.length === 0 ? (
@@ -98,7 +98,7 @@ export default function Result({
                       className="text-sm text-zinc-700 flex items-baseline justify-between"
                     >
                       <span>{t.label}</span>
-                      <span className="text-xs tabular-nums text-emerald-700 font-medium">
+                      <span className="text-xs tabular-nums text-blue-700 font-medium">
                         z = {t.zScore >= 0 ? '+' : ''}
                         {t.zScore.toFixed(2)}
                       </span>
@@ -147,7 +147,7 @@ export default function Result({
           <ul className="space-y-3">
             {passport.action_signals.map((s, i) => (
               <li key={i} className="text-sm text-zinc-700 leading-relaxed flex gap-3">
-                <span className="text-emerald-700 font-mono text-xs tabular-nums mt-0.5">
+                <span className="text-blue-700 font-mono text-xs tabular-nums mt-0.5">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <span>{s}</span>
@@ -175,7 +175,7 @@ export default function Result({
               <div className="col-span-6 relative h-3 bg-zinc-100 rounded-full overflow-hidden">
                 <div className="absolute inset-y-0 left-1/2 w-px bg-zinc-300" />
                 <div
-                  className="absolute inset-y-0 left-0 bg-emerald-500/30 rounded-full"
+                  className="absolute inset-y-0 left-0 bg-blue-500/30 rounded-full"
                   style={{ width: `${Math.max(2, w.pct).toFixed(1)}%` }}
                 />
                 <div
@@ -207,13 +207,13 @@ export default function Result({
       )}
 
       {gap && (
-        <article className="rounded-2xl bg-emerald-50 border border-emerald-200 p-7 space-y-4">
-          <p className="eyebrow text-emerald-700">
+        <article className="rounded-2xl bg-blue-50 border border-blue-200 p-7 space-y-4">
+          <p className="eyebrow text-blue-700">
             Welfare-state translation · {gap.pairLabel} matched pair
           </p>
           <p className="display-3 text-slate-900">
             In {country === 'italy' ? 'Sweden' : 'Italy'}, this cluster matches{' '}
-            <span className="text-emerald-700">
+            <span className="text-blue-700">
               {country === 'italy' ? gap.swedishProfile : gap.italianProfile}
             </span>
             .
@@ -270,7 +270,7 @@ export default function Result({
                 <div
                   className={[
                     'absolute inset-y-0 left-0 rounded-full',
-                    i === 0 ? 'bg-emerald-600' : 'bg-zinc-400',
+                    i === 0 ? 'bg-blue-600' : 'bg-zinc-400',
                   ].join(' ')}
                   style={{ width: `${(m.probability * 100).toFixed(1)}%` }}
                 />
@@ -308,7 +308,7 @@ export default function Result({
                     className={[
                       'absolute inset-y-0 rounded',
                       isPos
-                        ? 'bg-emerald-600 left-1/2'
+                        ? 'bg-blue-600 left-1/2'
                         : 'bg-rose-500 right-1/2',
                     ].join(' ')}
                     style={{ width: `${pct}%` }}
@@ -347,7 +347,7 @@ export default function Result({
               className={[
                 'flex items-center justify-between rounded-lg px-3 py-2',
                 i === 0
-                  ? 'bg-emerald-50 font-medium text-slate-900'
+                  ? 'bg-blue-50 font-medium text-slate-900'
                   : 'text-zinc-700',
               ].join(' ')}
             >
@@ -389,7 +389,7 @@ function FingerprintRow({ f }: { f: HealthcareIndicator }) {
       : 'down_good';
   const deltaTone =
     deltaDir === 'up_good' || deltaDir === 'down_good'
-      ? 'text-emerald-700'
+      ? 'text-blue-700'
       : 'text-rose-600';
   const max = Math.max(f.cluster, f.national, 0.0001);
   return (
@@ -398,7 +398,7 @@ function FingerprintRow({ f }: { f: HealthcareIndicator }) {
       <div className="col-span-5 space-y-1">
         <div className="relative h-2 bg-zinc-100 rounded-full overflow-hidden">
           <div
-            className="absolute inset-y-0 left-0 bg-emerald-600 rounded-full"
+            className="absolute inset-y-0 left-0 bg-blue-600 rounded-full"
             style={{ width: `${(f.cluster / max) * 100}%` }}
           />
         </div>
@@ -441,7 +441,7 @@ function GapRow({
     if (d.unit === 'score') return `${v >= 0 ? '+' : ''}${v.toFixed(1)}`;
     return `${v >= 0 ? '+' : ''}${v.toFixed(2)}`;
   };
-  const tone = gap >= 0 ? 'text-emerald-700' : 'text-rose-600';
+  const tone = gap >= 0 ? 'text-blue-700' : 'text-rose-600';
   return (
     <div className="grid grid-cols-12 gap-3 items-baseline">
       <div className="col-span-5 text-sm text-zinc-700">{d.label}</div>

@@ -16,7 +16,7 @@ export default function Home({ onNavigate }: Props) {
         <p className="eyebrow">01 · Overview</p>
         <h1 className="display-1 text-slate-900">
           Italy's over-65 population is{' '}
-          <span className="text-emerald-700">five segments</span>, not one.
+          <span className="text-blue-700">five segments</span>, not one.
         </h1>
         <p className="text-xl text-zinc-700 leading-relaxed max-w-3xl">
           Evidence-based segmentation of the {formatIndividuals(italy.national_over65_individuals)}{' '}
@@ -150,12 +150,12 @@ function NextStep({
     <button
       type="button"
       onClick={onClick}
-      className="block w-full text-left rounded-2xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 hover:border-emerald-400 transition-colors p-8 group"
+      className="block w-full text-left rounded-2xl border border-blue-200 bg-blue-50 hover:bg-blue-100 hover:border-blue-400 transition-colors p-8 group"
     >
-      <p className="eyebrow text-emerald-700">{eyebrow}</p>
+      <p className="eyebrow text-blue-700">{eyebrow}</p>
       <p className="display-2 text-slate-900 mt-3">{title}</p>
       <p className="mt-3 text-base text-zinc-700 leading-relaxed max-w-3xl">{desc}</p>
-      <p className="mt-6 text-sm font-medium text-emerald-700 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
+      <p className="mt-6 text-sm font-medium text-blue-700 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
         {cta} →
       </p>
     </button>
@@ -178,7 +178,7 @@ function Finding({
   return (
     <article className="rounded-2xl bg-white border border-zinc-200 p-7 space-y-3">
       <div className="flex items-baseline gap-4">
-        <span className="text-emerald-700 font-mono text-sm tabular-nums">
+        <span className="text-blue-700 font-mono text-sm tabular-nums">
           {number}
         </span>
         <h3 className="display-3 text-slate-900 flex-1">{title}</h3>
@@ -217,7 +217,7 @@ function Stat({
       className={[
         'rounded-2xl border p-7 space-y-3',
         accent
-          ? 'bg-emerald-50 border-emerald-200'
+          ? 'bg-blue-50 border-blue-200'
           : 'bg-white border-zinc-200',
       ].join(' ')}
     >
@@ -225,7 +225,7 @@ function Stat({
       <p
         className={[
           'metric-hero',
-          accent ? 'text-emerald-800' : 'text-slate-900',
+          accent ? 'text-blue-800' : 'text-slate-900',
         ].join(' ')}
       >
         {value}

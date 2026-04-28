@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import killer from '../data/killer_numbers.json';
 import centroids from '../data/centroids.json';
 import {
@@ -105,9 +105,9 @@ export default function Atlas({ onNavigate }: Props) {
         <button
           type="button"
           onClick={() => onNavigate('benchmark')}
-          className="block w-full text-left rounded-2xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 hover:border-emerald-400 transition-colors p-8 group"
+          className="block w-full text-left rounded-2xl border border-blue-200 bg-blue-50 hover:bg-blue-100 hover:border-blue-400 transition-colors p-8 group"
         >
-          <p className="eyebrow text-emerald-700">Continue · Italy ↔ Sweden</p>
+          <p className="eyebrow text-blue-700">Continue · Italy ↔ Sweden</p>
           <p className="display-2 text-slate-900 mt-3">
             Now compare them across welfare regimes.
           </p>
@@ -116,7 +116,7 @@ export default function Atlas({ onNavigate }: Props) {
             structural gap on healthcare, digital reach, and quality of life —
             with 95% bootstrap confidence intervals.
           </p>
-          <p className="mt-6 text-sm font-medium text-emerald-700 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
+          <p className="mt-6 text-sm font-medium text-blue-700 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
             Italy ↔ Sweden →
           </p>
         </button>
@@ -138,7 +138,7 @@ function ProfileCard({
   return (
     <article
       className={[
-        'rounded-2xl bg-white border p-6 space-y-5 hover:border-emerald-400 transition-colors cursor-pointer group',
+        'rounded-2xl bg-white border p-6 space-y-5 hover:border-blue-400 transition-colors cursor-pointer group',
         hero ? 'border-zinc-300' : 'border-zinc-200',
       ].join(' ')}
       onClick={onOpen}
@@ -182,7 +182,7 @@ function ProfileCard({
         </p>
       )}
 
-      <p className="text-xs text-emerald-700 group-hover:translate-x-1 transition-transform">
+      <p className="text-xs text-blue-700 group-hover:translate-x-1 transition-transform">
         Full passport &rarr;
       </p>
     </article>
@@ -226,35 +226,53 @@ function DrilldownModal({
   const gap = welfareGap('italy', p.profile);
   const agg = killer.country_aggregates.italy;
 
+  // Esc-to-close + body scroll lock while panel is open.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [onClose]);
+
   return (
-    <div
-      className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-start sm:items-center justify-center z-30 p-4 overflow-y-auto"
-      onClick={onClose}
-    >
+    <>
+      {/* Light dim — does not blur the page so the Atlas grid stays readable */}
       <div
-        className="bg-white rounded-2xl max-w-3xl w-full p-8 sm:p-10 shadow-xl space-y-8 mt-4 sm:mt-0"
-        onClick={(e) => e.stopPropagation()}
+        className="fixed inset-0 bg-slate-900/15 z-30"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <aside
+        role="dialog"
+        aria-label={`${p.profile} profile dossier`}
+        className="fixed top-0 right-0 bottom-0 w-full sm:w-[640px] lg:w-[720px] bg-white shadow-2xl z-40 overflow-y-auto animate-[slideIn_220ms_ease-out]"
       >
-        <header className="flex items-start justify-between gap-4">
-          <div className="space-y-2">
-            <p className="eyebrow">
-              {formatPct(p.share_of_country_pct)} ·{' '}
-              {formatIndividuals(p.market_size_individuals)} individuals · sample n = {p.n_sample}
-            </p>
-            <h2 className="display-2 text-slate-900">{p.profile}</h2>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-zinc-400 hover:text-slate-900 text-2xl leading-none -mt-1"
-            aria-label="Close"
-          >
-            ×
-          </button>
-        </header>
+        <div className="p-6 sm:p-8 space-y-8">
+          <header className="flex items-start justify-between gap-4 sticky top-0 -mx-6 sm:-mx-8 -mt-6 sm:-mt-8 px-6 sm:px-8 pt-6 sm:pt-8 pb-4 bg-white border-b border-zinc-200 z-10">
+            <div className="space-y-2">
+              <p className="eyebrow">
+                {formatPct(p.share_of_country_pct)} ·{' '}
+                {formatIndividuals(p.market_size_individuals)} individuals · sample n = {p.n_sample}
+              </p>
+              <h2 className="display-2 text-slate-900">{p.profile}</h2>
+            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="text-zinc-400 hover:text-slate-900 text-2xl leading-none -mt-1 px-2"
+              aria-label="Close"
+            >
+              ×
+            </button>
+          </header>
 
         {passport && (
-          <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-5 space-y-3">
+          <div className="rounded-xl bg-blue-50 border border-blue-200 p-5 space-y-3">
             <p className="font-medium text-slate-900">{passport.headline}</p>
             <p className="text-sm text-zinc-700 italic leading-relaxed">
               {passport.tagline}
@@ -266,7 +284,7 @@ function DrilldownModal({
                     key={i}
                     className="text-sm text-zinc-700 leading-relaxed flex gap-3"
                   >
-                    <span className="text-emerald-700 font-mono text-xs tabular-nums mt-0.5">
+                    <span className="text-blue-700 font-mono text-xs tabular-nums mt-0.5">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <span>{s}</span>
@@ -305,7 +323,7 @@ function DrilldownModal({
             <p className="eyebrow">Cluster signature</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <p className="text-xs font-medium text-emerald-700 mb-2">Strengths</p>
+                <p className="text-xs font-medium text-blue-700 mb-2">Strengths</p>
                 {traits.strengths.length === 0 ? (
                   <p className="text-xs text-zinc-500">
                     No dimension scores notably above the country mean.
@@ -318,7 +336,7 @@ function DrilldownModal({
                         className="text-sm text-zinc-700 flex items-baseline justify-between"
                       >
                         <span>{t.label}</span>
-                        <span className="text-xs tabular-nums text-emerald-700 font-medium">
+                        <span className="text-xs tabular-nums text-blue-700 font-medium">
                           z = {t.zScore >= 0 ? '+' : ''}{t.zScore.toFixed(2)}
                         </span>
                       </li>
@@ -366,13 +384,13 @@ function DrilldownModal({
 
         {/* Welfare-state translation: matched-pair gap */}
         {gap && (
-          <section className="rounded-2xl bg-emerald-50 border border-emerald-200 p-5 space-y-3">
-            <p className="eyebrow text-emerald-700">
+          <section className="rounded-2xl bg-blue-50 border border-blue-200 p-5 space-y-3">
+            <p className="eyebrow text-blue-700">
               Welfare-state translation · {gap.pairLabel} matched pair
             </p>
             <p className="text-sm text-slate-900">
               In Sweden, this cluster matches{' '}
-              <span className="text-emerald-700 font-medium">{gap.swedishProfile}</span>.
+              <span className="text-blue-700 font-medium">{gap.swedishProfile}</span>.
             </p>
             <div className="space-y-2 pt-1">
               {gap.dimensions.slice(0, 5).map((d) => (
@@ -471,13 +489,14 @@ function DrilldownModal({
           </div>
         </details>
 
-        <p className="text-xs text-zinc-500 leading-relaxed pt-2 border-t border-zinc-100">
-          Sources: SHARE Wave 9 release 9.0.0 (fielded 2021–2022) for all
-          per-segment metrics; Istat 2024 for the national over-65 projection.
-          Confidence intervals: 2,000-iteration percentile bootstrap (seed = 42).
-        </p>
-      </div>
-    </div>
+          <p className="text-xs text-zinc-500 leading-relaxed pt-2 border-t border-zinc-100">
+            Sources: SHARE Wave 9 release 9.0.0 (fielded 2021–2022) for all
+            per-segment metrics; Istat 2024 for the national over-65 projection.
+            Confidence intervals: 2,000-iteration percentile bootstrap (seed = 42).
+          </p>
+        </div>
+      </aside>
+    </>
   );
 }
 
@@ -504,7 +523,7 @@ function HeadlineMetric({
     Math.abs(pct) < 5
       ? 'text-zinc-500'
       : pct > 0
-      ? 'text-emerald-700'
+      ? 'text-blue-700'
       : 'text-rose-600';
   const sign = delta >= 0 ? '+' : '−';
   const absDelta = Math.abs(delta);
@@ -531,7 +550,7 @@ function FingerprintRow({ f }: { f: HealthcareIndicator }) {
   const cohortDelta = f.cluster - f.national;
   const isImprovement =
     f.orientation === 'higher_is_engaged' ? cohortDelta >= 0 : cohortDelta <= 0;
-  const tone = isImprovement ? 'text-emerald-700' : 'text-rose-600';
+  const tone = isImprovement ? 'text-blue-700' : 'text-rose-600';
   const max = Math.max(f.cluster, f.national, 0.0001);
   return (
     <div className="grid grid-cols-12 gap-3 items-center">
@@ -539,7 +558,7 @@ function FingerprintRow({ f }: { f: HealthcareIndicator }) {
       <div className="col-span-5 space-y-1">
         <div className="relative h-2 bg-zinc-100 rounded-full overflow-hidden">
           <div
-            className="absolute inset-y-0 left-0 bg-emerald-600 rounded-full"
+            className="absolute inset-y-0 left-0 bg-blue-600 rounded-full"
             style={{ width: `${(f.cluster / max) * 100}%` }}
           />
         </div>
@@ -575,7 +594,7 @@ function GapRow({ d }: { d: WelfareGapDimension }) {
       : d.unit === 'score'
       ? `${v >= 0 ? '+' : ''}${v.toFixed(1)}`
       : `${v >= 0 ? '+' : ''}${v.toFixed(2)}`;
-  const tone = d.gap >= 0 ? 'text-emerald-700' : 'text-rose-600';
+  const tone = d.gap >= 0 ? 'text-blue-700' : 'text-rose-600';
   return (
     <div className="grid grid-cols-12 gap-3 items-baseline">
       <div className="col-span-5 text-sm text-zinc-700">{d.label}</div>

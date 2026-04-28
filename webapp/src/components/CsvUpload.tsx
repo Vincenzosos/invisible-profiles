@@ -51,7 +51,7 @@ type Props = {
 };
 
 const CONFIDENCE_COLORS: Record<ScoredRow['confidence'], string> = {
-  confident: 'bg-emerald-100 text-emerald-800',
+  confident: 'bg-blue-100 text-blue-800',
   borderline: 'bg-amber-100 text-amber-800',
   weak: 'bg-rose-100 text-rose-800',
 };
@@ -81,8 +81,8 @@ const COMMERCIAL_PROXIES: Record<string, string> = {
 };
 
 const SOURCE_TONE: Record<MappingSource, string> = {
-  synonym: 'text-emerald-700',
-  fuzzy: 'text-emerald-600',
+  synonym: 'text-blue-700',
+  fuzzy: 'text-blue-600',
   range: 'text-amber-700',
   manual: 'text-zinc-700',
   none: 'text-zinc-400',
@@ -499,7 +499,7 @@ function DropZone({ onFile }: { onFile: (f: File) => void }) {
       className={[
         'rounded-2xl border-2 border-dashed p-12 text-center transition-colors',
         dragActive
-          ? 'border-emerald-500 bg-emerald-50'
+          ? 'border-blue-500 bg-blue-50'
           : 'border-zinc-300 bg-white',
       ].join(' ')}
     >
@@ -610,7 +610,7 @@ function MappingCard({
   const coveragePct = (mappedCount / total) * 100;
   const coverageTone =
     mappedCount >= 7
-      ? 'text-emerald-700'
+      ? 'text-blue-700'
       : mappedCount >= 5
       ? 'text-amber-700'
       : 'text-rose-600';
@@ -642,7 +642,7 @@ function MappingCard({
             className={[
               'absolute inset-y-0 left-0 rounded-full',
               mappedCount >= 7
-                ? 'bg-emerald-600'
+                ? 'bg-blue-600'
                 : mappedCount >= 5
                 ? 'bg-amber-500'
                 : 'bg-rose-500',
@@ -675,7 +675,7 @@ function MappingCard({
             >
               <div className="sm:col-span-5">
                 <p className="text-sm font-medium text-slate-900">
-                  <span className="font-mono text-xs text-emerald-700 mr-2">
+                  <span className="font-mono text-xs text-blue-700 mr-2">
                     {kv.var}
                   </span>
                   {QUESTION_PROMPTS[kv.var] ?? kv.var}
@@ -811,7 +811,7 @@ function CohortAnalytics({
         <button
           type="button"
           onClick={onDownload}
-          className="rounded-xl bg-emerald-600 text-white px-5 py-2.5 hover:bg-emerald-700 transition-colors text-sm whitespace-nowrap"
+          className="rounded-xl bg-blue-600 text-white px-5 py-2.5 hover:bg-blue-700 transition-colors text-sm whitespace-nowrap"
         >
           Download scored CSV
         </button>
@@ -827,7 +827,7 @@ function CohortAnalytics({
             Math.abs(dPp) < 2
               ? 'text-zinc-500'
               : dPp > 0
-              ? 'text-emerald-700'
+              ? 'text-blue-700'
               : 'text-rose-600';
           const isSelected = selectedCluster === d.name;
           return (
@@ -838,20 +838,20 @@ function CohortAnalytics({
               className={[
                 'w-full grid grid-cols-12 gap-3 items-center text-left rounded-lg px-2 py-1.5 transition-colors',
                 isSelected
-                  ? 'bg-emerald-50 ring-1 ring-emerald-300'
+                  ? 'bg-blue-50 ring-1 ring-blue-300'
                   : 'hover:bg-zinc-50',
               ].join(' ')}
             >
               <div className="col-span-4 text-sm text-slate-900 truncate">
                 {isSelected && (
-                  <span className="text-emerald-700 mr-1">▸</span>
+                  <span className="text-blue-700 mr-1">▸</span>
                 )}
                 {d.name}
               </div>
               <div className="col-span-6 space-y-1">
                 <div className="relative h-2.5 bg-zinc-100 rounded-full overflow-hidden">
                   <div
-                    className="absolute inset-y-0 left-0 bg-emerald-600 rounded-full"
+                    className="absolute inset-y-0 left-0 bg-blue-600 rounded-full"
                     style={{ width: `${(cohortPct / max) * 100}%` }}
                   />
                 </div>
@@ -1021,7 +1021,7 @@ function RowsTable({
           <button
             type="button"
             onClick={onToggle}
-            className="text-xs text-emerald-700 hover:text-emerald-900"
+            className="text-xs text-blue-700 hover:text-blue-900"
           >
             {showAll ? 'Show first 10' : `Show all ${scored.length.toLocaleString()}`}
           </button>

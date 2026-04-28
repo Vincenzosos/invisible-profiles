@@ -165,9 +165,9 @@ export default function Methods({ onNavigate }: Props) {
         <button
           type="button"
           onClick={() => onNavigate('profiler')}
-          className="block w-full text-left rounded-2xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 hover:border-emerald-400 transition-colors p-8 group"
+          className="block w-full text-left rounded-2xl border border-blue-200 bg-blue-50 hover:bg-blue-100 hover:border-blue-400 transition-colors p-8 group"
         >
-          <p className="eyebrow text-emerald-700">Continue · 04</p>
+          <p className="eyebrow text-blue-700">Continue · 04</p>
           <p className="display-2 text-slate-900 mt-3">
             OK, now try the model.
           </p>
@@ -176,7 +176,7 @@ export default function Methods({ onNavigate }: Props) {
             of your cohort and get the full segmentation in one go: smart
             column mapping, per-row enrichment, cohort vs SHARE benchmark.
           </p>
-          <p className="mt-6 text-sm font-medium text-emerald-700 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
+          <p className="mt-6 text-sm font-medium text-blue-700 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
             Try the model →
           </p>
         </button>

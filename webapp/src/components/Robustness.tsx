@@ -50,7 +50,7 @@ export default function Robustness({ onNavigate }: Props) {
                   key={`${r.country}-${r.specification}`}
                   className={
                     r.specification.startsWith('5D')
-                      ? 'bg-emerald-50'
+                      ? 'bg-blue-50'
                       : i % 2 === 0
                         ? 'bg-white'
                         : 'bg-zinc-50/40'
@@ -163,9 +163,9 @@ export default function Robustness({ onNavigate }: Props) {
         <button
           type="button"
           onClick={() => onNavigate('profiler')}
-          className="block w-full text-left rounded-2xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 hover:border-emerald-400 transition-colors p-8 group"
+          className="block w-full text-left rounded-2xl border border-blue-200 bg-blue-50 hover:bg-blue-100 hover:border-blue-400 transition-colors p-8 group"
         >
-          <p className="eyebrow text-emerald-700">Continue · 04</p>
+          <p className="eyebrow text-blue-700">Continue · 04</p>
           <p className="display-2 text-slate-900 mt-3">
             OK, now try the model.
           </p>
@@ -173,7 +173,7 @@ export default function Robustness({ onNavigate }: Props) {
             Score yourself with ten plain-language questions, or upload a CSV
             of your cohort and get the full segmentation in one go.
           </p>
-          <p className="mt-6 text-sm font-medium text-emerald-700 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
+          <p className="mt-6 text-sm font-medium text-blue-700 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
             Try the model →
           </p>
         </button>
@@ -213,7 +213,7 @@ function ConvergenceTable({
                 <span
                   className={
                     r.convergence_pct >= 75
-                      ? 'text-emerald-700 font-medium'
+                      ? 'text-blue-700 font-medium'
                       : r.convergence_pct >= 60
                         ? 'text-zinc-800'
                         : 'text-zinc-500'

@@ -110,7 +110,7 @@ function ModePicker({
           <button
             type="button"
             onClick={() => onStart(mode, 'italy')}
-            className="rounded-2xl bg-white border border-zinc-200 px-6 py-8 text-left hover:border-emerald-400 transition-colors group"
+            className="rounded-2xl bg-white border border-zinc-200 px-6 py-8 text-left hover:border-blue-400 transition-colors group"
           >
             <p className="text-lg font-medium text-slate-900">
               Score against Italy
@@ -118,14 +118,14 @@ function ModePicker({
             <p className="text-xs text-zinc-500 mt-1">
               5 segments · 14.18M individuals
             </p>
-            <p className="text-sm text-emerald-700 mt-4 group-hover:translate-x-1 transition-transform">
+            <p className="text-sm text-blue-700 mt-4 group-hover:translate-x-1 transition-transform">
               Start &rarr;
             </p>
           </button>
           <button
             type="button"
             onClick={() => onStart(mode, 'sweden')}
-            className="rounded-2xl bg-white border border-zinc-200 px-6 py-8 text-left hover:border-emerald-400 transition-colors group"
+            className="rounded-2xl bg-white border border-zinc-200 px-6 py-8 text-left hover:border-blue-400 transition-colors group"
           >
             <p className="text-lg font-medium text-slate-900">
               Score against Sweden
@@ -133,7 +133,7 @@ function ModePicker({
             <p className="text-xs text-zinc-500 mt-1">
               6 segments · 2.05M individuals
             </p>
-            <p className="text-sm text-emerald-700 mt-4 group-hover:translate-x-1 transition-transform">
+            <p className="text-sm text-blue-700 mt-4 group-hover:translate-x-1 transition-transform">
               Start &rarr;
             </p>
           </button>
@@ -163,11 +163,11 @@ function ModeCard({
       className={[
         'text-left rounded-2xl p-6 transition-colors border',
         active
-          ? 'bg-emerald-50 border-emerald-300'
-          : 'bg-white border-zinc-200 hover:border-emerald-400',
+          ? 'bg-blue-50 border-blue-300'
+          : 'bg-white border-zinc-200 hover:border-blue-400',
       ].join(' ')}
     >
-      <p className={['eyebrow', active ? 'text-emerald-700' : ''].join(' ')}>
+      <p className={['eyebrow', active ? 'text-blue-700' : ''].join(' ')}>
         {eyebrow}
       </p>
       <p className="display-3 text-slate-900 mt-3">{title}</p>
