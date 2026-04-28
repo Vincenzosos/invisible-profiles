@@ -53,14 +53,14 @@ export default function Quiz({ country, keyVariables, onComplete, onBack }: Prop
           Question {idx + 1} of {total}
         </span>
       </div>
-      <div className="h-1 w-full bg-stone-200 rounded-full overflow-hidden">
+      <div className="h-1 w-full bg-zinc-200 rounded-full overflow-hidden">
         <div
-          className="h-full bg-amber-500 transition-all"
+          className="h-full bg-emerald-600 transition-all"
           style={{ width: `${((idx + 1) / total) * 100}%` }}
         />
       </div>
 
-      <article className="rounded-2xl bg-white border border-stone-200 p-8 space-y-6">
+      <article className="rounded-2xl bg-white border border-zinc-200 p-8 space-y-6">
         <p className="eyebrow">{q.dim} dimension</p>
         <h2 className="display-3 text-slate-900">{q.label}</h2>
 
@@ -78,7 +78,7 @@ export default function Quiz({ country, keyVariables, onComplete, onBack }: Prop
                   'rounded-xl px-6 py-4 border transition-colors',
                   answers[q.var] === opt.value
                     ? 'border-slate-900 bg-slate-900 text-white'
-                    : 'border-stone-300 bg-white text-slate-900 hover:border-slate-500',
+                    : 'border-zinc-300 bg-white text-slate-900 hover:border-slate-500',
                 ].join(' ')}
               >
                 {opt.label}
@@ -102,7 +102,7 @@ export default function Quiz({ country, keyVariables, onComplete, onBack }: Prop
                   })
                 : setAns(Number(e.target.value))
             }
-            className="w-full rounded-xl border border-stone-300 px-4 py-3 text-lg text-slate-900 focus:outline-none focus:border-amber-500"
+            className="w-full rounded-xl border border-zinc-300 px-4 py-3 text-lg text-slate-900 focus:outline-none focus:border-emerald-500"
             placeholder="0 – 50"
           />
         )}
@@ -116,9 +116,9 @@ export default function Quiz({ country, keyVariables, onComplete, onBack }: Prop
               step={1}
               value={answers[q.var] ?? Math.round((scale.min + scale.max) / 2)}
               onChange={(e) => setAns(Number(e.target.value))}
-              className="w-full accent-amber-500"
+              className="w-full accent-emerald-600"
             />
-            <div className="flex items-center justify-between text-sm text-stone-500">
+            <div className="flex items-center justify-between text-sm text-zinc-500">
               <span>{scale.min}</span>
               <span className="text-lg font-semibold text-slate-900 tabular-nums">
                 {answers[q.var] ?? '—'}
@@ -133,7 +133,7 @@ export default function Quiz({ country, keyVariables, onComplete, onBack }: Prop
         <button
           type="button"
           onClick={back}
-          className="rounded-xl border border-stone-300 px-5 py-2.5 text-stone-700 hover:bg-white hover:text-slate-900 transition-colors"
+          className="rounded-xl border border-zinc-300 px-5 py-2.5 text-zinc-700 hover:bg-white hover:text-slate-900 transition-colors"
         >
           {idx === 0 ? 'Cancel' : 'Back'}
         </button>

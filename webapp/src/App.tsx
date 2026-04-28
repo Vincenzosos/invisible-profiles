@@ -22,11 +22,9 @@ export default function App() {
         {view === 'profiler' && <ProfilerFlow />}
         {view === 'methods' && <Methods />}
       </main>
-      <footer className="border-t border-stone-200 mt-20 py-8">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 flex flex-wrap items-center justify-between gap-3 text-xs text-stone-500">
-          <span>
-            Italian Silver Atlas · MSc thesis, Bocconi EMIT
-          </span>
+      <footer className="border-t border-zinc-200 mt-20 py-8">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-500">
+          <span>Italian Silver Atlas · MSc thesis, Bocconi EMIT</span>
           <div className="flex items-center gap-4">
             <button
               type="button"

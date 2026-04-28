@@ -48,13 +48,13 @@ export default function Result({
       <header className="space-y-4">
         <p className="eyebrow">{country} · closest profile</p>
         <h1 className="display-1 text-slate-900">{best.name}</h1>
-        <p className="text-lg text-stone-700 leading-relaxed">{narrative}</p>
+        <p className="text-lg text-zinc-700 leading-relaxed">{narrative}</p>
       </header>
 
-      <article className="rounded-2xl bg-white border border-stone-200 p-7 space-y-5">
+      <article className="rounded-2xl bg-white border border-zinc-200 p-7 space-y-5">
         <header>
           <p className="eyebrow">Membership distribution</p>
-          <p className="text-sm text-stone-600 leading-relaxed mt-2 max-w-2xl">
+          <p className="text-sm text-zinc-600 leading-relaxed mt-2 max-w-2xl">
             Soft assignment over all profiles &mdash; the output an operator
             consumes for propensity scoring.
           </p>
@@ -70,21 +70,21 @@ export default function Result({
                   'col-span-5 text-sm truncate',
                   i === 0
                     ? 'font-semibold text-slate-900'
-                    : 'text-stone-600',
+                    : 'text-zinc-600',
                 ].join(' ')}
               >
                 {m.name}
               </div>
-              <div className="col-span-6 relative h-3 bg-stone-100 rounded-full overflow-hidden">
+              <div className="col-span-6 relative h-3 bg-zinc-100 rounded-full overflow-hidden">
                 <div
                   className={[
                     'absolute inset-y-0 left-0 rounded-full',
-                    i === 0 ? 'bg-amber-500' : 'bg-stone-400',
+                    i === 0 ? 'bg-emerald-600' : 'bg-zinc-400',
                   ].join(' ')}
                   style={{ width: `${(m.probability * 100).toFixed(1)}%` }}
                 />
               </div>
-              <div className="col-span-1 text-right text-xs tabular-nums text-stone-700 font-medium">
+              <div className="col-span-1 text-right text-xs tabular-nums text-zinc-700 font-medium">
                 {(m.probability * 100).toFixed(0)}%
               </div>
             </div>
@@ -92,7 +92,7 @@ export default function Result({
         </div>
       </article>
 
-      <article className="rounded-2xl bg-white border border-stone-200 p-7 space-y-5">
+      <article className="rounded-2xl bg-white border border-zinc-200 p-7 space-y-5">
         <p className="eyebrow">Your z-scores · 10 quiz dimensions</p>
         <div className="space-y-2.5">
           {keyVars.map((kv) => {
@@ -106,24 +106,24 @@ export default function Result({
                 className="grid grid-cols-12 gap-3 items-center"
               >
                 <div
-                  className="col-span-3 text-sm text-stone-700 truncate"
+                  className="col-span-3 text-sm text-zinc-700 truncate"
                   title={kv.label}
                 >
                   {kv.var}
                 </div>
-                <div className="col-span-8 relative h-4 bg-stone-100 rounded">
-                  <div className="absolute inset-y-0 left-1/2 w-px bg-stone-300" />
+                <div className="col-span-8 relative h-4 bg-zinc-100 rounded">
+                  <div className="absolute inset-y-0 left-1/2 w-px bg-zinc-300" />
                   <div
                     className={[
                       'absolute inset-y-0 rounded',
                       isPos
-                        ? 'bg-emerald-500 left-1/2'
-                        : 'bg-amber-500 right-1/2',
+                        ? 'bg-emerald-600 left-1/2'
+                        : 'bg-rose-500 right-1/2',
                     ].join(' ')}
                     style={{ width: `${pct}%` }}
                   />
                 </div>
-                <div className="col-span-1 text-right text-xs tabular-nums text-stone-600">
+                <div className="col-span-1 text-right text-xs tabular-nums text-zinc-600">
                   {z >= 0 ? '+' : ''}
                   {z.toFixed(1)}
                 </div>
@@ -131,7 +131,7 @@ export default function Result({
             );
           })}
         </div>
-        <p className="text-xs text-stone-500 leading-relaxed">
+        <p className="text-xs text-zinc-500 leading-relaxed">
           Standardised against the country mean. Display capped at ±{Z_CAP}.
         </p>
       </article>
@@ -144,7 +144,7 @@ export default function Result({
             <span className="text-emerald-700">{twinName}</span>.
           </p>
           {twinNarrative && (
-            <p className="text-sm text-stone-700 leading-relaxed">
+            <p className="text-sm text-zinc-700 leading-relaxed">
               {twinNarrative}
             </p>
           )}
@@ -152,21 +152,21 @@ export default function Result({
       )}
 
       {businessSignal && (
-        <article className="rounded-2xl bg-white border border-stone-200 p-7 space-y-3">
+        <article className="rounded-2xl bg-white border border-zinc-200 p-7 space-y-3">
           <p className="eyebrow">Business signal</p>
           <p className="display-3 text-slate-900">{businessSignal.headline}</p>
-          <p className="text-sm text-stone-700 leading-relaxed">
+          <p className="text-sm text-zinc-700 leading-relaxed">
             {businessSignal.detail}
           </p>
         </article>
       )}
 
       <details
-        className="rounded-2xl bg-white border border-stone-200 p-6"
+        className="rounded-2xl bg-white border border-zinc-200 p-6"
         open={showAll}
       >
         <summary
-          className="cursor-pointer text-sm font-medium text-stone-700 select-none"
+          className="cursor-pointer text-sm font-medium text-zinc-700 select-none"
           onClick={(e) => {
             e.preventDefault();
             setShowAll((v) => !v);
@@ -181,14 +181,14 @@ export default function Result({
               className={[
                 'flex items-center justify-between rounded-lg px-3 py-2',
                 i === 0
-                  ? 'bg-amber-50 font-medium text-slate-900'
-                  : 'text-stone-700',
+                  ? 'bg-emerald-50 font-medium text-slate-900'
+                  : 'text-zinc-700',
               ].join(' ')}
             >
               <span>
                 {i + 1}. {m.name}
               </span>
-              <span className="text-xs tabular-nums text-stone-500">
+              <span className="text-xs tabular-nums text-zinc-500">
                 d = {m.distance.toFixed(2)}
               </span>
             </li>
@@ -200,7 +200,7 @@ export default function Result({
         <button
           type="button"
           onClick={onRestart}
-          className="rounded-xl border border-stone-300 px-5 py-2.5 text-stone-700 hover:bg-white hover:text-slate-900 transition-colors"
+          className="rounded-xl border border-zinc-300 px-5 py-2.5 text-zinc-700 hover:bg-white hover:text-slate-900 transition-colors"
         >
           Start over
         </button>

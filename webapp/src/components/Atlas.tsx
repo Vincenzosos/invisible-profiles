@@ -24,39 +24,32 @@ export default function Atlas() {
   const [openProfile, setOpenProfile] = useState<string | null>(null);
   const profiles = killer.italy_profiles;
 
-  // Sort by aggregate income desc, hero profiles always first
   const sorted = [...profiles].sort((a, b) => {
     const aHero = HERO_PROFILES.has(a.profile) ? 1 : 0;
     const bHero = HERO_PROFILES.has(b.profile) ? 1 : 0;
     if (aHero !== bHero) return bHero - aHero;
-    return (b.aggregate_annual_income_eur_billions ?? 0) -
-           (a.aggregate_annual_income_eur_billions ?? 0);
+    return b.market_size_individuals - a.market_size_individuals;
   });
 
   const heroes = sorted.filter((p) => HERO_PROFILES.has(p.profile));
   const supporting = sorted.filter((p) => !HERO_PROFILES.has(p.profile));
 
-  const totalAggIncome = profiles.reduce(
-    (acc, p) => acc + (p.aggregate_annual_income_eur_billions ?? 0),
-    0,
-  );
-  const totalAggWealth = profiles.reduce(
-    (acc, p) => acc + (p.aggregate_networth_eur_billions ?? 0),
-    0,
-  );
-
   return (
     <section className="space-y-16">
       <header className="space-y-6 max-w-4xl">
         <p className="eyebrow">Atlas · Italy</p>
-        <h1 className="display-1 text-slate-900">Five segments. Each one a market.</h1>
-        <p className="text-lg text-stone-700 leading-relaxed max-w-3xl">
-          The Italian over-65 population partitions into five behaviourally and
-          economically distinct profiles. Two of them &mdash; Connected Active
-          and Moderate Isolated &mdash; together hold{' '}
-          {formatEUR((heroes[0]?.aggregate_networth_eur_billions ?? 0) * 1e9 +
-            (heroes[1]?.aggregate_networth_eur_billions ?? 0) * 1e9)}{' '}
-          of household wealth. Click any segment for the full profile.
+        <h1 className="display-1 text-slate-900">
+          Five segments. Each one a market.
+        </h1>
+        <p className="text-lg text-zinc-700 leading-relaxed max-w-3xl">
+          K-means clustering with k=5 on 29 standardised SHARE Wave 9
+          indicators (n = {killer.country_aggregates.italy.n_sample}). Profile
+          shares projected to{' '}
+          {formatIndividuals(
+            killer.country_aggregates.italy.national_over65_individuals,
+          )}{' '}
+          Italian over-65 individuals (Istat 2024). Click any segment for the
+          full profile drilldown.
         </p>
       </header>
 
@@ -84,20 +77,14 @@ export default function Atlas() {
         </div>
       </section>
 
-      <section className="rounded-2xl bg-white border border-stone-200 p-8">
-        <p className="eyebrow">Italy 65+ · totals</p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-4">
-          <Total
-            label="Individuals"
-            value={formatIndividuals(italy_total_individuals(profiles))}
-          />
-          <Total label="Annual income flow" value={`€${totalAggIncome.toFixed(1)}B`} />
-          <Total
-            label="Household net wealth"
-            value={`€${(totalAggWealth / 1000).toFixed(2)}T`}
-          />
-        </div>
-      </section>
+      <p className="text-xs text-zinc-500 max-w-3xl leading-relaxed">
+        Per-segment medians and means are SHARE-derived with 2,000-iteration
+        bootstrap 95% CI (seed = 42). Income and net-worth figures are
+        per-household, not per-individual: SHARE samples one financial
+        respondent per household. National projections use Istat 2024 over-65
+        total. See <span className="font-medium text-zinc-700">Methods &amp; data</span>{' '}
+        for variable definitions and the full source bibliography.
+      </p>
 
       {openProfile && (
         <DrilldownModal
@@ -107,10 +94,6 @@ export default function Atlas() {
       )}
     </section>
   );
-}
-
-function italy_total_individuals(profiles: Profile[]): number {
-  return profiles.reduce((acc, p) => acc + p.market_size_individuals, 0);
 }
 
 function ProfileCard({
@@ -126,14 +109,15 @@ function ProfileCard({
   return (
     <article
       className={[
-        'rounded-2xl bg-white border p-6 space-y-5 hover:border-amber-400 transition-colors cursor-pointer group',
-        hero ? 'border-stone-300' : 'border-stone-200',
+        'rounded-2xl bg-white border p-6 space-y-5 hover:border-emerald-400 transition-colors cursor-pointer group',
+        hero ? 'border-zinc-300' : 'border-zinc-200',
       ].join(' ')}
       onClick={onOpen}
     >
       <header className="space-y-2">
         <p className="eyebrow">
-          {formatPct(p.share_of_country_pct)} · {formatIndividuals(p.market_size_individuals)} individuals
+          {formatPct(p.share_of_country_pct)} ·{' '}
+          {formatIndividuals(p.market_size_individuals)} individuals
         </p>
         <h2
           className={[
@@ -147,34 +131,28 @@ function ProfileCard({
 
       <div className={hero ? 'grid grid-cols-2 gap-5' : 'grid grid-cols-2 gap-3'}>
         <Metric
-          label="Income / yr"
-          value={`€${(p.aggregate_annual_income_eur_billions ?? 0).toFixed(1)}B`}
-          big={hero}
-        />
-        <Metric
-          label="Net wealth"
-          value={`€${(p.aggregate_networth_eur_billions ?? 0).toFixed(0)}B`}
-          big={hero}
-        />
-        <Metric
-          label="Median income"
+          label="Median income (household)"
           value={formatEUR(p.median_income_eur, { abbreviated: false })}
+          big={hero}
         />
         <Metric
-          label="Median net worth"
+          label="Median net worth (household)"
           value={formatEUR(p.median_networth_eur, { abbreviated: false })}
+          big={hero}
         />
         <Metric label="Internet 7d" value={formatPct(p.internet_pct)} />
+        <Metric label="Home owners" value={formatPct(p.homeownership_pct)} />
         <Metric label="Dentist 12m" value={formatPct(p.dentist_12m_pct)} />
+        <Metric label="CASP-12 mean" value={formatNum(p.casp_mean, 1)} />
       </div>
 
       {signal && (
-        <p className="text-sm text-stone-700 leading-relaxed border-t border-stone-100 pt-4">
+        <p className="text-sm text-zinc-700 leading-relaxed border-t border-zinc-100 pt-4">
           <span className="font-medium text-slate-900">{signal.headline}</span>
         </p>
       )}
 
-      <p className="text-xs text-amber-700 group-hover:translate-x-1 transition-transform">
+      <p className="text-xs text-emerald-700 group-hover:translate-x-1 transition-transform">
         Full profile &rarr;
       </p>
     </article>
@@ -205,15 +183,6 @@ function Metric({
   );
 }
 
-function Total({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <p className="eyebrow">{label}</p>
-      <p className="metric-hero text-slate-900 mt-2">{value}</p>
-    </div>
-  );
-}
-
 function DrilldownModal({
   profile: p,
   onClose,
@@ -235,14 +204,15 @@ function DrilldownModal({
         <header className="flex items-start justify-between gap-4">
           <div className="space-y-2">
             <p className="eyebrow">
-              {formatPct(p.share_of_country_pct)} · {formatIndividuals(p.market_size_individuals)} individuals
+              {formatPct(p.share_of_country_pct)} ·{' '}
+              {formatIndividuals(p.market_size_individuals)} individuals · sample n = {p.n_sample}
             </p>
             <h2 className="display-2 text-slate-900">{p.profile}</h2>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="text-stone-400 hover:text-slate-900 text-2xl leading-none -mt-1"
+            className="text-zinc-400 hover:text-slate-900 text-2xl leading-none -mt-1"
             aria-label="Close"
           >
             ×
@@ -250,30 +220,13 @@ function DrilldownModal({
         </header>
 
         {signal && (
-          <div className="rounded-xl bg-amber-50 border border-amber-200 p-5">
-            <p className="font-medium text-slate-900 mb-2">
-              {signal.headline}
-            </p>
-            <p className="text-sm text-stone-700 leading-relaxed">{signal.detail}</p>
+          <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-5">
+            <p className="font-medium text-slate-900 mb-2">{signal.headline}</p>
+            <p className="text-sm text-zinc-700 leading-relaxed">{signal.detail}</p>
           </div>
         )}
 
-        <Section label="Market size">
-          <DetailRow
-            label="Individuals (national projection)"
-            value={`${formatIndividuals(p.market_size_individuals)} (${p.market_size_thousands.toFixed(0)}K)`}
-          />
-          <DetailRow
-            label="Aggregate annual income"
-            value={`€${p.aggregate_annual_income_eur_billions}B`}
-          />
-          <DetailRow
-            label="Aggregate household net wealth"
-            value={`€${p.aggregate_networth_eur_billions.toFixed(1)}B`}
-          />
-        </Section>
-
-        <Section label="Economic snapshot">
+        <Section label="Economic snapshot (per household)">
           <DetailRow
             label="Median household income"
             value={formatEUR(p.median_income_eur, { abbreviated: false })}
@@ -364,6 +317,12 @@ function DrilldownModal({
           <DetailRow label="Mean age" value={`${p.mean_age_years} years`} />
           <DetailRow label="Female share" value={formatPct(p.share_female)} />
         </Section>
+
+        <p className="text-xs text-zinc-500 leading-relaxed pt-2 border-t border-zinc-100">
+          Sources: SHARE Wave 9 release 9.0.0 (fielded 2021–2022) for all
+          per-segment metrics; Istat 2024 for the national over-65 projection.
+          Confidence intervals: 2,000-iteration percentile bootstrap (seed = 42).
+        </p>
       </div>
     </div>
   );
@@ -379,7 +338,7 @@ function Section({
   return (
     <section className="space-y-3">
       <p className="eyebrow">{label}</p>
-      <div className="border-t border-stone-200 divide-y divide-stone-100">
+      <div className="border-t border-zinc-200 divide-y divide-zinc-100">
         {children}
       </div>
     </section>
@@ -397,11 +356,11 @@ function DetailRow({
 }) {
   return (
     <div className="flex items-baseline justify-between py-2.5 gap-4">
-      <span className="text-sm text-stone-700">{label}</span>
+      <span className="text-sm text-zinc-700">{label}</span>
       <span className="text-sm font-medium text-slate-900 text-right tabular-nums">
         {value}
         {ci && (
-          <span className="block text-xs text-stone-400 font-normal">
+          <span className="block text-xs text-zinc-400 font-normal">
             CI 95%: {ci}
           </span>
         )}
