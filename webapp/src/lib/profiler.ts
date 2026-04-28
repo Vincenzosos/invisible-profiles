@@ -64,7 +64,12 @@ function buildUserVec(
   country: Country,
   answers: Record<string, number>,
   data: CentroidsJson,
-): { userVec: number[]; varOrder: string[]; zScores: Record<string, number> } {
+): {
+  userVec: number[];
+  varOrder: string[];
+  zScores: Record<string, number>;
+  activeIdx: number[]; // indices in varOrder where answer is provided
+} {
   const subset = country === 'italy' ? data.italy_subset : data.sweden_subset;
   const full = country === 'italy' ? data.italy_full : data.sweden_full;
 
@@ -75,17 +80,19 @@ function buildUserVec(
 
   const varOrder = subset.profiles[0].vars;
   const zScores: Record<string, number> = {};
-  for (const v of varOrder) {
+  const activeIdx: number[] = [];
+  varOrder.forEach((v, i) => {
     const s = stats.get(v);
     const ans = answers[v];
     if (!s || ans === undefined) {
       zScores[v] = 0;
     } else {
       zScores[v] = standardize(ans, s.mean, s.sd);
+      activeIdx.push(i);
     }
-  }
+  });
   const userVec = varOrder.map((v) => zScores[v]);
-  return { userVec, varOrder, zScores };
+  return { userVec, varOrder, zScores, activeIdx };
 }
 
 export function matchProfile(
@@ -94,12 +101,24 @@ export function matchProfile(
   data: CentroidsJson,
 ): MatchResult {
   const subset = country === 'italy' ? data.italy_subset : data.sweden_subset;
-  const { userVec, zScores } = buildUserVec(country, answers, data);
+  const { userVec, varOrder, zScores, activeIdx } = buildUserVec(
+    country,
+    answers,
+    data,
+  );
+
+  // If the user provided fewer than the full 10 variables, score on the
+  // subspace of provided dimensions only. Otherwise use the full
+  // Euclidean distance over all 10 (equivalent to subspace with all
+  // indices active).
+  const useSubspace = activeIdx.length > 0 && activeIdx.length < varOrder.length;
+  const dist = (a: number[], b: number[]) =>
+    useSubspace ? subspaceDistance(a, b, activeIdx) : euclidean(a, b);
 
   const ranking: ProfileMatch[] = subset.profiles
     .map((p) => ({
       name: p.name,
-      distance: euclidean(userVec, p.center),
+      distance: dist(userVec, p.center),
       zScores,
     }))
     .sort((a, b) => a.distance - b.distance);
@@ -120,10 +139,15 @@ export function matchProfile(
   const otherSubset =
     otherCountry === 'italy' ? data.italy_subset : data.sweden_subset;
   // Re-standardise the user against the OTHER country's marginal distributions
-  const { userVec: userVecOther } = buildUserVec(otherCountry, answers, data);
+  const otherBuilt = buildUserVec(otherCountry, answers, data);
+  const otherDist = (a: number[], b: number[]) =>
+    otherBuilt.activeIdx.length > 0 &&
+    otherBuilt.activeIdx.length < otherBuilt.varOrder.length
+      ? subspaceDistance(a, b, otherBuilt.activeIdx)
+      : euclidean(a, b);
   const twinScores = otherSubset.profiles.map((p) => ({
     name: p.name,
-    distance: euclidean(userVecOther, p.center),
+    distance: otherDist(otherBuilt.userVec, p.center),
   }));
   twinScores.sort((a, b) => a.distance - b.distance);
   const twin = twinScores[0] ?? null;
@@ -135,4 +159,16 @@ export function matchProfile(
     twinName: twin ? twin.name : null,
     twinDistance: twin ? twin.distance : null,
   };
+}
+
+// Re-export the subspace helper inline for matchProfile (kept private
+// before — promote here).
+function subspaceDistance(a: number[], b: number[], activeIdx: number[]): number {
+  if (activeIdx.length === 0) return 0;
+  let s = 0;
+  for (const i of activeIdx) {
+    const d = a[i] - b[i];
+    s += d * d;
+  }
+  return Math.sqrt(s);
 }

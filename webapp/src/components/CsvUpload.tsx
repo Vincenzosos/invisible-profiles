@@ -64,6 +64,22 @@ const SOURCE_LABEL: Record<MappingSource, string> = {
   none: '—',
 };
 
+// Examples of fields a typical company DB would carry that can act as
+// a proxy for each profiler variable. Surfaced under the mapping row to
+// help analysts understand "what of mine matches this".
+const COMMERCIAL_PROXIES: Record<string, string> = {
+  sphus:        'Customer-stated health, claim frequency, chronic-condition flag',
+  eurod:        'Wellbeing or mental-health survey score, customer-effort score',
+  iadl:         'Caregiver-flag, assistance-product subscriptions, frequent service contacts',
+  fdistress:    'Late-payment count, debt-to-income, declined-card events, credit score',
+  internet:     'App login frequency, web sessions, email opens (any digital touchpoint = 1)',
+  sn_size_w9:   'Referrals issued, household size on policy, joint-account members',
+  fluency:      'Rare in commercial DBs — leave unmapped if you do not have a verbal-fluency proxy',
+  casp:         'NPS score, life-satisfaction survey, brand-affinity index',
+  loneliness:   'Engagement frequency (low = candidate for lonelier), days-since-last-contact',
+  hope_future:  'Renewal intention, churn-risk inverse, multi-year product subscription',
+};
+
 const SOURCE_TONE: Record<MappingSource, string> = {
   synonym: 'text-emerald-700',
   fuzzy: 'text-emerald-600',
@@ -87,8 +103,9 @@ export default function CsvUpload({ country, onBack }: Props) {
   const [showAllRows, setShowAllRows] = useState(false);
   const [selectedCluster, setSelectedCluster] = useState<string | null>(null);
 
-  const allMapped = VAR_LIST.every((v) => mapping[v.var]);
-  const canScore = parsed && allMapped && parsed.rows.length > 0;
+  const mappedCount = VAR_LIST.filter((v) => mapping[v.var]).length;
+  const MIN_MAPPED = 3;
+  const canScore = parsed && mappedCount >= MIN_MAPPED && parsed.rows.length > 0;
 
   const handleFile = (file: File) => {
     setError(null);
@@ -141,8 +158,12 @@ export default function CsvUpload({ country, onBack }: Props) {
     for (const inputRow of parsed.rows) {
       const coerced: Record<string, number> = {};
       const validation: { var: string; reason: string; detail: string }[] = [];
+      // Iterate only over MAPPED variables. Unmapped variables stay
+      // out of the answers Record entirely; matchProfile then computes
+      // distance on the subspace of available dimensions.
       for (const v of VAR_LIST) {
         const col = mapping[v.var];
+        if (!col) continue; // unmapped — not a validation issue
         const raw = inputRow[col];
         const c = coerceValue(raw, v);
         if (c.ok) {
@@ -174,11 +195,15 @@ export default function CsvUpload({ country, onBack }: Props) {
     // Second pass: build scored rows; honour missing-data strategy
     const scoredRows: Omit<ScoredRow, 'distance_percentile'>[] = [];
     for (const r of rows) {
-      // If skip strategy AND we have validation issues, skip this row
+      // If skip strategy AND we have validation issues on mapped vars,
+      // skip this row. Unmapped vars never count as validation issues.
       if (missingStrategy === 'skip' && r.validation.length > 0) continue;
       const answers: Record<string, number> = { ...r.coerced };
-      // Impute missing
+      // Impute missing only for MAPPED vars where the row had a parsing
+      // failure. Unmapped vars stay out of answers — matchProfile uses
+      // subspace distance on the provided dimensions.
       for (const v of VAR_LIST) {
+        if (!mapping[v.var]) continue; // skip unmapped
         if (!(v.var in answers)) {
           answers[v.var] = imputeMap.get(v.var) ?? 0;
         }
@@ -347,13 +372,22 @@ export default function CsvUpload({ country, onBack }: Props) {
             parsed={parsed}
             mapping={mapping}
             suggestions={suggestions}
-            onChange={(v, h) =>
-              setMapping((prev) => ({ ...prev, [v]: h }))
-            }
+            onChange={(v, h) => {
+              if (h === '') {
+                setMapping((prev) => {
+                  const { [v]: _drop, ...rest } = prev;
+                  return rest;
+                });
+              } else {
+                setMapping((prev) => ({ ...prev, [v]: h }));
+              }
+            }}
             missingStrategy={missingStrategy}
             onChangeMissing={setMissingStrategy}
             onScore={onScore}
             canScore={!!canScore}
+            mappedCount={mappedCount}
+            minMapped={MIN_MAPPED}
             onReset={() => {
               setParsed(null);
               setMapping({});
@@ -557,6 +591,8 @@ function MappingCard({
   onScore,
   canScore,
   onReset,
+  mappedCount,
+  minMapped,
 }: {
   parsed: { headers: string[]; rows: Record<string, string>[] };
   mapping: Record<string, string>;
@@ -567,7 +603,17 @@ function MappingCard({
   onScore: () => void;
   canScore: boolean;
   onReset: () => void;
+  mappedCount: number;
+  minMapped: number;
 }) {
+  const total = VAR_LIST.length;
+  const coveragePct = (mappedCount / total) * 100;
+  const coverageTone =
+    mappedCount >= 7
+      ? 'text-emerald-700'
+      : mappedCount >= 5
+      ? 'text-amber-700'
+      : 'text-rose-600';
   return (
     <article className="rounded-2xl bg-white border border-zinc-200 p-6 space-y-5">
       <div>
@@ -575,8 +621,47 @@ function MappingCard({
         <p className="text-sm text-zinc-600 mt-2 max-w-2xl">
           Mappings auto-detected by name match, fuzzy similarity, or value
           range. Override any guess — confidence is shown beside each
-          suggestion.
+          suggestion. A typical company DB rarely has all ten — leave
+          unmapped what you don't have, scoring will use the subspace of
+          available dimensions.
         </p>
+      </div>
+
+      <div className="rounded-xl bg-zinc-50 border border-zinc-200 p-4 space-y-2">
+        <div className="flex items-baseline justify-between">
+          <p className="text-sm font-medium text-slate-900">
+            Data coverage:{' '}
+            <span className={`tabular-nums ${coverageTone}`}>
+              {mappedCount} of {total} variables mapped
+            </span>
+          </p>
+          <span className="text-xs text-zinc-500">min {minMapped} required</span>
+        </div>
+        <div className="relative h-2 bg-white rounded-full overflow-hidden border border-zinc-200">
+          <div
+            className={[
+              'absolute inset-y-0 left-0 rounded-full',
+              mappedCount >= 7
+                ? 'bg-emerald-600'
+                : mappedCount >= 5
+                ? 'bg-amber-500'
+                : 'bg-rose-500',
+            ].join(' ')}
+            style={{ width: `${coveragePct.toFixed(1)}%` }}
+          />
+        </div>
+        {mappedCount < 5 && mappedCount >= minMapped && (
+          <p className="text-xs text-amber-700">
+            Below 5 mapped variables: discrimination quality drops. Borderline
+            and weak rows will dominate the output. Provide more variables
+            for sharper assignment.
+          </p>
+        )}
+        {mappedCount < minMapped && (
+          <p className="text-xs text-rose-700">
+            Map at least {minMapped} variables to enable scoring.
+          </p>
+        )}
       </div>
       <div className="space-y-3">
         {VAR_LIST.map((kv) => {
@@ -618,6 +703,11 @@ function MappingCard({
                     {sug.source !== 'none' &&
                       sug.source !== 'manual' &&
                       ` · ${sug.reason}`}
+                  </p>
+                )}
+                {COMMERCIAL_PROXIES[kv.var] && (
+                  <p className="text-[11px] text-zinc-500 italic leading-relaxed">
+                    Typical company-DB proxy: {COMMERCIAL_PROXIES[kv.var]}
                   </p>
                 )}
               </div>

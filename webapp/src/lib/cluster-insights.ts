@@ -62,10 +62,14 @@ export function clusterTraits(
   });
 
   const sorted = [...traits].sort((a, b) => b.signedScore - a.signedScore);
-  const strengths = sorted.filter((t) => t.signedScore > 0.25).slice(0, 3);
+  // Filter by sign so we never call a positive deviation a "pressure
+  // point" or vice versa. No hard magnitude threshold — the most
+  // informative items in each direction surface even when the cluster
+  // hovers close to the country mean.
+  const strengths = sorted.filter((t) => t.signedScore > 0).slice(0, 3);
   const pressurePoints = sorted
-    .filter((t) => t.signedScore < -0.25)
-    .reverse()
+    .filter((t) => t.signedScore < 0)
+    .reverse() // most negative first
     .slice(0, 3);
   return { strengths, pressurePoints };
 }

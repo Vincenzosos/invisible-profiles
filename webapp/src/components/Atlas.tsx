@@ -506,12 +506,14 @@ function HeadlineMetric({
       : pct > 0
       ? 'text-emerald-700'
       : 'text-rose-600';
+  const sign = delta >= 0 ? '+' : '−';
+  const absDelta = Math.abs(delta);
   const fmtDelta =
     format === 'pct'
-      ? `${delta >= 0 ? '+' : ''}${(delta * 100).toFixed(0)}pp`
+      ? `${sign}${(absDelta * 100).toFixed(0)}pp`
       : format === 'eur'
-      ? `${delta >= 0 ? '+' : ''}${formatEUR(Math.abs(delta), { abbreviated: true })}${delta < 0 ? '' : ''}`.replace('+€', '+€').replace('−€', '−€')
-      : `${delta >= 0 ? '+' : ''}${delta.toFixed(1)}`;
+      ? `${sign}${formatEUR(absDelta, { abbreviated: true })}`
+      : `${sign}${absDelta.toFixed(1)}`;
   return (
     <div className="rounded-2xl bg-white border border-zinc-200 p-4 space-y-1">
       <p className="eyebrow">{label}</p>
