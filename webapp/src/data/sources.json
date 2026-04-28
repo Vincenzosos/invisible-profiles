@@ -1,0 +1,144 @@
+{
+  "metadata": {
+    "compiled": "2026-04-28",
+    "purpose": "Bibliographic sources for the Italian Silver Atlas. Each opportunity-sizing assumption used in Benchmark and Opportunity Explorer cites at least one of these sources."
+  },
+  "sources": [
+    {
+      "id": "share_w9",
+      "kind": "primary_data",
+      "publisher": "MEA, Max Planck Institute for Social Law and Social Policy",
+      "title": "Survey of Health, Ageing and Retirement in Europe (SHARE), Wave 9, release 9.0.0",
+      "year": 2024,
+      "fielded": "2021-2022",
+      "url": "https://share-eric.eu/data/data-set-details/share-wave-9",
+      "informs": "All segmentation variables, profile centroids, behavioural and economic indicators."
+    },
+    {
+      "id": "istat_2024",
+      "kind": "national_statistics",
+      "publisher": "Istat — Istituto Nazionale di Statistica",
+      "title": "Demographic data: resident population by age, 2024",
+      "year": 2024,
+      "url": "https://www.istat.it/",
+      "informs": "Italian over-65 national projection (14,180,000 individuals)."
+    },
+    {
+      "id": "scb_2024",
+      "kind": "national_statistics",
+      "publisher": "SCB — Statistics Sweden",
+      "title": "Population by age, 2024",
+      "year": 2024,
+      "url": "https://www.scb.se/",
+      "informs": "Swedish over-65 national projection (2,055,000 individuals)."
+    },
+    {
+      "id": "gimbe_2025",
+      "kind": "industry_report",
+      "publisher": "Fondazione GIMBE",
+      "title": "Report Osservatorio GIMBE 2.2025: La spesa sanitaria privata in Italia nel 2023",
+      "year": 2025,
+      "url": "https://salviamo-ssn.it/var/contenuti/Report_Osservatorio_GIMBE_2025.02_Spesa_sanitaria_privata_2023.pdf",
+      "informs": "Total Italian out-of-pocket health spending (€40.6B 2023); per-capita OOP €730/year; intermediated insurance €5.2B; share of cure assistance (incl dental) at 44.6%."
+    },
+    {
+      "id": "ania_supplementary_2024",
+      "kind": "industry_report",
+      "publisher": "Ufficio Studi Itinerari Previdenziali / ANIA",
+      "title": "Sanità integrativa in Italia, raccolta premi 2024",
+      "year": 2024,
+      "url": "https://www.itinerariprevidenziali.it/il-punto/spesa-sanitaria-invecchiamento-vincoli-bilancio/",
+      "informs": "Italian supplementary health insurance market: €6.8B in 2024, +8.4% YoY, 25%+ population coverage. Average family premium €1,300-2,000/year."
+    },
+    {
+      "id": "andi_2024",
+      "kind": "industry_report",
+      "publisher": "ANDI — Associazione Nazionale Dentisti Italiani",
+      "title": "Analisi congiunturale della professione odontoiatrica 2024 (riferito al 2023)",
+      "year": 2024,
+      "url": "https://andi.it/inversione-di-tendenza-per-la-professione-odontoiatrica-dai-dati-dellanalisi-congiunturale-andi-2024/",
+      "informs": "Italian dental private spending €8.5B in 2023; ~30% of total OOP healthcare; price growth +2.5% YoY."
+    },
+    {
+      "id": "private_dental_premiums",
+      "kind": "market_review",
+      "publisher": "Aggregator: Poste Assicura, UniSalute, Groupama, Intesa Sanpaolo, BPER (XME, dr-Smile, Sorriso products)",
+      "title": "Italian individual private dental insurance product pages, 2024-2025",
+      "year": 2025,
+      "url": "https://posteassicura.poste.it/poste-vivere-protetti/protezione-persona/cure-dentarie",
+      "informs": "Senior individual dental insurance premiums: €150-1,000/year; monthly typical €20-40; basic prevention from €100/year; comprehensive €400-800/year."
+    },
+    {
+      "id": "private_specialist_2024",
+      "kind": "market_review",
+      "publisher": "Censis / business reviewers (BusinessOnLine, Salute Privata, Cup Solidale)",
+      "title": "Tariffe medie visite specialistiche private 2024",
+      "year": 2024,
+      "url": "https://www.businessonline.it/news/quanto-costano-le-visite-specialistiche-fatte-privatamente-i-prezzi-medi-2024-e-le-tariffe-piu-alte-e-basse-per-tipologia_n75497.html",
+      "informs": "Private specialist visit fees in Italy: cardiology €100-200, ophthalmology €80-150, orthopaedics €100-200; tests add €50-150."
+    },
+    {
+      "id": "rsa_costs_2024",
+      "kind": "market_review",
+      "publisher": "Aggregators: Quotalo, Sespera, Pensionati CISL Lombardia, Trend-online",
+      "title": "Costi medi RSA e cohousing senior in Italia 2024-2026",
+      "year": 2024,
+      "url": "https://www.quotalo.it/guide/le-case-di-riposo-meno-care",
+      "informs": "RSA monthly cost average €1,700; range €1,300-2,500; cohousing €1,800-3,000; luxury senior living €2,000-3,000+."
+    },
+    {
+      "id": "aifa_osmed_2024",
+      "kind": "national_statistics",
+      "publisher": "AIFA — Agenzia Italiana del Farmaco",
+      "title": "Rapporto OsMed 2024: L'uso dei farmaci in Italia",
+      "year": 2025,
+      "url": "https://www.aifa.gov.it/documents/20142/2694929/Comunicato_AIFA_51-2025.pdf",
+      "informs": "Senior pharmacy spending €570/year per over-65 user; private pharma spending €7B in 2024 of which €3.4B OTC; 97.4% of seniors had at least one prescription; 68% polypharmacy."
+    },
+    {
+      "id": "aipb_2024",
+      "kind": "industry_report",
+      "publisher": "AIPB — Associazione Italiana Private Banking",
+      "title": "Rapporto sul Private Banking in Italia 2024",
+      "year": 2024,
+      "url": "https://www.aipb.it/it/ricerche/rapporto-sul-private-banking-italia-2024",
+      "informs": "Italian private banking AUM €1,300B (2024) → €1,398B (2025E); fee shift from commission-only (84.4% → 80.6%) to fee-only and fee-over models."
+    },
+    {
+      "id": "asset_mgmt_fees_2024",
+      "kind": "market_review",
+      "publisher": "BG SAXO, Studio Marco Franco, Consulenza Vincente",
+      "title": "Commissioni gestione patrimoniale Italia 2024",
+      "year": 2024,
+      "url": "https://www.bgsaxo.it/learn/guides/pricing/management-fees-vs-performance-fees-whats-the-difference-and-why-it-matters",
+      "informs": "Italian wealth management fees: 1.5-3% AUM/year (private banking high tier 2-4%); average investor 2-3.5% all-in including hidden fees; fee-only / robo 0.5-1.2%."
+    },
+    {
+      "id": "bankitalia_wealth_2024",
+      "kind": "national_statistics",
+      "publisher": "Banca d'Italia",
+      "title": "La ricchezza dei settori istituzionali in Italia, 2024",
+      "year": 2024,
+      "url": "https://www.bancaditalia.it/pubblicazioni/ricchezza-settori-istituzionali/2025-ricchezza-settori-istituzionali/index.html",
+      "informs": "Italian household total net wealth €11,732B (2024), +2.8% nominal YoY but -5.0% real vs 2021."
+    },
+    {
+      "id": "eurostat_ict_2024",
+      "kind": "national_statistics",
+      "publisher": "Eurostat",
+      "title": "Digital economy and society statistics: individuals using the internet, 2018-2024",
+      "year": 2024,
+      "url": "https://ec.europa.eu/eurostat/databrowser/view/tin00028/default/table?lang=en",
+      "informs": "Italy 65-74 internet use: 60.4% (2023) → 65.6% (2024), +5.2pp YoY post-pandemic; Sweden 65-74: ~87% in recent years; gap to Sweden ~22pp in 2024."
+    },
+    {
+      "id": "istat_ict_2024",
+      "kind": "national_statistics",
+      "publisher": "Istat",
+      "title": "Cittadini e ICT — Anno 2024",
+      "year": 2024,
+      "url": "https://www.istat.it/comunicato-stampa/cittadini-e-ict-anno-2024/",
+      "informs": "Italian ICT use trend among 65-74 cohort, 2018-2024."
+    }
+  ]
+}

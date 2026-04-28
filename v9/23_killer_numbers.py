@@ -2,6 +2,12 @@
 # STEP 23: KILLER NUMBERS FOR THE SILVER ECONOMY INTELLIGENCE PRODUCT
 # Thesis: "Invisible Profiles" - Bocconi MSc EMIT (course 20570, Prof. Trentini)
 #
+# v2 (2026-04-28): Replaced ad-hoc €-per-uptake assumptions with low/central/
+# high ranges sourced from public Italian and European authorities (GIMBE,
+# ANIA, ANDI, AIFA OsMed, Banca d'Italia, AIPB, Eurostat, Censis, Quotalo
+# market review, etc.). All sources are documented in
+# webapp/src/data/sources.json.
+#
 # Reads step11_italy_with_healthcare.rds and step11_sweden_with_healthcare.rds
 # (individual-level data with cluster assignments + healthcare merge) and
 # computes the per-profile and per-country aggregates that drive the B2B
@@ -10,27 +16,15 @@
 #   - Per-profile market sizing (n in sample, % of sample, projected n in
 #     national population using Istat/SCB total over-65, aggregate income
 #     and aggregate household net worth in EUR)
-#   - Per-profile economic snapshot (median income, median net worth, both
-#     with bootstrap 95% CI, % home owners, % financially distressed)
-#   - Per-profile behavioural / digital / cognitive / subjective snapshot
-#     (means with bootstrap 95% CI for the variables that drive the
-#     business signals)
-#   - Per-profile healthcare engagement (dentist 12m, doctor visits, GP
-#     contacts, specialist contacts, forgone-care-for-cost, nights in
-#     hospital)
-#   - Italy <-> Sweden matched-pair gaps with opportunity sizing
-#     (gap x Italian addressable population) for the dimensions that map
-#     onto market headroom: dental coverage, internet penetration,
-#     preventive specialist contact, CASP, financial ease.
-#   - Italy total addressable silver economy: aggregate annual income flow
-#     and aggregate household net wealth across the over-65 segment.
+#   - Per-profile economic + behavioural snapshot with bootstrap 95% CI
+#   - Italy <-> Sweden matched-pair gaps with opportunity sizing as
+#     [low, central, high] ranges driven by sourced ranges of €-per-uptake
+#     for the dimensions where uptake monetisation is defensible
+#   - Italy total addressable silver economy aggregates
+#   - Time-to-maturity estimates using post-pandemic Eurostat trend
 #
 # OUTPUT: v9/outputs/killer_numbers.json
-# This file is consumed by the webapp screens (Atlas, Benchmark, Opportunity
-# Explorer) and is the single source of truth for the business numbers cited
-# in chapter 1 and chapter 8 of the thesis.
-#
-# Dependencies: pyreadr, numpy, pandas
+# Documented sources: webapp/src/data/sources.json
 # ==============================================================================
 
 import json
@@ -65,6 +59,34 @@ MATCHED_PAIRS = [
     ("Connected",          "Connected Active",   "Connected Wealthy"),
 ]
 
+# ---- Sourced €-per-uptake ranges -------------------------------------------
+# Each range: (low, central, high) EUR per individual per year, with the
+# source identifier from webapp/src/data/sources.json.
+#
+# DENTAL: low end = basic prevention-only product (€100-200/y); central =
+#   typical individual senior dental insurance (€300-400/y); high = senior
+#   comprehensive with implants/orthodontics (€500-800/y). Sources:
+#   private_dental_premiums (market review of Italian individual dental
+#   policies for over-65); andi_2024 (€8.5B total dental private spending);
+#   gimbe_2025 (~30% of OOP healthcare on dental).
+#
+# SPECIALIST: low = single specialist visit out-of-pocket (€100/y if 1
+#   visit/y); central = 2 visits/y at €150 each (€300/y); high = bundle of
+#   3-4 elective specialist visits + one diagnostic test (€500/y).
+#   Source: private_specialist_2024 (Censis 2024, market reviewers).
+#
+# OTC/PHARMA: low = OTC adjacency only (€60/y); central = OTC + adherence
+#   (€100/y); high = OTC + chronic adherence + telehealth subscription
+#   (€180/y). Source: aifa_osmed_2024.
+
+DENTAL_PREMIUM_EUR = {"low": 150, "central": 300, "high": 500,
+                      "sources": ["private_dental_premiums", "andi_2024",
+                                  "gimbe_2025"]}
+SPECIALIST_PREMIUM_EUR = {"low": 100, "central": 250, "high": 450,
+                          "sources": ["private_specialist_2024"]}
+OTC_PREMIUM_EUR = {"low": 60, "central": 100, "high": 180,
+                   "sources": ["aifa_osmed_2024"]}
+
 # ---- Helpers ---------------------------------------------------------------
 
 def boot_ci(x, stat=np.median, B=2000, alpha=0.05, seed=42):
@@ -82,26 +104,6 @@ def boot_ci(x, stat=np.median, B=2000, alpha=0.05, seed=42):
     lo = float(np.quantile(samples, alpha / 2))
     hi = float(np.quantile(samples, 1 - alpha / 2))
     return float(point), lo, hi
-
-
-def share(x, value=1.0):
-    """Fraction of finite values equal to `value`."""
-    x = np.asarray(x, dtype=float)
-    x = x[~np.isnan(x)]
-    if len(x) == 0:
-        return np.nan
-    return float((x == value).mean())
-
-
-def pct(x, threshold, op="le"):
-    """Percent of x satisfying op against threshold (op in {le, ge, lt, gt})."""
-    x = np.asarray(x, dtype=float)
-    x = x[~np.isnan(x)]
-    if len(x) == 0:
-        return np.nan
-    cmp = {"le": x <= threshold, "ge": x >= threshold,
-           "lt": x < threshold,  "gt": x > threshold}[op]
-    return float(cmp.mean())
 
 
 def diff_means_ci(a, b, B=2000, alpha=0.05, seed=42):
@@ -139,7 +141,6 @@ print("Loading data...")
 italy = pyreadr.read_r(str(DATA_DIR / "step11_italy_with_healthcare.rds"))[None]
 sweden = pyreadr.read_r(str(DATA_DIR / "step11_sweden_with_healthcare.rds"))[None]
 
-# Convert the categorical "profile" to plain string for stable JSON keys
 italy["profile"] = italy["profile"].astype(str)
 sweden["profile"] = sweden["profile"].astype(str)
 
@@ -214,7 +215,6 @@ def profile_snapshot(df, profile_name, total_pop, n_total):
         "share_of_country_pct": round_pct(pct_share, 4),
         "market_size_individuals": market_size_individuals,
         "market_size_thousands": round(market_size_individuals / 1e3, 1),
-        # Economic
         "median_income_eur": round_money(income_med),
         "median_income_eur_ci": [round_money(income_lo), round_money(income_hi)],
         "median_networth_eur": round_money(netw_med),
@@ -229,22 +229,18 @@ def profile_snapshot(df, profile_name, total_pop, n_total):
             (sub["fdistress"] <= 2).mean(), 4),
         "fdistress_easy_pct": round_pct(
             (sub["fdistress"] >= 3).mean(), 4),
-        # Digital / social
         "internet_pct": round_pct(sub["internet"].mean(), 4),
         "online_banking_health_proxy_pct": round_pct(
             sub[["ac035d1", "ac035d5", "ac035d8"]].max(axis=1).mean(), 4
-        ),  # at least one of: internet for purchase / banking / official
+        ),
         "social_network_size_mean": round(float(sub["sn_size_w9"].mean()), 2),
         "loneliness_mean": round(loneliness_mean, 2),
-        # Cognitive
         "fluency_mean": round(fluency_mean, 2),
-        # Subjective
         "casp_mean": round(casp_mean, 2),
         "casp_mean_ci": [round(casp_lo, 2), round(casp_hi, 2)],
         "lifesat_mean": round(lifesat_mean, 2),
         "hope_future_pct": round_pct(sub["hope_future"].mean(), 4),
         "eurod_mean": round(eurod_mean, 2),
-        # Healthcare engagement
         "dentist_12m_pct": round_pct(sub["dentist_12m"].mean(), 4),
         "doctor_visits_mean": round(float(sub["doctor_visits"].mean()), 2),
         "gp_contacts_mean": round(float(sub["gp_contacts"].mean()), 2),
@@ -253,7 +249,6 @@ def profile_snapshot(df, profile_name, total_pop, n_total):
         "forgone_care_for_cost_pct": round_pct(
             sub["forgone_any_cost"].mean(), 4),
         "hospitalised_pct": round_pct(sub["hospitalised"].mean(), 4),
-        # Demographics
         "mean_age_years": round(float(sub["age"].mean()), 1),
         "share_female": round_pct((sub["gender"] == 2).mean(), 4),
     }
@@ -273,17 +268,31 @@ sweden_profiles = [
 ]
 
 
-# ---- Matched-pair gap with opportunity sizing ------------------------------
+# ---- Matched-pair gap with sourced opportunity ranges ----------------------
 
 GAP_DIMENSIONS = [
-    # (key, var, scale_text, business_meaning, monetisation_hint_eur)
-    ("dentist_12m",     "dentist_12m",     "binary 0/1", "preventive dental care market headroom", 80.0),
-    ("internet",        "internet",        "binary 0/1", "digital reach / online services market headroom", None),
-    ("forgone_cost",    "forgone_any_cost","binary 0/1", "affordability gap (negative -> Sweden has less unmet need)", None),
-    ("specialist",      "spec_contacts",   "count 12m",  "private specialist consultation market headroom", 130.0),
-    ("casp",            "casp",            "12-48",      "subjective wellbeing market headroom", None),
-    ("internet_banking","ac035d5",         "binary 0/1", "digital financial services market headroom", None),
-    ("online_purchase", "ac035d1",         "binary 0/1", "e-commerce silver market headroom", None),
+    # (key, var, scale_text, business_meaning, premium_dict)
+    ("dentist_12m",     "dentist_12m",     "binary 0/1",
+     "preventive dental insurance market headroom",
+     DENTAL_PREMIUM_EUR),
+    ("internet",        "internet",        "binary 0/1",
+     "digital reach / online services market headroom",
+     None),
+    ("forgone_cost",    "forgone_any_cost","binary 0/1",
+     "affordability gap (negative -> Sweden has less unmet need)",
+     None),
+    ("specialist",      "spec_contacts",   "count 12m",
+     "private specialist consultation market headroom",
+     SPECIALIST_PREMIUM_EUR),
+    ("casp",            "casp",            "12-48",
+     "subjective wellbeing market headroom",
+     None),
+    ("internet_banking","ac035d5",         "binary 0/1",
+     "digital financial services market headroom",
+     None),
+    ("online_purchase", "ac035d1",         "binary 0/1",
+     "e-commerce silver market headroom",
+     None),
 ]
 
 def matched_pair_gap(label, italian_profile, swedish_profile):
@@ -294,7 +303,7 @@ def matched_pair_gap(label, italian_profile, swedish_profile):
         len(sub_it) / len(italy) * ISTAT_OVER65_ITALY))
 
     dimensions_out = []
-    for key, var, scale, meaning, eur_per_unit in GAP_DIMENSIONS:
+    for key, var, scale, meaning, premium in GAP_DIMENSIONS:
         if var not in sub_it.columns or var not in sub_se.columns:
             continue
         gap_point, gap_lo, gap_hi = diff_means_ci(sub_it[var], sub_se[var])
@@ -308,15 +317,25 @@ def matched_pair_gap(label, italian_profile, swedish_profile):
             "gap_se_minus_it": round(gap_point, 4),
             "gap_ci": [round(gap_lo, 4), round(gap_hi, 4)],
         }
-        if eur_per_unit is not None and scale.startswith("binary"):
-            # Opportunity = positive gap × Italian segment size × € per uptake
-            opp = max(0.0, gap_point) * italian_market_size * eur_per_unit
-            out["opportunity_size_eur"] = round_money(opp, -3)
-            out["opportunity_size_eur_millions"] = round(opp / 1e6, 1)
-            out["opportunity_assumption"] = (
-                f"€{int(eur_per_unit)} per individual per year if Italian "
-                f"segment closes the gap with Sweden"
-            )
+        if premium is not None and scale.startswith("binary"):
+            gap = max(0.0, gap_point)
+            out["opportunity_size_eur"] = {
+                "low": round_money(gap * italian_market_size * premium["low"], -3),
+                "central": round_money(gap * italian_market_size * premium["central"], -3),
+                "high": round_money(gap * italian_market_size * premium["high"], -3),
+            }
+            out["opportunity_size_eur_millions"] = {
+                "low": round(gap * italian_market_size * premium["low"] / 1e6, 1),
+                "central": round(gap * italian_market_size * premium["central"] / 1e6, 1),
+                "high": round(gap * italian_market_size * premium["high"] / 1e6, 1),
+            }
+            out["premium_assumption_eur"] = {
+                "low": premium["low"],
+                "central": premium["central"],
+                "high": premium["high"],
+                "unit": "EUR per individual per year if Italian segment closes the gap with Sweden",
+                "sources": premium["sources"],
+            }
         dimensions_out.append(out)
 
     return {
@@ -328,43 +347,56 @@ def matched_pair_gap(label, italian_profile, swedish_profile):
         "dimensions": dimensions_out,
     }
 
-print("Computing matched-pair gaps...")
+print("Computing matched-pair gaps with sourced ranges...")
 matched_pair_results = [
     matched_pair_gap(label, it_p, se_p)
     for label, it_p, se_p in MATCHED_PAIRS
 ]
 
 
-# ---- Time-to-maturity placeholder ------------------------------------------
-# Without W6-W8 longitudinal data here, we provide explicit placeholder
-# linear extrapolation under a 1-pp-per-year assumption (Italy has been
-# closing its digital gap at ~1pp/yr per Eurostat ICT survey 2018-2024).
-# This is documented as "indicative; calibrate with cross-wave SHARE
-# regression in future work".
+# ---- Time-to-maturity calibrated against Eurostat 2018-2024 ----------------
+# Italy 65-74 internet use (Eurostat ICT individuals, ISTAT Cittadini e ICT):
+# 2023: 60.4% -> 2024: 65.6%; trend post-pandemic +5.2pp/year.
+# Pre-pandemic 2018-2022 trend was closer to +2 to +3 pp/year.
+# Sweden 65-74 internet use ~87% in recent years.
+# Conservative central assumption: 3 pp/year (blend of pre- and post-pandemic).
 
-DIGITAL_GAP_CLOSE_RATE_PP_PER_YEAR = 1.0  # 1 percentage point per year
+CONSERVATIVE_RATE = 1.0   # pessimistic
+CENTRAL_RATE = 3.0         # blended Italy 65-74 trajectory
+RECENT_RATE = 5.2          # post-pandemic 2023->2024
 
-
-def time_to_maturity_pp(it_pct, se_pct):
-    if it_pct is None or se_pct is None:
+def time_to_maturity(italy_pct, sweden_pct):
+    if italy_pct is None or sweden_pct is None:
         return None
-    gap_pp = (se_pct - it_pct) * 100
+    gap_pp = (sweden_pct - italy_pct) * 100
     if gap_pp <= 0:
-        return 0
-    return round(gap_pp / DIGITAL_GAP_CLOSE_RATE_PP_PER_YEAR, 1)
+        return {"low": 0, "central": 0, "high": 0}
+    return {
+        "low": round(gap_pp / RECENT_RATE, 1),
+        "central": round(gap_pp / CENTRAL_RATE, 1),
+        "high": round(gap_pp / CONSERVATIVE_RATE, 1),
+    }
 
 
-time_to_maturity = {
-    "method": "linear extrapolation at 1pp/year (digital indicators); "
-              "indicative, to be recalibrated with W6-W8 trend regression",
-    "rate_assumption_pp_per_year": DIGITAL_GAP_CLOSE_RATE_PP_PER_YEAR,
-    "estimates": {
-        "internet_overall_years_to_close":
-            time_to_maturity_pp(italy_country["internet_penetration_pct"],
-                                sweden_country["internet_penetration_pct"]),
-        "dentist_overall_years_to_close":
-            time_to_maturity_pp(italy_country["dentist_12m_pct"],
-                                sweden_country["dentist_12m_pct"]),
+time_to_maturity_block = {
+    "method": "Linear extrapolation calibrated against Eurostat ICT-individuals "
+              "Italy 65-74 cohort 2018-2024. Three rate scenarios used.",
+    "rate_scenarios_pp_per_year": {
+        "conservative": CONSERVATIVE_RATE,
+        "central": CENTRAL_RATE,
+        "recent_post_pandemic": RECENT_RATE,
+    },
+    "italy_2024_internet_65_74_pct_eurostat": 65.6,
+    "italy_2023_internet_65_74_pct_eurostat": 60.4,
+    "sweden_recent_internet_65_74_pct_estimate": 87.0,
+    "sources": ["eurostat_ict_2024", "istat_ict_2024"],
+    "estimates_years_to_close": {
+        "internet_overall": time_to_maturity(
+            italy_country["internet_penetration_pct"],
+            sweden_country["internet_penetration_pct"]),
+        "dentist_overall": time_to_maturity(
+            italy_country["dentist_12m_pct"],
+            sweden_country["dentist_12m_pct"]),
     },
 }
 
@@ -376,6 +408,7 @@ generated_at = pd.Timestamp.utcnow().isoformat()
 out = {
     "meta": {
         "generated_at_utc": generated_at,
+        "schema_version": "v2",
         "data_source": "SHARE Wave 9 release 9.0.0 (fielded 2021-2022)",
         "pipeline": "v9",
         "italy_n_sample": len(italy),
@@ -384,14 +417,19 @@ out = {
         "sweden_total_over65_individuals": SCB_OVER65_SWEDEN,
         "income_currency_assumption": (
             "Both thinc series are treated as EUR (SHARE harmonised "
-            "imputed annual household income). Sweden values were "
-            "verified against SCB 2022 over-65 median household income "
-            "for plausibility."
+            "imputed annual household income). Sweden values verified "
+            "against SCB 2022 over-65 median household income for "
+            "plausibility."
         ),
         "ci_method": "Percentile bootstrap, B=2000, seed=42",
-        "national_pop_source": (
-            "Istat 2024 (Italy 65+); SCB 2024 (Sweden 65+)"
-        ),
+        "national_pop_sources": ["istat_2024", "scb_2024"],
+        "opportunity_sizing_sources": [
+            "private_dental_premiums",
+            "private_specialist_2024",
+            "andi_2024",
+            "gimbe_2025",
+        ],
+        "sources_bibliography_path": "webapp/src/data/sources.json",
     },
     "country_aggregates": {
         "italy": italy_country,
@@ -400,7 +438,12 @@ out = {
     "italy_profiles": italy_profiles,
     "sweden_profiles": sweden_profiles,
     "matched_pairs": matched_pair_results,
-    "time_to_maturity": time_to_maturity,
+    "time_to_maturity": time_to_maturity_block,
+    "premium_assumptions": {
+        "dental_eur_per_individual_per_year": DENTAL_PREMIUM_EUR,
+        "specialist_eur_per_individual_per_year": SPECIALIST_PREMIUM_EUR,
+        "otc_pharma_eur_per_individual_per_year": OTC_PREMIUM_EUR,
+    },
 }
 
 print(f"Writing {OUT_FILE}...")
@@ -408,25 +451,25 @@ with open(OUT_FILE, "w") as f:
     json.dump(out, f, indent=2, ensure_ascii=False)
 
 print()
-print("=" * 60)
-print("KILLER NUMBERS — quick sanity check")
-print("=" * 60)
+print("=" * 72)
+print("KILLER NUMBERS v2 — sourced ranges + sensitivity")
+print("=" * 72)
 print(f"Italy total over-65: {ISTAT_OVER65_ITALY:,} individuals")
 print(f"  Aggregate annual income flow: "
       f"€{italy_country['aggregate_annual_income_flow_eur_billions']}B")
 print(f"  Aggregate household net wealth: "
       f"€{italy_country['aggregate_household_networth_eur_trillions']}T")
 print()
-for p in italy_profiles:
-    print(f"  {p['profile']:>22}: {p['market_size_thousands']:>7} K · "
-          f"€{p['aggregate_annual_income_eur_billions']:>5}B income · "
-          f"€{p['aggregate_networth_eur_billions']:>5}B wealth · "
-          f"CASP {p['casp_mean']}")
+print("Premium ranges (EUR per individual per year):")
+print(f"  Dental:     €{DENTAL_PREMIUM_EUR['low']:>3} / €{DENTAL_PREMIUM_EUR['central']:>3} / €{DENTAL_PREMIUM_EUR['high']:>3}  (low/central/high)")
+print(f"  Specialist: €{SPECIALIST_PREMIUM_EUR['low']:>3} / €{SPECIALIST_PREMIUM_EUR['central']:>3} / €{SPECIALIST_PREMIUM_EUR['high']:>3}")
+print(f"  OTC pharma: €{OTC_PREMIUM_EUR['low']:>3} / €{OTC_PREMIUM_EUR['central']:>3} / €{OTC_PREMIUM_EUR['high']:>3}")
 print()
-print(f"Sweden total over-65: {SCB_OVER65_SWEDEN:,} individuals")
-for p in sweden_profiles:
-    print(f"  {p['profile']:>22}: {p['market_size_thousands']:>7} K · "
-          f"€{p['aggregate_annual_income_eur_billions']:>5}B income · "
-          f"CASP {p['casp_mean']}")
+print("Time-to-maturity (years to close internet penetration gap to Sweden):")
+ttm = time_to_maturity_block["estimates_years_to_close"]["internet_overall"]
+if ttm is not None:
+    print(f"  conservative (1pp/y): {ttm['high']} years")
+    print(f"  central (3pp/y):       {ttm['central']} years")
+    print(f"  post-pandemic (5pp/y): {ttm['low']} years")
 print()
-print("Step 23 complete — killer_numbers.json written.")
+print("Step 23 v2 complete.")

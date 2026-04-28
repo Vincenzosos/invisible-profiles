@@ -1,20 +1,22 @@
 import killer from '../data/killer_numbers.json';
+import sources from '../data/sources.json';
 import { formatIndividuals } from '../lib/format';
 
 export default function Methods() {
   const it = killer.country_aggregates.italy;
   const se = killer.country_aggregates.sweden;
   return (
-    <section className="space-y-12 max-w-3xl">
+    <section className="space-y-12 max-w-4xl">
       <header className="space-y-4">
         <p className="eyebrow">Methods & data</p>
         <h1 className="display-1 text-slate-900">How we built this</h1>
         <p className="text-lg text-stone-700 leading-relaxed">
           The Italian Silver Atlas is built on the Survey of Health, Ageing and
-          Retirement in Europe (SHARE), Wave 9, fielded 2021–2022. The
-          segmentation is fitted on the SHARE sample and projected to the
-          national over-65 population using Istat (Italy) and SCB (Sweden) 2024
-          totals.
+          Retirement in Europe (SHARE), Wave&nbsp;9, fielded 2021–2022. Profile
+          shares are projected to the national over-65 population using Istat
+          (Italy) and SCB (Sweden) 2024 totals. Opportunity sizing uses
+          €-per-uptake ranges sourced from public Italian and European
+          authorities listed in the bibliography below.
         </p>
       </header>
 
@@ -29,7 +31,6 @@ export default function Methods() {
           k="Swedish over-65 national projection"
           v={formatIndividuals(se.national_over65_individuals)}
         />
-        <Row k="Source" v="SHARE Wave 9 release 9.0.0; Istat 2024; SCB 2024" />
       </Section>
 
       <Section title="Segmentation pipeline">
@@ -66,18 +67,88 @@ export default function Methods() {
         </p>
       </Section>
 
-      <Section title="Cross-country opportunity sizing">
+      <Section title="Opportunity sizing — sourced ranges">
         <p className="text-sm text-stone-700 leading-relaxed">
           For each matched pair (Italy ↔ Sweden) we compute the gap on
-          dimensions where uptake monetisation has a defensible single-anchor
-          proxy: dental coverage at €80 / individual / year, private specialist
-          consultation at €130 / individual / year. Opportunity size = max(0,
-          Sweden − Italy gap) × Italian segment size × € per uptake. Time-to-
-          maturity uses a 1pp / year linear-closure assumption for digital
-          indicators, calibrated against Eurostat ICT-individuals 2018–2024
-          Italy trend. These are board-memo orientation proxies, not
-          commercial pricing.
+          dimensions where uptake monetisation has a defensible €-per-uptake
+          range. Each range is derived from public Italian and European
+          authorities (full bibliography below):
         </p>
+        <div className="rounded-xl bg-stone-50 border border-stone-200 p-4 mt-3">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left border-b border-stone-200">
+                <th className="py-2 pr-3 eyebrow">Dimension</th>
+                <th className="py-2 pr-3 eyebrow text-right">Low</th>
+                <th className="py-2 pr-3 eyebrow text-right">Central</th>
+                <th className="py-2 pr-3 eyebrow text-right">High</th>
+                <th className="py-2 pr-3 eyebrow">Sources</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-stone-100">
+              <tr>
+                <td className="py-2 pr-3 text-stone-900">Dental insurance / yr</td>
+                <td className="py-2 pr-3 text-right tabular-nums">€150</td>
+                <td className="py-2 pr-3 text-right tabular-nums font-semibold">€300</td>
+                <td className="py-2 pr-3 text-right tabular-nums">€500</td>
+                <td className="py-2 pr-3 text-xs text-stone-600">
+                  ANIA, ANDI, GIMBE
+                </td>
+              </tr>
+              <tr>
+                <td className="py-2 pr-3 text-stone-900">Specialist consult / yr</td>
+                <td className="py-2 pr-3 text-right tabular-nums">€100</td>
+                <td className="py-2 pr-3 text-right tabular-nums font-semibold">€250</td>
+                <td className="py-2 pr-3 text-right tabular-nums">€450</td>
+                <td className="py-2 pr-3 text-xs text-stone-600">
+                  Censis, market reviewers
+                </td>
+              </tr>
+              <tr>
+                <td className="py-2 pr-3 text-stone-900">OTC / pharma adherence / yr</td>
+                <td className="py-2 pr-3 text-right tabular-nums">€60</td>
+                <td className="py-2 pr-3 text-right tabular-nums font-semibold">€100</td>
+                <td className="py-2 pr-3 text-right tabular-nums">€180</td>
+                <td className="py-2 pr-3 text-xs text-stone-600">AIFA OsMed</td>
+              </tr>
+              <tr>
+                <td className="py-2 pr-3 text-stone-900">Wealth mgmt all-in fee / yr</td>
+                <td className="py-2 pr-3 text-right tabular-nums">0.5%</td>
+                <td className="py-2 pr-3 text-right tabular-nums font-semibold">1.0%</td>
+                <td className="py-2 pr-3 text-right tabular-nums">1.5%</td>
+                <td className="py-2 pr-3 text-xs text-stone-600">AIPB, asset_mgmt_fees</td>
+              </tr>
+              <tr>
+                <td className="py-2 pr-3 text-stone-900">Senior living / month</td>
+                <td className="py-2 pr-3 text-right tabular-nums">€1,500</td>
+                <td className="py-2 pr-3 text-right tabular-nums font-semibold">€2,000</td>
+                <td className="py-2 pr-3 text-right tabular-nums">€3,000</td>
+                <td className="py-2 pr-3 text-xs text-stone-600">RSA market 2024</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-sm text-stone-700 leading-relaxed mt-3">
+          Opportunity size = max(0, gap) × Italian segment size × premium /
+          fee. Three scenarios (low / central / high) are computed for each
+          opportunity and surfaced in the Benchmark and Opportunity Explorer
+          views.
+        </p>
+      </Section>
+
+      <Section title="Time-to-maturity — Eurostat-calibrated">
+        <p className="text-sm text-stone-700 leading-relaxed">
+          Italy's 65–74 internet-use rate moved from 60.4% (2023) to 65.6%
+          (2024) per Eurostat, a +5.2 pp / year jump that reflects post-pandemic
+          acceleration. The pre-pandemic trend (2018-2022) was closer to +2 to
+          +3 pp / year. Sweden's 65–74 rate is approximately 87%. Three rate
+          scenarios are reported:
+        </p>
+        <ul className="text-sm text-stone-700 leading-relaxed space-y-1 list-disc pl-5">
+          <li>conservative 1 pp / year ≈ {killer.time_to_maturity.estimates_years_to_close.internet_overall.high} years to close the gap</li>
+          <li>central 3 pp / year ≈ {killer.time_to_maturity.estimates_years_to_close.internet_overall.central} years</li>
+          <li>recent post-pandemic 5 pp / year ≈ {killer.time_to_maturity.estimates_years_to_close.internet_overall.low} years</li>
+        </ul>
       </Section>
 
       <Section title="Profiler engine in the browser">
@@ -104,9 +175,9 @@ export default function Methods() {
             integration with Istat regional age-structure tables.
           </li>
           <li>
-            Willingness-to-pay is proxied via income, net worth and financial
-            distress. Commercial pricing requires vertical-specific elasticity
-            work.
+            Willingness-to-pay is proxied via income, net worth, financial
+            distress and sourced premium ranges. Commercial pricing requires
+            vertical-specific elasticity work and stakeholder interviews.
           </li>
           <li>
             Customer-level integration (CSV import, API scoring) is documented
@@ -114,6 +185,48 @@ export default function Methods() {
             implemented in this build.
           </li>
         </ul>
+      </Section>
+
+      <Section title="Sources">
+        <p className="text-sm text-stone-700 leading-relaxed">
+          The product is built on primary survey data, official national
+          statistics, industry-association reports, and market reviewers.
+          Each opportunity-sizing assumption cites at least one source from
+          the bibliography below.
+        </p>
+        <div className="space-y-3 mt-4">
+          {sources.sources.map((s) => (
+            <article
+              key={s.id}
+              className="rounded-xl bg-stone-50 border border-stone-200 p-4 space-y-1"
+            >
+              <div className="flex items-baseline justify-between flex-wrap gap-2">
+                <p className="font-medium text-slate-900 text-sm">
+                  {s.publisher}
+                </p>
+                <code className="text-xs bg-white px-2 py-0.5 rounded border border-stone-200 text-stone-600">
+                  {s.id}
+                </code>
+              </div>
+              <p className="text-sm text-stone-700">{s.title}</p>
+              <p className="text-xs text-stone-500">
+                {s.kind} · {s.year}
+                {' '}
+                · <a
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-amber-700 hover:underline underline-offset-4"
+                >
+                  link
+                </a>
+              </p>
+              <p className="text-xs text-stone-600 leading-relaxed pt-1">
+                <span className="font-medium">Informs:</span> {s.informs}
+              </p>
+            </article>
+          ))}
+        </div>
       </Section>
 
       <Section title="Reproducibility">

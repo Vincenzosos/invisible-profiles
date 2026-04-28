@@ -1,15 +1,26 @@
 {
   "meta": {
-    "generated_at_utc": "2026-04-28T11:24:44.176169+00:00",
+    "generated_at_utc": "2026-04-28T13:49:58.072270+00:00",
+    "schema_version": "v2",
     "data_source": "SHARE Wave 9 release 9.0.0 (fielded 2021-2022)",
     "pipeline": "v9",
     "italy_n_sample": 2378,
     "sweden_n_sample": 1787,
     "italy_total_over65_individuals": 14180000,
     "sweden_total_over65_individuals": 2055000,
-    "income_currency_assumption": "Both thinc series are treated as EUR (SHARE harmonised imputed annual household income). Sweden values were verified against SCB 2022 over-65 median household income for plausibility.",
+    "income_currency_assumption": "Both thinc series are treated as EUR (SHARE harmonised imputed annual household income). Sweden values verified against SCB 2022 over-65 median household income for plausibility.",
     "ci_method": "Percentile bootstrap, B=2000, seed=42",
-    "national_pop_source": "Istat 2024 (Italy 65+); SCB 2024 (Sweden 65+)"
+    "national_pop_sources": [
+      "istat_2024",
+      "scb_2024"
+    ],
+    "opportunity_sizing_sources": [
+      "private_dental_premiums",
+      "private_specialist_2024",
+      "andi_2024",
+      "gimbe_2025"
+    ],
+    "sources_bibliography_path": "webapp/src/data/sources.json"
   },
   "country_aggregates": {
     "italy": {
@@ -587,7 +598,7 @@
           "dimension": "dentist_12m",
           "variable": "dentist_12m",
           "scale": "binary 0/1",
-          "business_meaning": "preventive dental care market headroom",
+          "business_meaning": "preventive dental insurance market headroom",
           "italy_mean": 0.1975,
           "sweden_mean": 0.7463,
           "gap_se_minus_it": 0.5489,
@@ -595,9 +606,27 @@
             0.478,
             0.6221
           ],
-          "opportunity_size_eur": 82480000.0,
-          "opportunity_size_eur_millions": 82.5,
-          "opportunity_assumption": "€80 per individual per year if Italian segment closes the gap with Sweden"
+          "opportunity_size_eur": {
+            "low": 154650000.0,
+            "central": 309301000.0,
+            "high": 515501000.0
+          },
+          "opportunity_size_eur_millions": {
+            "low": 154.7,
+            "central": 309.3,
+            "high": 515.5
+          },
+          "premium_assumption_eur": {
+            "low": 150,
+            "central": 300,
+            "high": 500,
+            "unit": "EUR per individual per year if Italian segment closes the gap with Sweden",
+            "sources": [
+              "private_dental_premiums",
+              "andi_2024",
+              "gimbe_2025"
+            ]
+          }
         },
         {
           "dimension": "internet",
@@ -690,7 +719,7 @@
           "dimension": "dentist_12m",
           "variable": "dentist_12m",
           "scale": "binary 0/1",
-          "business_meaning": "preventive dental care market headroom",
+          "business_meaning": "preventive dental insurance market headroom",
           "italy_mean": 0.2201,
           "sweden_mean": 0.8243,
           "gap_se_minus_it": 0.6042,
@@ -698,9 +727,27 @@
             0.5341,
             0.6709
           ],
-          "opportunity_size_eur": 183312000.0,
-          "opportunity_size_eur_millions": 183.3,
-          "opportunity_assumption": "€80 per individual per year if Italian segment closes the gap with Sweden"
+          "opportunity_size_eur": {
+            "low": 343710000.0,
+            "central": 687420000.0,
+            "high": 1145701000.0
+          },
+          "opportunity_size_eur_millions": {
+            "low": 343.7,
+            "central": 687.4,
+            "high": 1145.7
+          },
+          "premium_assumption_eur": {
+            "low": 150,
+            "central": 300,
+            "high": 500,
+            "unit": "EUR per individual per year if Italian segment closes the gap with Sweden",
+            "sources": [
+              "private_dental_premiums",
+              "andi_2024",
+              "gimbe_2025"
+            ]
+          }
         },
         {
           "dimension": "internet",
@@ -793,7 +840,7 @@
           "dimension": "dentist_12m",
           "variable": "dentist_12m",
           "scale": "binary 0/1",
-          "business_meaning": "preventive dental care market headroom",
+          "business_meaning": "preventive dental insurance market headroom",
           "italy_mean": 0.4783,
           "sweden_mean": 0.8657,
           "gap_se_minus_it": 0.3874,
@@ -801,9 +848,27 @@
             0.3078,
             0.4653
           ],
-          "opportunity_size_eur": 34008000.0,
-          "opportunity_size_eur_millions": 34.0,
-          "opportunity_assumption": "€80 per individual per year if Italian segment closes the gap with Sweden"
+          "opportunity_size_eur": {
+            "low": 63765000.0,
+            "central": 127531000.0,
+            "high": 212551000.0
+          },
+          "opportunity_size_eur_millions": {
+            "low": 63.8,
+            "central": 127.5,
+            "high": 212.6
+          },
+          "premium_assumption_eur": {
+            "low": 150,
+            "central": 300,
+            "high": 500,
+            "unit": "EUR per individual per year if Italian segment closes the gap with Sweden",
+            "sources": [
+              "private_dental_premiums",
+              "andi_2024",
+              "gimbe_2025"
+            ]
+          }
         },
         {
           "dimension": "internet",
@@ -896,7 +961,7 @@
           "dimension": "dentist_12m",
           "variable": "dentist_12m",
           "scale": "binary 0/1",
-          "business_meaning": "preventive dental care market headroom",
+          "business_meaning": "preventive dental insurance market headroom",
           "italy_mean": 0.4934,
           "sweden_mean": 0.8804,
           "gap_se_minus_it": 0.387,
@@ -904,9 +969,27 @@
             0.3394,
             0.4353
           ],
-          "opportunity_size_eur": 111506000.0,
-          "opportunity_size_eur_millions": 111.5,
-          "opportunity_assumption": "€80 per individual per year if Italian segment closes the gap with Sweden"
+          "opportunity_size_eur": {
+            "low": 209074000.0,
+            "central": 418147000.0,
+            "high": 696912000.0
+          },
+          "opportunity_size_eur_millions": {
+            "low": 209.1,
+            "central": 418.1,
+            "high": 696.9
+          },
+          "premium_assumption_eur": {
+            "low": 150,
+            "central": 300,
+            "high": 500,
+            "unit": "EUR per individual per year if Italian segment closes the gap with Sweden",
+            "sources": [
+              "private_dental_premiums",
+              "andi_2024",
+              "gimbe_2025"
+            ]
+          }
         },
         {
           "dimension": "internet",
@@ -990,11 +1073,58 @@
     }
   ],
   "time_to_maturity": {
-    "method": "linear extrapolation at 1pp/year (digital indicators); indicative, to be recalibrated with W6-W8 trend regression",
-    "rate_assumption_pp_per_year": 1.0,
-    "estimates": {
-      "internet_overall_years_to_close": 49.7,
-      "dentist_overall_years_to_close": 53.4
+    "method": "Linear extrapolation calibrated against Eurostat ICT-individuals Italy 65-74 cohort 2018-2024. Three rate scenarios used.",
+    "rate_scenarios_pp_per_year": {
+      "conservative": 1.0,
+      "central": 3.0,
+      "recent_post_pandemic": 5.2
+    },
+    "italy_2024_internet_65_74_pct_eurostat": 65.6,
+    "italy_2023_internet_65_74_pct_eurostat": 60.4,
+    "sweden_recent_internet_65_74_pct_estimate": 87.0,
+    "sources": [
+      "eurostat_ict_2024",
+      "istat_ict_2024"
+    ],
+    "estimates_years_to_close": {
+      "internet_overall": {
+        "low": 9.6,
+        "central": 16.6,
+        "high": 49.7
+      },
+      "dentist_overall": {
+        "low": 10.3,
+        "central": 17.8,
+        "high": 53.4
+      }
+    }
+  },
+  "premium_assumptions": {
+    "dental_eur_per_individual_per_year": {
+      "low": 150,
+      "central": 300,
+      "high": 500,
+      "sources": [
+        "private_dental_premiums",
+        "andi_2024",
+        "gimbe_2025"
+      ]
+    },
+    "specialist_eur_per_individual_per_year": {
+      "low": 100,
+      "central": 250,
+      "high": 450,
+      "sources": [
+        "private_specialist_2024"
+      ]
+    },
+    "otc_pharma_eur_per_individual_per_year": {
+      "low": 60,
+      "central": 100,
+      "high": 180,
+      "sources": [
+        "aifa_osmed_2024"
+      ]
     }
   }
 }

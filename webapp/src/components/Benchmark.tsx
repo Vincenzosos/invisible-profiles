@@ -29,13 +29,17 @@ const DIMENSION_LABELS: Record<string, string> = {
   online_purchase: 'E-commerce',
 };
 
+type OppRange = { low: number; central: number; high: number };
+
 export default function Benchmark() {
   const pairs = killer.matched_pairs;
   const opportunities = useMemo(() => buildOpportunityRanking(pairs), [pairs]);
-  const totalEur = opportunities.reduce(
-    (acc, o) => acc + o.opportunityEur,
+  const totalCentral = opportunities.reduce(
+    (acc, o) => acc + o.opportunityCentral,
     0,
   );
+  const totalLow = opportunities.reduce((acc, o) => acc + o.opportunityLow, 0);
+  const totalHigh = opportunities.reduce((acc, o) => acc + o.opportunityHigh, 0);
 
   return (
     <section className="space-y-16">
@@ -48,19 +52,24 @@ export default function Benchmark() {
           For each Italian profile we identify the closest Swedish counterpart
           and quantify the gap on dental coverage, digital reach, private
           specialist consultation, online banking and CASP-12 wellbeing. Where
-          a defensible €-per-uptake assumption exists, the gap is sized as
-          addressable opportunity for Italian operators.
+          a defensible €-per-uptake range exists (sourced from ANIA, ANDI,
+          GIMBE, Censis), the gap is sized as addressable opportunity for
+          Italian operators with low / central / high scenarios.
         </p>
       </header>
 
       <section className="rounded-2xl bg-amber-50 border border-amber-200 p-8 space-y-6">
-        <header className="flex items-baseline justify-between flex-wrap gap-4">
-          <div>
-            <p className="eyebrow text-amber-700">Top opportunities, ranked</p>
-            <h2 className="display-3 text-slate-900 mt-2">
-              €{(totalEur / 1e6).toFixed(0)}M / year addressable from monetised gaps
-            </h2>
-          </div>
+        <header>
+          <p className="eyebrow text-amber-700">Top opportunities, ranked</p>
+          <h2 className="display-3 text-slate-900 mt-2">
+            <span className="text-amber-800">€{(totalCentral / 1e6).toFixed(0)}M</span>
+            <span className="text-stone-500 text-base font-medium tracking-normal ml-2">
+              central · €{(totalLow / 1e6).toFixed(0)}M low · €{(totalHigh / 1e6).toFixed(0)}M high
+            </span>
+          </h2>
+          <p className="text-sm text-stone-600 mt-1">
+            addressable from monetised gaps, per year
+          </p>
         </header>
         <div className="overflow-x-auto -mx-2">
           <table className="w-full text-sm">
@@ -71,7 +80,7 @@ export default function Benchmark() {
                 <th className="py-3 px-2 eyebrow">Dimension</th>
                 <th className="py-3 px-2 eyebrow text-right">Gap</th>
                 <th className="py-3 px-2 eyebrow text-right">Segment</th>
-                <th className="py-3 px-2 eyebrow text-right">Opportunity</th>
+                <th className="py-3 px-2 eyebrow text-right">Opportunity (low / central / high)</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-amber-100">
@@ -92,8 +101,12 @@ export default function Benchmark() {
                   <td className="py-3 px-2 text-right tabular-nums text-stone-600">
                     {formatIndividuals(o.italianSegmentSize)}
                   </td>
-                  <td className="py-3 px-2 text-right tabular-nums font-semibold text-amber-800">
-                    {formatEUR(o.opportunityEur)}
+                  <td className="py-3 px-2 text-right tabular-nums">
+                    <span className="text-stone-500 text-xs">{formatEUR(o.opportunityLow)}</span>
+                    <span className="mx-1 text-stone-400">/</span>
+                    <span className="font-semibold text-amber-800">{formatEUR(o.opportunityCentral)}</span>
+                    <span className="mx-1 text-stone-400">/</span>
+                    <span className="text-stone-500 text-xs">{formatEUR(o.opportunityHigh)}</span>
                   </td>
                 </tr>
               ))}
@@ -101,10 +114,13 @@ export default function Benchmark() {
           </table>
         </div>
         <p className="text-xs text-stone-600 leading-relaxed">
-          Sizing assumptions: dental at €80 / individual / year (mid-range
-          private dental insurance premium for Italian over-65); private
-          specialist at €130 / individual / year. Single-anchor proxies for
-          board-memo orientation.
+          Sourced premium ranges (€ per individual per year): dental
+          €150-500 (basic prevention to comprehensive senior dental, sources:
+          ANIA market review of individual policies, ANDI 2024); private
+          specialist consultation €100-450 (Censis 2024 + market reviewers).
+          Sizing = max(0, gap) × Italian segment size × premium. See{' '}
+          <span className="font-medium">Methods & data</span> for full
+          bibliography.
         </p>
       </section>
 
@@ -167,14 +183,16 @@ function PairCard({ pair }: { pair: Pair }) {
               <th className="py-2 px-2 eyebrow text-right">Italy</th>
               <th className="py-2 px-2 eyebrow text-right">Sweden</th>
               <th className="py-2 px-2 eyebrow text-right">Gap</th>
-              <th className="py-2 px-2 eyebrow text-right">Opportunity</th>
+              <th className="py-2 px-2 eyebrow text-right">Opportunity (central)</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-stone-100">
             {pair.dimensions.map((d) => {
               const isBinary = d.scale.startsWith('binary');
-              const oppEur =
-                'opportunity_size_eur' in d ? d.opportunity_size_eur : null;
+              const oppRange =
+                'opportunity_size_eur' in d
+                  ? (d.opportunity_size_eur as OppRange | null)
+                  : null;
               return (
                 <tr key={d.dimension}>
                   <td className="py-2 px-2 text-stone-700">
@@ -205,10 +223,19 @@ function PairCard({ pair }: { pair: Pair }) {
                       : (d.gap_se_minus_it >= 0 ? '+' : '') +
                         d.gap_se_minus_it.toFixed(2)}
                   </td>
-                  <td className="py-2 px-2 text-right tabular-nums text-amber-700 font-medium">
-                    {oppEur !== null && oppEur !== undefined && oppEur > 0
-                      ? formatEUR(oppEur as number)
-                      : '—'}
+                  <td className="py-2 px-2 text-right tabular-nums">
+                    {oppRange &&
+                    typeof oppRange === 'object' &&
+                    oppRange.central > 0 ? (
+                      <span className="text-amber-700 font-medium">
+                        {formatEUR(oppRange.central)}
+                        <span className="block text-xs text-stone-500 font-normal">
+                          {formatEUR(oppRange.low)}–{formatEUR(oppRange.high)}
+                        </span>
+                      </span>
+                    ) : (
+                      <span className="text-stone-400">—</span>
+                    )}
                   </td>
                 </tr>
               );
@@ -245,25 +272,32 @@ type Opportunity = {
   dimension: string;
   gap: number;
   italianSegmentSize: number;
-  opportunityEur: number;
+  opportunityLow: number;
+  opportunityCentral: number;
+  opportunityHigh: number;
 };
 
 function buildOpportunityRanking(pairs: Pair[]): Opportunity[] {
   const out: Opportunity[] = [];
   for (const p of pairs) {
     for (const d of p.dimensions) {
-      const oppEur = 'opportunity_size_eur' in d ? d.opportunity_size_eur : null;
-      if (oppEur !== null && oppEur !== undefined && (oppEur as number) > 0) {
+      const oppRange =
+        'opportunity_size_eur' in d
+          ? (d.opportunity_size_eur as OppRange | null)
+          : null;
+      if (oppRange && typeof oppRange === 'object' && oppRange.central > 0) {
         out.push({
           pair: p.matched_pair_label,
           dimension: d.dimension,
           gap: d.gap_se_minus_it,
           italianSegmentSize: p.italian_market_size_individuals,
-          opportunityEur: oppEur as number,
+          opportunityLow: oppRange.low,
+          opportunityCentral: oppRange.central,
+          opportunityHigh: oppRange.high,
         });
       }
     }
   }
-  out.sort((a, b) => b.opportunityEur - a.opportunityEur);
+  out.sort((a, b) => b.opportunityCentral - a.opportunityCentral);
   return out;
 }
