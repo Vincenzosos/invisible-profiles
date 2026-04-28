@@ -5,6 +5,7 @@ import { matchProfile } from '../lib/profiler';
 import { downloadFile, readCSV, writeCSV } from '../lib/csv';
 import { coerceValue, suggestMapping, type ColumnSuggestion, type MappingSource } from '../lib/csv-mapping';
 import { VAR_LIST, VAR_SPECS } from '../lib/var-specs';
+import ClusterDossier from './ClusterDossier';
 import {
   autoBuckets,
   benchmarkShares,
@@ -28,6 +29,7 @@ const QUESTION_PROMPTS: Record<string, string> = Object.fromEntries(
 
 type ScoredRow = {
   inputRow: Record<string, string>;
+  coerced: Record<string, number>;
   predicted_profile: string;
   best_distance: number;
   membership_top1_pct: number;
@@ -83,6 +85,7 @@ export default function CsvUpload({ country, onBack }: Props) {
   const [missingStrategy, setMissingStrategy] = useState<MissingStrategy>('skip');
   const [pivotColumn, setPivotColumn] = useState<string>('');
   const [showAllRows, setShowAllRows] = useState(false);
+  const [selectedCluster, setSelectedCluster] = useState<string | null>(null);
 
   const allMapped = VAR_LIST.every((v) => mapping[v.var]);
   const canScore = parsed && allMapped && parsed.rows.length > 0;
@@ -187,9 +190,12 @@ export default function CsvUpload({ country, onBack }: Props) {
         top1?.probability ?? 0,
         top2?.probability ?? 0,
       );
-      // Track all input columns; also keep raw row
+      // Track all input columns; also keep raw row + the SHARE-coded
+      // values that fed the scoring (used by the cluster dossier to
+      // compute cohort means within each cluster).
       scoredRows.push({
         inputRow: r.inputRow,
+        coerced: answers,
         predicted_profile: result.best.name,
         best_distance: result.best.distance,
         membership_top1_pct: top1?.probability ?? 0,
@@ -221,6 +227,14 @@ export default function CsvUpload({ country, onBack }: Props) {
     const profiles = benchmark.map((b) => b.name);
     return { dist, chi, profiles };
   }, [scored, country]);
+
+  // List of CSV columns NOT mapped to a profiler variable. Surfaced as
+  // demographic context inside the cluster dossier.
+  const unmappedColumns = useMemo(() => {
+    if (!parsed) return [] as string[];
+    const mapped = new Set(Object.values(mapping));
+    return parsed.headers.filter((h) => !mapped.has(h));
+  }, [parsed, mapping]);
 
   // Detect candidate pivot columns: anything that's not in the mapping,
   // is low-cardinality (≤ ~12 levels) when treated as string. Also
@@ -357,7 +371,21 @@ export default function CsvUpload({ country, onBack }: Props) {
             summary={summary}
             validation={validationStats}
             onDownload={onDownload}
+            selectedCluster={selectedCluster}
+            onSelectCluster={(name) =>
+              setSelectedCluster((prev) => (prev === name ? null : name))
+            }
           />
+
+          {selectedCluster && (
+            <ClusterDossier
+              country={country}
+              cluster={selectedCluster}
+              rows={scored}
+              unmappedColumns={unmappedColumns}
+              onClose={() => setSelectedCluster(null)}
+            />
+          )}
 
           <PivotCard
             pivotCandidates={pivotCandidates}
@@ -383,6 +411,7 @@ export default function CsvUpload({ country, onBack }: Props) {
                 setSuggestions({});
                 setFilename('');
                 setPivotColumn('');
+                setSelectedCluster(null);
               }}
               className="rounded-xl border border-zinc-300 px-5 py-2.5 text-zinc-700 hover:bg-white hover:text-slate-900 transition-colors text-sm"
             >
@@ -651,11 +680,15 @@ function CohortAnalytics({
   summary,
   validation,
   onDownload,
+  selectedCluster,
+  onSelectCluster,
 }: {
   country: Country2;
   summary: ReturnType<typeof useCohortSummary>;
   validation: { issues: number; skipped: number; total: number };
   onDownload: () => void;
+  selectedCluster: string | null;
+  onSelectCluster: (name: string) => void;
 }) {
   const { dist, chi } = summary;
   const top = [...dist].sort((a, b) => b.share - a.share)[0];
@@ -681,6 +714,9 @@ function CohortAnalytics({
             <span className="font-medium">{formatPValue(chi.p)}</span>{' '}
             against the SHARE national distribution.
           </p>
+          <p className="text-xs text-zinc-500 mt-2">
+            Click any cluster name below to open its dossier.
+          </p>
         </div>
         <button
           type="button"
@@ -703,9 +739,23 @@ function CohortAnalytics({
               : dPp > 0
               ? 'text-emerald-700'
               : 'text-rose-600';
+          const isSelected = selectedCluster === d.name;
           return (
-            <div key={d.name} className="grid grid-cols-12 gap-3 items-center">
+            <button
+              type="button"
+              key={d.name}
+              onClick={() => onSelectCluster(d.name)}
+              className={[
+                'w-full grid grid-cols-12 gap-3 items-center text-left rounded-lg px-2 py-1.5 transition-colors',
+                isSelected
+                  ? 'bg-emerald-50 ring-1 ring-emerald-300'
+                  : 'hover:bg-zinc-50',
+              ].join(' ')}
+            >
               <div className="col-span-4 text-sm text-slate-900 truncate">
+                {isSelected && (
+                  <span className="text-emerald-700 mr-1">▸</span>
+                )}
                 {d.name}
               </div>
               <div className="col-span-6 space-y-1">
@@ -731,7 +781,7 @@ function CohortAnalytics({
                   {dPp.toFixed(1)}pp
                 </div>
               </div>
-            </div>
+            </button>
           );
         })}
       </div>

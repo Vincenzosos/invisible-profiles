@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "purpose": "Curated descriptive + interpretive content for each cluster, surfaced in the Result page (single mode) and Cluster Dossier (batch mode). Tone: research-grade, factual + interpretive, no advisory recommendations. Each action signal links the cluster's data signature to a documented finding from the thesis or the matched-pair analysis.",
+    "compiled": "2026-04-28"
+  },
+  "italy": {
+    "Fragile Resigned": {
+      "headline": "Vulnerable, low-resource, accepting outlook.",
+      "tagline": "The most constrained Italian cluster across health, economic, digital and subjective dimensions.",
+      "welfare_pair": "Fragile",
+      "twin_swedish_profile": "Fragile",
+      "action_signals": [
+        "Lowest CASP-12 in the Italian segmentation (mean 27.8 vs 38.5 in Connected Active) combined with the highest forgone-care-for-cost prevalence — the cluster where affordability most constrains healthcare access.",
+        "Internet penetration 9% vs 64% in the matched-pair Swedish Fragile cluster: the +55pp digital reach gap is the single largest among the four matched pairs.",
+        "Welfare-state translation: structural beneficiary of universalist coverage. CASP gap with Swedish counterpart +5.7 points — the smallest among the four pairs, with the tightest confidence interval."
+      ]
+    },
+    "Fragile Depressed": {
+      "headline": "Subjective distress dominates the cluster signature.",
+      "tagline": "Health partially explains the pattern; subjective wellbeing collapses faster than objective vulnerability.",
+      "welfare_pair": "Declining",
+      "twin_swedish_profile": "Social Decline",
+      "action_signals": [
+        "EURO-D mean is the highest of the Italian segmentation; CASP-12 sits near 22 — substantially below the sample mean. Self-rated health is mid-range, so subjective distress is not fully explained by objective health.",
+        "Welfare-state translation: +9.6 CASP-12 gap with the Swedish Social Decline pair — the largest among the four matched pairs. Universalist welfare appears to compress subjective vulnerability where objective vulnerability is only partially equalised.",
+        "Forgone care for cost remains elevated relative to the Italian sample mean despite lower healthcare utilisation overall — financial constraint compounds the subjective burden."
+      ]
+    },
+    "Moderate Isolated": {
+      "headline": "Objectively healthy, structurally invisible.",
+      "tagline": "27% of the Italian over-65 — the largest single segment that current healthcare access models do not capture.",
+      "welfare_pair": null,
+      "twin_swedish_profile": null,
+      "action_signals": [
+        "CASP-12 mean 36.8 and internet penetration 34% — objectively healthy and moderately connected. Yet preventive-dental utilisation is 27pp lower than the matched Traditional Social cluster (21% vs 48%), with 47% fewer specialist contacts.",
+        "The forgone-care-for-cost gap with Traditional Social is statistically zero — the access barrier is informational and relational, not financial. This rules out the standard affordability explanation.",
+        "Welfare-state translation: no analogue cluster in Sweden. Universal coverage redistributes this profile across other clusters — the Moderate Isolated phenomenon is a country-specific finding of the Italian segmentation.",
+        "Approximately 3.8M individuals nationally — the single largest segment whose service-utilisation pattern diverges from objective health status."
+      ]
+    },
+    "Traditional Social": {
+      "headline": "Strong social network, moderate digital reach.",
+      "tagline": "The only Italian cluster where the social-network and digital axes diverge meaningfully.",
+      "welfare_pair": "Socially-oriented",
+      "twin_swedish_profile": "Moderate",
+      "action_signals": [
+        "Highest social network size in the segmentation (mean ≈ 3.8 confidants, top quartile) combined with moderate internet adoption — service access mediated through community channels rather than digital ones.",
+        "Healthcare utilisation pattern comparable to Connected Active (48% dentist visits in 12m, similar specialist contacts) despite markedly lower internet adoption — operational evidence that the digital channel is not a precondition for engagement with the system.",
+        "In Wave 9 the cluster partially compresses with Connected Active in the larger n = 2,378 sample (Robustness section): the traditional/digital separation observed in pre-COVID segmentation studies is dissolving in post-pandemic data."
+      ]
+    },
+    "Connected Active": {
+      "headline": "Top quartile on every measured dimension.",
+      "tagline": "The structural ceiling of high-resource ageing in Italy.",
+      "welfare_pair": "Connected",
+      "twin_swedish_profile": "Connected Wealthy",
+      "action_signals": [
+        "Top quartile on every objective and subjective indicator: highest CASP-12 (38.5), 75% internet penetration, social network ≥ 5, EURO-D under 2.",
+        "Highest household economic indicators in the Italian segmentation: median income €26,562 and median net worth €258,709 — the largest gap with the Fragile Resigned cluster on both dimensions.",
+        "Welfare-state translation: the smallest CASP gap with the Swedish counterpart (+4.3 points) — the saturated ceiling of welfare differential. High-resource ageing converges across the two regimes."
+      ]
+    }
+  },
+  "sweden": {
+    "Fragile": {
+      "headline": "Vulnerable but digitally connected.",
+      "tagline": "Universalist welfare floor: even the most fragile cluster retains substantial digital reach.",
+      "welfare_pair": "Fragile",
+      "twin_italian_profile": "Fragile Resigned",
+      "action_signals": [
+        "Direct analogue of the Italian Fragile Resigned cluster in the matched-pair design, but internet penetration 64% vs 9% in Italy — a +55pp gap directly attributable to universalist welfare and digital infrastructure.",
+        "CASP-12 mean 33.5 vs 27.8 in the Italian counterpart: +5.7 points despite both clusters representing the most vulnerable population in their respective regimes.",
+        "Forgone care for cost is markedly lower than in the Italian counterpart, isolating the regime contribution to the affordability dimension."
+      ]
+    },
+    "Social Decline": {
+      "headline": "Subjective decline in a high-floor regime.",
+      "tagline": "The matched pair where the welfare differential is most visible.",
+      "welfare_pair": "Declining",
+      "twin_italian_profile": "Fragile Depressed",
+      "action_signals": [
+        "+9.6 CASP-12 gap with the Italian Fragile Depressed cluster — the largest welfare-state translation gap among the four matched pairs.",
+        "Internet penetration ≈ 36% (Wave 9 reading) vs 9% in the Italian counterpart — fragility does not collapse digital connection in the Swedish regime.",
+        "In Wave 9 the cluster does not separate cleanly at n = 1,787 (see Robustness section): it appears partially absorbed into Connected Wealthy, suggesting universalist welfare further homogenises the population."
+      ]
+    },
+    "Moderate": {
+      "headline": "Universalist mid-tier benchmark.",
+      "tagline": "The Swedish counterpart of Italian Traditional Social, with markedly higher digital reach.",
+      "welfare_pair": "Socially-oriented",
+      "twin_italian_profile": "Traditional Social",
+      "action_signals": [
+        "Internet penetration substantially higher than the Italian counterpart (60–94% across Wave 9 readings), driven by universal-coverage digital infrastructure rather than individual SES.",
+        "Healthcare utilisation pattern similar to higher-tier clusters — universal coverage uniforms preventive-care access across moderate-resource clusters.",
+        "Reference benchmark for the welfare-state advantage on the moderate-resource segment of the Italian over-65 population."
+      ]
+    },
+    "Asset Rich": {
+      "headline": "Country-specific to Sweden.",
+      "tagline": "Wealth concentrated in property and savings, with lower-than-average digital reach.",
+      "welfare_pair": null,
+      "twin_italian_profile": null,
+      "action_signals": [
+        "No matched-pair analogue in the Italian segmentation. The cluster represents a structural feature of the Swedish housing-market and pension-system interaction.",
+        "Wealth-rich on property and financial assets but digitally below the Wealthy Digital cluster — a profile bifurcation that does not appear in the Italian k = 5 solution."
+      ]
+    },
+    "Wealthy Digital": {
+      "headline": "Sweden-specific digital-native ceiling.",
+      "tagline": "The structural top of the silver-economy distribution: high resources, high digital adoption.",
+      "welfare_pair": null,
+      "twin_italian_profile": null,
+      "action_signals": [
+        "Above-average internet use, cognition, and quality of life — the structural top of the Swedish silver economy.",
+        "No matched-pair analogue in Italy: the cluster represents a separation between asset-rich and digital-native that does not surface in the Italian segmentation."
+      ]
+    },
+    "Connected Wealthy": {
+      "headline": "Saturated welfare ceiling.",
+      "tagline": "The Swedish analogue of Italian Connected Active — both populations reach a high quality-of-life ceiling.",
+      "welfare_pair": "Connected",
+      "twin_italian_profile": "Connected Active",
+      "action_signals": [
+        "Top quartile across all objective dimensions, with internet penetration ≈ 99% vs 75% in the Italian counterpart.",
+        "Smallest welfare-gap pair: +4.3 CASP-12 points — the saturated ceiling. Both populations achieve high quality-of-life and the regime differential is minimal.",
+        "Operational reference for the upper bound of welfare-state translation: where both regimes converge."
+      ]
+    }
+  }
+}
