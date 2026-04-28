@@ -6,6 +6,7 @@ const TABS: { id: View; label: string }[] = [
   { id: 'benchmark',   label: 'Benchmark' },
   { id: 'opportunity', label: 'Opportunity' },
   { id: 'profiler',    label: 'Profiler' },
+  { id: 'robustness',  label: 'Robustness' },
 ];
 
 type Props = {
@@ -27,7 +28,7 @@ export default function NavBar({ active, onNavigate }: Props) {
               Italian Silver Atlas
             </span>
             <span className="hidden sm:inline text-xs text-zinc-500">
-              Silver economy intelligence
+              Evidence-based segmentation of the Italian over-65 population
             </span>
           </button>
         </div>

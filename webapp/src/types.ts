@@ -5,4 +5,5 @@ export type View =
   | 'benchmark'
   | 'opportunity'
   | 'profiler'
+  | 'robustness'
   | 'methods';

@@ -1,0 +1,85 @@
+{
+  "metadata": {
+    "compiled": "2026-04-28",
+    "source": "v9 R pipeline outputs, chapter 6 of the underlying thesis"
+  },
+  "sensitivity_4d_vs_5d": {
+    "description": "Removing the five subjective wellbeing variables (CASP-12, loneliness, hope_future, interest, expect_alive) from the clustering input. The 4D solution is fitted on the same pipeline, k held fixed at 5 (Italy) and 6 (Sweden). Life satisfaction is external to both specifications and serves as impartial validator.",
+    "rows": [
+      {
+        "country": "Italy",
+        "specification": "5D (reference)",
+        "k": 5,
+        "silhouette": 0.069,
+        "within_r2": 0.248,
+        "anova_f_lifesat": 124.6,
+        "ari_vs_5d": null
+      },
+      {
+        "country": "Italy",
+        "specification": "4D",
+        "k": 5,
+        "silhouette": 0.089,
+        "within_r2": 0.264,
+        "anova_f_lifesat": 73.8,
+        "ari_vs_5d": 0.409
+      },
+      {
+        "country": "Sweden",
+        "specification": "5D (reference)",
+        "k": 6,
+        "silhouette": 0.060,
+        "within_r2": 0.211,
+        "anova_f_lifesat": 44.3,
+        "ari_vs_5d": null
+      },
+      {
+        "country": "Sweden",
+        "specification": "4D",
+        "k": 6,
+        "silhouette": 0.079,
+        "within_r2": 0.229,
+        "anova_f_lifesat": 34.6,
+        "ari_vs_5d": 0.517
+      }
+    ],
+    "interpretation": "The 4D solution is marginally tighter on internal metrics (clustering on fewer variables produces tighter partitions in a reduced space) but loses substantial external discriminative power on life satisfaction: -41% in Italy, -22% in Sweden. The adjusted Rand index between 4D and 5D partitions is 0.41 (Italy) and 0.52 (Sweden), meaning roughly half of the assignments differ. The 5D specification preserves a substantively important contrast (Fragile Resigned vs Fragile Depressed) that the 4D solution collapses."
+  },
+  "kmeans_lca_convergence": {
+    "description": "Profile-level convergence rate between K-means hard assignment and the modal LCA class. LCA fitted with poLCA (Linzer & Lewis 2011) on tertilised inputs, k = 5/6 to match K-means. Profiles ordered by convergence descending within each country.",
+    "italy": [
+      {"profile": "Fragile Resigned",   "n": 315, "modal_lca": 4, "convergence_pct": 95.6},
+      {"profile": "Traditional Social", "n": 184, "modal_lca": 2, "convergence_pct": 78.3},
+      {"profile": "Connected Active",   "n": 604, "modal_lca": 2, "convergence_pct": 66.1},
+      {"profile": "Fragile Depressed",  "n": 636, "modal_lca": 3, "convergence_pct": 61.8},
+      {"profile": "Moderate Isolated",  "n": 639, "modal_lca": 1, "convergence_pct": 54.6}
+    ],
+    "sweden": [
+      {"profile": "Connected Wealthy", "n": 536, "modal_lca": 2, "convergence_pct": 86.9},
+      {"profile": "Fragile",           "n": 206, "modal_lca": 5, "convergence_pct": 85.9},
+      {"profile": "Social Decline",    "n": 149, "modal_lca": 2, "convergence_pct": 59.7},
+      {"profile": "Moderate",          "n": 417, "modal_lca": 4, "convergence_pct": 56.6},
+      {"profile": "Asset Rich",        "n": 341, "modal_lca": 6, "convergence_pct": 53.1},
+      {"profile": "Wealthy Digital",   "n": 138, "modal_lca": 2, "convergence_pct": 49.3}
+    ],
+    "interpretation": "Profiles at the extremes of the distribution are most robust: Fragile Resigned (Italy) converges at 95.6%, Connected Wealthy (Sweden) at 86.9%, Fragile (Sweden) at 85.9%. Middle-range profiles converge at 54-66%, indicating substantive latent types with soft boundaries. The Swedish welfare-regime-specific profiles (Wealthy Digital, Asset Rich) converge below 55%, consistent with their interpretive role as composite signatures rather than crystallised types."
+  },
+  "multi_algorithm": {
+    "description": "K-means compared against three agglomerative alternatives across k = 2 to 12 on six internal validity indexes. Reported for the chosen k (5 for Italy, 6 for Sweden).",
+    "summary": "Across both countries and across all six indexes (R^2, Pseudo-F, silhouette, Davies-Bouldin proxy, Dunn, Pearson-gamma), K-means attains uniformly higher within-cluster R^2 and silhouette than Ward, complete linkage, and average linkage. Ward linkage is competitive only on the Dunn index, which penalises cluster elongation differently and is known to favour ellipsoidal shapes.",
+    "duda_hart": {
+      "italy_pst2_peak_at_k": 5,
+      "sweden_pst2_peak_at_k": 6,
+      "comment": "Pseudo-T^2 (Duda-Hart) for Ward linkage peaks at k = 5 (Italy) and k = 6 (Sweden), independently corroborating the K-means cut-off. Average and complete linkages produce shallower peaks consistent with their known behaviour on mixed-scale data."
+    }
+  },
+  "factor_analysis_stability": {
+    "kmo_italy": 0.832,
+    "kmo_sweden": 0.808,
+    "bartlett_chi2_italy": 18755,
+    "bartlett_df_italy": 406,
+    "bartlett_chi2_sweden": 9067,
+    "bartlett_df_sweden": 465,
+    "heywood_case": "Sweden social_integration loading 1.11, communality 1.38. Flagged as a known fragility of the Swedish factor solution; the decision to cluster on standardised original variables rather than on factor scores insulates the segmentation from this instability."
+  }
+}

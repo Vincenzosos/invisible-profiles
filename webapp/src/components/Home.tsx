@@ -28,10 +28,8 @@ export default function Home({ onNavigate }: Props) {
           <span className="text-emerald-700">five segments</span>, not one.
         </h1>
         <p className="text-xl text-zinc-700 leading-relaxed max-w-3xl">
-          {formatIndividuals(italy.national_over65_individuals)} individuals served
-          today as a single block by insurance, banking, retail, healthcare and
-          public administration. Five behaviourally and economically distinct
-          segments emerge from a multidimensional segmentation on{' '}
+          Evidence-based segmentation of the {formatIndividuals(italy.national_over65_individuals)}{' '}
+          Italian residents aged 65+, derived from{' '}
           <a
             className="cite-link"
             href="https://share-eric.eu/data/data-set-details/share-wave-9"
@@ -39,10 +37,84 @@ export default function Home({ onNavigate }: Props) {
             rel="noopener noreferrer"
           >
             SHARE Wave 9
-          </a>
-          . Sweden serves as the operationally mature benchmark.
+          </a>{' '}
+          and benchmarked against Sweden. Public reference for academic,
+          policy, and analyst audiences.
         </p>
       </header>
+
+      <section className="space-y-6">
+        <p className="eyebrow">Findings</p>
+        <h2 className="display-2 text-slate-900">
+          Three things this segmentation makes visible.
+        </h2>
+        <div className="space-y-4">
+          <Finding
+            number="01"
+            title="Subjective wellbeing is constitutive of vulnerability, not derived from it."
+            evidence={
+              <>
+                Removing the five subjective variables from the clustering input
+                reduces the external ANOVA <em>F</em>-statistic on life
+                satisfaction by{' '}
+                <strong className="text-slate-900">41% in Italy</strong>{' '}
+                (124.6 → 73.8) and{' '}
+                <strong className="text-slate-900">22% in Sweden</strong>{' '}
+                (44.3 → 34.6); the adjusted Rand index between 4D and 5D
+                partitions is 0.41 / 0.52 — the two specifications disagree on
+                roughly half of the assignments. The 5D solution preserves a
+                Fragile Resigned vs Fragile Depressed distinction that the 4D
+                solution collapses.
+              </>
+            }
+            seeMore={{ label: 'See robustness analysis', view: 'robustness' }}
+            onNavigate={onNavigate}
+          />
+          <Finding
+            number="02"
+            title="A 27% segment of Italian over-65s is invisible to current systems."
+            evidence={
+              <>
+                The Moderate Isolated profile (n = 639, 26.9% of the Italian
+                sample) reports CASP-12 quality of life of 36.8 and 34%
+                internet penetration — objectively healthy and connected — yet
+                visits the dentist{' '}
+                <strong className="text-slate-900">
+                  27 percentage points less
+                </strong>{' '}
+                often than the Traditional Social profile (21% vs 48%) and
+                makes 47% fewer specialist contacts. The gap on forgone care
+                for cost is statistically zero, ruling out an affordability
+                explanation.
+              </>
+            }
+            seeMore={{ label: 'See profile in Atlas', view: 'atlas' }}
+            onNavigate={onNavigate}
+          />
+          <Finding
+            number="03"
+            title="The Italy → Sweden gap concentrates at the vulnerable end of the distribution."
+            evidence={
+              <>
+                Mean CASP-12 difference (Sweden − Italy):{' '}
+                <strong className="text-slate-900">+5.7 points</strong> for
+                the Fragile pair,{' '}
+                <strong className="text-slate-900">+9.6</strong> for the
+                Declining pair,{' '}
+                <strong className="text-slate-900">+4.3</strong> for the
+                Connected pair, and{' '}
+                <strong className="text-slate-900">−1.4</strong> for the
+                Socially-oriented pair. Internet penetration gap follows the
+                same monotonic compression: +55pp for Fragile, +81pp for
+                Declining, +24pp for Connected. Universalist welfare compresses
+                the distance between top and bottom of the ageing experience.
+              </>
+            }
+            seeMore={{ label: 'See benchmark', view: 'benchmark' }}
+            onNavigate={onNavigate}
+          />
+        </div>
+      </section>
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Stat
@@ -76,7 +148,7 @@ export default function Home({ onNavigate }: Props) {
           accent
         />
         <Stat
-          eyebrow="Forgone care for cost"
+          eyebrow="Forgone care for cost gap"
           value={`+${fcCostPP}pp`}
           context={`Italy ${Math.round(italy.forgone_care_for_cost_pct * 100)}% · Sweden ${Math.round(sweden.forgone_care_for_cost_pct * 100)}%`}
           source="SHARE Wave 9 healthcare module"
@@ -92,7 +164,7 @@ export default function Home({ onNavigate }: Props) {
       </section>
 
       <section className="space-y-6">
-        <h2 className="display-3 text-slate-900">Three places to start</h2>
+        <h2 className="display-3 text-slate-900">Where to start</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <NavCard
             label="Atlas"
@@ -107,10 +179,10 @@ export default function Home({ onNavigate }: Props) {
             onClick={() => onNavigate('benchmark')}
           />
           <NavCard
-            label="Opportunity Explorer"
-            title="Vertical playbooks."
-            desc="Health insurance, wealth management, senior living, pharma. Profile fit + sourced market premium ranges + CRM criteria."
-            onClick={() => onNavigate('opportunity')}
+            label="Robustness"
+            title="Methodological tests."
+            desc="4D-vs-5D sensitivity, K-means / LCA convergence per profile, multi-algorithm comparison, factor-analysis adequacy."
+            onClick={() => onNavigate('robustness')}
           />
         </div>
         <p className="text-sm text-zinc-600 max-w-3xl pt-2">
@@ -123,6 +195,13 @@ export default function Home({ onNavigate }: Props) {
           </button>
           {'  ·  '}
           <button
+            onClick={() => onNavigate('opportunity')}
+            className="cite-link"
+          >
+            Opportunity Explorer &rarr;
+          </button>
+          {'  ·  '}
+          <button
             onClick={() => onNavigate('methods')}
             className="cite-link"
           >
@@ -131,6 +210,41 @@ export default function Home({ onNavigate }: Props) {
         </p>
       </section>
     </section>
+  );
+}
+
+function Finding({
+  number,
+  title,
+  evidence,
+  seeMore,
+  onNavigate,
+}: {
+  number: string;
+  title: string;
+  evidence: React.ReactNode;
+  seeMore: { label: string; view: View };
+  onNavigate: (v: View) => void;
+}) {
+  return (
+    <article className="rounded-2xl bg-white border border-zinc-200 p-7 space-y-3">
+      <div className="flex items-baseline gap-4">
+        <span className="text-emerald-700 font-mono text-sm tabular-nums">
+          {number}
+        </span>
+        <h3 className="display-3 text-slate-900 flex-1">{title}</h3>
+      </div>
+      <p className="text-sm text-zinc-700 leading-relaxed pl-10">{evidence}</p>
+      <div className="pl-10">
+        <button
+          type="button"
+          onClick={() => onNavigate(seeMore.view)}
+          className="cite-link text-sm"
+        >
+          {seeMore.label} &rarr;
+        </button>
+      </div>
+    </article>
   );
 }
 

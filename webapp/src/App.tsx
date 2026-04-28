@@ -5,6 +5,7 @@ import Atlas from './components/Atlas';
 import Benchmark from './components/Benchmark';
 import OpportunityExplorer from './components/OpportunityExplorer';
 import ProfilerFlow from './components/ProfilerFlow';
+import Robustness from './components/Robustness';
 import Methods from './components/Methods';
 import type { View } from './types';
 
@@ -20,6 +21,7 @@ export default function App() {
         {view === 'benchmark' && <Benchmark />}
         {view === 'opportunity' && <OpportunityExplorer />}
         {view === 'profiler' && <ProfilerFlow />}
+        {view === 'robustness' && <Robustness />}
         {view === 'methods' && <Methods />}
       </main>
       <footer className="border-t border-zinc-200 mt-20 py-8">
