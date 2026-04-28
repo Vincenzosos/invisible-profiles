@@ -1,12 +1,17 @@
 import type { View } from '../types';
 
-const TABS: { id: View; label: string }[] = [
-  { id: 'home',        label: 'Overview' },
-  { id: 'atlas',       label: 'Atlas' },
-  { id: 'benchmark',   label: 'Benchmark' },
-  { id: 'opportunity', label: 'Opportunity' },
-  { id: 'profiler',    label: 'Profiler' },
-  { id: 'robustness',  label: 'Robustness' },
+// 4 macro-sections instead of 6 paritetic tabs.
+// Each section maps to a default sub-view; sub-views are reached via
+// a secondary pill bar (SectionTabs) rendered inside the page.
+const SECTIONS: {
+  id: View;            // default view when the section is opened
+  label: string;
+  members: View[];     // all views that belong to this section (for active state)
+}[] = [
+  { id: 'home',     label: 'Overview',          members: ['home'] },
+  { id: 'atlas',    label: 'The Five Segments', members: ['atlas', 'benchmark', 'opportunity'] },
+  { id: 'methods',  label: 'Methodology',       members: ['methods', 'robustness'] },
+  { id: 'profiler', label: 'Try the model',     members: ['profiler'] },
 ];
 
 type Props = {
@@ -33,21 +38,24 @@ export default function NavBar({ active, onNavigate }: Props) {
           </button>
         </div>
         <div className="flex flex-wrap gap-0 -mb-px">
-          {TABS.map((t) => (
-            <button
-              key={t.id}
-              type="button"
-              onClick={() => onNavigate(t.id)}
-              className={[
-                'px-4 sm:px-5 py-3 text-sm border-b-2 -mb-px transition-colors',
-                active === t.id || (active === 'methods' && t.id === 'home')
-                  ? 'border-emerald-700 text-slate-900 font-medium'
-                  : 'border-transparent text-zinc-600 hover:text-slate-900',
-              ].join(' ')}
-            >
-              {t.label}
-            </button>
-          ))}
+          {SECTIONS.map((s) => {
+            const isActive = s.members.includes(active);
+            return (
+              <button
+                key={s.id}
+                type="button"
+                onClick={() => onNavigate(s.id)}
+                className={[
+                  'px-4 sm:px-5 py-3 text-sm border-b-2 -mb-px transition-colors',
+                  isActive
+                    ? 'border-emerald-700 text-slate-900 font-medium'
+                    : 'border-transparent text-zinc-600 hover:text-slate-900',
+                ].join(' ')}
+              >
+                {s.label}
+              </button>
+            );
+          })}
         </div>
       </div>
     </nav>

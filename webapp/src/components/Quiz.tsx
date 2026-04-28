@@ -1,35 +1,40 @@
 import { useState } from 'react';
+import questionsData from '../data/profiler_questions.json';
 import type { Country } from '../lib/profiler';
 
-type KeyVar = { var: string; dim: string; scale: string; label: string };
+type ChoiceOption = { label: string; value: number };
 
-type Scale =
-  | { kind: 'binary' }
-  | { kind: 'count' }
-  | { kind: 'range'; min: number; max: number };
+type Question =
+  | {
+      var: string;
+      dim: string;
+      prompt: string;
+      helper?: string;
+      type: 'choices';
+      options: ChoiceOption[];
+    }
+  | {
+      var: string;
+      dim: string;
+      prompt: string;
+      helper?: string;
+      type: 'count';
+    };
 
-function parseScale(s: string): Scale {
-  if (s === '0/1') return { kind: 'binary' };
-  if (s === 'count') return { kind: 'count' };
-  const m = s.match(/^(\d+)-(\d+)$/);
-  if (m) return { kind: 'range', min: Number(m[1]), max: Number(m[2]) };
-  return { kind: 'count' };
-}
+const QUESTIONS = questionsData.questions as Question[];
 
 type Props = {
   country: Country;
-  keyVariables: readonly KeyVar[];
   onComplete: (answers: Record<string, number>) => void;
   onBack: () => void;
 };
 
-export default function Quiz({ country, keyVariables, onComplete, onBack }: Props) {
+export default function Quiz({ country, onComplete, onBack }: Props) {
   const [idx, setIdx] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
 
-  const total = keyVariables.length;
-  const q = keyVariables[idx];
-  const scale = parseScale(q.scale);
+  const total = QUESTIONS.length;
+  const q = QUESTIONS[idx];
   const answered = q.var in answers;
 
   const setAns = (v: number) => {
@@ -62,69 +67,56 @@ export default function Quiz({ country, keyVariables, onComplete, onBack }: Prop
 
       <article className="rounded-2xl bg-white border border-zinc-200 p-8 space-y-6">
         <p className="eyebrow">{q.dim} dimension</p>
-        <h2 className="display-3 text-slate-900">{q.label}</h2>
+        <h2 className="display-3 text-slate-900">{q.prompt}</h2>
+        {q.helper && (
+          <p className="text-sm text-zinc-600 leading-relaxed">{q.helper}</p>
+        )}
 
-        {scale.kind === 'binary' && (
-          <div className="grid grid-cols-2 gap-3">
-            {[
-              { label: 'No', value: 0 },
-              { label: 'Yes', value: 1 },
-            ].map((opt) => (
-              <button
-                key={opt.value}
-                type="button"
-                onClick={() => setAns(opt.value)}
-                className={[
-                  'rounded-xl px-6 py-4 border transition-colors',
-                  answers[q.var] === opt.value
-                    ? 'border-slate-900 bg-slate-900 text-white'
-                    : 'border-zinc-300 bg-white text-slate-900 hover:border-slate-500',
-                ].join(' ')}
-              >
-                {opt.label}
-              </button>
-            ))}
+        {q.type === 'choices' && (
+          <div className="grid grid-cols-1 gap-2.5">
+            {q.options.map((opt) => {
+              const selected = answers[q.var] === opt.value;
+              return (
+                <button
+                  key={opt.label}
+                  type="button"
+                  onClick={() => setAns(opt.value)}
+                  className={[
+                    'rounded-xl px-5 py-3.5 border text-left transition-colors',
+                    selected
+                      ? 'border-slate-900 bg-slate-900 text-white'
+                      : 'border-zinc-300 bg-white text-slate-900 hover:border-slate-500',
+                  ].join(' ')}
+                >
+                  {opt.label}
+                </button>
+              );
+            })}
           </div>
         )}
 
-        {scale.kind === 'count' && (
-          <input
-            type="number"
-            min={0}
-            max={50}
-            step={1}
-            value={answers[q.var] ?? ''}
-            onChange={(e) =>
-              e.target.value === ''
-                ? setAnswers((prev) => {
-                    const { [q.var]: _drop, ...rest } = prev;
-                    return rest;
-                  })
-                : setAns(Number(e.target.value))
-            }
-            className="w-full rounded-xl border border-zinc-300 px-4 py-3 text-lg text-slate-900 focus:outline-none focus:border-emerald-500"
-            placeholder="0 – 50"
-          />
-        )}
-
-        {scale.kind === 'range' && (
-          <div className="space-y-3">
+        {q.type === 'count' && (
+          <div className="space-y-2">
             <input
-              type="range"
-              min={scale.min}
-              max={scale.max}
+              type="number"
+              min={0}
+              max={100}
               step={1}
-              value={answers[q.var] ?? Math.round((scale.min + scale.max) / 2)}
-              onChange={(e) => setAns(Number(e.target.value))}
-              className="w-full accent-emerald-600"
+              value={answers[q.var] ?? ''}
+              onChange={(e) =>
+                e.target.value === ''
+                  ? setAnswers((prev) => {
+                      const { [q.var]: _drop, ...rest } = prev;
+                      return rest;
+                    })
+                  : setAns(Number(e.target.value))
+              }
+              className="w-full rounded-xl border border-zinc-300 px-4 py-3 text-lg text-slate-900 focus:outline-none focus:border-emerald-500"
+              placeholder="Type a number"
             />
-            <div className="flex items-center justify-between text-sm text-zinc-500">
-              <span>{scale.min}</span>
-              <span className="text-lg font-semibold text-slate-900 tabular-nums">
-                {answers[q.var] ?? '—'}
-              </span>
-              <span>{scale.max}</span>
-            </div>
+            <p className="text-xs text-zinc-500">
+              Adults typically name 10–25 different animals in 60 seconds.
+            </p>
           </div>
         )}
       </article>

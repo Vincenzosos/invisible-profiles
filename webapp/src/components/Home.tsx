@@ -29,17 +29,9 @@ export default function Home({ onNavigate }: Props) {
         </h1>
         <p className="text-xl text-zinc-700 leading-relaxed max-w-3xl">
           Evidence-based segmentation of the {formatIndividuals(italy.national_over65_individuals)}{' '}
-          Italian residents aged 65+, derived from{' '}
-          <a
-            className="cite-link"
-            href="https://share-eric.eu/data/data-set-details/share-wave-9"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            SHARE Wave 9
-          </a>{' '}
-          and benchmarked against Sweden. Public reference for academic,
-          policy, and analyst audiences.
+          Italian residents aged 65+, derived from SHARE Wave 9 and
+          benchmarked against Sweden. Public reference for academic, policy,
+          and analyst audiences.
         </p>
       </header>
 
@@ -129,14 +121,12 @@ export default function Home({ onNavigate }: Props) {
           value={`${italy.n_sample.toLocaleString()}`}
           context={`Italian sample, post Mahalanobis screen (Sweden n = ${sweden.n_sample.toLocaleString()})`}
           source="SHARE Wave 9, release 9.0.0"
-          sourceUrl="https://share-eric.eu/data/data-set-details/share-wave-9"
         />
         <Stat
           eyebrow="Internet-use gap (Italy → Sweden)"
           value={`+${internetGapPP}pp`}
           context={`Italy ${Math.round(italy.internet_penetration_pct * 100)}% · Sweden ${Math.round(sweden.internet_penetration_pct * 100)}% · SHARE 65+`}
           source="SHARE Wave 9"
-          sourceUrl="https://share-eric.eu/data/data-set-details/share-wave-9"
           accent
         />
         <Stat
@@ -144,7 +134,6 @@ export default function Home({ onNavigate }: Props) {
           value={`+${dentalGapPP}pp`}
           context={`Italy ${Math.round(italy.dentist_12m_pct * 100)}% · Sweden ${Math.round(sweden.dentist_12m_pct * 100)}%`}
           source="SHARE Wave 9 healthcare module"
-          sourceUrl="https://share-eric.eu/data/data-set-details/share-wave-9"
           accent
         />
         <Stat
@@ -152,62 +141,41 @@ export default function Home({ onNavigate }: Props) {
           value={`+${fcCostPP}pp`}
           context={`Italy ${Math.round(italy.forgone_care_for_cost_pct * 100)}% · Sweden ${Math.round(sweden.forgone_care_for_cost_pct * 100)}%`}
           source="SHARE Wave 9 healthcare module"
-          sourceUrl="https://share-eric.eu/data/data-set-details/share-wave-9"
         />
         <Stat
           eyebrow="Mean CASP-12 quality of life"
           value={`${italy.mean_casp.toFixed(1)} ↔ ${sweden.mean_casp.toFixed(1)}`}
           context="Italy vs Sweden over-65 mean (scale 12-48)"
           source="SHARE Wave 9 subjective module"
-          sourceUrl="https://share-eric.eu/data/data-set-details/share-wave-9"
         />
       </section>
 
       <section className="space-y-6">
         <h2 className="display-3 text-slate-900">Where to start</h2>
+        <p className="text-sm text-zinc-600 max-w-3xl">
+          The site is organised in three sections plus an interactive engine.
+          Pick the one that matches the question you are bringing.
+        </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <NavCard
-            label="Atlas"
-            title="The five segments."
-            desc="Profile by profile: share, individuals, household income and net worth medians, behavioural and digital depth — all with 95% confidence intervals."
+            label="The Five Segments"
+            title="Who is the Italian over-65."
+            desc="Profile by profile: share, individuals, household income and net worth medians, behavioural and digital depth, and the matched-pair gap with Sweden — all with 95% confidence intervals."
             onClick={() => onNavigate('atlas')}
           />
           <NavCard
-            label="Benchmark"
-            title="Italy ↔ Sweden gaps."
-            desc="Matched-pair gaps in percentage points with confidence intervals. The structural difference between the two welfare regimes, profile by profile."
-            onClick={() => onNavigate('benchmark')}
+            label="Methodology"
+            title="How the segments were built."
+            desc="The data, the variables, the choice of k, the robustness checks: 4D-vs-5D sensitivity, K-means / LCA convergence, multi-algorithm comparison, factor-analysis adequacy."
+            onClick={() => onNavigate('methods')}
           />
           <NavCard
-            label="Robustness"
-            title="Methodological tests."
-            desc="4D-vs-5D sensitivity, K-means / LCA convergence per profile, multi-algorithm comparison, factor-analysis adequacy."
-            onClick={() => onNavigate('robustness')}
+            label="Try the model"
+            title="Score yourself or a dataset."
+            desc="Ten plain-language questions return your closest profile and a soft-membership distribution. Or upload a CSV to score a whole cohort at once."
+            onClick={() => onNavigate('profiler')}
           />
         </div>
-        <p className="text-sm text-zinc-600 max-w-3xl pt-2">
-          Or try the engine on yourself or a customer profile in the{' '}
-          <button
-            onClick={() => onNavigate('profiler')}
-            className="cite-link"
-          >
-            Profiler &rarr;
-          </button>
-          {'  ·  '}
-          <button
-            onClick={() => onNavigate('opportunity')}
-            className="cite-link"
-          >
-            Opportunity Explorer &rarr;
-          </button>
-          {'  ·  '}
-          <button
-            onClick={() => onNavigate('methods')}
-            className="cite-link"
-          >
-            Methods &amp; data &rarr;
-          </button>
-        </p>
       </section>
     </section>
   );

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import NavBar from './components/NavBar';
+import SectionTabs from './components/SectionTabs';
 import Home from './components/Home';
 import Atlas from './components/Atlas';
 import Benchmark from './components/Benchmark';
@@ -9,13 +10,26 @@ import Robustness from './components/Robustness';
 import Methods from './components/Methods';
 import type { View } from './types';
 
+const FINDINGS: View[] = ['atlas', 'benchmark', 'opportunity'];
+const METHODOLOGY: View[] = ['methods', 'robustness'];
+
 export default function App() {
   const [view, setView] = useState<View>('home');
+
+  const inFindings = FINDINGS.includes(view);
+  const inMethodology = METHODOLOGY.includes(view);
 
   return (
     <div className="min-h-screen text-slate-900">
       <NavBar active={view} onNavigate={setView} />
-      <main className="max-w-6xl mx-auto py-12 sm:py-16 px-5 sm:px-8">
+      <main className="max-w-6xl mx-auto py-12 sm:py-16 px-5 sm:px-8 space-y-10">
+        {inFindings && (
+          <SectionTabs section="findings" active={view} onNavigate={setView} />
+        )}
+        {inMethodology && (
+          <SectionTabs section="methodology" active={view} onNavigate={setView} />
+        )}
+
         {view === 'home' && <Home onNavigate={setView} />}
         {view === 'atlas' && <Atlas />}
         {view === 'benchmark' && <Benchmark />}
@@ -33,7 +47,7 @@ export default function App() {
               onClick={() => setView('methods')}
               className="hover:text-slate-900 transition-colors"
             >
-              Methods & data
+              Methods &amp; data
             </button>
             <a
               className="hover:text-slate-900 transition-colors"
