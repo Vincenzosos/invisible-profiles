@@ -1,0 +1,1000 @@
+{
+  "meta": {
+    "generated_at_utc": "2026-04-28T11:24:44.176169+00:00",
+    "data_source": "SHARE Wave 9 release 9.0.0 (fielded 2021-2022)",
+    "pipeline": "v9",
+    "italy_n_sample": 2378,
+    "sweden_n_sample": 1787,
+    "italy_total_over65_individuals": 14180000,
+    "sweden_total_over65_individuals": 2055000,
+    "income_currency_assumption": "Both thinc series are treated as EUR (SHARE harmonised imputed annual household income). Sweden values were verified against SCB 2022 over-65 median household income for plausibility.",
+    "ci_method": "Percentile bootstrap, B=2000, seed=42",
+    "national_pop_source": "Istat 2024 (Italy 65+); SCB 2024 (Sweden 65+)"
+  },
+  "country_aggregates": {
+    "italy": {
+      "country": "Italy",
+      "n_sample": 2378,
+      "national_over65_individuals": 14180000,
+      "median_household_income_eur": 17190.0,
+      "median_household_income_eur_ci": [
+        16800.0,
+        18000.0
+      ],
+      "median_household_networth_eur": 164443.0,
+      "median_household_networth_eur_ci": [
+        159000.0,
+        170544.0
+      ],
+      "aggregate_annual_income_flow_eur": 243754000000.0,
+      "aggregate_household_networth_eur": 2331799000000.0,
+      "aggregate_annual_income_flow_eur_billions": 243.8,
+      "aggregate_household_networth_eur_trillions": 2.33,
+      "internet_penetration_pct": 0.3902,
+      "homeownership_pct": 0.9037,
+      "dentist_12m_pct": 0.3037,
+      "forgone_care_for_cost_pct": 0.1009,
+      "median_age_years": 75.0,
+      "mean_casp": 34.34,
+      "mean_lifesat": 7.65
+    },
+    "sweden": {
+      "country": "Sweden",
+      "n_sample": 1787,
+      "national_over65_individuals": 2055000,
+      "median_household_income_eur": 38052.0,
+      "median_household_income_eur_ci": [
+        36948.0,
+        39432.0
+      ],
+      "median_household_networth_eur": 419739.0,
+      "median_household_networth_eur_ci": [
+        401241.0,
+        449217.0
+      ],
+      "aggregate_annual_income_flow_eur": 78197000000.0,
+      "aggregate_household_networth_eur": 862564000000.0,
+      "aggregate_annual_income_flow_eur_billions": 78.2,
+      "aggregate_household_networth_eur_trillions": 0.86,
+      "internet_penetration_pct": 0.8875,
+      "homeownership_pct": 0.7957,
+      "dentist_12m_pct": 0.8379,
+      "forgone_care_for_cost_pct": 0.0274,
+      "median_age_years": 75.0,
+      "mean_casp": 39.13,
+      "mean_lifesat": 8.38
+    }
+  },
+  "italy_profiles": [
+    {
+      "profile": "Fragile Resigned",
+      "n_sample": 315,
+      "share_of_country_pct": 0.1325,
+      "market_size_individuals": 1878343,
+      "market_size_thousands": 1878.3,
+      "median_income_eur": 15900.0,
+      "median_income_eur_ci": [
+        14402.0,
+        16800.0
+      ],
+      "median_networth_eur": 128000.0,
+      "median_networth_eur_ci": [
+        114000.0,
+        145500.0
+      ],
+      "median_pension_eur": 9600.0,
+      "aggregate_annual_income_eur": 29866000000.0,
+      "aggregate_annual_income_eur_billions": 29.87,
+      "aggregate_networth_eur": 240428000000.0,
+      "aggregate_networth_eur_billions": 240.43,
+      "homeownership_pct": 0.8254,
+      "fdistress_struggling_pct": 0.5333,
+      "fdistress_easy_pct": 0.4667,
+      "internet_pct": 0.0857,
+      "online_banking_health_proxy_pct": 0.2317,
+      "social_network_size_mean": 2.44,
+      "loneliness_mean": 6.16,
+      "fluency_mean": 10.11,
+      "casp_mean": 27.83,
+      "casp_mean_ci": [
+        27.23,
+        28.42
+      ],
+      "lifesat_mean": 6.45,
+      "hope_future_pct": 0.454,
+      "eurod_mean": 6.06,
+      "dentist_12m_pct": 0.1975,
+      "doctor_visits_mean": 11.42,
+      "gp_contacts_mean": 7.54,
+      "specialist_contacts_mean": 4.04,
+      "forgone_care_for_cost_pct": 0.1524,
+      "hospitalised_pct": 0.1968,
+      "mean_age_years": 81.5,
+      "share_female": 0.6635
+    },
+    {
+      "profile": "Fragile Depressed",
+      "n_sample": 636,
+      "share_of_country_pct": 0.2675,
+      "market_size_individuals": 3792464,
+      "market_size_thousands": 3792.5,
+      "median_income_eur": 13571.0,
+      "median_income_eur_ci": [
+        13200.0,
+        14400.0
+      ],
+      "median_networth_eur": 127525.0,
+      "median_networth_eur_ci": [
+        120500.0,
+        135255.0
+      ],
+      "median_pension_eur": 8700.0,
+      "aggregate_annual_income_eur": 51467000000.0,
+      "aggregate_annual_income_eur_billions": 51.47,
+      "aggregate_networth_eur": 483633000000.0,
+      "aggregate_networth_eur_billions": 483.63,
+      "homeownership_pct": 0.8711,
+      "fdistress_struggling_pct": 0.6714,
+      "fdistress_easy_pct": 0.3286,
+      "internet_pct": 0.173,
+      "online_banking_health_proxy_pct": 0.2154,
+      "social_network_size_mean": 2.2,
+      "loneliness_mean": 5.43,
+      "fluency_mean": 12.27,
+      "casp_mean": 30.66,
+      "casp_mean_ci": [
+        30.29,
+        31.01
+      ],
+      "lifesat_mean": 7.17,
+      "hope_future_pct": 0.6761,
+      "eurod_mean": 4.23,
+      "dentist_12m_pct": 0.2201,
+      "doctor_visits_mean": 7.31,
+      "gp_contacts_mean": 5.79,
+      "specialist_contacts_mean": 1.89,
+      "forgone_care_for_cost_pct": 0.1918,
+      "hospitalised_pct": 0.1132,
+      "mean_age_years": 77.3,
+      "share_female": 0.6352
+    },
+    {
+      "profile": "Moderate Isolated",
+      "n_sample": 639,
+      "share_of_country_pct": 0.2687,
+      "market_size_individuals": 3810353,
+      "market_size_thousands": 3810.4,
+      "median_income_eur": 14400.0,
+      "median_income_eur_ci": [
+        13527.0,
+        15445.0
+      ],
+      "median_networth_eur": 149000.0,
+      "median_networth_eur_ci": [
+        136758.0,
+        154000.0
+      ],
+      "median_pension_eur": 6000.0,
+      "aggregate_annual_income_eur": 54869000000.0,
+      "aggregate_annual_income_eur_billions": 54.87,
+      "aggregate_networth_eur": 567743000000.0,
+      "aggregate_networth_eur_billions": 567.74,
+      "homeownership_pct": 0.8983,
+      "fdistress_struggling_pct": 0.4883,
+      "fdistress_easy_pct": 0.5117,
+      "internet_pct": 0.3412,
+      "online_banking_health_proxy_pct": 0.2207,
+      "social_network_size_mean": 2.25,
+      "loneliness_mean": 3.6,
+      "fluency_mean": 15.33,
+      "casp_mean": 36.78,
+      "casp_mean_ci": [
+        36.45,
+        37.1
+      ],
+      "lifesat_mean": 8.24,
+      "hope_future_pct": 0.9202,
+      "eurod_mean": 1.19,
+      "dentist_12m_pct": 0.2097,
+      "doctor_visits_mean": 4.61,
+      "gp_contacts_mean": 4.19,
+      "specialist_contacts_mean": 1.08,
+      "forgone_care_for_cost_pct": 0.0579,
+      "hospitalised_pct": 0.0438,
+      "mean_age_years": 72.8,
+      "share_female": 0.5133
+    },
+    {
+      "profile": "Traditional Social",
+      "n_sample": 184,
+      "share_of_country_pct": 0.0774,
+      "market_size_individuals": 1097191,
+      "market_size_thousands": 1097.2,
+      "median_income_eur": 24604.0,
+      "median_income_eur_ci": [
+        21950.0,
+        26752.0
+      ],
+      "median_networth_eur": 247270.0,
+      "median_networth_eur_ci": [
+        214317.0,
+        269667.0
+      ],
+      "median_pension_eur": 13620.0,
+      "aggregate_annual_income_eur": 26995000000.0,
+      "aggregate_annual_income_eur_billions": 27.0,
+      "aggregate_networth_eur": 271302000000.0,
+      "aggregate_networth_eur_billions": 271.3,
+      "homeownership_pct": 0.9457,
+      "fdistress_struggling_pct": 0.2283,
+      "fdistress_easy_pct": 0.7717,
+      "internet_pct": 0.6576,
+      "online_banking_health_proxy_pct": 1.0,
+      "social_network_size_mean": 2.62,
+      "loneliness_mean": 3.75,
+      "fluency_mean": 18.54,
+      "casp_mean": 38.48,
+      "casp_mean_ci": [
+        37.72,
+        39.21
+      ],
+      "lifesat_mean": 8.19,
+      "hope_future_pct": 0.8967,
+      "eurod_mean": 1.69,
+      "dentist_12m_pct": 0.4783,
+      "doctor_visits_mean": 6.2,
+      "gp_contacts_mean": 4.37,
+      "specialist_contacts_mean": 2.02,
+      "forgone_care_for_cost_pct": 0.0543,
+      "hospitalised_pct": 0.0978,
+      "mean_age_years": 73.8,
+      "share_female": 0.337
+    },
+    {
+      "profile": "Connected Active",
+      "n_sample": 604,
+      "share_of_country_pct": 0.254,
+      "market_size_individuals": 3601648,
+      "market_size_thousands": 3601.6,
+      "median_income_eur": 26562.0,
+      "median_income_eur_ci": [
+        25323.0,
+        27771.0
+      ],
+      "median_networth_eur": 258709.0,
+      "median_networth_eur_ci": [
+        242075.0,
+        269428.0
+      ],
+      "median_pension_eur": 14400.0,
+      "aggregate_annual_income_eur": 95667000000.0,
+      "aggregate_annual_income_eur_billions": 95.67,
+      "aggregate_networth_eur": 931779000000.0,
+      "aggregate_networth_eur_billions": 931.78,
+      "homeownership_pct": 0.9719,
+      "fdistress_struggling_pct": 0.1258,
+      "fdistress_easy_pct": 0.8742,
+      "internet_pct": 0.7483,
+      "online_banking_health_proxy_pct": 0.7897,
+      "social_network_size_mean": 3.01,
+      "loneliness_mean": 3.74,
+      "fluency_mean": 19.2,
+      "casp_mean": 37.77,
+      "casp_mean_ci": [
+        37.39,
+        38.13
+      ],
+      "lifesat_mean": 8.13,
+      "hope_future_pct": 0.9089,
+      "eurod_mean": 2.06,
+      "dentist_12m_pct": 0.4934,
+      "doctor_visits_mean": 7.12,
+      "gp_contacts_mean": 5.06,
+      "specialist_contacts_mean": 2.31,
+      "forgone_care_for_cost_pct": 0.0381,
+      "hospitalised_pct": 0.0679,
+      "mean_age_years": 73.9,
+      "share_female": 0.5083
+    }
+  ],
+  "sweden_profiles": [
+    {
+      "profile": "Fragile",
+      "n_sample": 206,
+      "share_of_country_pct": 0.1153,
+      "market_size_individuals": 236894,
+      "market_size_thousands": 236.9,
+      "median_income_eur": 19682.0,
+      "median_income_eur_ci": [
+        18599.0,
+        22337.0
+      ],
+      "median_networth_eur": 161938.0,
+      "median_networth_eur_ci": [
+        131236.0,
+        219510.0
+      ],
+      "median_pension_eur": 12305.0,
+      "aggregate_annual_income_eur": 4662000000.0,
+      "aggregate_annual_income_eur_billions": 4.66,
+      "aggregate_networth_eur": 38362000000.0,
+      "aggregate_networth_eur_billions": 38.36,
+      "homeownership_pct": 0.5777,
+      "fdistress_struggling_pct": 0.2573,
+      "fdistress_easy_pct": 0.7427,
+      "internet_pct": 0.6359,
+      "online_banking_health_proxy_pct": 0.8835,
+      "social_network_size_mean": 3.13,
+      "loneliness_mean": 4.92,
+      "fluency_mean": 18.78,
+      "casp_mean": 33.55,
+      "casp_mean_ci": [
+        32.93,
+        34.2
+      ],
+      "lifesat_mean": 7.42,
+      "hope_future_pct": 0.8058,
+      "eurod_mean": 3.77,
+      "dentist_12m_pct": 0.7463,
+      "doctor_visits_mean": 9.89,
+      "gp_contacts_mean": 3.22,
+      "specialist_contacts_mean": 2.69,
+      "forgone_care_for_cost_pct": 0.0777,
+      "hospitalised_pct": 0.2488,
+      "mean_age_years": 80.4,
+      "share_female": 0.6456
+    },
+    {
+      "profile": "Social Decline",
+      "n_sample": 149,
+      "share_of_country_pct": 0.0834,
+      "market_size_individuals": 171346,
+      "market_size_thousands": 171.3,
+      "median_income_eur": 47227.0,
+      "median_income_eur_ci": [
+        41074.0,
+        53085.0
+      ],
+      "median_networth_eur": 575688.0,
+      "median_networth_eur_ci": [
+        461918.0,
+        680087.0
+      ],
+      "median_pension_eur": 12756.0,
+      "aggregate_annual_income_eur": 8092000000.0,
+      "aggregate_annual_income_eur_billions": 8.09,
+      "aggregate_networth_eur": 98642000000.0,
+      "aggregate_networth_eur_billions": 98.64,
+      "homeownership_pct": 0.8993,
+      "fdistress_struggling_pct": 0.1007,
+      "fdistress_easy_pct": 0.8993,
+      "internet_pct": 0.9866,
+      "online_banking_health_proxy_pct": 1.0,
+      "social_network_size_mean": 4.14,
+      "loneliness_mean": 3.53,
+      "fluency_mean": 25.88,
+      "casp_mean": 40.3,
+      "casp_mean_ci": [
+        39.72,
+        40.89
+      ],
+      "lifesat_mean": 8.51,
+      "hope_future_pct": 0.9799,
+      "eurod_mean": 2.01,
+      "dentist_12m_pct": 0.8243,
+      "doctor_visits_mean": 3.89,
+      "gp_contacts_mean": 2.02,
+      "specialist_contacts_mean": 1.66,
+      "forgone_care_for_cost_pct": 0.0336,
+      "hospitalised_pct": 0.1074,
+      "mean_age_years": 72.6,
+      "share_female": 0.5973
+    },
+    {
+      "profile": "Moderate",
+      "n_sample": 417,
+      "share_of_country_pct": 0.2334,
+      "market_size_individuals": 479538,
+      "market_size_thousands": 479.5,
+      "median_income_eur": 41833.0,
+      "median_income_eur_ci": [
+        39432.0,
+        43842.0
+      ],
+      "median_networth_eur": 488399.0,
+      "median_networth_eur_ci": [
+        435348.0,
+        525563.0
+      ],
+      "median_pension_eur": 12418.0,
+      "aggregate_annual_income_eur": 20061000000.0,
+      "aggregate_annual_income_eur_billions": 20.06,
+      "aggregate_networth_eur": 234206000000.0,
+      "aggregate_networth_eur_billions": 234.21,
+      "homeownership_pct": 0.9065,
+      "fdistress_struggling_pct": 0.0719,
+      "fdistress_easy_pct": 0.9281,
+      "internet_pct": 0.9376,
+      "online_banking_health_proxy_pct": 0.976,
+      "social_network_size_mean": 3.91,
+      "loneliness_mean": 3.82,
+      "fluency_mean": 22.72,
+      "casp_mean": 37.11,
+      "casp_mean_ci": [
+        36.74,
+        37.51
+      ],
+      "lifesat_mean": 8.06,
+      "hope_future_pct": 0.9089,
+      "eurod_mean": 2.9,
+      "dentist_12m_pct": 0.8657,
+      "doctor_visits_mean": 7.5,
+      "gp_contacts_mean": 3.12,
+      "specialist_contacts_mean": 2.95,
+      "forgone_care_for_cost_pct": 0.0096,
+      "hospitalised_pct": 0.1942,
+      "mean_age_years": 76.6,
+      "share_female": 0.5156
+    },
+    {
+      "profile": "Asset Rich",
+      "n_sample": 341,
+      "share_of_country_pct": 0.1908,
+      "market_size_individuals": 392140,
+      "market_size_thousands": 392.1,
+      "median_income_eur": 23808.0,
+      "median_income_eur_ci": [
+        21171.0,
+        25721.0
+      ],
+      "median_networth_eur": 150523.0,
+      "median_networth_eur_ci": [
+        116391.0,
+        175416.0
+      ],
+      "median_pension_eur": 12418.0,
+      "aggregate_annual_income_eur": 9336000000.0,
+      "aggregate_annual_income_eur_billions": 9.34,
+      "aggregate_networth_eur": 59026000000.0,
+      "aggregate_networth_eur_billions": 59.03,
+      "homeownership_pct": 0.522,
+      "fdistress_struggling_pct": 0.173,
+      "fdistress_easy_pct": 0.827,
+      "internet_pct": 0.7507,
+      "online_banking_health_proxy_pct": 0.9413,
+      "social_network_size_mean": 2.77,
+      "loneliness_mean": 3.76,
+      "fluency_mean": 19.97,
+      "casp_mean": 39.34,
+      "casp_mean_ci": [
+        38.84,
+        39.79
+      ],
+      "lifesat_mean": 8.48,
+      "hope_future_pct": 0.9648,
+      "eurod_mean": 1.69,
+      "dentist_12m_pct": 0.8,
+      "doctor_visits_mean": 4.07,
+      "gp_contacts_mean": 2.21,
+      "specialist_contacts_mean": 1.56,
+      "forgone_care_for_cost_pct": 0.0469,
+      "hospitalised_pct": 0.1085,
+      "mean_age_years": 77.7,
+      "share_female": 0.5308
+    },
+    {
+      "profile": "Wealthy Digital",
+      "n_sample": 138,
+      "share_of_country_pct": 0.0772,
+      "market_size_individuals": 158696,
+      "market_size_thousands": 158.7,
+      "median_income_eur": 41399.0,
+      "median_income_eur_ci": [
+        38189.0,
+        50334.0
+      ],
+      "median_networth_eur": 445849.0,
+      "median_networth_eur_ci": [
+        361922.0,
+        542379.0
+      ],
+      "median_pension_eur": 11289.0,
+      "aggregate_annual_income_eur": 6570000000.0,
+      "aggregate_annual_income_eur_billions": 6.57,
+      "aggregate_networth_eur": 70755000000.0,
+      "aggregate_networth_eur_billions": 70.75,
+      "homeownership_pct": 0.8188,
+      "fdistress_struggling_pct": 0.0797,
+      "fdistress_easy_pct": 0.9203,
+      "internet_pct": 0.9638,
+      "online_banking_health_proxy_pct": 1.0,
+      "social_network_size_mean": 3.91,
+      "loneliness_mean": 3.54,
+      "fluency_mean": 25.07,
+      "casp_mean": 40.25,
+      "casp_mean_ci": [
+        39.6,
+        40.92
+      ],
+      "lifesat_mean": 8.47,
+      "hope_future_pct": 0.9855,
+      "eurod_mean": 2.17,
+      "dentist_12m_pct": 0.8333,
+      "doctor_visits_mean": 6.11,
+      "gp_contacts_mean": 2.89,
+      "specialist_contacts_mean": 2.14,
+      "forgone_care_for_cost_pct": 0.0217,
+      "hospitalised_pct": 0.1304,
+      "mean_age_years": 74.9,
+      "share_female": 0.4565
+    },
+    {
+      "profile": "Connected Wealthy",
+      "n_sample": 536,
+      "share_of_country_pct": 0.2999,
+      "market_size_individuals": 616385,
+      "market_size_thousands": 616.4,
+      "median_income_eur": 50749.0,
+      "median_income_eur_ci": [
+        48049.0,
+        52561.0
+      ],
+      "median_networth_eur": 661405.0,
+      "median_networth_eur_ci": [
+        617914.0,
+        713782.0
+      ],
+      "median_pension_eur": 13056.0,
+      "aggregate_annual_income_eur": 31281000000.0,
+      "aggregate_annual_income_eur_billions": 31.28,
+      "aggregate_networth_eur": 407680000000.0,
+      "aggregate_networth_eur_billions": 407.68,
+      "homeownership_pct": 0.9328,
+      "fdistress_struggling_pct": 0.0243,
+      "fdistress_easy_pct": 0.9757,
+      "internet_pct": 0.9851,
+      "online_banking_health_proxy_pct": 0.9963,
+      "social_network_size_mean": 4.07,
+      "loneliness_mean": 3.29,
+      "fluency_mean": 26.5,
+      "casp_mean": 42.08,
+      "casp_mean_ci": [
+        41.79,
+        42.38
+      ],
+      "lifesat_mean": 8.88,
+      "hope_future_pct": 0.9944,
+      "eurod_mean": 1.26,
+      "dentist_12m_pct": 0.8804,
+      "doctor_visits_mean": 3.6,
+      "gp_contacts_mean": 1.86,
+      "specialist_contacts_mean": 1.44,
+      "forgone_care_for_cost_pct": 0.0093,
+      "hospitalised_pct": 0.0821,
+      "mean_age_years": 73.1,
+      "share_female": 0.5168
+    }
+  ],
+  "matched_pairs": [
+    {
+      "matched_pair_label": "Fragile",
+      "italian_profile": "Fragile Resigned",
+      "swedish_profile": "Fragile",
+      "italian_market_size_individuals": 1878343,
+      "italian_market_size_thousands": 1878.3,
+      "dimensions": [
+        {
+          "dimension": "dentist_12m",
+          "variable": "dentist_12m",
+          "scale": "binary 0/1",
+          "business_meaning": "preventive dental care market headroom",
+          "italy_mean": 0.1975,
+          "sweden_mean": 0.7463,
+          "gap_se_minus_it": 0.5489,
+          "gap_ci": [
+            0.478,
+            0.6221
+          ],
+          "opportunity_size_eur": 82480000.0,
+          "opportunity_size_eur_millions": 82.5,
+          "opportunity_assumption": "€80 per individual per year if Italian segment closes the gap with Sweden"
+        },
+        {
+          "dimension": "internet",
+          "variable": "internet",
+          "scale": "binary 0/1",
+          "business_meaning": "digital reach / online services market headroom",
+          "italy_mean": 0.0857,
+          "sweden_mean": 0.6359,
+          "gap_se_minus_it": 0.5502,
+          "gap_ci": [
+            0.4781,
+            0.6225
+          ]
+        },
+        {
+          "dimension": "forgone_cost",
+          "variable": "forgone_any_cost",
+          "scale": "binary 0/1",
+          "business_meaning": "affordability gap (negative -> Sweden has less unmet need)",
+          "italy_mean": 0.1524,
+          "sweden_mean": 0.0777,
+          "gap_se_minus_it": -0.0747,
+          "gap_ci": [
+            -0.1292,
+            -0.022
+          ]
+        },
+        {
+          "dimension": "specialist",
+          "variable": "spec_contacts",
+          "scale": "count 12m",
+          "business_meaning": "private specialist consultation market headroom",
+          "italy_mean": 4.0427,
+          "sweden_mean": 2.6862,
+          "gap_se_minus_it": -1.3565,
+          "gap_ci": [
+            -3.2638,
+            0.2048
+          ]
+        },
+        {
+          "dimension": "casp",
+          "variable": "casp",
+          "scale": "12-48",
+          "business_meaning": "subjective wellbeing market headroom",
+          "italy_mean": 27.8254,
+          "sweden_mean": 33.5534,
+          "gap_se_minus_it": 5.728,
+          "gap_ci": [
+            4.8517,
+            6.5605
+          ]
+        },
+        {
+          "dimension": "internet_banking",
+          "variable": "ac035d5",
+          "scale": "binary 0/1",
+          "business_meaning": "digital financial services market headroom",
+          "italy_mean": 0.0159,
+          "sweden_mean": 0.2427,
+          "gap_se_minus_it": 0.2268,
+          "gap_ci": [
+            0.1671,
+            0.2866
+          ]
+        },
+        {
+          "dimension": "online_purchase",
+          "variable": "ac035d1",
+          "scale": "binary 0/1",
+          "business_meaning": "e-commerce silver market headroom",
+          "italy_mean": 0.0063,
+          "sweden_mean": 0.0583,
+          "gap_se_minus_it": 0.0519,
+          "gap_ci": [
+            0.0196,
+            0.0891
+          ]
+        }
+      ]
+    },
+    {
+      "matched_pair_label": "Declining",
+      "italian_profile": "Fragile Depressed",
+      "swedish_profile": "Social Decline",
+      "italian_market_size_individuals": 3792464,
+      "italian_market_size_thousands": 3792.5,
+      "dimensions": [
+        {
+          "dimension": "dentist_12m",
+          "variable": "dentist_12m",
+          "scale": "binary 0/1",
+          "business_meaning": "preventive dental care market headroom",
+          "italy_mean": 0.2201,
+          "sweden_mean": 0.8243,
+          "gap_se_minus_it": 0.6042,
+          "gap_ci": [
+            0.5341,
+            0.6709
+          ],
+          "opportunity_size_eur": 183312000.0,
+          "opportunity_size_eur_millions": 183.3,
+          "opportunity_assumption": "€80 per individual per year if Italian segment closes the gap with Sweden"
+        },
+        {
+          "dimension": "internet",
+          "variable": "internet",
+          "scale": "binary 0/1",
+          "business_meaning": "digital reach / online services market headroom",
+          "italy_mean": 0.173,
+          "sweden_mean": 0.9866,
+          "gap_se_minus_it": 0.8136,
+          "gap_ci": [
+            0.7766,
+            0.8466
+          ]
+        },
+        {
+          "dimension": "forgone_cost",
+          "variable": "forgone_any_cost",
+          "scale": "binary 0/1",
+          "business_meaning": "affordability gap (negative -> Sweden has less unmet need)",
+          "italy_mean": 0.1918,
+          "sweden_mean": 0.0336,
+          "gap_se_minus_it": -0.1583,
+          "gap_ci": [
+            -0.198,
+            -0.1145
+          ]
+        },
+        {
+          "dimension": "specialist",
+          "variable": "spec_contacts",
+          "scale": "count 12m",
+          "business_meaning": "private specialist consultation market headroom",
+          "italy_mean": 1.8937,
+          "sweden_mean": 1.6562,
+          "gap_se_minus_it": -0.2374,
+          "gap_ci": [
+            -0.7116,
+            0.2177
+          ]
+        },
+        {
+          "dimension": "casp",
+          "variable": "casp",
+          "scale": "12-48",
+          "business_meaning": "subjective wellbeing market headroom",
+          "italy_mean": 30.6635,
+          "sweden_mean": 40.2953,
+          "gap_se_minus_it": 9.6318,
+          "gap_ci": [
+            9.0028,
+            10.2895
+          ]
+        },
+        {
+          "dimension": "internet_banking",
+          "variable": "ac035d5",
+          "scale": "binary 0/1",
+          "business_meaning": "digital financial services market headroom",
+          "italy_mean": 0.0031,
+          "sweden_mean": 0.651,
+          "gap_se_minus_it": 0.6479,
+          "gap_ci": [
+            0.5705,
+            0.7268
+          ]
+        },
+        {
+          "dimension": "online_purchase",
+          "variable": "ac035d1",
+          "scale": "binary 0/1",
+          "business_meaning": "e-commerce silver market headroom",
+          "italy_mean": 0.0236,
+          "sweden_mean": 0.2215,
+          "gap_se_minus_it": 0.1979,
+          "gap_ci": [
+            0.1323,
+            0.2701
+          ]
+        }
+      ]
+    },
+    {
+      "matched_pair_label": "Socially-oriented",
+      "italian_profile": "Traditional Social",
+      "swedish_profile": "Moderate",
+      "italian_market_size_individuals": 1097191,
+      "italian_market_size_thousands": 1097.2,
+      "dimensions": [
+        {
+          "dimension": "dentist_12m",
+          "variable": "dentist_12m",
+          "scale": "binary 0/1",
+          "business_meaning": "preventive dental care market headroom",
+          "italy_mean": 0.4783,
+          "sweden_mean": 0.8657,
+          "gap_se_minus_it": 0.3874,
+          "gap_ci": [
+            0.3078,
+            0.4653
+          ],
+          "opportunity_size_eur": 34008000.0,
+          "opportunity_size_eur_millions": 34.0,
+          "opportunity_assumption": "€80 per individual per year if Italian segment closes the gap with Sweden"
+        },
+        {
+          "dimension": "internet",
+          "variable": "internet",
+          "scale": "binary 0/1",
+          "business_meaning": "digital reach / online services market headroom",
+          "italy_mean": 0.6576,
+          "sweden_mean": 0.9376,
+          "gap_se_minus_it": 0.28,
+          "gap_ci": [
+            0.2059,
+            0.3531
+          ]
+        },
+        {
+          "dimension": "forgone_cost",
+          "variable": "forgone_any_cost",
+          "scale": "binary 0/1",
+          "business_meaning": "affordability gap (negative -> Sweden has less unmet need)",
+          "italy_mean": 0.0543,
+          "sweden_mean": 0.0096,
+          "gap_se_minus_it": -0.0448,
+          "gap_ci": [
+            -0.0798,
+            -0.0121
+          ]
+        },
+        {
+          "dimension": "specialist",
+          "variable": "spec_contacts",
+          "scale": "count 12m",
+          "business_meaning": "private specialist consultation market headroom",
+          "italy_mean": 2.023,
+          "sweden_mean": 2.9452,
+          "gap_se_minus_it": 0.9222,
+          "gap_ci": [
+            0.1737,
+            1.7424
+          ]
+        },
+        {
+          "dimension": "casp",
+          "variable": "casp",
+          "scale": "12-48",
+          "business_meaning": "subjective wellbeing market headroom",
+          "italy_mean": 38.4783,
+          "sweden_mean": 37.1103,
+          "gap_se_minus_it": -1.3679,
+          "gap_ci": [
+            -2.1779,
+            -0.5158
+          ]
+        },
+        {
+          "dimension": "internet_banking",
+          "variable": "ac035d5",
+          "scale": "binary 0/1",
+          "business_meaning": "digital financial services market headroom",
+          "italy_mean": 1.0,
+          "sweden_mean": 0.4748,
+          "gap_se_minus_it": -0.5252,
+          "gap_ci": [
+            -0.5731,
+            -0.4772
+          ]
+        },
+        {
+          "dimension": "online_purchase",
+          "variable": "ac035d1",
+          "scale": "binary 0/1",
+          "business_meaning": "e-commerce silver market headroom",
+          "italy_mean": 0.1957,
+          "sweden_mean": 0.1199,
+          "gap_se_minus_it": -0.0757,
+          "gap_ci": [
+            -0.1421,
+            -0.0096
+          ]
+        }
+      ]
+    },
+    {
+      "matched_pair_label": "Connected",
+      "italian_profile": "Connected Active",
+      "swedish_profile": "Connected Wealthy",
+      "italian_market_size_individuals": 3601648,
+      "italian_market_size_thousands": 3601.6,
+      "dimensions": [
+        {
+          "dimension": "dentist_12m",
+          "variable": "dentist_12m",
+          "scale": "binary 0/1",
+          "business_meaning": "preventive dental care market headroom",
+          "italy_mean": 0.4934,
+          "sweden_mean": 0.8804,
+          "gap_se_minus_it": 0.387,
+          "gap_ci": [
+            0.3394,
+            0.4353
+          ],
+          "opportunity_size_eur": 111506000.0,
+          "opportunity_size_eur_millions": 111.5,
+          "opportunity_assumption": "€80 per individual per year if Italian segment closes the gap with Sweden"
+        },
+        {
+          "dimension": "internet",
+          "variable": "internet",
+          "scale": "binary 0/1",
+          "business_meaning": "digital reach / online services market headroom",
+          "italy_mean": 0.7483,
+          "sweden_mean": 0.9851,
+          "gap_se_minus_it": 0.2367,
+          "gap_ci": [
+            0.2005,
+            0.2725
+          ]
+        },
+        {
+          "dimension": "forgone_cost",
+          "variable": "forgone_any_cost",
+          "scale": "binary 0/1",
+          "business_meaning": "affordability gap (negative -> Sweden has less unmet need)",
+          "italy_mean": 0.0381,
+          "sweden_mean": 0.0093,
+          "gap_se_minus_it": -0.0288,
+          "gap_ci": [
+            -0.0459,
+            -0.0124
+          ]
+        },
+        {
+          "dimension": "specialist",
+          "variable": "spec_contacts",
+          "scale": "count 12m",
+          "business_meaning": "private specialist consultation market headroom",
+          "italy_mean": 2.3122,
+          "sweden_mean": 1.4376,
+          "gap_se_minus_it": -0.8745,
+          "gap_ci": [
+            -1.1938,
+            -0.548
+          ]
+        },
+        {
+          "dimension": "casp",
+          "variable": "casp",
+          "scale": "12-48",
+          "business_meaning": "subjective wellbeing market headroom",
+          "italy_mean": 37.7682,
+          "sweden_mean": 42.0821,
+          "gap_se_minus_it": 4.3139,
+          "gap_ci": [
+            3.8596,
+            4.8014
+          ]
+        },
+        {
+          "dimension": "internet_banking",
+          "variable": "ac035d5",
+          "scale": "binary 0/1",
+          "business_meaning": "digital financial services market headroom",
+          "italy_mean": 0.0,
+          "sweden_mean": 0.6082,
+          "gap_se_minus_it": 0.6082,
+          "gap_ci": [
+            0.5672,
+            0.6493
+          ]
+        },
+        {
+          "dimension": "online_purchase",
+          "variable": "ac035d1",
+          "scale": "binary 0/1",
+          "business_meaning": "e-commerce silver market headroom",
+          "italy_mean": 0.1573,
+          "sweden_mean": 0.1493,
+          "gap_se_minus_it": -0.008,
+          "gap_ci": [
+            -0.0503,
+            0.0315
+          ]
+        }
+      ]
+    }
+  ],
+  "time_to_maturity": {
+    "method": "linear extrapolation at 1pp/year (digital indicators); indicative, to be recalibrated with W6-W8 trend regression",
+    "rate_assumption_pp_per_year": 1.0,
+    "estimates": {
+      "internet_overall_years_to_close": 49.7,
+      "dentist_overall_years_to_close": 53.4
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "italy": {
+    "Fragile Resigned": {
+      "headline": "Lowest commercial priority, highest public-care priority.",
+      "detail": "Severely fragile, oldest cohort, lowest digital reach and lowest income. Limited spending power. Relevant to public home-care providers, third-sector elderly assistance, basic-tier insurance with broad eligibility. Low-margin, high-volume social services."
+    },
+    "Fragile Depressed": {
+      "headline": "Caregiver-mediated decisions; mental-health-adjacent product fit.",
+      "detail": "Comparable physical fragility to Resigned but elevated depressive load and preserved instrumental capacity. Most decisions made or filtered by family caregivers (typically daughter / spouse). Targets: caregiver-facing apps, simplified telehealth, mental-health-adjacent OTC, family-mediated insurance bundles."
+    },
+    "Moderate Isolated": {
+      "headline": "The largest invisible market — wealthy, healthy, socially under-served.",
+      "detail": "639k sample, ~3.8M individuals nationally; asset-rich, in good objective health, but digitally and socially under-integrated. Pays a measurable preventive-care deficit (-27pp dentist, -47% specialist) without an affordability barrier. Largest white-space for: navigator services, simplified digital onboarding (banking, healthcare booking, e-commerce), home-delivery wellness, community-routed financial advisory."
+    },
+    "Traditional Social": {
+      "headline": "Community-channel distribution; conservative product fit.",
+      "detail": "Smallest segment but the most socially integrated; modest internet use, low financial distress. Highest receptivity to community-mediated marketing (local associations, parishes, neighbourhood). Strong fit for traditional life-insurance, hybrid digital-physical financial services, community-organised travel, multi-generational savings products."
+    },
+    "Connected Active": {
+      "headline": "Premium target for digital-native silver economy.",
+      "detail": "Largest high-income, high-digital, high-wellbeing profile (~3.6M individuals, ~€95B aggregate annual income). Accustomed to digital channels for banking, healthcare, retail. Best fit for: private health insurance, wealth management, senior travel, premium e-commerce, digital health platforms, longevity products."
+    }
+  },
+  "sweden": {
+    "Fragile": {
+      "headline": "Mature-market analogue of Italian Fragile Resigned, with universalist coverage closing acute access gaps.",
+      "detail": "Most fragile Swedish segment but reports CASP +5.7 above the Italian counterpart, internet +55pp, dentist access in line with Swedish norm (universal). Service backbone is public; private operators target adjacencies (premium home support, family-respite services)."
+    },
+    "Social Decline": {
+      "headline": "Defined by trajectory of declining civic participation; not visible in the 10-question quiz.",
+      "detail": "Identified through the full 31-variable model on civic and organisational engagement variables. Healthy and digitally engaged on the visible quiz answers. Targets: community-rebuilding programmes, intergenerational engagement platforms, low-friction social tech."
+    },
+    "Moderate": {
+      "headline": "Mass middle of Swedish over-65 — comparable to Italian Traditional Social on wellbeing.",
+      "detail": "Largest Swedish profile by share excluding Connected Wealthy. Adequate health, average digital, moderate social integration. Reference benchmark for Italian middle-class elderly product positioning."
+    },
+    "Asset Rich": {
+      "headline": "Wealth-rich on property and savings; below-average digital reach.",
+      "detail": "Welfare-regime-specific Swedish segment (no Italian counterpart). Wealth in property and financial assets but lower internet use, smaller social network, lower verbal fluency. Reference benchmark for Italian private wealth management products targeting offline-resilient HNW seniors."
+    },
+    "Wealthy Digital": {
+      "headline": "Slightly above Swedish norm on digital and wellbeing; HNW digital-native cohort.",
+      "detail": "Welfare-regime-specific Swedish segment. Above-average internet use, cognition, quality of life. Reference for Italian premium digital-native silver products at the most affluent end."
+    },
+    "Connected Wealthy": {
+      "headline": "The Swedish reference benchmark for the Italian Connected Active.",
+      "detail": "Largest Swedish profile (30%); near-universal internet use, lowest loneliness, highest CASP and life satisfaction. The aspirational target state for Italy's Connected Active under a more mature service ecosystem."
+    }
+  }
+}
