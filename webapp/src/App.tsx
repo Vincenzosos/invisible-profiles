@@ -10,7 +10,7 @@ import Robustness from './components/Robustness';
 import Methods from './components/Methods';
 import type { View } from './types';
 
-const FINDINGS: View[] = ['atlas', 'benchmark', 'opportunity'];
+const FINDINGS: View[] = ['atlas', 'benchmark'];
 const METHODOLOGY: View[] = ['methods', 'robustness'];
 
 export default function App() {
@@ -31,12 +31,12 @@ export default function App() {
         )}
 
         {view === 'home' && <Home onNavigate={setView} />}
-        {view === 'atlas' && <Atlas />}
-        {view === 'benchmark' && <Benchmark />}
+        {view === 'atlas' && <Atlas onNavigate={setView} />}
+        {view === 'benchmark' && <Benchmark onNavigate={setView} />}
         {view === 'opportunity' && <OpportunityExplorer />}
         {view === 'profiler' && <ProfilerFlow />}
-        {view === 'robustness' && <Robustness />}
-        {view === 'methods' && <Methods />}
+        {view === 'robustness' && <Robustness onNavigate={setView} />}
+        {view === 'methods' && <Methods onNavigate={setView} />}
       </main>
       <footer className="border-t border-zinc-200 mt-20 py-8">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-500">

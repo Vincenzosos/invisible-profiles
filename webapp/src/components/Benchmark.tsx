@@ -5,6 +5,7 @@ import {
   formatNum,
   formatPP,
 } from '../lib/format';
+import type { View } from '../types';
 
 type Pair = (typeof killer.matched_pairs)[number];
 
@@ -27,24 +28,26 @@ const DIMENSION_LABELS: Record<string, string> = {
   online_purchase: 'E-commerce',
 };
 
-export default function Benchmark() {
+type Props = {
+  onNavigate?: (v: View) => void;
+};
+
+export default function Benchmark({ onNavigate }: Props) {
   const pairs = killer.matched_pairs;
 
   return (
     <section className="space-y-16">
       <header className="space-y-6 max-w-4xl">
-        <p className="eyebrow">Benchmark · Italy ↔ Sweden</p>
+        <p className="eyebrow">02 · Italy ↔ Sweden</p>
         <h1 className="display-1 text-slate-900">
-          The structural gap to a more mature welfare market.
+          The structural gap to a more mature welfare regime.
         </h1>
         <p className="text-lg text-zinc-700 leading-relaxed max-w-3xl">
           For each Italian profile we identify the closest Swedish counterpart
-          (matched-pair design) and report the gap on every dimension that maps
-          onto operator headroom. Gaps are reported in percentage points (or
-          mean differences) with 95% bootstrap confidence intervals — drawn
-          directly from the SHARE Wave 9 sample. Premium ranges from sourced
-          Italian market reviews are reported in the Opportunity Explorer for
-          context.
+          (matched-pair design) and report the gap on every dimension where
+          welfare-state design plausibly intervenes. Gaps are in percentage
+          points (or mean differences) with 95% bootstrap confidence intervals
+          — drawn directly from the SHARE Wave 9 sample.
         </p>
       </header>
 
@@ -86,6 +89,27 @@ export default function Benchmark() {
         to the Istat 2024 over-65 total (14.18M individuals). Gap CIs from
         2,000-iteration percentile bootstrap (seed = 42).
       </p>
+
+      {onNavigate && (
+        <button
+          type="button"
+          onClick={() => onNavigate('methods')}
+          className="block w-full text-left rounded-2xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 hover:border-emerald-400 transition-colors p-8 group"
+        >
+          <p className="eyebrow text-emerald-700">Continue · 03</p>
+          <p className="display-2 text-slate-900 mt-3">
+            Now see how it was built.
+          </p>
+          <p className="mt-3 text-base text-zinc-700 leading-relaxed max-w-3xl">
+            Methodology, robustness checks, and the choices made when building
+            the segmentation: the variables, the choice of k, the 4D-vs-5D
+            sensitivity, and the multi-algorithm comparison.
+          </p>
+          <p className="mt-6 text-sm font-medium text-emerald-700 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
+            Methodology →
+          </p>
+        </button>
+      )}
     </section>
   );
 }

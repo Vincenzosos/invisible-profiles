@@ -72,7 +72,7 @@ function ModePicker({
   return (
     <section className="space-y-12 max-w-3xl">
       <header className="space-y-4">
-        <p className="eyebrow">Try the model</p>
+        <p className="eyebrow">04 · Try the model</p>
         <h1 className="display-1 text-slate-900">
           Score yourself, or score a whole dataset.
         </h1>

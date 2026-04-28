@@ -16,9 +16,8 @@ const TABS: Record<Props['section'], { eyebrow: string; tabs: Tab[] }> = {
   findings: {
     eyebrow: 'The Five Segments',
     tabs: [
-      { id: 'atlas',       label: 'The profiles' },
-      { id: 'benchmark',   label: 'Italy ↔ Sweden' },
-      { id: 'opportunity', label: 'Where to act' },
+      { id: 'atlas',     label: 'The profiles' },
+      { id: 'benchmark', label: 'Italy ↔ Sweden' },
     ],
   },
   methodology: {

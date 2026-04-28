@@ -1,26 +1,26 @@
 import { useState } from 'react';
 import killer from '../data/killer_numbers.json';
-import signals from '../data/business_signals.json';
 import {
   formatEUR,
   formatIndividuals,
   formatNum,
   formatPct,
 } from '../lib/format';
+import { passportFor } from '../lib/cluster-insights';
+import type { View } from '../types';
 
 type Profile = (typeof killer.italy_profiles)[number];
-
-const ITALY_BUSINESS_SIGNALS = signals.italy as Record<
-  string,
-  { headline: string; detail: string }
->;
 
 const HERO_PROFILES = new Set([
   'Connected Active',
   'Moderate Isolated',
 ]);
 
-export default function Atlas() {
+type Props = {
+  onNavigate?: (v: View) => void;
+};
+
+export default function Atlas({ onNavigate }: Props) {
   const [openProfile, setOpenProfile] = useState<string | null>(null);
   const profiles = killer.italy_profiles;
 
@@ -37,9 +37,9 @@ export default function Atlas() {
   return (
     <section className="space-y-16">
       <header className="space-y-6 max-w-4xl">
-        <p className="eyebrow">Atlas · Italy</p>
+        <p className="eyebrow">02 · The Five Segments</p>
         <h1 className="display-1 text-slate-900">
-          Five segments. Each one a market.
+          Five segments. Each one a different chapter of ageing.
         </h1>
         <p className="text-lg text-zinc-700 leading-relaxed max-w-3xl">
           K-means clustering with k=5 on 29 standardised SHARE Wave 9
@@ -49,7 +49,7 @@ export default function Atlas() {
             killer.country_aggregates.italy.national_over65_individuals,
           )}{' '}
           Italian over-65 individuals (Istat 2024). Click any segment for the
-          full profile drilldown.
+          full passport: economics, healthcare, welfare-state translation.
         </p>
       </header>
 
@@ -92,6 +92,27 @@ export default function Atlas() {
           onClose={() => setOpenProfile(null)}
         />
       )}
+
+      {onNavigate && (
+        <button
+          type="button"
+          onClick={() => onNavigate('benchmark')}
+          className="block w-full text-left rounded-2xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 hover:border-emerald-400 transition-colors p-8 group"
+        >
+          <p className="eyebrow text-emerald-700">Continue · Italy ↔ Sweden</p>
+          <p className="display-2 text-slate-900 mt-3">
+            Now compare them across welfare regimes.
+          </p>
+          <p className="mt-3 text-base text-zinc-700 leading-relaxed max-w-3xl">
+            For each Italian profile, the matched Swedish counterpart and the
+            structural gap on healthcare, digital reach, and quality of life —
+            with 95% bootstrap confidence intervals.
+          </p>
+          <p className="mt-6 text-sm font-medium text-emerald-700 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
+            Italy ↔ Sweden →
+          </p>
+        </button>
+      )}
     </section>
   );
 }
@@ -105,7 +126,7 @@ function ProfileCard({
   hero?: boolean;
   onOpen: () => void;
 }) {
-  const signal = ITALY_BUSINESS_SIGNALS[p.profile] ?? null;
+  const passport = passportFor('italy', p.profile);
   return (
     <article
       className={[
@@ -146,14 +167,15 @@ function ProfileCard({
         <Metric label="CASP-12 mean" value={formatNum(p.casp_mean, 1)} />
       </div>
 
-      {signal && (
+      {passport && (
         <p className="text-sm text-zinc-700 leading-relaxed border-t border-zinc-100 pt-4">
-          <span className="font-medium text-slate-900">{signal.headline}</span>
+          <span className="font-medium text-slate-900">{passport.headline}</span>{' '}
+          <span className="text-zinc-600">{passport.tagline}</span>
         </p>
       )}
 
       <p className="text-xs text-emerald-700 group-hover:translate-x-1 transition-transform">
-        Full profile &rarr;
+        Full passport &rarr;
       </p>
     </article>
   );
@@ -190,7 +212,7 @@ function DrilldownModal({
   profile: Profile;
   onClose: () => void;
 }) {
-  const signal = ITALY_BUSINESS_SIGNALS[p.profile] ?? null;
+  const passport = passportFor('italy', p.profile);
 
   return (
     <div
@@ -219,10 +241,27 @@ function DrilldownModal({
           </button>
         </header>
 
-        {signal && (
-          <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-5">
-            <p className="font-medium text-slate-900 mb-2">{signal.headline}</p>
-            <p className="text-sm text-zinc-700 leading-relaxed">{signal.detail}</p>
+        {passport && (
+          <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-5 space-y-3">
+            <p className="font-medium text-slate-900">{passport.headline}</p>
+            <p className="text-sm text-zinc-700 italic leading-relaxed">
+              {passport.tagline}
+            </p>
+            {passport.action_signals.length > 0 && (
+              <ul className="space-y-2 pt-1">
+                {passport.action_signals.map((s, i) => (
+                  <li
+                    key={i}
+                    className="text-sm text-zinc-700 leading-relaxed flex gap-3"
+                  >
+                    <span className="text-emerald-700 font-mono text-xs tabular-nums mt-0.5">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span>{s}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         )}
 

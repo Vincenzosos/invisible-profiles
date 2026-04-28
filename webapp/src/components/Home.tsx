@@ -8,21 +8,12 @@ type Props = {
 
 const italy = killer.country_aggregates.italy;
 const sweden = killer.country_aggregates.sweden;
-const internetGapPP = Math.round(
-  (sweden.internet_penetration_pct - italy.internet_penetration_pct) * 100,
-);
-const dentalGapPP = Math.round(
-  (sweden.dentist_12m_pct - italy.dentist_12m_pct) * 100,
-);
-const fcCostPP = Math.round(
-  (italy.forgone_care_for_cost_pct - sweden.forgone_care_for_cost_pct) * 100,
-);
 
 export default function Home({ onNavigate }: Props) {
   return (
     <section className="space-y-20">
       <header className="space-y-8 max-w-4xl">
-        <p className="eyebrow">Italian Silver Atlas</p>
+        <p className="eyebrow">01 · Overview</p>
         <h1 className="display-1 text-slate-900">
           Italy's over-65 population is{' '}
           <span className="text-emerald-700">five segments</span>, not one.
@@ -108,76 +99,66 @@ export default function Home({ onNavigate }: Props) {
         </div>
       </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Stat
           eyebrow="Italian over-65 population"
           value={formatIndividuals(italy.national_over65_individuals)}
-          context="2024"
+          context="Istat 2024 — projected nationally"
           source="Istat, 2024"
           sourceUrl="https://demo.istat.it/"
         />
         <Stat
-          eyebrow="SHARE respondents 65+"
+          eyebrow="SHARE Wave 9 respondents 65+"
           value={`${italy.n_sample.toLocaleString()}`}
-          context={`Italian sample, post Mahalanobis screen (Sweden n = ${sweden.n_sample.toLocaleString()})`}
+          context={`Italian sample · Sweden n = ${sweden.n_sample.toLocaleString()}`}
           source="SHARE Wave 9, release 9.0.0"
-        />
-        <Stat
-          eyebrow="Internet-use gap (Italy → Sweden)"
-          value={`+${internetGapPP}pp`}
-          context={`Italy ${Math.round(italy.internet_penetration_pct * 100)}% · Sweden ${Math.round(sweden.internet_penetration_pct * 100)}% · SHARE 65+`}
-          source="SHARE Wave 9"
-          accent
-        />
-        <Stat
-          eyebrow="12-month dentist gap"
-          value={`+${dentalGapPP}pp`}
-          context={`Italy ${Math.round(italy.dentist_12m_pct * 100)}% · Sweden ${Math.round(sweden.dentist_12m_pct * 100)}%`}
-          source="SHARE Wave 9 healthcare module"
-          accent
-        />
-        <Stat
-          eyebrow="Forgone care for cost gap"
-          value={`+${fcCostPP}pp`}
-          context={`Italy ${Math.round(italy.forgone_care_for_cost_pct * 100)}% · Sweden ${Math.round(sweden.forgone_care_for_cost_pct * 100)}%`}
-          source="SHARE Wave 9 healthcare module"
         />
         <Stat
           eyebrow="Mean CASP-12 quality of life"
           value={`${italy.mean_casp.toFixed(1)} ↔ ${sweden.mean_casp.toFixed(1)}`}
-          context="Italy vs Sweden over-65 mean (scale 12-48)"
+          context="Italy vs Sweden over-65 (scale 12–48)"
           source="SHARE Wave 9 subjective module"
+          accent
         />
       </section>
 
-      <section className="space-y-6">
-        <h2 className="display-3 text-slate-900">Where to start</h2>
-        <p className="text-sm text-zinc-600 max-w-3xl">
-          The site is organised in three sections plus an interactive engine.
-          Pick the one that matches the question you are bringing.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <NavCard
-            label="The Five Segments"
-            title="Who is the Italian over-65."
-            desc="Profile by profile: share, individuals, household income and net worth medians, behavioural and digital depth, and the matched-pair gap with Sweden — all with 95% confidence intervals."
-            onClick={() => onNavigate('atlas')}
-          />
-          <NavCard
-            label="Methodology"
-            title="How the segments were built."
-            desc="The data, the variables, the choice of k, the robustness checks: 4D-vs-5D sensitivity, K-means / LCA convergence, multi-algorithm comparison, factor-analysis adequacy."
-            onClick={() => onNavigate('methods')}
-          />
-          <NavCard
-            label="Try the model"
-            title="Score yourself or a dataset."
-            desc="Ten plain-language questions return your closest profile and a soft-membership distribution. Or upload a CSV to score a whole cohort at once."
-            onClick={() => onNavigate('profiler')}
-          />
-        </div>
-      </section>
+      <NextStep
+        eyebrow="Continue · 02"
+        title="Now meet the five segments."
+        desc="Each profile in detail: share, household economics, behavioural and digital depth, healthcare engagement, and the matched-pair gap with Sweden."
+        cta="The Five Segments"
+        onClick={() => onNavigate('atlas')}
+      />
     </section>
+  );
+}
+
+function NextStep({
+  eyebrow,
+  title,
+  desc,
+  cta,
+  onClick,
+}: {
+  eyebrow: string;
+  title: string;
+  desc: string;
+  cta: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="block w-full text-left rounded-2xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 hover:border-emerald-400 transition-colors p-8 group"
+    >
+      <p className="eyebrow text-emerald-700">{eyebrow}</p>
+      <p className="display-2 text-slate-900 mt-3">{title}</p>
+      <p className="mt-3 text-base text-zinc-700 leading-relaxed max-w-3xl">{desc}</p>
+      <p className="mt-6 text-sm font-medium text-emerald-700 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
+        {cta} →
+      </p>
+    </button>
   );
 }
 
@@ -266,32 +247,5 @@ function Stat({
         )}
       </p>
     </div>
-  );
-}
-
-function NavCard({
-  label,
-  title,
-  desc,
-  onClick,
-}: {
-  label: string;
-  title: string;
-  desc: string;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="text-left rounded-2xl bg-white border border-zinc-200 p-6 hover:border-emerald-400 transition-colors group"
-    >
-      <p className="eyebrow text-emerald-700">{label}</p>
-      <p className="display-3 text-slate-900 mt-3">{title}</p>
-      <p className="mt-3 text-sm text-zinc-600 leading-relaxed">{desc}</p>
-      <p className="mt-5 text-sm text-emerald-700 group-hover:translate-x-1 transition-transform">
-        Open &rarr;
-      </p>
-    </button>
   );
 }

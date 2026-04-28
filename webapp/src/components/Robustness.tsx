@@ -1,6 +1,11 @@
 import robust from '../data/robustness.json';
+import type { View } from '../types';
 
-export default function Robustness() {
+type Props = {
+  onNavigate?: (v: View) => void;
+};
+
+export default function Robustness({ onNavigate }: Props) {
   const sens = robust.sensitivity_4d_vs_5d;
   const conv = robust.kmeans_lca_convergence;
   const fa = robust.factor_analysis_stability;
@@ -9,7 +14,7 @@ export default function Robustness() {
   return (
     <section className="space-y-16 max-w-4xl">
       <header className="space-y-4">
-        <p className="eyebrow">Robustness</p>
+        <p className="eyebrow">03 · Robustness</p>
         <h1 className="display-1 text-slate-900">
           Does the segmentation survive every reasonable alternative?
         </h1>
@@ -153,6 +158,26 @@ export default function Robustness() {
         chapter&nbsp;6 of the underlying thesis. Source data: SHARE Wave 9
         release 9.0.0; pipeline scripts in <code className="text-xs bg-zinc-100 rounded px-1.5 py-0.5">v9/</code>.
       </p>
+
+      {onNavigate && (
+        <button
+          type="button"
+          onClick={() => onNavigate('profiler')}
+          className="block w-full text-left rounded-2xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 hover:border-emerald-400 transition-colors p-8 group"
+        >
+          <p className="eyebrow text-emerald-700">Continue · 04</p>
+          <p className="display-2 text-slate-900 mt-3">
+            OK, now try the model.
+          </p>
+          <p className="mt-3 text-base text-zinc-700 leading-relaxed max-w-3xl">
+            Score yourself with ten plain-language questions, or upload a CSV
+            of your cohort and get the full segmentation in one go.
+          </p>
+          <p className="mt-6 text-sm font-medium text-emerald-700 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
+            Try the model →
+          </p>
+        </button>
+      )}
     </section>
   );
 }

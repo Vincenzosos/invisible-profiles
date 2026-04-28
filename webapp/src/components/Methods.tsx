@@ -1,23 +1,25 @@
 import killer from '../data/killer_numbers.json';
 import sources from '../data/sources.json';
 import { formatIndividuals } from '../lib/format';
+import type { View } from '../types';
 
-export default function Methods() {
+type Props = {
+  onNavigate?: (v: View) => void;
+};
+
+export default function Methods({ onNavigate }: Props) {
   const it = killer.country_aggregates.italy;
   const se = killer.country_aggregates.sweden;
   return (
     <section className="space-y-12 max-w-4xl">
       <header className="space-y-4">
-        <p className="eyebrow">Methods & data</p>
-        <h1 className="display-1 text-slate-900">How we built this</h1>
+        <p className="eyebrow">03 · Methodology</p>
+        <h1 className="display-1 text-slate-900">How the segmentation was built.</h1>
         <p className="text-lg text-zinc-700 leading-relaxed">
           The Italian Silver Atlas is built on the Survey of Health, Ageing and
           Retirement in Europe (SHARE), Wave&nbsp;9, fielded 2021–2022. Profile
-          shares are projected to the national over-65 population using
-          Istat (Italy) 2024 totals. Per-segment metrics are direct
-          measurements; aggregate € figures derived from "median × individual
-          count" formulas have been deliberately removed because their
-          methodology cannot be defended cell-by-cell.
+          shares are projected to the national over-65 population using Istat
+          (Italy) 2024 totals.
         </p>
       </header>
 
@@ -67,74 +69,6 @@ export default function Methods() {
         </p>
       </Section>
 
-      <Section title="Numbers we deliberately do not show">
-        <p className="text-sm text-zinc-700 leading-relaxed">
-          We could compute aggregate € figures by multiplying SHARE-derived
-          per-household medians by Istat individual counts (e.g. €17,190 ×
-          14.18M = €243.8B). We choose not to display these numbers because
-          their methodology has documented bias: medians under-state means
-          for skewed distributions, and household-level values multiplied by
-          individual counts double-count multi-senior households.
-        </p>
-        <p className="text-sm text-zinc-700 leading-relaxed">
-          We also do not display single-point opportunity €. Sizing requires
-          conversion-rate and penetration assumptions that are vertical-
-          specific elasticity questions, not stable industry constants. The
-          Opportunity Explorer reports{' '}
-          <span className="font-medium">sourced market premium ranges</span>{' '}
-          (e.g. €150–500 / year for Italian individual senior dental
-          insurance) and the segment size in individuals; the operator
-          multiplying these against their own conversion model is the right
-          place for that calculation.
-        </p>
-      </Section>
-
-      <Section title="Sourced market premium ranges">
-        <p className="text-sm text-zinc-700 leading-relaxed">
-          Where the Opportunity Explorer surfaces a € range, it comes from
-          one of the published sources below. Ranges are reported as data
-          points, not as multiplicands.
-        </p>
-        <div className="rounded-xl bg-zinc-50 border border-zinc-200 p-4 mt-3">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="text-left border-b border-zinc-200">
-                <th className="py-2 pr-3 eyebrow">Item</th>
-                <th className="py-2 pr-3 eyebrow text-right">Range</th>
-                <th className="py-2 pr-3 eyebrow">Sources</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-zinc-100">
-              <tr>
-                <td className="py-2 pr-3 text-slate-900">Senior individual dental insurance</td>
-                <td className="py-2 pr-3 text-right tabular-nums">€150–500 / yr</td>
-                <td className="py-2 pr-3 text-xs text-zinc-600">ANIA, ANDI, GIMBE</td>
-              </tr>
-              <tr>
-                <td className="py-2 pr-3 text-slate-900">Private specialist consultation</td>
-                <td className="py-2 pr-3 text-right tabular-nums">€100–450 / yr</td>
-                <td className="py-2 pr-3 text-xs text-zinc-600">Censis 2024, market reviewers</td>
-              </tr>
-              <tr>
-                <td className="py-2 pr-3 text-slate-900">Senior OTC + adherence per individual</td>
-                <td className="py-2 pr-3 text-right tabular-nums">€60–180 / yr</td>
-                <td className="py-2 pr-3 text-xs text-zinc-600">AIFA OsMed</td>
-              </tr>
-              <tr>
-                <td className="py-2 pr-3 text-slate-900">Wealth-management all-in fee</td>
-                <td className="py-2 pr-3 text-right tabular-nums">0.5–1.5% AUM / yr</td>
-                <td className="py-2 pr-3 text-xs text-zinc-600">AIPB, asset_mgmt_fees</td>
-              </tr>
-              <tr>
-                <td className="py-2 pr-3 text-slate-900">RSA / senior living monthly</td>
-                <td className="py-2 pr-3 text-right tabular-nums">€1,500–3,000 / mo</td>
-                <td className="py-2 pr-3 text-xs text-zinc-600">RSA market 2024</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </Section>
-
       <Section title="Profiler engine in the browser">
         <p className="text-sm text-zinc-700 leading-relaxed">
           The Profiler ships the K-means centroids and per-variable raw means
@@ -163,11 +97,6 @@ export default function Methods() {
             (EUR for Italy; in Sweden harmonised to EUR per SHARE codebook).
             Verified for plausibility against SCB 2022 over-65 median
             household income.
-          </li>
-          <li>
-            Customer-level integration (CSV import, API scoring) is documented
-            as architecture in chapter 8 of the underlying thesis but not
-            implemented in this build.
           </li>
         </ul>
       </Section>
@@ -215,14 +144,43 @@ export default function Methods() {
 
       <Section title="Reproducibility">
         <p className="text-sm text-zinc-700 leading-relaxed">
-          The full R pipeline (22 numbered scripts) and the Python market-
-          sizing script (<code className="text-xs bg-zinc-100 rounded px-1.5 py-0.5">
-            v9/23_killer_numbers.py
-          </code>) are available in the GitHub repository linked from the
-          footer. Random seeds are fixed throughout. Total runtime from raw
-          SHARE files to webapp data: ~40 minutes on a standard laptop.
+          The full R pipeline (22 numbered scripts) is available in the GitHub
+          repository linked from the footer. Random seeds are fixed throughout.
+          Total runtime from raw SHARE files to webapp data: ~40 minutes on a
+          standard laptop.
         </p>
       </Section>
+
+      <p className="text-xs text-zinc-500 leading-relaxed pt-4 border-t border-zinc-200">
+        <span className="font-medium text-zinc-700">A note on numbers we do not show.</span>{' '}
+        Aggregate € figures derived from "median × individual count" formulas
+        (e.g. €17,190 × 14.18M = €243.8B) are deliberately removed:
+        household-level medians multiplied by individual counts double-count
+        multi-senior households and under-state means for skewed distributions.
+        Per-segment metrics on the site are direct measurements with
+        confidence intervals.
+      </p>
+
+      {onNavigate && (
+        <button
+          type="button"
+          onClick={() => onNavigate('profiler')}
+          className="block w-full text-left rounded-2xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 hover:border-emerald-400 transition-colors p-8 group"
+        >
+          <p className="eyebrow text-emerald-700">Continue · 04</p>
+          <p className="display-2 text-slate-900 mt-3">
+            OK, now try the model.
+          </p>
+          <p className="mt-3 text-base text-zinc-700 leading-relaxed max-w-3xl">
+            Score yourself with ten plain-language questions, or upload a CSV
+            of your cohort and get the full segmentation in one go: smart
+            column mapping, per-row enrichment, cohort vs SHARE benchmark.
+          </p>
+          <p className="mt-6 text-sm font-medium text-emerald-700 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
+            Try the model →
+          </p>
+        </button>
+      )}
     </section>
   );
 }
