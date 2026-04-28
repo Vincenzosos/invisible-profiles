@@ -4,24 +4,50 @@ import type { Country } from '../lib/profiler';
 
 type ChoiceOption = { label: string; value: number };
 
-type Question =
-  | {
-      var: string;
-      dim: string;
-      prompt: string;
-      helper?: string;
-      type: 'choices';
-      options: ChoiceOption[];
-    }
-  | {
-      var: string;
-      dim: string;
-      prompt: string;
-      helper?: string;
-      type: 'count';
-    };
+type Question = {
+  id: string;
+  var: string;
+  dim: string;
+  prompt: string;
+  helper?: string;
+  type: 'choices' | 'count';
+  options?: ChoiceOption[];
+};
 
 const QUESTIONS = questionsData.questions as Question[];
+const AGGREGATIONS = (questionsData.aggregations ?? {}) as Record<
+  string,
+  'sum' | 'identity'
+>;
+
+// Pre-compute the count of questions per SHARE variable (used to label
+// "n of m" sub-question hints in the UI).
+const VAR_QUESTION_COUNT: Record<string, number> = QUESTIONS.reduce(
+  (acc, q) => {
+    acc[q.var] = (acc[q.var] ?? 0) + 1;
+    return acc;
+  },
+  {} as Record<string, number>,
+);
+
+// Aggregate per-question answers (keyed by question.id) into per-variable
+// SHARE-coded values that matchProfile() expects (keyed by var).
+function aggregateAnswers(
+  perQuestion: Record<string, number>,
+): Record<string, number> {
+  const out: Record<string, number> = {};
+  for (const q of QUESTIONS) {
+    if (!(q.id in perQuestion)) continue;
+    const v = perQuestion[q.id];
+    const agg = AGGREGATIONS[q.var] ?? 'identity';
+    if (agg === 'sum') {
+      out[q.var] = (out[q.var] ?? 0) + v;
+    } else {
+      out[q.var] = v; // last write wins for non-aggregated; only one Q per var anyway
+    }
+  }
+  return out;
+}
 
 type Props = {
   country: Country;
@@ -35,20 +61,22 @@ export default function Quiz({ country, onComplete, onBack }: Props) {
 
   const total = QUESTIONS.length;
   const q = QUESTIONS[idx];
-  const answered = q.var in answers;
+  const answered = q.id in answers;
 
   const setAns = (v: number) => {
-    setAnswers((prev) => ({ ...prev, [q.var]: v }));
+    setAnswers((prev) => ({ ...prev, [q.id]: v }));
   };
 
   const next = () => {
     if (idx < total - 1) setIdx(idx + 1);
-    else onComplete(answers);
+    else onComplete(aggregateAnswers(answers));
   };
   const back = () => {
     if (idx > 0) setIdx(idx - 1);
     else onBack();
   };
+
+  const isMultiPart = (VAR_QUESTION_COUNT[q.var] ?? 1) > 1;
 
   return (
     <section className="space-y-8 max-w-2xl">
@@ -66,16 +94,23 @@ export default function Quiz({ country, onComplete, onBack }: Props) {
       </div>
 
       <article className="rounded-2xl bg-white border border-zinc-200 p-8 space-y-6">
-        <p className="eyebrow">{q.dim} dimension</p>
+        <p className="eyebrow">
+          {q.dim}
+          {isMultiPart && (
+            <span className="text-zinc-400 normal-case tracking-normal ml-2 text-[10px]">
+              (sub-question contributes to one dimension)
+            </span>
+          )}
+        </p>
         <h2 className="display-3 text-slate-900">{q.prompt}</h2>
         {q.helper && (
           <p className="text-sm text-zinc-600 leading-relaxed">{q.helper}</p>
         )}
 
-        {q.type === 'choices' && (
+        {q.type === 'choices' && q.options && (
           <div className="grid grid-cols-1 gap-2.5">
             {q.options.map((opt) => {
-              const selected = answers[q.var] === opt.value;
+              const selected = answers[q.id] === opt.value;
               return (
                 <button
                   key={opt.label}
@@ -102,11 +137,11 @@ export default function Quiz({ country, onComplete, onBack }: Props) {
               min={0}
               max={100}
               step={1}
-              value={answers[q.var] ?? ''}
+              value={answers[q.id] ?? ''}
               onChange={(e) =>
                 e.target.value === ''
                   ? setAnswers((prev) => {
-                      const { [q.var]: _drop, ...rest } = prev;
+                      const { [q.id]: _drop, ...rest } = prev;
                       return rest;
                     })
                   : setAns(Number(e.target.value))
@@ -114,9 +149,6 @@ export default function Quiz({ country, onComplete, onBack }: Props) {
               className="w-full rounded-xl border border-zinc-300 px-4 py-3 text-lg text-slate-900 focus:outline-none focus:border-emerald-500"
               placeholder="Type a number"
             />
-            <p className="text-xs text-zinc-500">
-              Adults typically name 10–25 different animals in 60 seconds.
-            </p>
           </div>
         )}
       </article>

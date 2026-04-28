@@ -1,14 +1,20 @@
 {
   "metadata": {
-    "purpose": "Plain-language wording for the 10 Profiler questions. Each question maps to a SHARE Wave 9 variable used by the K-means centroids. Choice values reproduce the SHARE coding so that downstream z-score standardisation (lib/profiler.ts) is correct.",
-    "audience": "Anyone — designed to be answerable without specialist knowledge. Researchers and analysts looking at the technical labels can refer to data/centroids.json key_variables."
+    "purpose": "Profiler questions in plain language. Each question carries an id and a SHARE variable (var). When multiple questions share a var, the Quiz aggregates per the aggregations map below before passing answers to matchProfile().",
+    "audience": "Anyone — designed to be answerable without specialist knowledge.",
+    "compiled": "2026-04-28"
+  },
+  "aggregations": {
+    "eurod": "sum",
+    "casp": "sum"
   },
   "questions": [
     {
+      "id": "sphus",
       "var": "sphus",
       "dim": "Health",
       "prompt": "How would you rate your overall health right now?",
-      "helper": "Self-rated health. SHARE uses a five-step scale where 1 is excellent and 5 is poor.",
+      "helper": "Self-rated health on the standard five-step scale (1 = excellent, 5 = poor).",
       "type": "choices",
       "options": [
         { "label": "Excellent",  "value": 1 },
@@ -19,49 +25,81 @@
       ]
     },
     {
+      "id": "eurod_humor",
       "var": "eurod",
-      "dim": "Health",
-      "prompt": "Over the last month, how often have you felt sad, down, or in low spirits?",
-      "helper": "Approximation of the EURO-D depression scale (0–12). Pick the option that best describes the past four weeks.",
+      "dim": "Health · depression 1/3",
+      "prompt": "Over the last month, how often have you felt sad, depressed, or in low spirits?",
+      "helper": "First of three short questions that together approximate the EURO-D depression scale.",
       "type": "choices",
       "options": [
-        { "label": "Never",                  "value": 0 },
-        { "label": "Rarely",                 "value": 2 },
-        { "label": "Sometimes",              "value": 5 },
-        { "label": "Often",                  "value": 8 },
-        { "label": "Most of the time",       "value": 11 }
+        { "label": "Never",                   "value": 0 },
+        { "label": "Rarely",                  "value": 1 },
+        { "label": "Sometimes",               "value": 3 },
+        { "label": "Most of the time",        "value": 4 }
       ]
     },
     {
+      "id": "eurod_anhedonia",
+      "var": "eurod",
+      "dim": "Health · depression 2/3",
+      "prompt": "How often do you find pleasure in things you used to enjoy — hobbies, conversation, food, family time?",
+      "helper": "Anhedonia component. Higher when pleasure is reduced or absent.",
+      "type": "choices",
+      "options": [
+        { "label": "Almost always — same as before", "value": 0 },
+        { "label": "Often",                          "value": 1 },
+        { "label": "Sometimes",                      "value": 3 },
+        { "label": "Rarely or never",                "value": 4 }
+      ]
+    },
+    {
+      "id": "eurod_sleep",
+      "var": "eurod",
+      "dim": "Health · depression 3/3",
+      "prompt": "How is your sleep lately?",
+      "helper": "Sleep disturbance is a core depression marker.",
+      "type": "choices",
+      "options": [
+        { "label": "Very good",                          "value": 0 },
+        { "label": "Good",                               "value": 1 },
+        { "label": "Restless or wake up often",          "value": 3 },
+        { "label": "Very poor — barely sleep",           "value": 4 }
+      ]
+    },
+    {
+      "id": "iadl",
       "var": "iadl",
-      "dim": "Health",
-      "prompt": "Do you need help with everyday tasks like cooking, taking medication, shopping, or managing money?",
-      "helper": "Instrumental Activities of Daily Living (IADL): how many of these tasks need outside help (0 = fully independent, 7 = needs help with all).",
+      "dim": "Health · independence",
+      "prompt": "Which best describes your independence in daily tasks like cooking, taking medication, shopping, or managing money?",
+      "helper": "IADL count: 0 = fully independent; higher means help is needed in more areas.",
       "type": "choices",
       "options": [
-        { "label": "I'm fully independent",            "value": 0 },
-        { "label": "Need help with 1–2 of these",      "value": 2 },
-        { "label": "Need help with 3–4 of these",      "value": 4 },
-        { "label": "Need help with 5 or more",         "value": 6 }
+        { "label": "Fully independent in all of them",        "value": 0 },
+        { "label": "Need a little help with one task",        "value": 2 },
+        { "label": "Need help with two or three tasks",       "value": 4 },
+        { "label": "Need help with four or more",             "value": 6 },
+        { "label": "Need help with all of them",              "value": 7 }
       ]
     },
     {
+      "id": "fdistress",
       "var": "fdistress",
       "dim": "Economic",
-      "prompt": "At the end of the month, how is your financial situation?",
-      "helper": "How easily the household makes ends meet. 1 = with great difficulty, 4 = easily.",
+      "prompt": "At the end of the month, how easily does your household make ends meet?",
+      "helper": "1 = with great difficulty, 4 = easily.",
       "type": "choices",
       "options": [
-        { "label": "Great difficulty",   "value": 1 },
-        { "label": "Some difficulty",    "value": 2 },
-        { "label": "Fairly easily",      "value": 3 },
-        { "label": "Easily",             "value": 4 }
+        { "label": "With great difficulty",   "value": 1 },
+        { "label": "With some difficulty",    "value": 2 },
+        { "label": "Fairly easily",           "value": 3 },
+        { "label": "Easily",                  "value": 4 }
       ]
     },
     {
+      "id": "internet",
       "var": "internet",
       "dim": "Digital",
-      "prompt": "In the last 7 days, have you used the internet — for any reason (email, news, messaging, banking, shopping, video calls)?",
+      "prompt": "In the last 7 days, have you used the internet for any reason — email, news, messaging, banking, video calls?",
       "helper": "Even a single use in the past week counts as Yes.",
       "type": "choices",
       "options": [
@@ -70,46 +108,98 @@
       ]
     },
     {
+      "id": "sn_size_w9",
       "var": "sn_size_w9",
       "dim": "Social",
       "prompt": "How many people are in your close circle — family or friends you'd talk to about something important?",
-      "helper": "Size of the social network (1–7). Pick the closest option even if you're between two.",
+      "helper": "Pick the option closest to your situation. Acquaintances and casual contacts don't count.",
       "type": "choices",
       "options": [
-        { "label": "Just 1 person",     "value": 1 },
-        { "label": "2 people",          "value": 2 },
-        { "label": "3 people",          "value": 3 },
-        { "label": "4 people",          "value": 4 },
-        { "label": "5–6 people",        "value": 5.5 },
-        { "label": "7 or more",         "value": 7 }
+        { "label": "Just one person",     "value": 1 },
+        { "label": "Two people",          "value": 2 },
+        { "label": "Three people",        "value": 3 },
+        { "label": "Four people",         "value": 4 },
+        { "label": "Five or six",         "value": 5.5 },
+        { "label": "Seven or more",       "value": 7 }
       ]
     },
     {
+      "id": "fluency",
       "var": "fluency",
       "dim": "Cognitive",
-      "prompt": "Quick test: in the next 60 seconds, how many different animals can you name?",
-      "helper": "Verbal fluency. Type the count (most adults score between 10 and 25). If you don't want to test, type your best estimate.",
-      "type": "count"
-    },
-    {
-      "var": "casp",
-      "dim": "Subjective",
-      "prompt": "Looking at your life right now, how often do the things you do feel worthwhile and within your control?",
-      "helper": "CASP-12 quality of life (12–48). Higher means more autonomy, control, pleasure, and self-realisation.",
+      "prompt": "When you speak, how easily do words come to you — finding the right word, names, places?",
+      "helper": "Self-rated proxy for verbal fluency. Replaces the 60-second animal-naming test that doesn't work in a static form.",
       "type": "choices",
       "options": [
-        { "label": "Rarely or never",         "value": 16 },
-        { "label": "Sometimes",               "value": 24 },
-        { "label": "Often",                   "value": 32 },
-        { "label": "Most of the time",        "value": 40 },
-        { "label": "Almost always",           "value": 46 }
+        { "label": "Very easily, almost instantly",          "value": 22 },
+        { "label": "Usually quickly",                        "value": 18 },
+        { "label": "Sometimes I have to search a moment",    "value": 15 },
+        { "label": "Often I struggle to find the word",      "value": 11 },
+        { "label": "Frequently the word just won't come",    "value": 8 }
       ]
     },
     {
+      "id": "casp_control",
+      "var": "casp",
+      "dim": "Subjective · CASP 1/4",
+      "prompt": "How often do you feel in control of your life and your decisions?",
+      "helper": "Control subscale of CASP-12. First of four questions on quality of life.",
+      "type": "choices",
+      "options": [
+        { "label": "Almost always", "value": 12 },
+        { "label": "Often",         "value": 9 },
+        { "label": "Sometimes",     "value": 6 },
+        { "label": "Rarely",        "value": 3 }
+      ]
+    },
+    {
+      "id": "casp_autonomy",
+      "var": "casp",
+      "dim": "Subjective · CASP 2/4",
+      "prompt": "How free do you feel to do what you want with your time and your day?",
+      "helper": "Autonomy subscale.",
+      "type": "choices",
+      "options": [
+        { "label": "Almost always", "value": 12 },
+        { "label": "Often",         "value": 9 },
+        { "label": "Sometimes",     "value": 6 },
+        { "label": "Rarely",        "value": 3 }
+      ]
+    },
+    {
+      "id": "casp_pleasure",
+      "var": "casp",
+      "dim": "Subjective · CASP 3/4",
+      "prompt": "How often do you find what you do enjoyable and rewarding?",
+      "helper": "Pleasure subscale.",
+      "type": "choices",
+      "options": [
+        { "label": "Almost always", "value": 12 },
+        { "label": "Often",         "value": 9 },
+        { "label": "Sometimes",     "value": 6 },
+        { "label": "Rarely",        "value": 3 }
+      ]
+    },
+    {
+      "id": "casp_self_realization",
+      "var": "casp",
+      "dim": "Subjective · CASP 4/4",
+      "prompt": "How often do you feel you're doing things that matter to you and that you're learning or growing?",
+      "helper": "Self-realization subscale.",
+      "type": "choices",
+      "options": [
+        { "label": "Almost always", "value": 12 },
+        { "label": "Often",         "value": 9 },
+        { "label": "Sometimes",     "value": 6 },
+        { "label": "Rarely",        "value": 3 }
+      ]
+    },
+    {
+      "id": "loneliness",
       "var": "loneliness",
       "dim": "Subjective",
       "prompt": "How often do you feel lonely?",
-      "helper": "UCLA loneliness short scale (3–9). Three states summarised here.",
+      "helper": "UCLA loneliness short scale (3 = hardly ever, 9 = often).",
       "type": "choices",
       "options": [
         { "label": "Hardly ever or never", "value": 3 },
@@ -118,6 +208,7 @@
       ]
     },
     {
+      "id": "hope_future",
       "var": "hope_future",
       "dim": "Subjective",
       "prompt": "Do you have things you look forward to or hope for in the coming years?",
