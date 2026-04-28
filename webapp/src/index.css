@@ -1,1 +1,39 @@
 @import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+ * Italian Silver Atlas — design tokens
+ *
+ * Single accent (amber) for opportunity highlights. Warm-neutral surfaces.
+ * Display typography uses tighter tracking and larger sizes for hero
+ * metrics; body uses default Tailwind sans.
+ * ------------------------------------------------------------------------ */
+
+@theme {
+  --color-surface: oklch(98% 0.005 80);          /* warm stone-50 */
+  --color-surface-raised: oklch(100% 0 0);       /* white */
+  --color-border: oklch(91% 0.005 80);           /* warm stone-200 */
+  --color-border-strong: oklch(82% 0.008 80);    /* warm stone-300 */
+  --color-text: oklch(22% 0.02 250);             /* deep slate */
+  --color-text-muted: oklch(50% 0.015 80);       /* warm stone-600 */
+  --color-text-subtle: oklch(62% 0.012 80);      /* warm stone-500 */
+  --color-accent: oklch(76% 0.16 70);            /* amber-500 */
+  --color-accent-strong: oklch(58% 0.13 60);     /* amber-700 */
+  --color-positive: oklch(56% 0.13 160);         /* emerald-600 */
+  --color-positive-soft: oklch(94% 0.05 160);    /* emerald-50 */
+}
+
+html, body {
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+/* Headline display tracking */
+.display-1 { font-size: clamp(2.5rem, 5vw, 3.75rem); line-height: 1.05; letter-spacing: -0.025em; font-weight: 600; }
+.display-2 { font-size: clamp(1.875rem, 3.5vw, 2.5rem); line-height: 1.1; letter-spacing: -0.02em; font-weight: 600; }
+.display-3 { font-size: clamp(1.5rem, 2.5vw, 1.875rem); line-height: 1.15; letter-spacing: -0.015em; font-weight: 600; }
+
+.metric-hero { font-size: clamp(2rem, 4vw, 3rem); line-height: 1; letter-spacing: -0.025em; font-weight: 600; font-variant-numeric: tabular-nums; }
+.metric { font-size: 1.5rem; line-height: 1.1; letter-spacing: -0.01em; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.eyebrow { font-size: 0.6875rem; line-height: 1; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 500; color: var(--color-text-subtle); }

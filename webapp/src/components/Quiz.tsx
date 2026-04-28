@@ -46,25 +46,23 @@ export default function Quiz({ country, keyVariables, onComplete, onBack }: Prop
   };
 
   return (
-    <section className="space-y-8">
-      <div className="flex items-center justify-between text-xs text-slate-500">
-        <span className="uppercase tracking-wide">{country}</span>
-        <span>
+    <section className="space-y-8 max-w-2xl">
+      <div className="flex items-center justify-between text-xs">
+        <span className="eyebrow">{country}</span>
+        <span className="eyebrow">
           Question {idx + 1} of {total}
         </span>
       </div>
-      <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
+      <div className="h-1 w-full bg-stone-200 rounded-full overflow-hidden">
         <div
-          className="h-full bg-slate-700 transition-all"
+          className="h-full bg-amber-500 transition-all"
           style={{ width: `${((idx + 1) / total) * 100}%` }}
         />
       </div>
 
-      <article className="rounded-2xl bg-white border border-slate-200 p-8 shadow-sm space-y-6">
-        <p className="text-xs uppercase tracking-wide text-slate-500">
-          {q.dim} dimension
-        </p>
-        <h2 className="text-xl font-medium leading-snug text-slate-900">{q.label}</h2>
+      <article className="rounded-2xl bg-white border border-stone-200 p-8 space-y-6">
+        <p className="eyebrow">{q.dim} dimension</p>
+        <h2 className="display-3 text-slate-900">{q.label}</h2>
 
         {scale.kind === 'binary' && (
           <div className="grid grid-cols-2 gap-3">
@@ -77,10 +75,10 @@ export default function Quiz({ country, keyVariables, onComplete, onBack }: Prop
                 type="button"
                 onClick={() => setAns(opt.value)}
                 className={[
-                  'rounded-xl px-6 py-4 border transition',
+                  'rounded-xl px-6 py-4 border transition-colors',
                   answers[q.var] === opt.value
                     ? 'border-slate-900 bg-slate-900 text-white'
-                    : 'border-slate-300 bg-white text-slate-900 hover:border-slate-500',
+                    : 'border-stone-300 bg-white text-slate-900 hover:border-slate-500',
                 ].join(' ')}
               >
                 {opt.label}
@@ -104,7 +102,7 @@ export default function Quiz({ country, keyVariables, onComplete, onBack }: Prop
                   })
                 : setAns(Number(e.target.value))
             }
-            className="w-full rounded-xl border border-slate-300 px-4 py-3 text-lg text-slate-900 focus:outline-none focus:border-slate-700"
+            className="w-full rounded-xl border border-stone-300 px-4 py-3 text-lg text-slate-900 focus:outline-none focus:border-amber-500"
             placeholder="0 – 50"
           />
         )}
@@ -118,11 +116,11 @@ export default function Quiz({ country, keyVariables, onComplete, onBack }: Prop
               step={1}
               value={answers[q.var] ?? Math.round((scale.min + scale.max) / 2)}
               onChange={(e) => setAns(Number(e.target.value))}
-              className="w-full accent-slate-900"
+              className="w-full accent-amber-500"
             />
-            <div className="flex items-center justify-between text-sm text-slate-500">
+            <div className="flex items-center justify-between text-sm text-stone-500">
               <span>{scale.min}</span>
-              <span className="text-base font-medium text-slate-900 tabular-nums">
+              <span className="text-lg font-semibold text-slate-900 tabular-nums">
                 {answers[q.var] ?? '—'}
               </span>
               <span>{scale.max}</span>
@@ -135,7 +133,7 @@ export default function Quiz({ country, keyVariables, onComplete, onBack }: Prop
         <button
           type="button"
           onClick={back}
-          className="rounded-xl border border-slate-300 px-5 py-2.5 text-slate-700 hover:bg-white"
+          className="rounded-xl border border-stone-300 px-5 py-2.5 text-stone-700 hover:bg-white hover:text-slate-900 transition-colors"
         >
           {idx === 0 ? 'Cancel' : 'Back'}
         </button>
@@ -143,7 +141,7 @@ export default function Quiz({ country, keyVariables, onComplete, onBack }: Prop
           type="button"
           onClick={next}
           disabled={!answered}
-          className="rounded-xl bg-slate-900 text-white px-6 py-2.5 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition"
+          className="rounded-xl bg-slate-900 text-white px-6 py-2.5 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
           {idx === total - 1 ? 'See result' : 'Next'}
         </button>

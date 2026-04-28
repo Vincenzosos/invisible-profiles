@@ -5,32 +5,46 @@ import Atlas from './components/Atlas';
 import Benchmark from './components/Benchmark';
 import OpportunityExplorer from './components/OpportunityExplorer';
 import ProfilerFlow from './components/ProfilerFlow';
+import Methods from './components/Methods';
 import type { View } from './types';
 
 export default function App() {
   const [view, setView] = useState<View>('home');
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
+    <div className="min-h-screen text-slate-900">
       <NavBar active={view} onNavigate={setView} />
-      <main className="max-w-6xl mx-auto py-8 sm:py-12 px-4 sm:px-6">
+      <main className="max-w-6xl mx-auto py-12 sm:py-16 px-5 sm:px-8">
         {view === 'home' && <Home onNavigate={setView} />}
         {view === 'atlas' && <Atlas />}
         {view === 'benchmark' && <Benchmark />}
         {view === 'opportunity' && <OpportunityExplorer />}
         {view === 'profiler' && <ProfilerFlow />}
+        {view === 'methods' && <Methods />}
       </main>
-      <footer className="border-t border-slate-200 mt-16 py-6 text-center text-xs text-slate-500">
-        Italian Silver Atlas · MSc thesis (Bocconi EMIT, course 20570) ·
-        Built on SHARE Wave 9, Istat 2024, SCB 2024 ·{' '}
-        <a
-          className="underline-offset-4 hover:underline"
-          href="https://github.com/Vincenzosos/invisible-profiles"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          source
-        </a>
+      <footer className="border-t border-stone-200 mt-20 py-8">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 flex flex-wrap items-center justify-between gap-3 text-xs text-stone-500">
+          <span>
+            Italian Silver Atlas · MSc thesis, Bocconi EMIT
+          </span>
+          <div className="flex items-center gap-4">
+            <button
+              type="button"
+              onClick={() => setView('methods')}
+              className="hover:text-slate-900 transition-colors"
+            >
+              Methods & data
+            </button>
+            <a
+              className="hover:text-slate-900 transition-colors"
+              href="https://github.com/Vincenzosos/invisible-profiles"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Source
+            </a>
+          </div>
+        </div>
       </footer>
     </div>
   );

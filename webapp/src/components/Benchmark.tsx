@@ -20,79 +20,79 @@ const ITALY_BUSINESS_SIGNALS = signals.italy as Record<
 >;
 
 const DIMENSION_LABELS: Record<string, string> = {
-  dentist_12m: 'Preventive dental care (12m)',
+  dentist_12m: 'Preventive dental (12m)',
   internet: 'Internet penetration',
   forgone_cost: 'Forgone care for cost',
-  specialist: 'Private specialist contacts',
-  casp: 'CASP-12 quality of life',
+  specialist: 'Private specialist',
+  casp: 'CASP-12 wellbeing',
   internet_banking: 'Online banking',
-  online_purchase: 'E-commerce / online purchase',
+  online_purchase: 'E-commerce',
 };
 
 export default function Benchmark() {
   const pairs = killer.matched_pairs;
   const opportunities = useMemo(() => buildOpportunityRanking(pairs), [pairs]);
+  const totalEur = opportunities.reduce(
+    (acc, o) => acc + o.opportunityEur,
+    0,
+  );
 
   return (
-    <section className="space-y-10">
-      <header className="space-y-3 max-w-4xl">
-        <p className="text-xs uppercase tracking-wide text-slate-500">
-          Benchmark · Italy ↔ Sweden
-        </p>
-        <h1 className="text-3xl font-semibold tracking-tight text-slate-900">
-          Operational gaps to Europe's most mature elderly-services market
+    <section className="space-y-16">
+      <header className="space-y-6 max-w-4xl">
+        <p className="eyebrow">Benchmark · Italy ↔ Sweden</p>
+        <h1 className="display-1 text-slate-900">
+          Where the gap to the mature market pays.
         </h1>
-        <p className="text-slate-700 leading-relaxed">
-          For each Italian profile, we identify the closest Swedish counterpart
-          (matched-pair design from chapter 5) and quantify the gap on the
-          dimensions that map onto market headroom: dental coverage, digital
-          reach, private specialist consultation, online banking and
-          e-commerce, and subjective quality of life. Where a sensible
-          €-per-uptake assumption exists, we size the addressable
-          opportunity.
+        <p className="text-lg text-stone-700 leading-relaxed max-w-3xl">
+          For each Italian profile we identify the closest Swedish counterpart
+          and quantify the gap on dental coverage, digital reach, private
+          specialist consultation, online banking and CASP-12 wellbeing. Where
+          a defensible €-per-uptake assumption exists, the gap is sized as
+          addressable opportunity for Italian operators.
         </p>
       </header>
 
-      <section className="rounded-2xl bg-white border border-slate-200 p-6 space-y-4">
-        <h2 className="text-lg font-semibold text-slate-900">
-          Top opportunities, ranked
-        </h2>
-        <p className="text-sm text-slate-600 max-w-3xl">
-          Opportunity size = max(0, Sweden − Italy gap) × Italian segment size ×
-          €-per-uptake assumption. Computed only on dimensions where uptake
-          monetisation is a defensible single-product proxy (dental, specialist
-          consultation). Other gaps are reported below for context but not
-          monetised here.
-        </p>
-        <div className="overflow-x-auto">
+      <section className="rounded-2xl bg-amber-50 border border-amber-200 p-8 space-y-6">
+        <header className="flex items-baseline justify-between flex-wrap gap-4">
+          <div>
+            <p className="eyebrow text-amber-700">Top opportunities, ranked</p>
+            <h2 className="display-3 text-slate-900 mt-2">
+              €{(totalEur / 1e6).toFixed(0)}M / year addressable from monetised gaps
+            </h2>
+          </div>
+        </header>
+        <div className="overflow-x-auto -mx-2">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-left text-xs uppercase tracking-wide text-slate-500 border-b border-slate-200">
-                <th className="py-2.5 pr-3">Rank</th>
-                <th className="py-2.5 pr-3">Pair</th>
-                <th className="py-2.5 pr-3">Dimension</th>
-                <th className="py-2.5 pr-3 text-right">Gap</th>
-                <th className="py-2.5 pr-3 text-right">Segment size</th>
-                <th className="py-2.5 pr-3 text-right">Opportunity €/y</th>
+              <tr className="text-left text-stone-600 border-b border-amber-200">
+                <th className="py-3 px-2 eyebrow">#</th>
+                <th className="py-3 px-2 eyebrow">Pair</th>
+                <th className="py-3 px-2 eyebrow">Dimension</th>
+                <th className="py-3 px-2 eyebrow text-right">Gap</th>
+                <th className="py-3 px-2 eyebrow text-right">Segment</th>
+                <th className="py-3 px-2 eyebrow text-right">Opportunity</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-amber-100">
               {opportunities.map((o, i) => (
                 <tr key={`${o.pair}-${o.dimension}`}>
-                  <td className="py-2.5 pr-3 text-slate-500 tabular-nums">
+                  <td className="py-3 px-2 text-stone-500 tabular-nums">
                     {i + 1}
                   </td>
-                  <td className="py-2.5 pr-3 text-slate-900">{o.pair}</td>
-                  <td className="py-2.5 pr-3 text-slate-700">
+                  <td className="py-3 px-2 text-slate-900 font-medium">
+                    {o.pair}
+                  </td>
+                  <td className="py-3 px-2 text-stone-700">
                     {DIMENSION_LABELS[o.dimension] ?? o.dimension}
                   </td>
-                  <td className="py-2.5 pr-3 text-right tabular-nums">
+                  <td className="py-3 px-2 text-right tabular-nums text-stone-700">
                     {formatPP(o.gap)}
                   </td>
-                  <td className="py-2.5 pr-3 text-right tabular-nums text-slate-700">
+                  <td className="py-3 px-2 text-right tabular-nums text-stone-600">
                     {formatIndividuals(o.italianSegmentSize)}
                   </td>
-                  <td className="py-2.5 pr-3 text-right tabular-nums font-medium text-slate-900">
+                  <td className="py-3 px-2 text-right tabular-nums font-semibold text-amber-800">
                     {formatEUR(o.opportunityEur)}
                   </td>
                 </tr>
@@ -100,30 +100,28 @@ export default function Benchmark() {
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-slate-500 leading-relaxed">
-          Assumptions: dental — €80/individual/year (mid-range private dental
-          insurance premium for Italian over-65, pre-tax); specialist
-          consultation — €130/individual/year (median full-cost private
-          specialist visit times observed Sweden mean uptake delta). These are
-          single-anchor proxies for board-memo sizing; commercial pricing
-          requires stakeholder-specific elasticity work.
+        <p className="text-xs text-stone-600 leading-relaxed">
+          Sizing assumptions: dental at €80 / individual / year (mid-range
+          private dental insurance premium for Italian over-65); private
+          specialist at €130 / individual / year. Single-anchor proxies for
+          board-memo orientation.
         </p>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-lg font-semibold text-slate-900">
-          Matched pairs in detail
-        </h2>
+      <section className="space-y-6">
+        <h2 className="display-3 text-slate-900">Matched pairs</h2>
         {pairs.map((p) => (
           <PairCard key={p.matched_pair_label} pair={p} />
         ))}
       </section>
 
-      <section className="rounded-2xl bg-white border border-slate-200 p-6 space-y-4">
-        <h2 className="text-lg font-semibold text-slate-900">
-          Welfare-regime-specific profiles (no cross-country counterpart)
-        </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <section className="space-y-4">
+        <h2 className="display-3 text-slate-900">Profiles without a counterpart</h2>
+        <p className="text-sm text-stone-600 max-w-3xl">
+          Three segments have no cross-country match. They are the
+          welfare-regime-specific signatures of each market.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <UnmatchedCard
             country="Italy"
             profileName="Moderate Isolated"
@@ -141,91 +139,65 @@ export default function Benchmark() {
           />
         </div>
       </section>
-
-      <footer className="border-t border-slate-200 pt-6 text-xs text-slate-500 max-w-3xl space-y-1.5">
-        <p>
-          Time-to-maturity (digital indicators): under a 1pp/year linear-closure
-          assumption (calibrated against Eurostat ICT-individuals 2018–2024
-          Italy trend), the Italy–Sweden internet-penetration gap of{' '}
-          {formatPP(
-            killer.country_aggregates.sweden.internet_penetration_pct -
-              killer.country_aggregates.italy.internet_penetration_pct,
-            0,
-          )}{' '}
-          would close in approximately{' '}
-          {killer.time_to_maturity.estimates.internet_overall_years_to_close}{' '}
-          years; the dentist-coverage gap of{' '}
-          {formatPP(
-            killer.country_aggregates.sweden.dentist_12m_pct -
-              killer.country_aggregates.italy.dentist_12m_pct,
-            0,
-          )}{' '}
-          in approximately{' '}
-          {killer.time_to_maturity.estimates.dentist_overall_years_to_close}{' '}
-          years. These are indicative single-rate extrapolations; a
-          proper estimate requires a cross-wave SHARE regression.
-        </p>
-      </footer>
     </section>
   );
 }
 
 function PairCard({ pair }: { pair: Pair }) {
   return (
-    <article className="rounded-2xl bg-white border border-slate-200 p-5 space-y-3">
+    <article className="rounded-2xl bg-white border border-stone-200 p-6 space-y-4">
       <header className="flex items-baseline justify-between flex-wrap gap-2">
         <div>
-          <p className="text-xs uppercase tracking-wide text-slate-500">
-            {pair.matched_pair_label}
-          </p>
-          <h3 className="text-base font-semibold text-slate-900">
-            🇮🇹 {pair.italian_profile} ↔ 🇸🇪 {pair.swedish_profile}
+          <p className="eyebrow">{pair.matched_pair_label}</p>
+          <h3 className="display-3 text-slate-900 mt-1">
+            {pair.italian_profile} <span className="text-stone-400">↔</span>{' '}
+            {pair.swedish_profile}
           </h3>
         </div>
-        <p className="text-xs text-slate-500 tabular-nums">
-          IT segment size: {formatIndividuals(pair.italian_market_size_individuals)}
+        <p className="text-sm text-stone-500 tabular-nums">
+          IT segment: {formatIndividuals(pair.italian_market_size_individuals)}
         </p>
       </header>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto -mx-2">
         <table className="w-full text-sm">
           <thead>
-            <tr className="text-left text-xs uppercase tracking-wide text-slate-500 border-b border-slate-200">
-              <th className="py-2 pr-3">Dimension</th>
-              <th className="py-2 pr-3 text-right">🇮🇹 IT</th>
-              <th className="py-2 pr-3 text-right">🇸🇪 SE</th>
-              <th className="py-2 pr-3 text-right">Gap</th>
-              <th className="py-2 pr-3 text-right">€/y opportunity</th>
+            <tr className="text-left text-stone-600 border-b border-stone-200">
+              <th className="py-2 px-2 eyebrow">Dimension</th>
+              <th className="py-2 px-2 eyebrow text-right">Italy</th>
+              <th className="py-2 px-2 eyebrow text-right">Sweden</th>
+              <th className="py-2 px-2 eyebrow text-right">Gap</th>
+              <th className="py-2 px-2 eyebrow text-right">Opportunity</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-stone-100">
             {pair.dimensions.map((d) => {
               const isBinary = d.scale.startsWith('binary');
               const oppEur =
                 'opportunity_size_eur' in d ? d.opportunity_size_eur : null;
               return (
                 <tr key={d.dimension}>
-                  <td className="py-2 pr-3 text-slate-700">
+                  <td className="py-2 px-2 text-stone-700">
                     {DIMENSION_LABELS[d.dimension] ?? d.dimension}
                   </td>
-                  <td className="py-2 pr-3 text-right tabular-nums text-slate-700">
+                  <td className="py-2 px-2 text-right tabular-nums text-stone-700">
                     {isBinary
                       ? `${(d.italy_mean * 100).toFixed(0)}%`
                       : formatNum(d.italy_mean)}
                   </td>
-                  <td className="py-2 pr-3 text-right tabular-nums text-slate-700">
+                  <td className="py-2 px-2 text-right tabular-nums text-stone-700">
                     {isBinary
                       ? `${(d.sweden_mean * 100).toFixed(0)}%`
                       : formatNum(d.sweden_mean)}
                   </td>
                   <td
                     className={[
-                      'py-2 pr-3 text-right tabular-nums font-medium',
+                      'py-2 px-2 text-right tabular-nums font-medium',
                       d.gap_se_minus_it > 0
                         ? 'text-emerald-700'
                         : d.gap_se_minus_it < 0
                           ? 'text-amber-700'
-                          : 'text-slate-500',
+                          : 'text-stone-500',
                     ].join(' ')}
                   >
                     {isBinary
@@ -233,7 +205,7 @@ function PairCard({ pair }: { pair: Pair }) {
                       : (d.gap_se_minus_it >= 0 ? '+' : '') +
                         d.gap_se_minus_it.toFixed(2)}
                   </td>
-                  <td className="py-2 pr-3 text-right tabular-nums text-slate-900">
+                  <td className="py-2 px-2 text-right tabular-nums text-amber-700 font-medium">
                     {oppEur !== null && oppEur !== undefined && oppEur > 0
                       ? formatEUR(oppEur as number)
                       : '—'}
@@ -259,13 +231,11 @@ function UnmatchedCard({
 }) {
   if (!signal) return null;
   return (
-    <article className="rounded-xl bg-slate-50 border border-slate-200 p-4 space-y-2">
-      <p className="text-xs uppercase tracking-wide text-slate-500">
-        {country === 'Italy' ? '🇮🇹' : '🇸🇪'} {country}
-      </p>
-      <h3 className="text-base font-semibold text-slate-900">{profileName}</h3>
-      <p className="text-xs text-slate-700 font-medium">{signal.headline}</p>
-      <p className="text-xs text-slate-600 leading-relaxed">{signal.detail}</p>
+    <article className="rounded-2xl bg-white border border-stone-200 p-5 space-y-3">
+      <p className="eyebrow">{country}</p>
+      <h3 className="display-3 text-slate-900">{profileName}</h3>
+      <p className="text-sm font-medium text-slate-900">{signal.headline}</p>
+      <p className="text-sm text-stone-600 leading-relaxed">{signal.detail}</p>
     </article>
   );
 }

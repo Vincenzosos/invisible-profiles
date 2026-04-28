@@ -6,37 +6,42 @@ type Props = {
 
 export default function Landing({ onSelectCountry }: Props) {
   return (
-    <section className="space-y-10">
-      <header className="space-y-4 text-center">
-        <h1 className="text-4xl font-semibold tracking-tight text-slate-900">
-          Invisible Profiles
+    <section className="space-y-12 max-w-2xl">
+      <header className="space-y-5">
+        <p className="eyebrow">Profiler</p>
+        <h1 className="display-1 text-slate-900">
+          Try the engine on yourself or a customer.
         </h1>
-        <p className="text-slate-600 leading-relaxed">
-          A 10-question profiler that places you among the over-65 segments derived
-          from SHARE Wave 9 data for Italy and Sweden. Pick a country to begin.
+        <p className="text-lg text-stone-700 leading-relaxed">
+          Ten questions across health, economics, digital reach, social network
+          and subjective wellbeing. Returns a hard match (closest profile) and
+          a soft membership distribution &mdash; the two outputs an operator
+          would consume in a propensity-scoring pipeline.
         </p>
       </header>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <button
           type="button"
           onClick={() => onSelectCountry('italy')}
-          className="rounded-2xl bg-white border border-slate-200 px-6 py-10 text-lg font-medium text-slate-900 shadow-sm hover:border-slate-400 hover:shadow-md transition"
+          className="rounded-2xl bg-white border border-stone-200 px-6 py-12 text-lg font-medium text-slate-900 hover:border-amber-400 transition-colors"
         >
           Italy
+          <span className="block mt-1 text-xs text-stone-500 font-normal">
+            5 segments · 14.18M individuals
+          </span>
         </button>
         <button
           type="button"
           onClick={() => onSelectCountry('sweden')}
-          className="rounded-2xl bg-white border border-slate-200 px-6 py-10 text-lg font-medium text-slate-900 shadow-sm hover:border-slate-400 hover:shadow-md transition"
+          className="rounded-2xl bg-white border border-stone-200 px-6 py-12 text-lg font-medium text-slate-900 hover:border-amber-400 transition-colors"
         >
           Sweden
+          <span className="block mt-1 text-xs text-stone-500 font-normal">
+            6 segments · 2.05M individuals
+          </span>
         </button>
       </div>
-      <p className="text-xs text-center text-slate-400 leading-relaxed">
-        Five Italian and six Swedish profiles, fitted with K-means on standardised
-        SHARE W9 indicators across health, economic, digital/social, cognitive, and
-        subjective dimensions.
-      </p>
     </section>
   );
 }
