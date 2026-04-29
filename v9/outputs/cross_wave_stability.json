@@ -1,0 +1,329 @@
+{
+  "meta": {
+    "method": "Panel ARI on W8 cap W9 mergeid intersection + Hungarian-matched centroid distance on common standardized variables.",
+    "bootstrap": "2000 replicates, percentile CI 95%, seed=42",
+    "w8_period": "2019-2020 (pre-COVID)",
+    "w9_period": "2021-2022 (post-COVID)",
+    "common_vars_italy": ["sphus", "chronic", "adl", "iadl", "mobility", "eurod", "bmi", "phinact", "log_thinc", "log_hnetw", "ypen1", "home_own", "fdistress", "internet", "ac035d1", "ac035d5", "ac035d8", "sp002_", "sp008_", "sn_size_w9", "social_integration", "fluency", "memory", "orienti", "loneliness", "casp", "hope_future", "interest", "expect_alive"],
+    "common_vars_sweden": ["sphus", "chronic", "adl", "iadl", "mobility", "eurod", "bmi", "phinact", "log_thinc", "log_hnetw", "ypen1", "home_own", "fdistress", "internet", "ac035d1", "ac035d5", "ac035d8", "sp002_", "sp008_", "sn_size_w9", "social_integration", "ac035d4", "ac035d7", "fluency", "memory", "orienti", "loneliness", "casp", "hope_future", "interest", "expect_alive"]
+  },
+  "italy": {
+    "panel_n": 958,
+    "n_w8": 1277,
+    "n_w9": 2378,
+    "ari": 0.1605,
+    "ari_ci_low": 0.1358,
+    "ari_ci_high": 0.195,
+    "structural_match": [
+      {
+        "profile_w8": "Moderate Isolated",
+        "profile_w9": "Traditional Social",
+        "centroid_distance": 5.7121,
+        "share_w8_pct": 8.8,
+        "share_w9_pct": 7.7,
+        "delta_share_pp": -1.1,
+        "match_consistent_with_naming": false
+      },
+      {
+        "profile_w8": "Fragile Depressed",
+        "profile_w9": "Fragile Depressed",
+        "centroid_distance": 0.7706,
+        "share_w8_pct": 28.2,
+        "share_w9_pct": 26.7,
+        "delta_share_pp": -1.4,
+        "match_consistent_with_naming": true
+      },
+      {
+        "profile_w8": "Traditional Social",
+        "profile_w9": "Moderate Isolated",
+        "centroid_distance": 1.3152,
+        "share_w8_pct": 25.8,
+        "share_w9_pct": 26.9,
+        "delta_share_pp": 1,
+        "match_consistent_with_naming": false
+      },
+      {
+        "profile_w8": "Connected Active",
+        "profile_w9": "Connected Active",
+        "centroid_distance": 1.104,
+        "share_w8_pct": 24.1,
+        "share_w9_pct": 25.4,
+        "delta_share_pp": 1.3,
+        "match_consistent_with_naming": true
+      },
+      {
+        "profile_w8": "Fragile Resigned",
+        "profile_w9": "Fragile Resigned",
+        "centroid_distance": 0.4683,
+        "share_w8_pct": 13,
+        "share_w9_pct": 13.2,
+        "delta_share_pp": 0.2,
+        "match_consistent_with_naming": true
+      }
+    ],
+    "confusion_panel_pct_row": [
+      {
+        "profile_w8": "Connected Active",
+        "Connected Active": 52.5,
+        "Fragile Depressed": 9,
+        "Fragile Resigned": 2,
+        "Moderate Isolated": 17.6,
+        "Traditional Social": 18.9
+      },
+      {
+        "profile_w8": "Fragile Depressed",
+        "Connected Active": 9,
+        "Fragile Depressed": 57.8,
+        "Fragile Resigned": 18.4,
+        "Moderate Isolated": 13.3,
+        "Traditional Social": 1.6
+      },
+      {
+        "profile_w8": "Fragile Resigned",
+        "Connected Active": 0,
+        "Fragile Depressed": 33.3,
+        "Fragile Resigned": 65.6,
+        "Moderate Isolated": 1.1,
+        "Traditional Social": 0
+      },
+      {
+        "profile_w8": "Moderate Isolated",
+        "Connected Active": 8.5,
+        "Fragile Depressed": 53.2,
+        "Fragile Resigned": 10.6,
+        "Moderate Isolated": 24.5,
+        "Traditional Social": 3.2
+      },
+      {
+        "profile_w8": "Traditional Social",
+        "Connected Active": 25.1,
+        "Fragile Depressed": 17.7,
+        "Fragile Resigned": 5.2,
+        "Moderate Isolated": 46.5,
+        "Traditional Social": 5.5
+      }
+    ],
+    "confusion_panel_pct_col": [
+      {
+        "profile_w8": "Connected Active",
+        "Connected Active": 56.4,
+        "Fragile Depressed": 7.4,
+        "Fragile Resigned": 3.6,
+        "Moderate Isolated": 18.9,
+        "Traditional Social": 67.6
+      },
+      {
+        "profile_w8": "Fragile Depressed",
+        "Connected Active": 10.1,
+        "Fragile Depressed": 49.5,
+        "Fragile Resigned": 34.3,
+        "Moderate Isolated": 15,
+        "Traditional Social": 5.9
+      },
+      {
+        "profile_w8": "Fragile Resigned",
+        "Connected Active": 0,
+        "Fragile Depressed": 10.4,
+        "Fragile Resigned": 44.5,
+        "Moderate Isolated": 0.4,
+        "Traditional Social": 0
+      },
+      {
+        "profile_w8": "Moderate Isolated",
+        "Connected Active": 3.5,
+        "Fragile Depressed": 16.7,
+        "Fragile Resigned": 7.3,
+        "Moderate Isolated": 10.1,
+        "Traditional Social": 4.4
+      },
+      {
+        "profile_w8": "Traditional Social",
+        "Connected Active": 30,
+        "Fragile Depressed": 16.1,
+        "Fragile Resigned": 10.2,
+        "Moderate Isolated": 55.5,
+        "Traditional Social": 22.1
+      }
+    ]
+  },
+  "sweden": {
+    "panel_n": 1320,
+    "n_w8": 1814,
+    "n_w9": 1787,
+    "ari": 0.233,
+    "ari_ci_low": 0.2044,
+    "ari_ci_high": 0.2676,
+    "structural_match": [
+      {
+        "profile_w8": "Social Decline",
+        "profile_w9": "Asset Rich",
+        "centroid_distance": 0.8276,
+        "share_w8_pct": 20.7,
+        "share_w9_pct": 19.1,
+        "delta_share_pp": -1.6,
+        "match_consistent_with_naming": false
+      },
+      {
+        "profile_w8": "Asset Rich",
+        "profile_w9": "Social Decline",
+        "centroid_distance": 5.8955,
+        "share_w8_pct": 4.5,
+        "share_w9_pct": 8.3,
+        "delta_share_pp": 3.8,
+        "match_consistent_with_naming": false
+      },
+      {
+        "profile_w8": "Connected Wealthy",
+        "profile_w9": "Connected Wealthy",
+        "centroid_distance": 0.6196,
+        "share_w8_pct": 30.2,
+        "share_w9_pct": 30,
+        "delta_share_pp": -0.2,
+        "match_consistent_with_naming": true
+      },
+      {
+        "profile_w8": "Moderate",
+        "profile_w9": "Moderate",
+        "centroid_distance": 0.7936,
+        "share_w8_pct": 25.2,
+        "share_w9_pct": 23.3,
+        "delta_share_pp": -1.9,
+        "match_consistent_with_naming": true
+      },
+      {
+        "profile_w8": "Fragile",
+        "profile_w9": "Fragile",
+        "centroid_distance": 1.045,
+        "share_w8_pct": 10.1,
+        "share_w9_pct": 11.5,
+        "delta_share_pp": 1.4,
+        "match_consistent_with_naming": true
+      },
+      {
+        "profile_w8": "Wealthy Digital",
+        "profile_w9": "Wealthy Digital",
+        "centroid_distance": 0.7177,
+        "share_w8_pct": 9.3,
+        "share_w9_pct": 7.7,
+        "delta_share_pp": -1.6,
+        "match_consistent_with_naming": true
+      }
+    ],
+    "confusion_panel_pct_row": [
+      {
+        "profile_w8": "Asset Rich",
+        "Asset Rich": 27.5,
+        "Connected Wealthy": 19.6,
+        "Fragile": 19.6,
+        "Moderate": 29.4,
+        "Social Decline": 0,
+        "Wealthy Digital": 3.9
+      },
+      {
+        "profile_w8": "Connected Wealthy",
+        "Asset Rich": 10.1,
+        "Connected Wealthy": 61,
+        "Fragile": 0,
+        "Moderate": 11.5,
+        "Social Decline": 13,
+        "Wealthy Digital": 4.4
+      },
+      {
+        "profile_w8": "Fragile",
+        "Asset Rich": 7.2,
+        "Connected Wealthy": 1.2,
+        "Fragile": 73.5,
+        "Moderate": 13.3,
+        "Social Decline": 0,
+        "Wealthy Digital": 4.8
+      },
+      {
+        "profile_w8": "Moderate",
+        "Asset Rich": 9.9,
+        "Connected Wealthy": 16.6,
+        "Fragile": 7.9,
+        "Moderate": 52.2,
+        "Social Decline": 9.9,
+        "Wealthy Digital": 3.5
+      },
+      {
+        "profile_w8": "Social Decline",
+        "Asset Rich": 55.8,
+        "Connected Wealthy": 4.8,
+        "Fragile": 15.5,
+        "Moderate": 17.9,
+        "Social Decline": 3.6,
+        "Wealthy Digital": 2.4
+      },
+      {
+        "profile_w8": "Wealthy Digital",
+        "Asset Rich": 13,
+        "Connected Wealthy": 18.8,
+        "Fragile": 1.4,
+        "Moderate": 15.9,
+        "Social Decline": 7.2,
+        "Wealthy Digital": 43.5
+      }
+    ],
+    "confusion_panel_pct_col": [
+      {
+        "profile_w8": "Asset Rich",
+        "Asset Rich": 5.4,
+        "Connected Wealthy": 2.6,
+        "Fragile": 7.2,
+        "Moderate": 4.6,
+        "Social Decline": 0,
+        "Wealthy Digital": 1.9
+      },
+      {
+        "profile_w8": "Connected Wealthy",
+        "Asset Rich": 17.8,
+        "Connected Wealthy": 72.3,
+        "Fragile": 0,
+        "Moderate": 16,
+        "Social Decline": 52.7,
+        "Wealthy Digital": 19.2
+      },
+      {
+        "profile_w8": "Fragile",
+        "Asset Rich": 2.3,
+        "Connected Wealthy": 0.3,
+        "Fragile": 43.9,
+        "Moderate": 3.4,
+        "Social Decline": 0,
+        "Wealthy Digital": 3.8
+      },
+      {
+        "profile_w8": "Moderate",
+        "Asset Rich": 13.2,
+        "Connected Wealthy": 14.9,
+        "Fragile": 19.4,
+        "Moderate": 55.2,
+        "Social Decline": 30.4,
+        "Wealthy Digital": 11.5
+      },
+      {
+        "profile_w8": "Social Decline",
+        "Asset Rich": 54.3,
+        "Connected Wealthy": 3.1,
+        "Fragile": 28.1,
+        "Moderate": 13.9,
+        "Social Decline": 8,
+        "Wealthy Digital": 5.8
+      },
+      {
+        "profile_w8": "Wealthy Digital",
+        "Asset Rich": 7,
+        "Connected Wealthy": 6.8,
+        "Fragile": 1.4,
+        "Moderate": 6.8,
+        "Social Decline": 8.9,
+        "Wealthy Digital": 57.7
+      }
+    ]
+  },
+  "interpretation_thresholds": {
+    "ari_substantial": 0.4,
+    "ari_moderate": 0.2
+  }
+}

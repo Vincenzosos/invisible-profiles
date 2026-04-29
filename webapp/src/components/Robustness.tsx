@@ -1,4 +1,5 @@
 import robust from '../data/robustness.json';
+import crossWave from '../data/cross_wave_stability.json';
 import type { View } from '../types';
 
 type Props = {
@@ -95,6 +96,8 @@ export default function Robustness({ onNavigate }: Props) {
           {conv.interpretation}
         </p>
       </Section>
+
+      <CrossWaveSection />
 
       <Section title="Multi-algorithm comparison">
         <p className="text-sm text-zinc-700 leading-relaxed">
@@ -241,6 +244,169 @@ function Section({
     <section className="space-y-3">
       <h2 className="display-3 text-slate-900">{title}</h2>
       <div className="space-y-3">{children}</div>
+    </section>
+  );
+}
+
+function ariBadge(ari: number): { text: string; cls: string } {
+  if (ari >= 0.4)
+    return {
+      text: 'Substantial stability',
+      cls: 'inline-block rounded-full bg-blue-50 text-blue-700 text-xs font-medium px-2.5 py-1',
+    };
+  if (ari >= 0.2)
+    return {
+      text: 'Moderate stability',
+      cls: 'inline-block rounded-full bg-zinc-100 text-zinc-700 text-xs font-medium px-2.5 py-1',
+    };
+  return {
+    text: 'Weak panel stability',
+    cls: 'inline-block rounded-full bg-rose-50 text-rose-700 text-xs font-medium px-2.5 py-1',
+  };
+}
+
+function CrossWaveSection() {
+  return (
+    <section className="space-y-6">
+      <h2 className="display-3 text-slate-900">
+        Cross-wave stability (W8 vs W9)
+      </h2>
+      <p className="text-sm text-zinc-700 leading-relaxed max-w-3xl">
+        SHARE Wave 8 (2019&ndash;2020, pre-COVID) and Wave 9 (2021&ndash;2022,
+        post-COVID) were processed independently through the full segmentation
+        pipeline. Two complementary tests of stability are reported: (a) panel
+        Adjusted Rand Index between W8 and W9 cluster assignments for the same
+        individuals (test&ndash;retest stability under a pandemic shock); (b)
+        Hungarian-matched centroid distance between W8 and W9 cluster centers
+        in standardized space (structural replicability).
+      </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {(['italy', 'sweden'] as const).map((c) => {
+          const d = crossWave[c];
+          const badge = ariBadge(d.ari);
+          return (
+            <article
+              key={c}
+              className="rounded-2xl bg-white border border-zinc-200 p-6 space-y-3"
+            >
+              <p className="eyebrow capitalize">{c}</p>
+              <p className="metric-hero text-slate-900">
+                ARI {d.ari.toFixed(3)}
+              </p>
+              <p className="text-xs text-zinc-500">
+                95% CI [{d.ari_ci_low.toFixed(3)}, {d.ari_ci_high.toFixed(3)}]
+                &nbsp;·&nbsp; panel n = {d.panel_n.toLocaleString()}
+              </p>
+              <span className={badge.cls}>{badge.text}</span>
+            </article>
+          );
+        })}
+      </div>
+
+      <div className="space-y-6 mt-8">
+        {(['italy', 'sweden'] as const).map((c) => {
+          const d = crossWave[c];
+          const nVars =
+            c === 'italy'
+              ? crossWave.meta.common_vars_italy.length
+              : crossWave.meta.common_vars_sweden.length;
+          return (
+            <div key={c}>
+              <h3 className="display-3 text-slate-900 capitalize">
+                {c} &mdash; structural match
+              </h3>
+              <p className="text-xs text-zinc-500 mb-3">
+                Hungarian-optimal pairing between W8 and W9 centroids in
+                standardized space. Distance is Euclidean on the {nVars} common
+                variables.
+              </p>
+              <div className="overflow-x-auto rounded-xl border border-zinc-200 bg-white">
+                <table className="w-full text-sm">
+                  <thead className="text-xs text-zinc-500 uppercase tracking-wider bg-zinc-50">
+                    <tr className="border-b border-zinc-200">
+                      <th className="text-left py-2 px-3">Profile W8</th>
+                      <th className="text-left py-2 px-3">Profile W9 (Hungarian)</th>
+                      <th className="text-right py-2 px-3">Distance</th>
+                      <th className="text-right py-2 px-3">Share W8</th>
+                      <th className="text-right py-2 px-3">Share W9</th>
+                      <th className="text-right py-2 px-3">Δ pp</th>
+                      <th className="text-center py-2 px-3">Match</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-zinc-100">
+                    {d.structural_match.map((m, i) => (
+                      <tr key={i}>
+                        <td className="py-2 px-3 text-slate-900">
+                          {m.profile_w8}
+                        </td>
+                        <td className="py-2 px-3 text-slate-900">
+                          {m.profile_w9}
+                        </td>
+                        <td className="py-2 px-3 text-right tabular-nums text-zinc-700">
+                          {m.centroid_distance.toFixed(2)}
+                        </td>
+                        <td className="py-2 px-3 text-right tabular-nums text-zinc-700">
+                          {m.share_w8_pct.toFixed(1)}%
+                        </td>
+                        <td className="py-2 px-3 text-right tabular-nums text-zinc-700">
+                          {m.share_w9_pct.toFixed(1)}%
+                        </td>
+                        <td
+                          className={
+                            'py-2 px-3 text-right tabular-nums ' +
+                            (m.delta_share_pp > 0
+                              ? 'text-blue-700'
+                              : m.delta_share_pp < 0
+                                ? 'text-rose-700'
+                                : 'text-zinc-500')
+                          }
+                        >
+                          {m.delta_share_pp > 0 ? '+' : ''}
+                          {m.delta_share_pp.toFixed(1)}
+                        </td>
+                        <td
+                          className={
+                            'py-2 px-3 text-center ' +
+                            (m.match_consistent_with_naming
+                              ? 'text-blue-700'
+                              : 'text-rose-700')
+                          }
+                        >
+                          {m.match_consistent_with_naming ? '✓' : '⤬'}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <article className="rounded-2xl bg-blue-50 border border-blue-200 p-6 space-y-3 mt-8">
+        <p className="eyebrow text-blue-700">Interpretation</p>
+        <p className="text-sm text-zinc-800 leading-relaxed">
+          The panel ARI is substantially lower in Italy than in Sweden,
+          consistent with the differential pandemic shock on the over-65
+          population (excess mortality, prolonged isolation). The
+          Hungarian-matched centroid distances, by contrast, show that 4 out of
+          5 Italian and 5 out of 6 Swedish archetypes have a structural twin
+          across waves with Euclidean distance ≤ 1.32 on standardized
+          variables. The two countries' boundary profiles (Moderate Isolated ↔
+          Traditional Social in Italy; Social Decline ↔ Asset Rich in Sweden)
+          re-name across waves but the overall typological scaffolding is
+          preserved.
+        </p>
+        <p className="text-sm text-zinc-700 leading-relaxed">
+          The contribution of this thesis is the structural typology, not the
+          per-individual classifier. The cross-wave evidence confirms the
+          typology replicates while documenting honestly that pandemic
+          disruption rearranged individual cluster memberships, more sharply
+          in Italy than in Sweden.
+        </p>
+      </article>
     </section>
   );
 }
