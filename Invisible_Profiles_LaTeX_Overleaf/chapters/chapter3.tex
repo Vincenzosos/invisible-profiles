@@ -1,147 +1,223 @@
-\chapter{Data and Methodology}
+\chaptertitlepage{Methodology}{Data, variable selection, preprocessing, factor structure, clustering pipeline}
 \label{ch:ch3}
 
-This chapter describes the data source, the derivation of the analytical sample, the variable set, the preprocessing decisions, the three complementary analytical approaches employed for the segmentation of the elderly population, and the validation strategy. The pipeline is applied identically to Italy and Sweden to ensure cross-country comparability, with the only intentional country-specific deviation documented in Section~\ref{sec:ch3-variables}.
+\section{Empirical strategy}
+\label{sec:ch3-empirical-strategy}
 
-\section{Data source}
+The empirical strategy of this thesis rests on three commitments. The first is methodological: the multidimensional structure of late-life experience is recovered from a data-driven segmentation operating on a harmonised analytical set, rather than from a manual partition of cross-tabulations. The second is comparative: two segmentations are estimated independently in Italy and Sweden --- the leading Mediterranean-familistic and Nordic-universalistic cases --- and compared on structurally meaningful axes. The third is conceptual: the analytical set includes both objective dimensions (health, economic resources, digital and social integration, cognitive function) and subjective dimensions (CASP-12, EURO-D, loneliness, hope for the future, expected survival), with the latter entering the segmentation as constituent inputs rather than as external validation outcomes.
+
+This chapter sets out the operational implementation. \S\ref{sec:ch3-data} describes the data and the analytical sample. \S\ref{sec:ch3-variables} lists the variable inventory across the five dimensions. \S\ref{sec:ch3-preprocessing} documents the preprocessing pipeline. \S\ref{sec:ch3-fa} reports the factor-analytic structure of the harmonised input space. \S\ref{sec:ch3-kmeans} details K-means estimation and the choice of $k$. \S\ref{sec:ch3-lca} reports the LCA triangulation. \S\ref{sec:ch3-subjective-commitment} articulates the methodological commitment to subjective dimensions as inputs and reports the empirical sensitivity that justifies it. \S\ref{sec:ch3-reproducibility} documents reproducibility. Internal validity diagnostics, multi-algorithm comparison, and cross-wave panel stability are reported in Chapter~7.
+
+\section{Data and analytical sample}
 \label{sec:ch3-data}
 
-The Survey of Health, Ageing and Retirement in Europe (SHARE) provides the empirical foundation of this thesis. Launched in 2004 and coordinated by the Max Planck Institute for Social Law and Social Policy, SHARE fields a harmonised battery of health, economic, cognitive, and social-network instruments across twenty-seven European countries and a complementary Israeli sample (Börsch-Supan et al., 2013). The ninth wave (SHARE W9), fielded between 2021 and 2022 and used throughout this thesis, includes 5{,}601 Italian and 3{,}405 Swedish respondents (SHARE Release 9.0.0, 2024). The harmonised questionnaire, cross-national coverage, and post-pandemic timing of W9 make it particularly suited to the comparative welfare-regime question addressed here.
+The Survey of Health, Ageing and Retirement in Europe (SHARE) is a multidisciplinary, cross-national panel of individuals aged 50 and older resident in 28 European countries \citep{borschsupan2013}, harmonised ex ante on questionnaire content and ex post on variable definitions. Wave 9 was fielded between June 2021 and August 2022, covering the period that follows the most acute phase of the COVID-19 pandemic. The wave is the most recent fully released SHARE wave at the time of writing. The pre-pandemic Wave 8 (2019--2020) is used in Chapter~7 as the comparator for the cross-wave robustness analysis.
 
-Three methodological advantages justify the choice of SHARE W9. First, the strictly harmonised questionnaire permits direct cross-national comparisons on identical indicator batteries, a necessary condition for welfare-regime comparative designs (Esping-Andersen, 1990; Ferrera, 1996). Second, the integration of health, financial, digital, cognitive and subjective measures within a single instrument enables the multidimensional segmentation that constitutes the core analytical strategy of this thesis. Third, the W9 fieldwork captures the elderly population immediately after the most acute phase of the COVID-19 pandemic, a period in which digital integration and social isolation acquired unprecedented policy salience (Seifert et al., 2021).
+Italy and Sweden are selected on theoretical grounds. The two countries occupy opposite ends of \citet{espingandersen1990} typology of welfare regimes --- Italy as the leading Mediterranean-familistic case (high reliance on intra-family care provision, fragmented social-protection system, predominance of cash transfers in elderly care) and Sweden as the prototypical Nordic-universalistic case (extensive public long-term care, dense community-based social services, elderly-care provision largely de-familised). The two countries also differ markedly in digital adoption among older adults: Eurostat 2022 reports 51\% internet use in the past three months for Italian residents aged 65--74, against 96\% in Sweden.
 
-The analysis focuses on two country sub-samples: Italy (country code 16 in SHARE) and Sweden (country code 13). These two cases exemplify polar welfare-regime types --- the familistic, Mediterranean model and the universalist, Social-Democratic model respectively (Esping-Andersen, 1990; Ferrera, 1996) --- and their comparison is empirically rich yet analytically tractable. The contrast also maps directly onto the thesis's substantive interest in how welfare architecture conditions the multidimensional experience of ageing, while controlling for the shared institutional context of the European Union and the common measurement apparatus of SHARE.
-
-\section{Analytical sample derivation}
-\label{sec:ch3-sample}
-
-Figure~\ref{fig:ch3-sample-flow} documents the derivation of the analytical samples from the raw SHARE W9 files. Three successive restrictions were applied to each country.
+The analytical sample is restricted to respondents aged 65 or older at the date of interview, with proxy interviews excluded. The SHARE multiple-imputation procedure is applied to income, wealth and pension variables, and the analytical sample uses the first imputation (implicat = 1). Figure~\ref{fig:ch3-sample-flow} reports the sample derivation. The Italian SHARE Wave 9 release contains 5,601 respondents; restriction to the over-65 population reduces the sample to 2,399, listwise deletion on the 31 analytical variables retains 2,378 (a 0.9\% loss), and Mahalanobis-distance outlier screening at $p = 0.001$ removes no further respondents. The Swedish release contains 3,405 respondents; the corresponding sequence yields 2,202, then 2,045 (7.1\% listwise loss), then 1,787 (a further 12.6\% Mahalanobis loss). The asymmetry reflects the higher dimensionality of the Swedish active variable set and a wider tail of the Swedish multivariate distribution in the joint digital-economic subspace; Figure~\ref{fig:ch3-mahalanobis} visualises this asymmetry.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.85\linewidth]{figures/03_data_methods/fig_01_sample_flow.png}
-  \caption{Analytical sample derivation, SHARE Wave 9. Italy and Sweden cohorts, from survey total to final pre-clustering sample. Source: SHARE W9, own calculations.}
+  \includegraphics[width=0.95\linewidth]{figures/03_data_methods/fig_01_sample_flow.png}
+  \caption{Analytical sample derivation, SHARE Wave 9. From the country-level survey total (Italy = 5,601; Sweden = 3,405) to the final pre-clustering sample (Italy = 2,378; Sweden = 1,787), reporting the consequences of four sequential filters: age cut-off (65+) at the first imputation, listwise deletion on the 31 analytical variables, and Mahalanobis-distance outlier screening at $p = 0.001$.}
   \label{fig:ch3-sample-flow}
 \end{figure}
 
-First, the analysis was limited to non-institutionalised respondents aged sixty-five years or older at the time of interview, retaining only the first implicate produced by SHARE's multiple-imputation procedure (\emph{implicat~==~1}). This restriction reduces the working samples to 2{,}399 (Italy) and 2{,}202 (Sweden) observations, consistent with the population of interest for research on ageing.
+\begin{table}[ht]
+  \centering
+  \caption{Analytical sample, by country and stage}
+  \label{tab:ch3-sample-sizes}
+  \begin{tabular}{lrr}
+    \toprule
+    \textbf{Stage} & \textbf{Italy} & \textbf{Sweden} \\
+    \midrule
+    SHARE Wave 9 release total & 5{,}601 & 3{,}405 \\
+    Aged 65 or older at first imputation & 2{,}399 & 2{,}202 \\
+    After listwise deletion on 31 variables & 2{,}378 & 2{,}045 \\
+    After Mahalanobis screening ($p = 0.001$) & 2{,}378 & 1{,}787 \\
+    \textbf{Final analytical sample} & \textbf{2{,}378} & \textbf{1{,}787} \\
+    Active analytical variables & 29 & 31 \\
+    Number of clusters retained ($k$) & 5 & 6 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
-Second, complete-case listwise deletion was applied across the thirty-one analytical variables described in Section~\ref{sec:ch3-variables}. Listwise deletion, rather than multiple imputation, was chosen because the clustering and factor-analytic procedures at the centre of the analytical strategy require fully observed cases, and because the amount of missingness is modest and approximately missing-at-random on the selected items (Little \& Rubin, 2019). After this step the Italian sample stands at 2{,}378 respondents and the Swedish sample at 2{,}045.
+\noindent\small Note. Active variables in Italy are 29: two cultural-engagement binary indicators (ac035d4, ac035d7) have zero variance in the Italian sub-sample and are dropped at variance screening (\S\ref{sec:ch3-preprocessing}). The number of clusters is selected by joint reading of the Duda--Hart pseudo-$T^2$ statistic, the within-cluster sum of squares scree, and substantive interpretability (\S\ref{sec:ch3-kmeans}). \normalsize
 
-Third, multivariate outliers were identified using the Mahalanobis distance against the correlation structure of the thirty-one standardised variables. A conservative $\chi^{2}$ cut-off at $p = 0.001$ (31 degrees of freedom) was adopted to avoid overly aggressive trimming. No Italian respondent exceeds the cut-off; 258 Swedish cases are flagged and removed. The final analytical samples are therefore $n = 2{,}378$ (Italy) and $n = 1{,}787$ (Sweden).
-
-It should be noted that these final sample sizes differ from those reported in earlier iterations of the project design. This divergence reflects the adoption of a uniform, code-authoritative preprocessing pipeline that applies the same Mahalanobis threshold to both countries and does not rely on any previously computed cleaning artefacts. All empirical results presented in the remainder of the thesis derive from the samples described above.
-
-\section{Variables}
+\section{Variable inventory}
 \label{sec:ch3-variables}
 
-The thirty-one analytical variables span five conceptual dimensions --- health, economic resources, digital and social engagement, cognitive function, and subjective well-being --- summarised in Table~\ref{tab:ch3-variables}. The selection replicates, within SHARE W9, the multidimensional structure of successful ageing proposed by Rowe and Kahn (1997), while incorporating the post-pandemic emphasis on digital inclusion that motivates much current research on ageing societies (Friemel, 2016; König et al., 2018).
+Thirty-one analytical variables span five conceptual dimensions, following the SHARE conceptual framework on the multidimensional measurement of late-life experience \citep{wahrendorfsiegrist2010, jivraj2020}. Where multiple SHARE items operationalise the same construct (for example, mobility limitations, ADL and IADL for functional health), all candidate items are retained and dimensionality reduction is delegated to the preprocessing and to the clustering algorithm itself.
+
+The physical and functional health block (8 items) aggregates self-rated health (SPHUS), the count of chronic conditions (CHRONIC), basic and instrumental activities of daily living limitations (ADL, IADL), mobility limitations, body mass index, physical inactivity, and the EURO-D depressive-symptoms score. The economic block (5 items) contains log-transformed household income (log\_thinc), log-transformed household net worth (log\_hnetw), individual annual pension income (ypen1), home-ownership status, and self-reported financial distress (FDISTRESS). Income, wealth and pension are imputed via the SHARE multiple-imputation procedure. The digital and social block (10 items) contains a binary internet-use indicator, network size (sn\_size\_w9), a social-integration index, three cultural-engagement binary indicators (ac035d1, ac035d5, ac035d8), and indicators on receipt of help (sp002\_) and provision of help to grandchildren (sp008\_); two further cultural items (ac035d4, ac035d7) have zero variance in Italy and are dropped at variance screening. The cognitive block (3 items) contains verbal fluency (animal-naming), the ten-word recall test (memory), and an orientation-in-time task; cognitive items require CAPI administration and are unavailable for the CATI sub-sample, accounting for the higher Swedish listwise loss reported in \S\ref{sec:ch3-data}. The subjective block (5 items) contains CASP-12 quality of life \citep{hyde2003}, UCLA-3 loneliness \citep{hughes2004}, a binary indicator on hope for the future, four-point interest in the surrounding world, and self-rated probability of survival to a target age.
 
 \begin{table}[ht]
   \centering
-  \caption{Analytical variables by conceptual dimension.}
+  \caption{Analytical variable inventory by conceptual dimension}
   \label{tab:ch3-variables}
-  \small
-  \begin{tabular}{@{}lp{9.5cm}@{}}
+  \begin{tabular}{lp{9cm}}
     \toprule
-    \textbf{Dimension} & \textbf{Variables}\\
+    \textbf{Dimension} & \textbf{Variables (SHARE codename)} \\
     \midrule
-    Health (8)               & \emph{sphus}, \emph{chronic}, \emph{adl}, \emph{iadl}, \emph{mobility}, \emph{eurod}, \emph{bmi}, \emph{phinact}\\
-    Economic resources (5)   & \emph{log\_thinc}, \emph{log\_hnetw}, \emph{ypen1}, \emph{home\_own}, \emph{fdistress}\\
-    Digital / social (10)    & \emph{internet}, \emph{ac035d1}, \emph{ac035d5}, \emph{ac035d8}, \emph{sp002\_}, \emph{sp008\_}, \emph{sn\_size\_w9}, \emph{social\_integration}, \emph{ac035d4}, \emph{ac035d7}\\
-    Cognitive (3)            & \emph{fluency}, \emph{memory}, \emph{orienti}\\
-    Subjective well-being (5)& \emph{loneliness}, \emph{casp}, \emph{hope\_future}, \emph{interest}, \emph{expect\_alive}\\
+    Physical and functional health (8) & sphus, chronic, adl, iadl, mobility, bmi, phinact, eurod \\
+    Economic resources (5) & log\_thinc, log\_hnetw, ypen1, home\_own, fdistress \\
+    Digital and social integration (10) & internet, sn\_size\_w9, social\_integration, ac035d1, ac035d5, ac035d8, sp002\_, sp008\_, plus two country-specific items \\
+    Cognitive function (3) & fluency, memory, orienti \\
+    Subjective well-being (5) & casp, loneliness, hope\_future, interest, expect\_alive \\
     \bottomrule
   \end{tabular}
-  \par\smallskip
-  \footnotesize \emph{Note.} Eleven variables are binary (\emph{phinact}, \emph{home\_own}, \emph{internet}, \emph{ac035d1}, \emph{ac035d5}, \emph{ac035d8}, \emph{sp002\_}, \emph{sp008\_}, \emph{ac035d4}, \emph{ac035d7}, \emph{hope\_future}); the remaining twenty are continuous or quasi-continuous. Short human-readable labels and measurement scales are given in Figures~4, 5, 34, 50, 51, 66 and~67; the full mapping is stored in the helper module \texttt{v9/var\_labels.R}.
 \end{table}
 
-Eleven of the thirty-one variables are binary (coded 0/1); twenty are continuous or quasi-continuous. Three SHARE items that might in principle have entered the analytical battery were excluded on grounds of cross-country comparability. The item \emph{pcskill\_r} (computer skills self-assessment) is administered only to respondents who report regular personal-computer use, yielding 48 per cent missing values in Sweden; the items \emph{wllft} and \emph{wllst} (immediate and delayed word recall) cover 22 and 25 per cent of the Swedish sample respectively, because they are administered only to a random sub-sample of participants. Retaining these items would have forced a much smaller common support, distorting the comparative exercise.
+\noindent\small Note. Variable codes follow the SHARE Wave 9 release naming convention. Italy retains 29 active variables (ac035d4, ac035d7 dropped); Sweden retains the full 31 items. \normalsize
 
-Two digital-engagement items require particular comment. In Italy, \emph{ac035d4} (participation in educational training) and \emph{ac035d7} (involvement in political organisations) have zero variance: no Italian respondent in the analytical sample reports either activity. This pattern appears to reflect an artefact of the Italian fieldwork rather than a substantive finding about participation, but it requires the two variables to be excluded from the Italian PCA and factor-analysis computations. In Sweden the same items exhibit low but non-zero variance (four to six per cent positive responses) and are therefore retained. The common analytical battery comprises twenty-nine active variables in Italy and thirty-one in Sweden; cross-country comparisons at the profile level rely on indicators that are active in both countries.
-
-\section{Preprocessing}
+\section{Preprocessing pipeline}
 \label{sec:ch3-preprocessing}
 
-Two successive transformations were applied to the twenty non-binary variables prior to analysis, following the workflow established in the Bocconi course 20570 \emph{Data Analytics and Visualization} (Piccareta \& Trentini, 2025). First, each non-binary variable was rank-transformed using average-rank tie-breaking. Rank transformation uniformises marginal distributions and mitigates the influence of extreme values on the distance-based procedures that follow, at the cost of discarding information about absolute magnitudes. Second, every analytical variable --- binary and non-binary alike --- was standardised to zero mean and unit variance (z-score standardisation), so that no dimension dominates cluster formation or factor extraction by virtue of its original scale.
+The pipeline operates in five stages: sample selection, variable selection, listwise deletion plus Mahalanobis screening, scale harmonisation by rank transformation followed by z-standardisation, and clustering estimation. Each stage is implemented as a numbered R script with fixed seed 42.
 
-Binary variables were not rank-transformed, since the rank of a 0/1 variable collapses into a trivial two-valued distribution. They were nevertheless z-standardised jointly with the continuous variables, yielding a single homogeneous standardised matrix of thirty-one columns for Sweden and twenty-nine columns for Italy. This homogeneous standardised matrix is the direct input to the K-means, PCA, and factor-analysis procedures described below. For the Latent Class Analysis of Section~\ref{sec:ch3-lca}, the continuous variables are further discretised into tertiles, as detailed there.
+Listwise deletion is applied at the variable level. SHARE imputes income, wealth and pension ex ante \citep{christelis2011}, so the principal source of listwise loss is non-response on cognitive and subjective items. Multiple imputation is not used at the segmentation stage because the K-means objective function is not invariant to imputation noise. After listwise deletion, the sample is screened for multivariate outliers using Mahalanobis distance, with respondents above the chi-squared critical value at $p = 0.001$ excluded; this removes no Italian respondents and 258 Swedish respondents (12.6\%).
 
-\section{Analytical framework}
-\label{sec:ch3-framework}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/03_data_methods/fig_mahalanobis_distribution.png}
+  \caption{Mahalanobis distance distribution, Italy and Sweden. Density of Mahalanobis distances on the standardised analytical matrix; the dashed line marks the chi-squared critical value at $p = 0.001$. Italy retains all respondents; Sweden loses 12.6\% in the right tail.}
+  \label{fig:ch3-mahalanobis}
+\end{figure}
 
-The empirical strategy of this thesis employs three complementary methods to produce and validate the multidimensional profiles of elderly Italians and Swedes. Each method rests on a different theoretical premise and draws on a different statistical tradition, and their triangulation serves to evaluate whether a given profile reflects a robust population type or a method-specific artefact (Magidson \& Vermunt, 2002).
+Continuous and ordinal variables are then rank-transformed within each country, mapping the original distribution onto a uniform rank distribution; binary variables are passed through unchanged. The rank-transformed and binary variables are z-standardised within each country, so that each variable enters K-means with mean zero and unit variance. Standardisation is performed at the country level rather than on the pooled sample, in order to preserve the within-country interpretation of the centroids: a respondent classified as ``Connected Active'' in Italy is so classified relative to the Italian distribution, and is then compared in Chapter~6 with the analogous ``Connected Wealthy'' archetype in Sweden defined relative to the Swedish distribution.
 
-\subsection{Dimension-wise Principal Component Analysis}
-\label{sec:ch3-pca}
-
-Principal Component Analysis (PCA) was applied separately to each of the five conceptual dimensions. This dimension-wise decomposition serves three purposes: it summarises the correlational structure of the three to ten indicators within each dimension into a smaller set of orthogonal components; it provides diagnostics for the presence of a natural latent structure within each domain; and it anchors the downstream outlier analysis that flagged Swedish extreme respondents.
-
-Components were retained on the basis of Kaiser's criterion (eigenvalue greater than one), with one documented exception. For the digital/social block, four components were retained in both countries even though the fourth component has an eigenvalue just below unity (0.96 in Italy, 0.98 in Sweden). Two considerations motivated this departure. First, when Kaiser's threshold lies so near one, the criterion provides only weak guidance. Second, the fourth component carries meaningful substantive content --- it captures a latent axis of civic and political engagement independent of generic digital use --- and the ensuing outlier diagnostics depend on it to flag extreme respondents. Retaining four components therefore maximises comparability with the reference design and ensures that the cross-country profile structures remain commensurable.
-
-\subsection{Factor analysis}
+\section{Factor structure of the harmonised input space}
 \label{sec:ch3-fa}
 
-A second lens on the variable space is provided by exploratory factor analysis, fitted with principal-axis extraction, varimax rotation, and six factors per country. Factor analysis differs from PCA in two respects: it isolates the shared-variance component of each indicator, discarding uniquenesses, and it rotates the latent space to approximate simple structure (each indicator loading primarily on one factor). The course treats factor analysis as the preferred tool for substantive interpretation of latent constructs (Piccareta \& Trentini, 2025), while reserving PCA for dimensionality reduction.
+Before estimating the K-means partition, the preprocessed input space is examined through Principal Axis factor analysis. The purpose is twofold: a sanity check on the suitability of the input matrix for dimensionality-reduction methods, and a low-dimensional representation that supports the substantive interpretation of the cluster solution.
 
-The six-factor solution is justified \emph{ex ante} by theoretical expectations --- five substantive dimensions plus a mood-versus-cognition distinction within the subjective block --- and \emph{ex post} by empirical diagnostics. The Kaiser--Meyer--Olkin measure of sampling adequacy equals 0.832 in Italy and 0.808 in Sweden, both above the meritorious threshold (Kaiser \& Rice, 1974). Bartlett's test of sphericity is rejected at any conventional level in both countries ($\chi^{2} = 18{,}755$, $df = 406$ for Italy; $\chi^{2} = 9{,}067$, $df = 465$ for Sweden; both $p < 10^{-300}$). Parallel analysis with one hundred random datasets suggests ten factors in Italy and nine in Sweden; Kaiser's criterion on the full correlation matrix indicates nine and ten respectively. The six-factor solution is therefore conservative and is retained on interpretive grounds and for cross-country comparability, with the BIC-minimal larger solutions reported as sensitivity analyses in Chapter~6.
+The Kaiser--Meyer--Olkin (KMO) measure is 0.832 in Italy and 0.827 in Sweden, both well above the 0.700 threshold conventionally taken as ``good'' adequacy \citep{kaiser1974}; the Bartlett test of sphericity rejects the null in both countries ($p < 0.001$). The number of factors is selected by joint reading of three criteria: parallel analysis \citep{horn1965}, BIC for $k$ between 2 and 8, and substantive interpretability of the rotated loadings. The country-level BIC optima fall at $k = 7$ (Italy) and $k = 4$ (Sweden); the parallel-analysis criterion suggests $k = 6$ (Italy) and $k = 5$ (Sweden); substantive interpretability is highest at $k = 6$ in both countries. The six-factor solution is therefore retained on cross-country-comparability grounds, despite being conservative relative to the BIC optimum in Italy and slightly aggressive in Sweden (RMSEA increase of approximately 0.005 in Italy and 0.010 in Sweden relative to the BIC-optimal solution). Figure~\ref{fig:ch3-fa-fit} reports the four fit indices for $k$ between 4 and 8.
 
-One diagnostic deserves explicit mention: in Sweden, \emph{social\_integration} exhibits a Heywood case with an estimated loading of 1.11 on its dominant factor, yielding a communality of 1.38 once small secondary loadings are added in quadrature. This pattern reflects the near-perfect determination of the social-integration index by its dominant factor; it is flagged rather than treated. Chapter~6 discusses its implications for the stability of the Swedish solution and evaluates alternative parameterisations.
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/03_data_methods/fig_kselection_diagnostics_both.png}
+  \caption{Factor-analysis fit indices across number of factors. Four indices (RMSR, TLI, RMSEA, BIC) reported for $k = 4$ to 8 factors, separately for Italy and Sweden. Dashed reference line marks the $k = 6$ design choice.}
+  \label{fig:ch3-fa-fit}
+\end{figure}
 
-\subsection{K-means clustering}
+Loadings are rotated by varimax. Figure~\ref{fig:ch3-fa-loadings} reports the Italian solution. The six factors carry interpretable substantive labels: PA1 --- physical and functional fragility (loadings $\geq 0.50$ on self-rated health, IADL, mobility, ADL, chronic conditions); PA5 --- subjective burden (EURO-D 0.73, loneliness 0.55); PA2 --- quality-of-life and engagement (CASP-12 at $-0.64$ indicating that the factor captures the ``low quality of life'' pole, plus internet use and educational participation); PA3 --- social integration (social\_integration 0.95, network size 0.68); PA4 --- household income (log\_thinc 0.87); PA6 --- household wealth (log\_hnetw 0.81, pension 0.93, home-ownership 0.55). The six factors jointly explain 38.4\% of the variance in the 29-variable Italian active set.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/03_data_methods/fig_3_3_NEW.png}
+  \caption{Factor loadings matrix, Italy and Sweden. Six factors extracted by Principal Axis factoring with varimax rotation, on the 29-variable active set in Italy and the 31-variable active set in Sweden. Cell entries are loadings $\geq 0.30$ in absolute value (loadings below the threshold are suppressed for readability). Variable ordering follows the dominant Italian factor for cross-country comparability. KMO = 0.832 (IT); 0.827 (SE); Bartlett $p < 0.001$ in both countries.}
+  \label{fig:ch3-fa-loadings}
+\end{figure}
+
+A residual diagnostic concerns the social-integration index, which produces a Heywood case in the Italian PA extraction (loading 1.11, communality 1.38) --- values that exceed the unit-variance bound and signal that the variable is empirically over-determined within the social factor (PA3). The Heywood case does not invalidate the factor structure but is reported here in line with the conventions of the factor-analytic literature: the social\_integration index, by construction a composite of social-engagement items, captures essentially the same latent dimension as network size, and the choice to retain the index reflects the preservation of the SHARE-conceptual encoding.
+
+K-means estimation operates on the standardised analytical matrix directly, not on the EFA-extracted factor scores. The factor analysis is therefore an interpretative companion to the segmentation, not an intermediate dimensionality-reduction step.
+
+\section{K-means clustering: estimation and choice of \texorpdfstring{$k$}{k}}
 \label{sec:ch3-kmeans}
 
-The core segmentation device of this thesis is K-means clustering, applied to the thirty-one (respectively twenty-nine) standardised variables rather than to any factor- or component-derived score. This choice follows the methodological guidance of course 20570 (Piccareta \& Trentini, 2025) and ensures that profile means can be interpreted directly in the metric of the original indicators. Clustering on factor scores is sometimes preferred in the literature on latent-variable segmentation (Magidson \& Vermunt, 2002), but it complicates the interpretation of profile characteristics and, as shown in Chapter~6, may produce unstable assignments when the factor solution itself contains Heywood cases.
+K-means with squared-Euclidean distance is the principal segmentation algorithm, implemented with the Hartigan--Wong update rule \citep{hartiganwong1979} on the country-specific standardised matrix. The estimation is run with 100 random initial-centroid configurations and a fixed seed (42); the configuration with the lowest within-cluster sum of squares is retained. K-means is preferred to agglomerative alternatives (Ward, complete, average) on the basis of higher within-cluster $R^2$ and silhouette indices reported in Chapter~7.
 
-For each country, K-means was initialised with one hundred random restarts, a maximum of five hundred iterations per restart, and a fixed random seed (42) for reproducibility. The number of clusters was fixed at six for both countries at the model-fitting stage, consistent with the reference design. In Italy, the six-cluster solution was subsequently refined by removing any micro-cluster smaller than five per cent of the sample and characterised by extreme digital-component scores; at $n = 2{,}378$ no such micro-cluster emerged, and the analysis was refitted directly with $k = 5$ on the full sample. In Sweden the six-cluster solution was retained without further removal, since no micro-cluster emerged --- a pattern that is consistent with the reference design's observation that the Italian micro-cluster has no Swedish analogue.
+The number of clusters $k$ is selected on three criteria. The within-cluster sum of squares scree ($k$ between 2 and 12) places the elbow at $k = 5$ (Italy) and $k = 6$ (Sweden). The Duda--Hart pseudo-$T^2$ statistic on the Ward dendrogram \citep{dudahartstork2001} peaks independently at the same values. Substantive interpretability is decisive at the boundary cases: at $k = 4$ the Italian fragile stratum collapses into a single archetype that obscures a substantively important contrast between ``Resigned'' and ``Depressed'' fragile sub-types (\S\ref{sec:ch4-fragile-resigned}, \S\ref{sec:ch4-fragile-depressed}); at $k = 6$ the Italian middle stratum splits into two unstable profiles. Table~\ref{tab:ch3-internal-validity} reports the internal validity at the chosen $k$.
 
-K-means was preferred over hierarchical alternatives on empirical grounds. The within-cluster quality indexes computed across $k = 2,\ldots,12$ show that K-means attains uniformly higher within-cluster $R^{2}$ and silhouette than Ward, complete, and average linkage in both countries; Ward only rivals K-means on the Dunn index, which penalises cluster elongation differently. This comparison is summarised in Figures~22--23 (K-means diagnostics by country) and in the multi-algorithm overlay of Figures~64--65, which presents all six indexes ($R^{2}$, Pseudo-F, silhouette, Davies-Bouldin proxy, Dunn and Pearson--gamma) for the four algorithms on a common scale. Figures~66--67 further document, variable by variable, how the within-cluster $R^{2}$ saturates with $k$ for each algorithm, highlighting a small group of indicators (e.g.\ body mass index, received help) that carry no clustering signal under any method and a larger group whose separation stabilises precisely in the $k = 5,\ldots,6$ range.
-
-The choice of $k = 5$ for Italy and $k = 6$ for Sweden rests on three converging criteria. First, the silhouette and $R^{2}$ curves of Figures~22--23 flatten beyond these values, indicating diminishing returns from further partitioning. Second, the semi-partial $R^{2}$ and Pseudo-$T^{2}$ (Duda--Hart) diagnostics reported in the appendix (Figures~72--73) display the sharpest merge-cost jumps when $k$ crosses the chosen cut-off, consistent with a natural boundary in the dendrogram. Third, the five- and six-cluster solutions produce substantively interpretable profiles that map onto the welfare-regime hypotheses of Chapter~5; solutions with $k > 6$ split the Connected and Social profiles into thematically redundant fragments, while $k < 5$ collapses the Fragile Resigned / Fragile Depressed contrast that is the analytical payoff of the subjective-wellbeing block.
-
-\subsection{Latent Class Analysis}
-\label{sec:ch3-lca}
-
-A third, probabilistic lens on the same population is provided by Latent Class Analysis (LCA), fitted using the R package \emph{poLCA} (Linzer \& Lewis, 2011). LCA models the joint distribution of categorical indicators as a mixture of latent-class-specific multinomial distributions, yielding a fully probabilistic assignment of respondents to classes. Whereas K-means imposes hard, distance-based partitions, LCA produces posterior probabilities over all latent classes for every individual and thus supports a more explicit assessment of classification uncertainty (Collins \& Lanza, 2010).
-
-\emph{poLCA} requires categorical indicators, so the twenty non-binary variables were discretised into tertiles (1 = low, 2 = mid, 3 = high) prior to fitting. Five variables whose distributions are heavily zero-inflated --- \emph{adl}, \emph{iadl}, \emph{memory}, \emph{orienti} and \emph{interest} --- admit only two or two-plus-one effective categories; for these a mode-based split was adopted (one category for the modal value, one or two for the remainder). For each country, LCA was estimated for $k = 2$ through $k = 8$ with five random restarts and up to one thousand EM iterations per fit. Normalised entropy (computed from the posterior matrix) and the Bayesian Information Criterion are reported for all fits. Chapter~6 uses these criteria, alongside the cluster-level convergence between K-means and LCA assignments, to evaluate the robustness of the segmentation.
-
-\section{Validation strategy}
-\label{sec:ch3-validation}
-
-Three complementary validation strategies are used throughout the thesis.
-
-First, external validation exploits a variable that did not enter the clustering. Life satisfaction --- measured on the SHARE zero-to-ten scale (\emph{ac012\_}) and absent from the analytical battery --- is regressed on the profile factor through a one-way analysis of variance (ANOVA) in each country. A strong between-group effect indicates that the profiles capture real variation in aspects of well-being that were not used in their construction. Welch's $t$-test and Tukey's HSD are used for post-hoc pairwise comparisons and adjust for unequal variances and multiplicity.
-
-Second, internal consistency is assessed by comparing K-means and LCA assignments on the same individuals. A cluster-specific convergence rate is computed as the share of members of a given K-means profile that are also assigned to the modal LCA class. High convergence indicates a robust latent type, while low convergence flags a profile that is geometrically well-defined but probabilistically ambiguous.
-
-Third, cross-country comparability is evaluated through four matched profile pairs constructed to correspond semantically across Italy and Sweden, as detailed in Table~\ref{tab:ch3-matched-pairs}. Welch's $t$-tests compare the Italian and Swedish members of each pair on the core well-being and connectedness variables, and chi-squared tests perform the analogous comparison on binary indicators. Profiles that have no cross-country analogue are reported separately as welfare-regime-specific types and listed in the bottom row of Table~\ref{tab:ch3-matched-pairs}.
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/03_data_methods/fig_kselection_scree.png}
+  \caption{K-selection scree, Italy and Sweden. Within-cluster sum-of-squares $R^2$ gradient for $k = 2 \ldots 10$ on the Ward dendrogram. The Italian scree elbows at $k = 5$ and the Swedish at $k = 6$, in agreement with the Duda--Hart pseudo-$T^2$ statistic.}
+  \label{fig:ch3-k-scree}
+\end{figure}
 
 \begin{table}[ht]
   \centering
-  \caption{Cross-country matched-pair mapping between Italian and Swedish profiles.}
-  \label{tab:ch3-matched-pairs}
-  \small
-  \begin{tabular}{@{}lll@{}}
+  \caption{Internal validity of the K-means partition at the chosen $k$}
+  \label{tab:ch3-internal-validity}
+  \begin{tabular}{lrr}
     \toprule
-    \textbf{Matched pair} & \textbf{Italian profile} & \textbf{Swedish profile}\\
+    \textbf{Index} & \textbf{Italy ($k = 5$)} & \textbf{Sweden ($k = 6$)} \\
     \midrule
-    Fragile            & \emph{Fragile Resigned}   & \emph{Fragile}\\
-    Declining          & \emph{Fragile Depressed}  & \emph{Social Decline}\\
-    Socially-oriented  & \emph{Traditional Social} & \emph{Moderate}\\
-    Connected          & \emph{Connected Active}   & \emph{Connected Wealthy}\\
-    \midrule
-    Unmatched          & \emph{Moderate Isolated}  & \emph{Asset Rich}, \emph{Wealthy Digital}\\
+    Within-cluster $R^2$ (between/total SS) & 0.248 & 0.211 \\
+    Mean silhouette width & 0.069 & 0.060 \\
+    Duda--Hart pseudo-$T^2$ peak at & $k = 5$ & $k = 6$ \\
+    ANOVA F on life satisfaction (external) & 124.6 & 44.3 \\
     \bottomrule
   \end{tabular}
-  \par\smallskip
-  \footnotesize \emph{Note.} Profiles in the first four rows are compared on well-being and connectedness variables via Welch's $t$-tests and chi-squared tests. Profiles in the bottom row have no cross-country analogue and are reported as welfare-regime-specific types in Chapter~5.
 \end{table}
 
-\section{Software and reproducibility}
-\label{sec:ch3-software}
+\noindent\small Note. Within-cluster $R^2$ is between/total sum of squares in the standardised input matrix. Mean silhouette is computed on Euclidean distances. The Duda--Hart pseudo-$T^2$ is the peak value of the statistic on the Ward dendrogram. ANOVA F is computed on the SHARE Wave 9 life-satisfaction item (single-item, eleven-point scale) external to the analytical input set. \normalsize
 
-All analyses were conducted in R 4.5 (R Core Team, 2024) with the following principal packages: \emph{psych} 2.3 (factor analysis and KMO/Bartlett diagnostics), \emph{cluster} 2.1 (silhouette computation), \emph{poLCA} 1.6 (latent class analysis), \emph{haven} 2.5 (reading SHARE Stata files), and the \emph{tidyverse} suite (data manipulation and visualisation). The analytical pipeline is organised into twenty numbered R scripts --- from raw SHARE file ingestion to final figure generation --- together with two shared helper modules: a central variable-label dictionary (\texttt{v9/var\_labels.R}) and a chapter-routing utility (\texttt{v9/fig\_paths.R}) that deposits each figure under the appropriate chapter subfolder. All twenty-two files are available in the online appendix. Each script uses a fixed random seed (42) wherever stochasticity is involved; the total execution time from raw files to final figures is approximately forty minutes on a standard laptop, with the cluster-diagnostic scripts (hierarchical linkages over $k = 2,\ldots,12$) accounting for the bulk of the runtime.
+The mean silhouette values of 0.069 (Italy) and 0.060 (Sweden) are low in absolute terms --- below the 0.250 threshold conventionally taken as indicative of a cohesive cluster structure \citep{kaufman1990}. This is a routine consequence of clustering on a high-dimensional input matrix spanning multiple FA-correlated subspaces, in which Euclidean compactness is intrinsically limited and within-cluster heterogeneity remains material along the dimensions on which the partition does not separate. The Duda--Hart pseudo-$T^2$ peak and the substantive interpretability of the resulting profiles therefore carry decisive weight in the choice of $k$, with the full silhouette decomposition by cluster reported in Chapter~7.
 
-Raw SHARE data are used under the conditions of Release 9.0.0, which require an end-user licence and prohibit disclosure of individual-level data. All aggregate results and figures presented in this thesis comply with the SHARE publication guidelines; no individual respondent is identifiable from the results reported.
+\section{Latent Class Analysis triangulation}
+\label{sec:ch3-lca}
+
+The K-means hard assignment is triangulated by Latent Class Analysis fitted on a tertilised representation of the same input variables. Continuous and ordinal variables are partitioned at country-level tertile cut-points into a three-category ordinal variable; binary variables are passed through unchanged. The LCA is fitted by the EM algorithm \citep{vermuntmagidson2002} with 100 random starts. The number of latent classes is held fixed at the K-means $k$ for each country, so the two partitions are directly comparable.
+
+Figure~\ref{fig:ch3-lca-convergence} reports the agreement between the K-means hard assignment and the LCA modal-class assignment by profile. Italian profiles converge between 55\% (Moderate Isolated) and 96\% (Fragile Resigned); Swedish profiles between 49\% (Wealthy Digital) and 87\% (Connected Wealthy). The four corner archetypes converge well above the 50\% chance line; the lower convergence on the middle-stratum profiles localises the regions where the cluster boundary is intrinsically fuzzy. The two methods therefore validate each other on the well-defined corners and identify the boundary regions where both algorithms struggle \citep{vermuntmagidson2002}.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/03_data_methods/fig_kmeans_lca_convergence.png}
+  \caption{Cross-method convergence between K-means and Latent Class Analysis by profile, separately for Italy and Sweden. Bars report the share of K-means cluster members whose LCA modal class coincides with the cluster.}
+  \label{fig:ch3-lca-convergence}
+\end{figure}
+
+\section{Methodological commitment: subjective dimensions as constituent inputs}
+\label{sec:ch3-subjective-commitment}
+
+A central methodological choice of this thesis is that the five subjective measures listed in \S\ref{sec:ch3-variables} --- CASP-12, EURO-D, loneliness, hope for the future, and self-rated probability of survival --- enter the K-means and LCA stages as inputs on equal footing with the objective health, economic, digital and social variables. They are not held aside for use as external validation outcomes. This section sets out the choice, its theoretical grounding, the empirical evidence that supports it, and a response to the objection that the resulting typology is in some sense circular.
+
+\subsection{The analytic choice}
+\label{sec:ch3-subjective-analytic}
+
+A common architecture in segmentation studies of older adults is to cluster on objective indicators and to use subjective dimensions as external validators \citep{wahrendorfsiegrist2010, jivraj2020}. The implicit position is that subjective dimensions are downstream consequences of the objective state. The architecture adopted here takes the opposite view: subjective dimensions are constituent dimensions of the lived experience of aging, with empirical content partially independent of the objective state. A typology that includes subjective measures as inputs cannot, by construction, be used to predict subjective well-being from cluster membership; it can be used to identify groups whose multidimensional configuration of objective and subjective experience is sufficiently coherent to be treated as a recognisable pattern of late-life trajectory.
+
+\subsection{Theoretical grounding}
+\label{sec:ch3-subjective-theory}
+
+\citet{lalivedepinay2005} develop late life as a distinct phase whose meaning is shaped jointly by objective resources and subjective interpretation, and explicitly argue against treating one as the cause of the other. \citet{walker2005active}, in his programmatic statement of the active-ageing paradigm, situates subjective control, sense of meaning, and life evaluation as core components of the aging process. The CASP scale \citep{hyde2003} was designed precisely to capture constituent quality-of-life dimensions of older age. In the gerontological-health literature, \citet{idlerbenyamini1997} showed that self-rated health predicts mortality independently of clinically observed health, and \citet{bowling2006} reviews two decades of work concluding that subjective evaluations should be treated as primary indicators of late-life experience rather than as derivative outcomes. The EURO-D depression scale \citep{prince1999} was constructed to provide a multi-country comparable measure of late-life depressive affect contributing to a constituent description of older-adult well-being.
+
+\subsection{Empirical justification: 4D versus 5D sensitivity}
+\label{sec:ch3-subjective-empirical}
+
+A direct empirical test re-runs the segmentation pipeline with the subjective block removed, retaining only the four objective dimensions for clustering and holding all other parameters constant. External discriminative power is measured by the F-statistic of a one-way ANOVA of life satisfaction (SHARE item AC012, eleven-point scale) on cluster membership; life satisfaction is external to both specifications. The Adjusted Rand Index between the 5D and 4D partitions measures how much the individual cluster assignments shift.
+
+\begin{table}[ht]
+  \centering
+  \caption{Sensitivity to the subjective block: 4D versus 5D specifications}
+  \label{tab:ch3-4d-5d-sensitivity}
+  \begin{tabular}{lrrrr}
+    \toprule
+    \textbf{Country / Specification} & \textbf{Silhouette} & \textbf{Within $R^2$} & \textbf{ANOVA F} & \textbf{ARI vs 5D} \\
+    \midrule
+    Italy --- 5D (with subjective) & 0.069 & 0.248 & 124.6 & --- \\
+    Italy --- 4D (no subjective) & 0.089 & 0.264 & 73.8 & 0.41 \\
+    Italy --- $\Delta$ (4D $-$ 5D) & +0.020 & +0.016 & $-50.8$ ($-41\%$) & \\
+    Sweden --- 5D (with subjective) & 0.060 & 0.211 & 44.3 & --- \\
+    Sweden --- 4D (no subjective) & 0.079 & 0.229 & 34.6 & 0.52 \\
+    Sweden --- $\Delta$ (4D $-$ 5D) & +0.019 & +0.018 & $-9.7$ ($-22\%$) & \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent\small Note. The 4D specification omits the five subjective measures from the K-means input set; $k$ and all other parameters are held constant. ANOVA F is computed on life satisfaction (SHARE item AC012, eleven-point scale), external to both specifications. ARI vs 5D is the Adjusted Rand Index between the 4D and 5D cluster assignments on the same respondents. \normalsize
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/03_data_methods/fig_3_7_NEW.png}
+  \caption{Sensitivity of the segmentation to the inclusion of the subjective block. Bar chart of the ANOVA F-statistic on life satisfaction (external outcome) under the 5D specification (with subjective inputs) and the 4D specification (objective inputs only). The 41\% reduction in Italy and 22\% reduction in Sweden quantify the discriminative gain attributable to the subjective dimensions.}
+  \label{fig:ch3-4d-5d-discrimination}
+\end{figure}
+
+Internal validity indices increase modestly when the subjective block is dropped --- the routine consequence of clustering on a smaller variable space. The external discriminative power on life satisfaction falls sharply: a 41\% reduction in Italy and a 22\% reduction in Sweden. The ARI between the 4D and 5D partitions is 0.41 in Italy and 0.52 in Sweden --- moderate agreement, meaning roughly half of the individual cluster assignments are sensitive to the inclusion of the subjective block. In Italy the 4D specification collapses the qualitative contrast between Fragile Resigned and Fragile Depressed (\S\ref{sec:ch4-fragile-resigned}, \S\ref{sec:ch4-fragile-depressed}) into a single fragile cluster, eliminating the affective distinction that the 5D specification preserves. The asymmetry between Italy ($-41\%$) and Sweden ($-22\%$) suggests that the subjective dimension contributes more uniquely to the Italian aging experience than to the Swedish one --- consistent with the substantive finding (Chapter~6) that the cross-country gap on subjective well-being indicators is wider than the gap on objective ones.
+
+\subsection{Response to the circularity objection}
+\label{sec:ch3-subjective-circularity}
+
+The objection that the analytical strategy is circular --- that the typology cannot validly be evaluated against subjective outcomes because subjective measures enter the clustering as inputs --- is addressed directly in what follows. Three points are relevant. First, the objection rests on a specific framing of what the typology is for. If the typology is intended to predict subjective well-being from objective state, then circularity is a real problem and the four-dimensional specification is the appropriate analytical strategy. The typology developed here is not intended for that purpose; it is intended to describe coherent multidimensional configurations of late-life experience, and includes all dimensions on equal footing. Second, the discriminative-power gain reported in Table~\ref{tab:ch3-4d-5d-sensitivity} is measured against life satisfaction, an outcome correlated with but not identical to any of the five subjective inputs and administered in a separate questionnaire block. The gain is closer to a test of construct validity than to a tautology. Third, where the typology is applied to genuinely external validation --- pension-system attachment, healthcare utilisation, regional variation, policy take-up --- the validation outcomes are entirely separate from the clustering inputs (Chapter~7).
+
+\section{Reproducibility protocol}
+\label{sec:ch3-reproducibility}
+
+The full analytical pipeline is implemented in twenty numbered R scripts (00--19) plus two helper modules (var\_labels.R; fig\_paths.R), executed sequentially in a versioned repository under git. The pipeline builds on the analytical scaffold of the Data Analytics and Visualization course \citep{piccarreta2025}. Each script is parameterised by a single seed (42) and re-seeds before each stochastic step. All intermediate and output files are written to a versioned outputs directory and indexed by the script number that generated them. The full pipeline runs in approximately forty minutes on a standard laptop, with R-package versions pinned via renv. A separate web application (\url{https://invisible-profiles.vercel.app}) presents the typology, the cross-country comparison, and the robustness diagnostics in interactive form, regenerated automatically from the analytical outputs.
+
