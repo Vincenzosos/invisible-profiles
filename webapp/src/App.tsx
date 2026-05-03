@@ -10,6 +10,7 @@ import Robustness from './components/Robustness';
 import Methods from './components/Methods';
 import type { View } from './types';
 import { readUrlState, writeUrlState } from './lib/url-state';
+import { buildMailto } from './lib/contact';
 
 const FINDINGS: View[] = ['atlas', 'benchmark'];
 const METHODOLOGY: View[] = ['methods', 'robustness'];
@@ -86,6 +87,14 @@ export default function App() {
             >
               Methods &amp; data
             </button>
+            <a
+              className="hover:text-slate-900 transition-colors"
+              href={buildMailto()}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Contact
+            </a>
             <a
               className="hover:text-slate-900 transition-colors"
               href="https://github.com/Vincenzosos/invisible-profiles"

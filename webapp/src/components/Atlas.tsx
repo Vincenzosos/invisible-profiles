@@ -16,6 +16,7 @@ import {
   type WelfareGapDimension,
 } from '../lib/cluster-insights';
 import type { View } from '../types';
+import { buildMailto } from '../lib/contact';
 
 type Profile = (typeof killer.italy_profiles)[number];
 
@@ -349,6 +350,25 @@ function DrilldownModal({
                 )}
               />
             )}
+          </div>
+
+          <div className="flex justify-end pt-2">
+            <a
+              href={buildMailto({
+                subject: comparing && compareProfile
+                  ? `Invisible Profiles - inquiry: ${p.profile} ↔ ${compareProfile.profile}`
+                  : `Invisible Profiles - inquiry: ${p.profile}`,
+                body: comparing && compareProfile
+                  ? `Hi Vincenzo,\n\nI'd like to discuss the ${p.profile} ↔ ${compareProfile.profile} segments.\n\n`
+                  : `Hi Vincenzo,\n\nI'd like to discuss the ${p.profile} segment.\n\n`,
+              })}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-xl border border-blue-300 bg-blue-50 px-5 py-2.5 text-sm font-medium text-blue-700 hover:bg-blue-100 hover:border-blue-500 transition-colors"
+            >
+              <span aria-hidden="true">✉</span>
+              Discuss {comparing ? 'these segments' : 'this segment'}
+            </a>
           </div>
 
           <p className="text-xs text-zinc-500 leading-relaxed pt-2 border-t border-zinc-100">
