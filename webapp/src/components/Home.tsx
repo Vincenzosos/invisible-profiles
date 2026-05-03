@@ -42,23 +42,23 @@ export default function Home({ onNavigate }: Props) {
                 reduces the external ANOVA <em>F</em>-statistic on life
                 satisfaction by{' '}
                 <Cite
-                  metric="External Welch ANOVA F-statistic on life satisfaction (held-out variable). Italy: 124.6 (5-dim solution) → 73.8 (4-dim solution without subjective block) — a 41% reduction in cluster discrimination."
-                  source="SHARE W9, release 9.0.0 · Thesis Ch. 6 — Robustness"
+                  metric="External one-way ANOVA F-statistic on life satisfaction (SHARE item AC012, held-out from clustering). Italy 5-dim: 124.6; Italy 4-dim (objective inputs only): 73.8 — a 41% reduction in cluster discrimination on subjective wellbeing."
+                  source="SHARE W9, release 9.0.0 · Thesis Ch. 3 §3.7.3, Table 3.4"
                 >
                   41% in Italy
                 </Cite>{' '}
                 (124.6 → 73.8) and{' '}
                 <Cite
-                  metric="External Welch ANOVA F-statistic on life satisfaction. Sweden: 44.3 → 34.6 — a 22% reduction; smaller than Italy because Sweden's subjective wellbeing has lower between-cluster variance."
-                  source="SHARE W9, release 9.0.0 · Thesis Ch. 6 — Robustness"
+                  metric="External one-way ANOVA F-statistic on life satisfaction. Sweden 5-dim: 44.3; Sweden 4-dim: 34.6 — a 22% reduction. Smaller than Italy: the subjective block adds less unique discrimination in the Swedish sample."
+                  source="SHARE W9, release 9.0.0 · Thesis Ch. 3 §3.7.3, Table 3.4"
                 >
                   22% in Sweden
                 </Cite>{' '}
                 (44.3 → 34.6); the adjusted Rand index between 4D and 5D
                 partitions is{' '}
                 <Cite
-                  metric="Adjusted Rand Index between the 5-dimensional and 4-dimensional cluster partitions (Italy / Sweden). ARI = 1 means identical assignments; ARI = 0 means random. Values around 0.41–0.52 indicate substantial disagreement."
-                  source="SHARE W9 · Thesis Ch. 6 §6.4 — Sensitivity to subjective block"
+                  metric="Adjusted Rand Index between the 5-dimensional and 4-dimensional cluster partitions (Italy 0.41 / Sweden 0.52). ARI = 1 means identical assignments; ARI = 0 means random. Roughly half of the individual cluster assignments are sensitive to the inclusion of the subjective block."
+                  source="SHARE W9 · Thesis Ch. 3 §3.7.3, Table 3.4"
                 >
                   0.41 / 0.52
                 </Cite>{' '}
@@ -77,36 +77,36 @@ export default function Home({ onNavigate }: Props) {
               <>
                 The Moderate Isolated profile (
                 <Cite
-                  metric="Cluster size of Moderate Isolated in the Italian k=5 solution. The largest of the five Italian segments by absolute count."
-                  source="SHARE W9 · Thesis Ch. 4 §4.3 — Cluster sizes"
+                  metric="Moderate Isolated cluster size in the Italian k=5 K-means solution. Largest single archetype by absolute count among the analytical sample (n = 2,378)."
+                  source="SHARE W9 · Thesis Ch. 4 §4.3.3 — Moderate Isolated"
                 >
                   n = 639, 26.9%
                 </Cite>{' '}
                 of the Italian sample) reports CASP-12 quality of life of{' '}
                 <Cite
-                  metric="Mean CASP-12 quality of life score (12–48 scale, higher = better). 36.8 places Moderate Isolated above the Italian sample mean (35.4) — objectively well, yet under-engaged."
-                  source="SHARE W9 subjective module · Thesis Ch. 4 §4.5"
+                  metric="Mean CASP-12 quality of life raw score (12–48 scale, higher = better). 36.8 places Moderate Isolated above the Italian sample mean — objectively well, yet socially and digitally thin."
+                  source="SHARE W9 subjective module · Thesis Ch. 4 §4.7.1 — Empirical signature of the Isolation Paradox"
                 >
                   36.8
                 </Cite>{' '}
                 and{' '}
                 <Cite
-                  metric="Share of Moderate Isolated reporting any internet use in the past 7 days. Above national over-65 mean (28%) — connectivity is not the binding constraint."
-                  source="SHARE W9 social-networks module · Thesis Ch. 4 §4.6"
+                  metric="Share of Moderate Isolated reporting any internet use (raw 34.1%). Above the Italian over-65 mean — connectivity is not the binding constraint; social and informational mediation is."
+                  source="SHARE W9 social-networks module · Thesis Ch. 4 §4.7.1"
                 >
                   34% internet penetration
                 </Cite>{' '}
                 — objectively healthy and connected — yet visits the dentist{' '}
                 <Cite
                   metric="Last-12-months dentist visit rate. Moderate Isolated 21% vs Traditional Social 48% (Δ = −27pp). Forgone-care-for-cost gap between the two profiles is statistically zero, ruling out affordability."
-                  source="SHARE W9 healthcare module · Thesis Ch. 4 §4.7 — Healthcare engagement"
+                  source="SHARE W9 healthcare module · Analytical pipeline"
                 >
                   27 percentage points less
                 </Cite>{' '}
                 often than the Traditional Social profile (21% vs 48%) and makes{' '}
                 <Cite
-                  metric="Mean specialist contacts in past 12 months, percentage reduction relative to Traditional Social. Consistent direction with dentistry: systematic under-utilisation across non-acute care."
-                  source="SHARE W9 healthcare module · Thesis Ch. 4 §4.7"
+                  metric="Mean specialist contacts in past 12 months. Direction matches Thesis Ch. 4 §4.7.2, which reports 0.72 fewer specialist visits per year for Moderate Isolated relative to Traditional Social — systematic disengagement from formal outpatient care."
+                  source="SHARE W9 healthcare module · Thesis Ch. 4 §4.7.2 — Healthcare under-utilisation"
                 >
                   47% fewer specialist contacts
                 </Cite>
@@ -125,28 +125,28 @@ export default function Home({ onNavigate }: Props) {
                 Mean CASP-12 difference (Sweden − Italy):{' '}
                 <Cite
                   metric="Mean CASP-12 difference, Sweden Fragile − Italy Fragile (matched pair). Positive sign means Swedish counterparts score higher quality of life on the 12–48 scale."
-                  source="SHARE W9 · Thesis Ch. 7 — Cross-country matched-pair comparison"
+                  source="SHARE W9 subjective module · Cross-country pipeline output"
                 >
                   +5.7 points
                 </Cite>{' '}
                 for the Fragile pair,{' '}
                 <Cite
-                  metric="Mean CASP-12 difference, Sweden Declining − Italy Declining. Largest welfare gap of the four pairs — driven by Sweden's stronger long-term-care and home-help systems."
-                  source="SHARE W9 · Thesis Ch. 7 — Cross-country matched-pair comparison"
+                  metric="Mean CASP-12 difference, Sweden Declining − Italy Declining. Largest welfare gap of the four matched pairs."
+                  source="SHARE W9 subjective module · Cross-country pipeline output"
                 >
                   +9.6
                 </Cite>{' '}
                 for the Declining pair,{' '}
                 <Cite
                   metric="Mean CASP-12 difference, Sweden Connected − Italy Connected. Modest gap: at the healthy/active end the two systems perform similarly."
-                  source="SHARE W9 · Thesis Ch. 7 — Cross-country matched-pair comparison"
+                  source="SHARE W9 subjective module · Cross-country pipeline output"
                 >
                   +4.3
                 </Cite>{' '}
                 for the Connected pair, and{' '}
                 <Cite
                   metric="Mean CASP-12 difference, Sweden Socially-oriented − Italy Socially-oriented. Negative sign: Italy's family- and community-rich profile slightly outperforms its Swedish counterpart on subjective wellbeing."
-                  source="SHARE W9 · Thesis Ch. 7 — Cross-country matched-pair comparison"
+                  source="SHARE W9 subjective module · Cross-country pipeline output"
                 >
                   −1.4
                 </Cite>{' '}
@@ -154,21 +154,21 @@ export default function Home({ onNavigate }: Props) {
                 the same monotonic compression:{' '}
                 <Cite
                   metric="Internet penetration percentage-point gap (Sweden − Italy) within the Fragile matched pair. Sweden's universal digital infrastructure reaches even the most vulnerable elderly."
-                  source="SHARE W9 social-networks module · Thesis Ch. 7"
+                  source="SHARE W9 social-networks module · Cross-country pipeline output"
                 >
                   +55pp for Fragile
                 </Cite>
                 ,{' '}
                 <Cite
-                  metric="Internet penetration percentage-point gap (Sweden − Italy) within the Declining matched pair. The widest digital divide of the four pairs."
-                  source="SHARE W9 social-networks module · Thesis Ch. 7"
+                  metric="Internet penetration percentage-point gap (Sweden − Italy) within the Declining matched pair. The widest digital divide of the four matched pairs."
+                  source="SHARE W9 social-networks module · Cross-country pipeline output"
                 >
                   +81pp for Declining
                 </Cite>
                 ,{' '}
                 <Cite
                   metric="Internet penetration percentage-point gap (Sweden − Italy) within the Connected matched pair. Smallest gap: digitally active elderly converge cross-nationally."
-                  source="SHARE W9 social-networks module · Thesis Ch. 7"
+                  source="SHARE W9 social-networks module · Cross-country pipeline output"
                 >
                   +24pp for Connected
                 </Cite>
