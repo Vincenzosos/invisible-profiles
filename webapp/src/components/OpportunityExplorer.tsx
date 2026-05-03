@@ -2,11 +2,75 @@ import { useState } from 'react';
 import playbooks from '../data/playbooks.json';
 import killer from '../data/killer_numbers.json';
 import { formatIndividuals } from '../lib/format';
+import { downloadFile, writeCSV } from '../lib/csv';
 
 type Vertical = (typeof playbooks.verticals)[number];
 type SkipEntry = { profile: string; reason?: string; rationale?: string };
 
 const PREMIUM_RANGES = killer.premium_assumptions;
+
+// Per-vertical premium-range string. Mirrors what MarketRanges renders
+// inline. Kept in one place so the CSV export and the on-screen panel
+// cannot drift.
+function premiumStringFor(verticalId: string): string {
+  if (verticalId === 'health_insurance') {
+    const d = PREMIUM_RANGES.dental_eur_per_individual_per_year;
+    const s = PREMIUM_RANGES.specialist_eur_per_individual_per_year;
+    return `Dental €${d.low}-€${d.high}/yr; Specialist €${s.low}-€${s.high}/yr`;
+  }
+  if (verticalId === 'pharma_otc') {
+    const o = PREMIUM_RANGES.otc_pharma_eur_per_individual_per_year;
+    return `OTC + adherence €${o.low}-€${o.high}/yr per individual`;
+  }
+  if (verticalId === 'wealth_management') {
+    return '0.5%-1.5% AUM/yr (all-in fee load)';
+  }
+  if (verticalId === 'senior_living') {
+    return 'RSA / independent senior living €1,500-€3,000/month';
+  }
+  return '';
+}
+
+function buildCrmCsv(): string {
+  type Row = {
+    profile: string;
+    vertical: string;
+    criteria: string;
+    include_or_exclude: 'include' | 'exclude';
+    expected_market_premium: string;
+  };
+  const rows: Row[] = [];
+  for (const v of playbooks.verticals) {
+    const criteria = v.crm_criteria.join(' | ');
+    const premium = premiumStringFor(v.id);
+    for (const t of v.targets) {
+      rows.push({
+        profile: t.profile,
+        vertical: v.label,
+        criteria,
+        include_or_exclude: 'include',
+        expected_market_premium: premium,
+      });
+    }
+    for (const s of v.skip) {
+      rows.push({
+        profile: s.profile,
+        vertical: v.label,
+        criteria,
+        include_or_exclude: 'exclude',
+        expected_market_premium: premium,
+      });
+    }
+  }
+  const headers = [
+    'profile',
+    'vertical',
+    'criteria',
+    'include_or_exclude',
+    'expected_market_premium',
+  ];
+  return writeCSV(headers, rows);
+}
 
 export default function OpportunityExplorer() {
   const [activeId, setActiveId] = useState(playbooks.verticals[0].id);
@@ -29,6 +93,13 @@ export default function OpportunityExplorer() {
           and the segment size in individuals, and leave the multiplication
           to the operator who owns their conversion assumptions.
         </p>
+        <button
+          type="button"
+          onClick={() => downloadFile('crm_mapping.csv', buildCrmCsv())}
+          className="inline-flex items-center gap-2 rounded-xl border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:border-blue-500 transition-colors px-4 py-2.5 text-sm font-medium text-blue-700"
+        >
+          <span aria-hidden="true">↓</span> Download CRM mapping (CSV)
+        </button>
       </header>
 
       <nav className="flex flex-wrap gap-2">
