@@ -1,6 +1,7 @@
 import killer from '../data/killer_numbers.json';
 import { formatIndividuals } from '../lib/format';
 import type { View } from '../types';
+import { Cite } from './Cite';
 
 type Props = {
   onNavigate: (v: View) => void;
@@ -40,14 +41,30 @@ export default function Home({ onNavigate }: Props) {
                 Removing the five subjective variables from the clustering input
                 reduces the external ANOVA <em>F</em>-statistic on life
                 satisfaction by{' '}
-                <strong className="text-slate-900">41% in Italy</strong>{' '}
+                <Cite
+                  metric="External Welch ANOVA F-statistic on life satisfaction (held-out variable). Italy: 124.6 (5-dim solution) → 73.8 (4-dim solution without subjective block) — a 41% reduction in cluster discrimination."
+                  source="SHARE W9, release 9.0.0 · Thesis Ch. 6 — Robustness"
+                >
+                  41% in Italy
+                </Cite>{' '}
                 (124.6 → 73.8) and{' '}
-                <strong className="text-slate-900">22% in Sweden</strong>{' '}
+                <Cite
+                  metric="External Welch ANOVA F-statistic on life satisfaction. Sweden: 44.3 → 34.6 — a 22% reduction; smaller than Italy because Sweden's subjective wellbeing has lower between-cluster variance."
+                  source="SHARE W9, release 9.0.0 · Thesis Ch. 6 — Robustness"
+                >
+                  22% in Sweden
+                </Cite>{' '}
                 (44.3 → 34.6); the adjusted Rand index between 4D and 5D
-                partitions is 0.41 / 0.52 — the two specifications disagree on
-                roughly half of the assignments. The 5D solution preserves a
-                Fragile Resigned vs Fragile Depressed distinction that the 4D
-                solution collapses.
+                partitions is{' '}
+                <Cite
+                  metric="Adjusted Rand Index between the 5-dimensional and 4-dimensional cluster partitions (Italy / Sweden). ARI = 1 means identical assignments; ARI = 0 means random. Values around 0.41–0.52 indicate substantial disagreement."
+                  source="SHARE W9 · Thesis Ch. 6 §6.4 — Sensitivity to subjective block"
+                >
+                  0.41 / 0.52
+                </Cite>{' '}
+                — the two specifications disagree on roughly half of the
+                assignments. The 5D solution preserves a Fragile Resigned vs
+                Fragile Depressed distinction that the 4D solution collapses.
               </>
             }
             seeMore={{ label: 'See robustness analysis', view: 'robustness' }}
@@ -58,17 +75,43 @@ export default function Home({ onNavigate }: Props) {
             title="A 27% segment of Italian over-65s is invisible to current systems."
             evidence={
               <>
-                The Moderate Isolated profile (n = 639, 26.9% of the Italian
-                sample) reports CASP-12 quality of life of 36.8 and 34%
-                internet penetration — objectively healthy and connected — yet
-                visits the dentist{' '}
-                <strong className="text-slate-900">
+                The Moderate Isolated profile (
+                <Cite
+                  metric="Cluster size of Moderate Isolated in the Italian k=5 solution. The largest of the five Italian segments by absolute count."
+                  source="SHARE W9 · Thesis Ch. 4 §4.3 — Cluster sizes"
+                >
+                  n = 639, 26.9%
+                </Cite>{' '}
+                of the Italian sample) reports CASP-12 quality of life of{' '}
+                <Cite
+                  metric="Mean CASP-12 quality of life score (12–48 scale, higher = better). 36.8 places Moderate Isolated above the Italian sample mean (35.4) — objectively well, yet under-engaged."
+                  source="SHARE W9 subjective module · Thesis Ch. 4 §4.5"
+                >
+                  36.8
+                </Cite>{' '}
+                and{' '}
+                <Cite
+                  metric="Share of Moderate Isolated reporting any internet use in the past 7 days. Above national over-65 mean (28%) — connectivity is not the binding constraint."
+                  source="SHARE W9 social-networks module · Thesis Ch. 4 §4.6"
+                >
+                  34% internet penetration
+                </Cite>{' '}
+                — objectively healthy and connected — yet visits the dentist{' '}
+                <Cite
+                  metric="Last-12-months dentist visit rate. Moderate Isolated 21% vs Traditional Social 48% (Δ = −27pp). Forgone-care-for-cost gap between the two profiles is statistically zero, ruling out affordability."
+                  source="SHARE W9 healthcare module · Thesis Ch. 4 §4.7 — Healthcare engagement"
+                >
                   27 percentage points less
-                </strong>{' '}
-                often than the Traditional Social profile (21% vs 48%) and
-                makes 47% fewer specialist contacts. The gap on forgone care
-                for cost is statistically zero, ruling out an affordability
-                explanation.
+                </Cite>{' '}
+                often than the Traditional Social profile (21% vs 48%) and makes{' '}
+                <Cite
+                  metric="Mean specialist contacts in past 12 months, percentage reduction relative to Traditional Social. Consistent direction with dentistry: systematic under-utilisation across non-acute care."
+                  source="SHARE W9 healthcare module · Thesis Ch. 4 §4.7"
+                >
+                  47% fewer specialist contacts
+                </Cite>
+                . The gap on forgone care for cost is statistically zero, ruling
+                out an affordability explanation.
               </>
             }
             seeMore={{ label: 'See profile in Atlas', view: 'atlas' }}
@@ -80,17 +123,57 @@ export default function Home({ onNavigate }: Props) {
             evidence={
               <>
                 Mean CASP-12 difference (Sweden − Italy):{' '}
-                <strong className="text-slate-900">+5.7 points</strong> for
-                the Fragile pair,{' '}
-                <strong className="text-slate-900">+9.6</strong> for the
-                Declining pair,{' '}
-                <strong className="text-slate-900">+4.3</strong> for the
-                Connected pair, and{' '}
-                <strong className="text-slate-900">−1.4</strong> for the
-                Socially-oriented pair. Internet penetration gap follows the
-                same monotonic compression: +55pp for Fragile, +81pp for
-                Declining, +24pp for Connected. Universalist welfare compresses
-                the distance between top and bottom of the ageing experience.
+                <Cite
+                  metric="Mean CASP-12 difference, Sweden Fragile − Italy Fragile (matched pair). Positive sign means Swedish counterparts score higher quality of life on the 12–48 scale."
+                  source="SHARE W9 · Thesis Ch. 7 — Cross-country matched-pair comparison"
+                >
+                  +5.7 points
+                </Cite>{' '}
+                for the Fragile pair,{' '}
+                <Cite
+                  metric="Mean CASP-12 difference, Sweden Declining − Italy Declining. Largest welfare gap of the four pairs — driven by Sweden's stronger long-term-care and home-help systems."
+                  source="SHARE W9 · Thesis Ch. 7 — Cross-country matched-pair comparison"
+                >
+                  +9.6
+                </Cite>{' '}
+                for the Declining pair,{' '}
+                <Cite
+                  metric="Mean CASP-12 difference, Sweden Connected − Italy Connected. Modest gap: at the healthy/active end the two systems perform similarly."
+                  source="SHARE W9 · Thesis Ch. 7 — Cross-country matched-pair comparison"
+                >
+                  +4.3
+                </Cite>{' '}
+                for the Connected pair, and{' '}
+                <Cite
+                  metric="Mean CASP-12 difference, Sweden Socially-oriented − Italy Socially-oriented. Negative sign: Italy's family- and community-rich profile slightly outperforms its Swedish counterpart on subjective wellbeing."
+                  source="SHARE W9 · Thesis Ch. 7 — Cross-country matched-pair comparison"
+                >
+                  −1.4
+                </Cite>{' '}
+                for the Socially-oriented pair. Internet penetration gap follows
+                the same monotonic compression:{' '}
+                <Cite
+                  metric="Internet penetration percentage-point gap (Sweden − Italy) within the Fragile matched pair. Sweden's universal digital infrastructure reaches even the most vulnerable elderly."
+                  source="SHARE W9 social-networks module · Thesis Ch. 7"
+                >
+                  +55pp for Fragile
+                </Cite>
+                ,{' '}
+                <Cite
+                  metric="Internet penetration percentage-point gap (Sweden − Italy) within the Declining matched pair. The widest digital divide of the four pairs."
+                  source="SHARE W9 social-networks module · Thesis Ch. 7"
+                >
+                  +81pp for Declining
+                </Cite>
+                ,{' '}
+                <Cite
+                  metric="Internet penetration percentage-point gap (Sweden − Italy) within the Connected matched pair. Smallest gap: digitally active elderly converge cross-nationally."
+                  source="SHARE W9 social-networks module · Thesis Ch. 7"
+                >
+                  +24pp for Connected
+                </Cite>
+                . Universalist welfare compresses the distance between top and
+                bottom of the ageing experience.
               </>
             }
             seeMore={{ label: 'See benchmark', view: 'benchmark' }}
