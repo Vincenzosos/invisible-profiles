@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import NavBar from './components/NavBar';
 import SectionTabs from './components/SectionTabs';
 import Home from './components/Home';
@@ -9,12 +9,43 @@ import ProfilerFlow from './components/ProfilerFlow';
 import Robustness from './components/Robustness';
 import Methods from './components/Methods';
 import type { View } from './types';
+import { readUrlState, writeUrlState } from './lib/url-state';
 
 const FINDINGS: View[] = ['atlas', 'benchmark'];
 const METHODOLOGY: View[] = ['methods', 'robustness'];
 
 export default function App() {
-  const [view, setView] = useState<View>('home');
+  const initial = useRef(readUrlState()).current;
+  const [view, setViewState] = useState<View>(initial.section);
+  const [profile, setProfile] = useState<string | null>(initial.profile);
+  const isFirstSync = useRef(true);
+
+  // Push (view, profile) into the URL on every change after mount.
+  useEffect(() => {
+    if (isFirstSync.current) {
+      isFirstSync.current = false;
+      return;
+    }
+    writeUrlState({ section: view, profile });
+  }, [view, profile]);
+
+  // Browser back/forward → re-read URL and restore state.
+  useEffect(() => {
+    const onPop = () => {
+      const s = readUrlState();
+      setViewState(s.section);
+      setProfile(s.profile);
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  // Drop the profile param when navigating away from Atlas — it would
+  // be meaningless on any other section.
+  const setView = (v: View) => {
+    setViewState(v);
+    if (v !== 'atlas') setProfile(null);
+  };
 
   const inFindings = FINDINGS.includes(view);
   const inMethodology = METHODOLOGY.includes(view);
@@ -31,7 +62,13 @@ export default function App() {
         )}
 
         {view === 'home' && <Home onNavigate={setView} />}
-        {view === 'atlas' && <Atlas onNavigate={setView} />}
+        {view === 'atlas' && (
+          <Atlas
+            onNavigate={setView}
+            openProfile={profile}
+            onOpenProfile={setProfile}
+          />
+        )}
         {view === 'benchmark' && <Benchmark onNavigate={setView} />}
         {view === 'opportunity' && <OpportunityExplorer />}
         {view === 'profiler' && <ProfilerFlow />}

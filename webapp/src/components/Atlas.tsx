@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import killer from '../data/killer_numbers.json';
 import centroids from '../data/centroids.json';
 import {
@@ -26,11 +26,18 @@ const HERO_PROFILES = new Set([
 
 type Props = {
   onNavigate?: (v: View) => void;
+  openProfile?: string | null;
+  onOpenProfile?: (profile: string | null) => void;
 };
 
-export default function Atlas({ onNavigate }: Props) {
-  const [openProfile, setOpenProfile] = useState<string | null>(null);
+export default function Atlas({ onNavigate, openProfile = null, onOpenProfile }: Props) {
+  const setOpenProfile = (p: string | null) => onOpenProfile?.(p);
   const profiles = killer.italy_profiles;
+  // If the URL named a profile that no longer exists, ignore it.
+  const resolvedOpen =
+    openProfile && profiles.some((p) => p.profile === openProfile)
+      ? openProfile
+      : null;
 
   const sorted = [...profiles].sort((a, b) => {
     const aHero = HERO_PROFILES.has(a.profile) ? 1 : 0;
@@ -94,9 +101,9 @@ export default function Atlas({ onNavigate }: Props) {
         for variable definitions and the full source bibliography.
       </p>
 
-      {openProfile && (
+      {resolvedOpen && (
         <DrilldownModal
-          profile={profiles.find((p) => p.profile === openProfile)!}
+          profile={profiles.find((p) => p.profile === resolvedOpen)!}
           onClose={() => setOpenProfile(null)}
         />
       )}
