@@ -10,6 +10,7 @@ import {
   type HealthcareIndicator,
   type WelfareGapDimension,
 } from '../lib/cluster-insights';
+import { downloadFile } from '../lib/csv';
 
 type Narratives = {
   italy: Record<string, string>;
@@ -59,6 +60,60 @@ export default function Result({
   const narrative = narratives[country][best.name] ?? '';
   const twinNarrative = twinName ? narratives[otherCountry][twinName] : '';
   const keyVars = data.key_variables;
+
+  const handleDownload = () => {
+    const payload = {
+      profile: best.name,
+      country,
+      percentile: within.map((w) => ({
+        variable: w.variable,
+        label: w.label,
+        pct: Number(w.pct.toFixed(2)),
+      })),
+      twin: twinName ?? null,
+      traits: {
+        strengths: traits.strengths.map((t) => ({
+          variable: t.variable,
+          label: t.label,
+          z_score: Number(t.zScore.toFixed(3)),
+        })),
+        pressure_points: traits.pressurePoints.map((t) => ({
+          variable: t.variable,
+          label: t.label,
+          z_score: Number(t.zScore.toFixed(3)),
+        })),
+      },
+      healthcare: fingerprint.map((f) => ({
+        key: f.key,
+        label: f.label,
+        unit: f.unit,
+        orientation: f.orientation,
+        cluster: f.cluster,
+        national: f.national,
+      })),
+      welfare_gap: gap
+        ? {
+            pair_label: gap.pairLabel,
+            italian_profile: gap.italianProfile,
+            swedish_profile: gap.swedishProfile,
+            dimensions: gap.dimensions.map((d) => ({
+              dimension: d.dimension,
+              label: d.label,
+              unit: d.unit,
+              italy_value: d.italyValue,
+              sweden_value: d.swedenValue,
+              gap: d.gap,
+            })),
+          }
+        : null,
+    };
+    const safeName = best.name.replace(/[^A-Za-z0-9_-]+/g, '_');
+    downloadFile(
+      `my_profile_${safeName}.json`,
+      JSON.stringify(payload, null, 2),
+      'application/json;charset=utf-8',
+    );
+  };
 
   return (
     <section className="space-y-12 max-w-3xl">
@@ -362,7 +417,14 @@ export default function Result({
         </ul>
       </details>
 
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-3 flex-wrap">
+        <button
+          type="button"
+          onClick={handleDownload}
+          className="inline-flex items-center gap-2 rounded-xl border border-blue-300 bg-blue-50 px-5 py-2.5 text-sm font-medium text-blue-700 hover:bg-blue-100 hover:border-blue-500 transition-colors"
+        >
+          <span aria-hidden="true">↓</span> Download my profile (JSON)
+        </button>
         <button
           type="button"
           onClick={onRestart}
