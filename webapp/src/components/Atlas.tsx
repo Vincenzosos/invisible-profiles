@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import killer from '../data/killer_numbers.json';
 import centroids from '../data/centroids.json';
 import {
@@ -104,6 +104,7 @@ export default function Atlas({ onNavigate, openProfile = null, onOpenProfile }:
       {resolvedOpen && (
         <DrilldownModal
           profile={profiles.find((p) => p.profile === resolvedOpen)!}
+          allProfiles={profiles}
           onClose={() => setOpenProfile(null)}
         />
       )}
@@ -222,16 +223,25 @@ function Metric({
 
 function DrilldownModal({
   profile: p,
+  allProfiles,
   onClose,
 }: {
   profile: Profile;
+  allProfiles: readonly Profile[];
   onClose: () => void;
 }) {
-  const passport = passportFor('italy', p.profile);
-  const traits = clusterTraits('italy', p.profile, centroids);
-  const fingerprint = healthcareFingerprint('italy', p.profile);
-  const gap = welfareGap('italy', p.profile);
+  const [compareName, setCompareName] = useState<string | null>(null);
+  const compareProfile =
+    compareName && compareName !== p.profile
+      ? allProfiles.find((x) => x.profile === compareName) ?? null
+      : null;
+  const comparing = !!compareProfile;
   const agg = killer.country_aggregates.italy;
+
+  // Reset comparison when the primary profile changes (modal reopened on a different segment).
+  useEffect(() => {
+    setCompareName(null);
+  }, [p.profile]);
 
   // Esc-to-close + body scroll lock while panel is open.
   useEffect(() => {
@@ -246,9 +256,10 @@ function DrilldownModal({
     };
   }, [onClose]);
 
+  const compareCandidates = allProfiles.filter((x) => x.profile !== p.profile);
+
   return (
     <>
-      {/* Light dim — does not blur the page so the Atlas grid stays readable */}
       <div
         className="fixed inset-0 bg-slate-900/15 z-30"
         onClick={onClose}
@@ -257,244 +268,88 @@ function DrilldownModal({
       <aside
         role="dialog"
         aria-label={`${p.profile} profile dossier`}
-        className="fixed top-0 right-0 bottom-0 w-full sm:w-[640px] lg:w-[720px] bg-white shadow-2xl z-40 overflow-y-auto animate-[slideIn_220ms_ease-out]"
+        className={[
+          'fixed top-0 right-0 bottom-0 bg-white shadow-2xl z-40 overflow-y-auto animate-[slideIn_220ms_ease-out]',
+          comparing
+            ? 'w-full lg:w-[1080px] xl:w-[1240px]'
+            : 'w-full sm:w-[640px] lg:w-[720px]',
+        ].join(' ')}
       >
         <div className="p-6 sm:p-8 space-y-8">
           <header className="flex items-start justify-between gap-4 sticky top-0 -mx-6 sm:-mx-8 -mt-6 sm:-mt-8 px-6 sm:px-8 pt-6 sm:pt-8 pb-4 bg-white border-b border-zinc-200 z-10">
-            <div className="space-y-2">
-              <p className="eyebrow">
-                {formatPct(p.share_of_country_pct)} ·{' '}
-                {formatIndividuals(p.market_size_individuals)} individuals · sample n = {p.n_sample}
-              </p>
-              <h2 className="display-2 text-slate-900">{p.profile}</h2>
+            <div className="space-y-2 flex-1 min-w-0">
+              {comparing ? (
+                <>
+                  <p className="eyebrow">
+                    Compare · {p.profile} ↔ {compareProfile!.profile}
+                  </p>
+                  <h2 className="display-3 text-slate-900">Side-by-side dossier</h2>
+                </>
+              ) : (
+                <>
+                  <p className="eyebrow">
+                    {formatPct(p.share_of_country_pct)} ·{' '}
+                    {formatIndividuals(p.market_size_individuals)} individuals · sample n = {p.n_sample}
+                  </p>
+                  <h2 className="display-2 text-slate-900">{p.profile}</h2>
+                </>
+              )}
             </div>
-            <button
-              type="button"
-              onClick={onClose}
-              className="text-zinc-400 hover:text-slate-900 text-2xl leading-none -mt-1 px-2"
-              aria-label="Close"
-            >
-              ×
-            </button>
+            <div className="flex items-center gap-2 shrink-0">
+              {!comparing ? (
+                <select
+                  value=""
+                  onChange={(e) => setCompareName(e.target.value || null)}
+                  className="text-xs border border-zinc-300 rounded-lg px-3 py-1.5 bg-white text-zinc-700 hover:border-blue-500 cursor-pointer"
+                  aria-label="Compare with another profile"
+                >
+                  <option value="">Compare with…</option>
+                  {compareCandidates.map((op) => (
+                    <option key={op.profile} value={op.profile}>
+                      {op.profile}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setCompareName(null)}
+                  className="text-xs border border-zinc-300 rounded-lg px-3 py-1.5 bg-white text-zinc-700 hover:border-rose-400 hover:text-rose-700"
+                >
+                  Exit compare
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={onClose}
+                className="text-zinc-400 hover:text-slate-900 text-2xl leading-none -mt-1 px-2"
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
           </header>
 
-        {passport && (
-          <div className="rounded-xl bg-blue-50 border border-blue-200 p-5 space-y-3">
-            <p className="font-medium text-slate-900">{passport.headline}</p>
-            <p className="text-sm text-zinc-700 italic leading-relaxed">
-              {passport.tagline}
-            </p>
-            {passport.action_signals.length > 0 && (
-              <ul className="space-y-2 pt-1">
-                {passport.action_signals.map((s, i) => (
-                  <li
-                    key={i}
-                    className="text-sm text-zinc-700 leading-relaxed flex gap-3"
-                  >
-                    <span className="text-blue-700 font-mono text-xs tabular-nums mt-0.5">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <span>{s}</span>
-                  </li>
-                ))}
-              </ul>
+          <div className={comparing ? 'grid grid-cols-1 lg:grid-cols-2 gap-6' : ''}>
+            <ProfileColumn
+              profile={p}
+              agg={agg}
+              compact={comparing}
+              showColumnHeader={comparing}
+            />
+            {compareProfile && (
+              <ProfileColumn
+                profile={compareProfile}
+                agg={agg}
+                compact
+                showColumnHeader
+                onSwap={(name) => setCompareName(name)}
+                swapCandidates={allProfiles.filter(
+                  (x) => x.profile !== p.profile && x.profile !== compareProfile.profile,
+                )}
+              />
             )}
           </div>
-        )}
-
-        {/* Headline metrics — 3 big numbers cluster vs national */}
-        <section className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <HeadlineMetric
-            label="Median household income"
-            cluster={p.median_income_eur}
-            national={agg.median_household_income_eur}
-            format="eur"
-          />
-          <HeadlineMetric
-            label="Quality of life · CASP-12"
-            cluster={p.casp_mean}
-            national={agg.mean_casp}
-            format="num"
-          />
-          <HeadlineMetric
-            label="Internet last 7 days"
-            cluster={p.internet_pct}
-            national={agg.internet_penetration_pct}
-            format="pct"
-          />
-        </section>
-
-        {/* Cluster signature: strengths + pressure points */}
-        {(traits.strengths.length > 0 || traits.pressurePoints.length > 0) && (
-          <section className="rounded-2xl bg-white border border-zinc-200 p-5 space-y-4">
-            <p className="eyebrow">Cluster signature</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div>
-                <p className="text-xs font-medium text-blue-700 mb-2">Strengths</p>
-                {traits.strengths.length === 0 ? (
-                  <p className="text-xs text-zinc-500">
-                    No dimension scores notably above the country mean.
-                  </p>
-                ) : (
-                  <ul className="space-y-1.5">
-                    {traits.strengths.map((t) => (
-                      <li
-                        key={t.variable}
-                        className="text-sm text-zinc-700 flex items-baseline justify-between"
-                      >
-                        <span>{t.label}</span>
-                        <span className="text-xs tabular-nums text-blue-700 font-medium">
-                          z = {t.zScore >= 0 ? '+' : ''}{t.zScore.toFixed(2)}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-              <div>
-                <p className="text-xs font-medium text-rose-700 mb-2">Pressure points</p>
-                {traits.pressurePoints.length === 0 ? (
-                  <p className="text-xs text-zinc-500">
-                    No dimension scores notably below the country mean.
-                  </p>
-                ) : (
-                  <ul className="space-y-1.5">
-                    {traits.pressurePoints.map((t) => (
-                      <li
-                        key={t.variable}
-                        className="text-sm text-zinc-700 flex items-baseline justify-between"
-                      >
-                        <span>{t.label}</span>
-                        <span className="text-xs tabular-nums text-rose-700 font-medium">
-                          z = {t.zScore >= 0 ? '+' : ''}{t.zScore.toFixed(2)}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Healthcare engagement with comparative bars */}
-        {fingerprint.length > 0 && (
-          <section className="rounded-2xl bg-white border border-zinc-200 p-5 space-y-4">
-            <p className="eyebrow">Healthcare engagement · cluster vs national</p>
-            <div className="space-y-2.5">
-              {fingerprint.map((f) => (
-                <FingerprintRow key={f.key} f={f} />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Welfare-state translation: matched-pair gap */}
-        {gap && (
-          <section className="rounded-2xl bg-blue-50 border border-blue-200 p-5 space-y-3">
-            <p className="eyebrow text-blue-700">
-              Welfare-state translation · {gap.pairLabel} matched pair
-            </p>
-            <p className="text-sm text-slate-900">
-              In Sweden, this cluster matches{' '}
-              <span className="text-blue-700 font-medium">{gap.swedishProfile}</span>.
-            </p>
-            <div className="space-y-2 pt-1">
-              {gap.dimensions.slice(0, 5).map((d) => (
-                <GapRow key={d.dimension} d={d} />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {!gap && passport && passport.welfare_pair === null && (
-          <section className="rounded-2xl bg-zinc-50 border border-zinc-200 p-5">
-            <p className="eyebrow mb-2">Country-specific cluster</p>
-            <p className="text-sm text-zinc-700 leading-relaxed">
-              No analogue in the matched-pair design. Universalist welfare in
-              Sweden redistributes this profile across other clusters.
-            </p>
-          </section>
-        )}
-
-        {/* Numbers in detail (collapsible) */}
-        <details className="rounded-2xl bg-zinc-50 border border-zinc-200 p-5">
-          <summary className="cursor-pointer text-sm font-medium text-slate-900 select-none">
-            Numbers in detail
-          </summary>
-          <div className="space-y-7 pt-5">
-            <Section label="Economic snapshot (per household)">
-              <DetailRow
-                label="Median household income"
-                value={formatEUR(p.median_income_eur, { abbreviated: false })}
-                ci={`${formatEUR(p.median_income_eur_ci[0], { abbreviated: false })}–${formatEUR(p.median_income_eur_ci[1], { abbreviated: false })}`}
-              />
-              <DetailRow
-                label="Median household net worth"
-                value={formatEUR(p.median_networth_eur, { abbreviated: false })}
-                ci={`${formatEUR(p.median_networth_eur_ci[0], { abbreviated: false })}–${formatEUR(p.median_networth_eur_ci[1], { abbreviated: false })}`}
-              />
-              <DetailRow
-                label="Median pension income"
-                value={formatEUR(p.median_pension_eur, { abbreviated: false })}
-              />
-              <DetailRow label="Home owners" value={formatPct(p.homeownership_pct)} />
-              <DetailRow
-                label="Reports financial ease"
-                value={formatPct(p.fdistress_easy_pct)}
-              />
-              <DetailRow
-                label="Reports financial distress"
-                value={formatPct(p.fdistress_struggling_pct)}
-              />
-            </Section>
-
-            <Section label="Digital and social">
-              <DetailRow label="Internet last 7 days" value={formatPct(p.internet_pct)} />
-              <DetailRow
-                label="Online banking / health / e-commerce"
-                value={formatPct(p.online_banking_health_proxy_pct)}
-              />
-              <DetailRow
-                label="Social network size (mean)"
-                value={formatNum(p.social_network_size_mean, 2)}
-              />
-              <DetailRow
-                label="UCLA loneliness (mean)"
-                value={formatNum(p.loneliness_mean, 2)}
-              />
-            </Section>
-
-            <Section label="Cognitive and subjective">
-              <DetailRow
-                label="Verbal fluency (animals/60s)"
-                value={formatNum(p.fluency_mean, 1)}
-              />
-              <DetailRow
-                label="Quality of life · CASP-12"
-                value={formatNum(p.casp_mean, 2)}
-                ci={`${p.casp_mean_ci[0].toFixed(2)}–${p.casp_mean_ci[1].toFixed(2)}`}
-              />
-              <DetailRow
-                label="Life satisfaction (0-10)"
-                value={formatNum(p.lifesat_mean, 2)}
-              />
-              <DetailRow
-                label="Hope for the future"
-                value={formatPct(p.hope_future_pct)}
-              />
-              <DetailRow
-                label="EURO-D depression score"
-                value={formatNum(p.eurod_mean, 2)}
-              />
-            </Section>
-
-            <Section label="Demographics">
-              <DetailRow label="Mean age" value={`${p.mean_age_years} years`} />
-              <DetailRow label="Female share" value={formatPct(p.share_female)} />
-            </Section>
-          </div>
-        </details>
 
           <p className="text-xs text-zinc-500 leading-relaxed pt-2 border-t border-zinc-100">
             Sources: SHARE Wave 9 release 9.0.0 (fielded 2021–2022) for all
@@ -504,6 +359,283 @@ function DrilldownModal({
         </div>
       </aside>
     </>
+  );
+}
+
+function ProfileColumn({
+  profile: p,
+  agg,
+  compact,
+  showColumnHeader,
+  onSwap,
+  swapCandidates,
+}: {
+  profile: Profile;
+  agg: typeof killer.country_aggregates.italy;
+  compact: boolean;
+  showColumnHeader: boolean;
+  onSwap?: (name: string) => void;
+  swapCandidates?: readonly Profile[];
+}) {
+  const passport = passportFor('italy', p.profile);
+  const traits = clusterTraits('italy', p.profile, centroids);
+  const fingerprint = healthcareFingerprint('italy', p.profile);
+  const gap = welfareGap('italy', p.profile);
+
+  return (
+    <div className="space-y-8">
+      {showColumnHeader && (
+        <header className="space-y-2">
+          <p className="eyebrow">
+            {formatPct(p.share_of_country_pct)} ·{' '}
+            {formatIndividuals(p.market_size_individuals)} individuals · n = {p.n_sample}
+          </p>
+          <div className="flex items-baseline justify-between gap-3 flex-wrap">
+            <h3 className="display-3 text-slate-900">{p.profile}</h3>
+            {onSwap && swapCandidates && swapCandidates.length > 0 && (
+              <select
+                value=""
+                onChange={(e) => e.target.value && onSwap(e.target.value)}
+                className="text-xs border border-zinc-300 rounded-lg px-2.5 py-1 bg-white text-zinc-700 hover:border-blue-500 cursor-pointer"
+                aria-label="Swap comparison profile"
+              >
+                <option value="">Swap…</option>
+                {swapCandidates.map((op) => (
+                  <option key={op.profile} value={op.profile}>
+                    {op.profile}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+        </header>
+      )}
+
+      {passport && (
+        <div className="rounded-xl bg-blue-50 border border-blue-200 p-5 space-y-3">
+          <p className="font-medium text-slate-900">{passport.headline}</p>
+          <p className="text-sm text-zinc-700 italic leading-relaxed">
+            {passport.tagline}
+          </p>
+          {passport.action_signals.length > 0 && (
+            <ul className="space-y-2 pt-1">
+              {passport.action_signals.map((s, i) => (
+                <li
+                  key={i}
+                  className="text-sm text-zinc-700 leading-relaxed flex gap-3"
+                >
+                  <span className="text-blue-700 font-mono text-xs tabular-nums mt-0.5">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span>{s}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
+      <section
+        className={
+          compact
+            ? 'grid grid-cols-1 gap-3'
+            : 'grid grid-cols-1 sm:grid-cols-3 gap-3'
+        }
+      >
+        <HeadlineMetric
+          label="Median household income"
+          cluster={p.median_income_eur}
+          national={agg.median_household_income_eur}
+          format="eur"
+        />
+        <HeadlineMetric
+          label="Quality of life · CASP-12"
+          cluster={p.casp_mean}
+          national={agg.mean_casp}
+          format="num"
+        />
+        <HeadlineMetric
+          label="Internet last 7 days"
+          cluster={p.internet_pct}
+          national={agg.internet_penetration_pct}
+          format="pct"
+        />
+      </section>
+
+      {(traits.strengths.length > 0 || traits.pressurePoints.length > 0) && (
+        <section className="rounded-2xl bg-white border border-zinc-200 p-5 space-y-4">
+          <p className="eyebrow">Cluster signature</p>
+          <div
+            className={
+              compact
+                ? 'grid grid-cols-1 gap-5'
+                : 'grid grid-cols-1 sm:grid-cols-2 gap-5'
+            }
+          >
+            <div>
+              <p className="text-xs font-medium text-blue-700 mb-2">Strengths</p>
+              {traits.strengths.length === 0 ? (
+                <p className="text-xs text-zinc-500">
+                  No dimension scores notably above the country mean.
+                </p>
+              ) : (
+                <ul className="space-y-1.5">
+                  {traits.strengths.map((t) => (
+                    <li
+                      key={t.variable}
+                      className="text-sm text-zinc-700 flex items-baseline justify-between"
+                    >
+                      <span>{t.label}</span>
+                      <span className="text-xs tabular-nums text-blue-700 font-medium">
+                        z = {t.zScore >= 0 ? '+' : ''}{t.zScore.toFixed(2)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div>
+              <p className="text-xs font-medium text-rose-700 mb-2">Pressure points</p>
+              {traits.pressurePoints.length === 0 ? (
+                <p className="text-xs text-zinc-500">
+                  No dimension scores notably below the country mean.
+                </p>
+              ) : (
+                <ul className="space-y-1.5">
+                  {traits.pressurePoints.map((t) => (
+                    <li
+                      key={t.variable}
+                      className="text-sm text-zinc-700 flex items-baseline justify-between"
+                    >
+                      <span>{t.label}</span>
+                      <span className="text-xs tabular-nums text-rose-700 font-medium">
+                        z = {t.zScore >= 0 ? '+' : ''}{t.zScore.toFixed(2)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {fingerprint.length > 0 && (
+        <section className="rounded-2xl bg-white border border-zinc-200 p-5 space-y-4">
+          <p className="eyebrow">Healthcare engagement · cluster vs national</p>
+          <div className="space-y-2.5">
+            {fingerprint.map((f) => (
+              <FingerprintRow key={f.key} f={f} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {gap && (
+        <section className="rounded-2xl bg-blue-50 border border-blue-200 p-5 space-y-3">
+          <p className="eyebrow text-blue-700">
+            Welfare-state translation · {gap.pairLabel} matched pair
+          </p>
+          <p className="text-sm text-slate-900">
+            In Sweden, this cluster matches{' '}
+            <span className="text-blue-700 font-medium">{gap.swedishProfile}</span>.
+          </p>
+          <div className="space-y-2 pt-1">
+            {gap.dimensions.slice(0, 5).map((d) => (
+              <GapRow key={d.dimension} d={d} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {!gap && passport && passport.welfare_pair === null && (
+        <section className="rounded-2xl bg-zinc-50 border border-zinc-200 p-5">
+          <p className="eyebrow mb-2">Country-specific cluster</p>
+          <p className="text-sm text-zinc-700 leading-relaxed">
+            No analogue in the matched-pair design. Universalist welfare in
+            Sweden redistributes this profile across other clusters.
+          </p>
+        </section>
+      )}
+
+      <details className="rounded-2xl bg-zinc-50 border border-zinc-200 p-5">
+        <summary className="cursor-pointer text-sm font-medium text-slate-900 select-none">
+          Numbers in detail
+        </summary>
+        <div className="space-y-7 pt-5">
+          <Section label="Economic snapshot (per household)">
+            <DetailRow
+              label="Median household income"
+              value={formatEUR(p.median_income_eur, { abbreviated: false })}
+              ci={`${formatEUR(p.median_income_eur_ci[0], { abbreviated: false })}–${formatEUR(p.median_income_eur_ci[1], { abbreviated: false })}`}
+            />
+            <DetailRow
+              label="Median household net worth"
+              value={formatEUR(p.median_networth_eur, { abbreviated: false })}
+              ci={`${formatEUR(p.median_networth_eur_ci[0], { abbreviated: false })}–${formatEUR(p.median_networth_eur_ci[1], { abbreviated: false })}`}
+            />
+            <DetailRow
+              label="Median pension income"
+              value={formatEUR(p.median_pension_eur, { abbreviated: false })}
+            />
+            <DetailRow label="Home owners" value={formatPct(p.homeownership_pct)} />
+            <DetailRow
+              label="Reports financial ease"
+              value={formatPct(p.fdistress_easy_pct)}
+            />
+            <DetailRow
+              label="Reports financial distress"
+              value={formatPct(p.fdistress_struggling_pct)}
+            />
+          </Section>
+
+          <Section label="Digital and social">
+            <DetailRow label="Internet last 7 days" value={formatPct(p.internet_pct)} />
+            <DetailRow
+              label="Online banking / health / e-commerce"
+              value={formatPct(p.online_banking_health_proxy_pct)}
+            />
+            <DetailRow
+              label="Social network size (mean)"
+              value={formatNum(p.social_network_size_mean, 2)}
+            />
+            <DetailRow
+              label="UCLA loneliness (mean)"
+              value={formatNum(p.loneliness_mean, 2)}
+            />
+          </Section>
+
+          <Section label="Cognitive and subjective">
+            <DetailRow
+              label="Verbal fluency (animals/60s)"
+              value={formatNum(p.fluency_mean, 1)}
+            />
+            <DetailRow
+              label="Quality of life · CASP-12"
+              value={formatNum(p.casp_mean, 2)}
+              ci={`${p.casp_mean_ci[0].toFixed(2)}–${p.casp_mean_ci[1].toFixed(2)}`}
+            />
+            <DetailRow
+              label="Life satisfaction (0-10)"
+              value={formatNum(p.lifesat_mean, 2)}
+            />
+            <DetailRow
+              label="Hope for the future"
+              value={formatPct(p.hope_future_pct)}
+            />
+            <DetailRow
+              label="EURO-D depression score"
+              value={formatNum(p.eurod_mean, 2)}
+            />
+          </Section>
+
+          <Section label="Demographics">
+            <DetailRow label="Mean age" value={`${p.mean_age_years} years`} />
+            <DetailRow label="Female share" value={formatPct(p.share_female)} />
+          </Section>
+        </div>
+      </details>
+    </div>
   );
 }
 
