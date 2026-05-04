@@ -48,7 +48,10 @@ export default function Methods({ onNavigate }: Props) {
           Clustering uses K-means with k=5 (Italy) and k=6 (Sweden), 100
           random restarts, fixed seed (42). Latent Class Analysis is fitted
           on tertilised inputs as a probabilistic triangulation: convergence
-          rates between K-means and LCA range 60–96% across profiles.
+          rates between K-means and LCA range 49–96% across profiles
+          (corner archetypes converge well above chance; middle-stratum
+          profiles sit in transitional regions of the latent space where
+          boundaries are intrinsically fuzzy).
         </p>
         <p className="text-sm text-zinc-700 leading-relaxed">
           Methodological commitment: subjective wellbeing measures (CASP-12,
@@ -84,8 +87,21 @@ export default function Methods({ onNavigate }: Props) {
       <Section title="Limitations">
         <ul className="text-sm text-zinc-700 leading-relaxed space-y-2 list-disc pl-5">
           <li>
+            Single multiple-imputation replicate: K-means is not invariant
+            to imputation noise and consensus algorithms for high-dimensional
+            clustering are not yet well established. Bootstrap diagnostics
+            quantify the residual sensitivity to the imputation draw.
+          </li>
+          <li>
+            Proxy interviews excluded: biases the typology toward respondents
+            capable of self-reporting on the subjective block; the Fragile
+            Resigned cluster underestimates the prevalence of the most
+            adverse configurations (severe cognitive impairment,
+            institutionalisation).
+          </li>
+          <li>
             Cross-sectional design: SHARE Wave 9 is a snapshot. Cross-wave
-            replication is documented as future work.
+            panel stability (W8 ↔ W9) is documented in the Robustness section.
           </li>
           <li>
             Geographic granularity: SHARE does not release sub-national
