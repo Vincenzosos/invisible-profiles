@@ -1,18 +1,18 @@
 import { useMemo, useState } from 'react';
 import centroidsData from '../data/centroids.json';
 import questionsData from '../data/profiler_questions.json';
+import sampleCohortCsv from '../data/test_cohort.csv?raw';
 import { matchProfile } from '../lib/profiler';
 import { downloadFile, readCSV, writeCSV } from '../lib/csv';
 import { coerceValue, suggestMapping, type ColumnSuggestion, type MappingSource } from '../lib/csv-mapping';
 import { VAR_LIST, VAR_SPECS } from '../lib/var-specs';
-import ClusterDossier from './ClusterDossier';
+import CohortDashboard from './CohortDashboard';
 import {
   autoBuckets,
   benchmarkShares,
   chiSquareVsBenchmark,
   cohortDistribution,
   confidenceBucket,
-  formatPValue,
   percentile,
   pivotByGroup,
 } from '../lib/cohort-stats';
@@ -107,39 +107,51 @@ export default function CsvUpload({ country, onBack }: Props) {
   const MIN_MAPPED = 3;
   const canScore = parsed && mappedCount >= MIN_MAPPED && parsed.rows.length > 0;
 
-  const handleFile = (file: File) => {
+  // Shared parser used by both the file-upload path and the
+  // "Try with sample data" path. Takes the CSV as a string.
+  const ingestCsvText = (text: string, sourceFilename: string) => {
     setError(null);
     setScored(null);
-    setFilename(file.name);
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        const text = String(reader.result ?? '');
-        const out = readCSV(text);
-        if (out.headers.length === 0 || out.rows.length === 0) {
-          setError('The file appears empty or unreadable as CSV.');
-          setParsed(null);
-          return;
-        }
-        // Build columns→values for range-based detection
-        const colVals: Record<string, string[]> = {};
-        for (const h of out.headers) {
-          colVals[h] = out.rows.map((r) => r[h]);
-        }
-        const sug = suggestMapping(out.headers, colVals);
-        const initialMapping: Record<string, string> = {};
-        for (const v of Object.keys(sug)) {
-          if (sug[v].header) initialMapping[v] = sug[v].header as string;
-        }
-        setParsed(out);
-        setSuggestions(sug);
-        setMapping(initialMapping);
-      } catch (e) {
-        setError(`Could not parse: ${(e as Error).message}`);
+    setFilename(sourceFilename);
+    try {
+      const out = readCSV(text);
+      if (out.headers.length === 0 || out.rows.length === 0) {
+        setError('The file appears empty or unreadable as CSV.');
+        setParsed(null);
+        return;
       }
-    };
+      const colVals: Record<string, string[]> = {};
+      for (const h of out.headers) {
+        colVals[h] = out.rows.map((r) => r[h]);
+      }
+      const sug = suggestMapping(out.headers, colVals);
+      const initialMapping: Record<string, string> = {};
+      for (const v of Object.keys(sug)) {
+        if (sug[v].header) initialMapping[v] = sug[v].header as string;
+      }
+      setParsed(out);
+      setSuggestions(sug);
+      setMapping(initialMapping);
+    } catch (e) {
+      setError(`Could not parse: ${(e as Error).message}`);
+    }
+  };
+
+  const handleFile = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = () => ingestCsvText(String(reader.result ?? ''), file.name);
     reader.onerror = () => setError('Could not read the file.');
     reader.readAsText(file);
+  };
+
+  const handleLoadSample = () => {
+    ingestCsvText(sampleCohortCsv, 'test_cohort.csv (sample)');
+  };
+
+  const handlePrintReport = () => {
+    // Browser-native "Save as PDF" via the print dialog. Print stylesheet
+    // (in index.css) suppresses navigation/footer for a clean handout.
+    window.print();
   };
 
   const onScore = () => {
@@ -356,7 +368,7 @@ export default function CsvUpload({ country, onBack }: Props) {
       </header>
 
       {!parsed && (
-        <DropZone onFile={handleFile} />
+        <DropZone onFile={handleFile} onLoadSample={handleLoadSample} />
       )}
 
       {error && (
@@ -400,26 +412,25 @@ export default function CsvUpload({ country, onBack }: Props) {
 
       {scored && summary && validationStats && (
         <>
-          <CohortAnalytics
+          {validationStats.skipped > 0 && (
+            <p className="rounded-xl bg-zinc-50 border border-zinc-200 px-4 py-2.5 text-xs text-zinc-600">
+              {validationStats.skipped.toLocaleString()} of{' '}
+              {validationStats.total.toLocaleString()} rows skipped (validation
+              issues on mapped variables).
+            </p>
+          )}
+
+          <CohortDashboard
             country={country}
-            summary={summary}
-            validation={validationStats}
-            onDownload={onDownload}
+            rows={scored}
+            unmappedColumns={unmappedColumns}
             selectedCluster={selectedCluster}
             onSelectCluster={(name) =>
               setSelectedCluster((prev) => (prev === name ? null : name))
             }
+            onDownloadCsv={onDownload}
+            onPrintReport={handlePrintReport}
           />
-
-          {selectedCluster && (
-            <ClusterDossier
-              country={country}
-              cluster={selectedCluster}
-              rows={scored}
-              unmappedColumns={unmappedColumns}
-              onClose={() => setSelectedCluster(null)}
-            />
-          )}
 
           <PivotCard
             pivotCandidates={pivotCandidates}
@@ -481,7 +492,13 @@ export default function CsvUpload({ country, onBack }: Props) {
 //  Sub-components — kept inline because they read the parent's local types
 // ============================================================================
 
-function DropZone({ onFile }: { onFile: (f: File) => void }) {
+function DropZone({
+  onFile,
+  onLoadSample,
+}: {
+  onFile: (f: File) => void;
+  onLoadSample: () => void;
+}) {
   const [dragActive, setDragActive] = useState(false);
   return (
     <div
@@ -506,23 +523,33 @@ function DropZone({ onFile }: { onFile: (f: File) => void }) {
       <p className="text-base text-zinc-700">
         Drop a <code className="font-mono">.csv</code> file here, or
       </p>
-      <label className="inline-block mt-4 cursor-pointer rounded-xl bg-slate-900 text-white px-5 py-2.5 hover:bg-slate-700 transition-colors">
-        Choose file
-        <input
-          type="file"
-          accept=".csv,text/csv"
-          className="hidden"
-          onChange={(e) => {
-            const f = e.target.files?.[0];
-            if (f) onFile(f);
-          }}
-        />
-      </label>
+      <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+        <label className="inline-block cursor-pointer rounded-xl bg-slate-900 text-white px-5 py-2.5 hover:bg-slate-700 transition-colors">
+          Choose file
+          <input
+            type="file"
+            accept=".csv,text/csv"
+            className="hidden"
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) onFile(f);
+            }}
+          />
+        </label>
+        <button
+          type="button"
+          onClick={onLoadSample}
+          className="rounded-xl border border-blue-500 bg-blue-50 text-blue-800 px-5 py-2.5 hover:bg-blue-100 transition-colors text-sm font-medium"
+        >
+          Try with sample data (30 rows)
+        </button>
+      </div>
       <p className="text-xs text-zinc-500 mt-6 max-w-md mx-auto leading-relaxed">
         Header row + one row per individual. Column names will be auto-mapped
         — no need to rename. Values can be numeric SHARE codes (1–5, 0/1, …)
         or natural-language labels (Yes/No, Excellent/Poor) which are
-        coerced automatically.
+        coerced automatically. The sample dataset is a 30-row fictional
+        cohort that produces a realistic Italian distribution.
       </p>
     </div>
   );
@@ -764,139 +791,6 @@ function MappingCard({
     </article>
   );
 }
-
-function CohortAnalytics({
-  country,
-  summary,
-  validation,
-  onDownload,
-  selectedCluster,
-  onSelectCluster,
-}: {
-  country: Country2;
-  summary: ReturnType<typeof useCohortSummary>;
-  validation: { issues: number; skipped: number; total: number };
-  onDownload: () => void;
-  selectedCluster: string | null;
-  onSelectCluster: (name: string) => void;
-}) {
-  const { dist, chi } = summary;
-  const top = [...dist].sort((a, b) => b.share - a.share)[0];
-  return (
-    <article className="rounded-2xl bg-white border border-zinc-200 p-6 space-y-6">
-      <div className="flex items-baseline justify-between gap-4 flex-wrap">
-        <div>
-          <p className="eyebrow">Cohort vs SHARE benchmark · {country}</p>
-          <p className="display-3 text-slate-900 mt-2">
-            {top && top.n > 0
-              ? `${top.name} is the modal segment (${(top.share * 100).toFixed(1)}%).`
-              : 'No predictions available.'}
-          </p>
-          <p className="text-sm text-zinc-600 mt-2">
-            {chi.n.toLocaleString()} rows scored.{' '}
-            {validation.skipped > 0 && (
-              <>
-                {validation.skipped.toLocaleString()} of{' '}
-                {validation.total.toLocaleString()} skipped (validation issues).{' '}
-              </>
-            )}
-            Pearson χ²({chi.df}) = {chi.chi2.toFixed(2)},{' '}
-            <span className="font-medium">{formatPValue(chi.p)}</span>{' '}
-            against the SHARE national distribution.
-          </p>
-          <p className="text-xs text-zinc-500 mt-2">
-            Click any cluster name below to open its dossier.
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={onDownload}
-          className="rounded-xl bg-blue-600 text-white px-5 py-2.5 hover:bg-blue-700 transition-colors text-sm whitespace-nowrap"
-        >
-          Download scored CSV
-        </button>
-      </div>
-
-      <div className="space-y-2.5">
-        {dist.map((d) => {
-          const cohortPct = d.share * 100;
-          const benchPct = d.benchmarkShare * 100;
-          const max = Math.max(cohortPct, benchPct, 1);
-          const dPp = d.deltaPp;
-          const dColor =
-            Math.abs(dPp) < 2
-              ? 'text-zinc-500'
-              : dPp > 0
-              ? 'text-blue-700'
-              : 'text-rose-600';
-          const isSelected = selectedCluster === d.name;
-          return (
-            <button
-              type="button"
-              key={d.name}
-              onClick={() => onSelectCluster(d.name)}
-              className={[
-                'w-full grid grid-cols-12 gap-3 items-center text-left rounded-lg px-2 py-1.5 transition-colors',
-                isSelected
-                  ? 'bg-blue-50 ring-1 ring-blue-300'
-                  : 'hover:bg-zinc-50',
-              ].join(' ')}
-            >
-              <div className="col-span-4 text-sm text-slate-900 truncate">
-                {isSelected && (
-                  <span className="text-blue-700 mr-1">▸</span>
-                )}
-                {d.name}
-              </div>
-              <div className="col-span-6 space-y-1">
-                <div className="relative h-2.5 bg-zinc-100 rounded-full overflow-hidden">
-                  <div
-                    className="absolute inset-y-0 left-0 bg-blue-600 rounded-full"
-                    style={{ width: `${(cohortPct / max) * 100}%` }}
-                  />
-                </div>
-                <div className="relative h-2 bg-zinc-50 rounded-full overflow-hidden">
-                  <div
-                    className="absolute inset-y-0 left-0 bg-zinc-400 rounded-full"
-                    style={{ width: `${(benchPct / max) * 100}%` }}
-                  />
-                </div>
-              </div>
-              <div className="col-span-2 text-right text-xs tabular-nums">
-                <div className="text-slate-900 font-medium">
-                  {cohortPct.toFixed(1)}%
-                </div>
-                <div className={`${dColor}`}>
-                  {dPp >= 0 ? '+' : ''}
-                  {dPp.toFixed(1)}pp
-                </div>
-              </div>
-            </button>
-          );
-        })}
-      </div>
-      <p className="text-xs text-zinc-500">
-        Top bar: your cohort. Bottom thin bar: SHARE Wave 9 national share. Δpp
-        = cohort − benchmark in percentage points.
-      </p>
-    </article>
-  );
-}
-
-// Aux type to type the prop in CohortAnalytics
-type Summary = {
-  dist: ReturnType<typeof cohortDistribution>;
-  chi: ReturnType<typeof chiSquareVsBenchmark>;
-  profiles: string[];
-};
-function useCohortSummary(): Summary {
-  // Placeholder type-only function — never called. The summary is built
-  // inline in the parent useMemo. Defined so the CohortAnalytics props
-  // stay type-safe.
-  return { dist: [], chi: { chi2: 0, df: 1, p: 1, n: 0 }, profiles: [] };
-}
-// Suppress "unused" warning while keeping the type linkage above.
-void useCohortSummary;
 
 function PivotCard({
   pivotCandidates,

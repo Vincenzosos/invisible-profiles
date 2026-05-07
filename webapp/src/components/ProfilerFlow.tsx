@@ -74,27 +74,29 @@ function ModePicker({
       <header className="space-y-4">
         <p className="eyebrow">04 · Try the model</p>
         <h1 className="display-1 text-slate-900">
-          Score yourself, or score a whole dataset.
+          Score yourself, or score a whole cohort.
         </h1>
         <p className="text-lg text-zinc-700 leading-relaxed max-w-2xl">
           The same K-means engine that powers the Atlas, exposed two ways.
-          Pick the mode that fits the question you're bringing.
+          Pick the mode that fits the question you're bringing — both produce
+          the same per-individual segmentation, the cohort path adds the
+          aggregate dashboard.
         </p>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <ModeCard
           active={mode === 'single'}
-          eyebrow="Single profile"
+          eyebrow="Quiz · single profile"
           title="Ten plain-language questions."
-          desc="A short questionnaire across health, economics, digital reach, social network and subjective wellbeing. Returns the closest profile and a soft-membership distribution. Suitable for trying the model on yourself or a single client."
+          desc="A short questionnaire across health, economics, digital reach, social network and subjective wellbeing. Returns the closest profile and a soft-membership distribution. Use on yourself or to demo the model on a single record."
           onClick={() => setMode('single')}
         />
         <ModeCard
           active={mode === 'batch'}
-          eyebrow="Batch · CSV"
-          title="Score a whole cohort."
-          desc="Upload a CSV with one row per individual, map your columns to the ten profiler variables, and download a scored file with the predicted profile and soft-membership for each row. Designed for researchers and analysts."
+          eyebrow="Cohort upload · B2B"
+          title="Score 30–500 records."
+          desc="Drop a CSV (or load the 30-row sample). Auto-mapping resolves your column names to the ten profiler variables. The output is a cohort dashboard: Isolation Paradox flag, digital-addressability split, intermediated-need share, and a click-to-drill cluster breakdown. Designed for healthcare practice managers, pharmacy chain analysts and silver-economy product managers."
           onClick={() => setMode('batch')}
         />
       </div>
