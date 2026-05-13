@@ -4,6 +4,7 @@ import questionsData from '../data/profiler_questions.json';
 import sampleCohortCsv from '../data/test_cohort.csv?raw';
 import { matchProfile } from '../lib/profiler';
 import { matchProfileWithImputation } from '../lib/imputation';
+import { computeEvidence, type Evidence } from '../lib/evidence';
 import { downloadFile, readCSV, writeCSV } from '../lib/csv';
 import {
   applyRescaling,
@@ -56,6 +57,7 @@ type ScoredRow = {
   imputation_top2_cluster: string;
   imputation_top2_share: number;
   imputation_distribution: { name: string; probability: number; meanDistance: number }[];
+  evidence: Evidence;
 };
 
 type MissingStrategy = 'skip' | 'mean' | 'median';
@@ -65,9 +67,9 @@ type Props = {
   onBack: () => void;
 };
 
-const CONFIDENCE_COLORS: Record<ScoredRow['confidence'], string> = {
-  confident: 'bg-blue-100 text-blue-800',
-  borderline: 'bg-amber-100 text-amber-800',
+const EVIDENCE_COLORS: Record<Evidence, string> = {
+  strong: 'bg-blue-100 text-blue-800',
+  moderate: 'bg-amber-100 text-amber-800',
   weak: 'bg-rose-100 text-rose-800',
 };
 
@@ -295,6 +297,12 @@ export default function CsvUpload({ country, onBack }: Props) {
       } else {
         coverage = { observed: VAR_LIST.length, total: VAR_LIST.length };
       }
+      const evidence = computeEvidence({
+        coverageObserved: coverage.observed,
+        coverageTotal: coverage.total,
+        top1Share: imp_top1_share,
+        top2Share: imp_top2_share,
+      });
       // Track all input columns; also keep raw row + the SHARE-coded
       // values that fed the scoring (used by the cluster dossier to
       // compute cohort means within each cluster).
@@ -317,6 +325,7 @@ export default function CsvUpload({ country, onBack }: Props) {
         imputation_top2_cluster: imp_top2_cluster,
         imputation_top2_share: imp_top2_share,
         imputation_distribution: imp_distribution,
+        evidence,
       });
     }
     // Compute within-cohort distance percentile
@@ -405,6 +414,7 @@ export default function CsvUpload({ country, onBack }: Props) {
       'twin_country_distance',
       'coverage_observed',
       'coverage_total',
+      'evidence',
       'imputation_top1_cluster',
       'imputation_top1_share',
       'imputation_top2_cluster',
@@ -424,6 +434,7 @@ export default function CsvUpload({ country, onBack }: Props) {
       row.twin_country_distance = s.twin_country_distance.toFixed(4);
       row.coverage_observed = String(s.coverage.observed);
       row.coverage_total = String(s.coverage.total);
+      row.evidence = s.evidence;
       row.imputation_top1_cluster = s.imputation_top1_cluster;
       row.imputation_top1_share = (s.imputation_top1_share * 100).toFixed(2);
       row.imputation_top2_cluster = s.imputation_top2_cluster;
@@ -1244,7 +1255,7 @@ function RowsTable({
             <tr className="text-left text-zinc-600 border-b border-zinc-200">
               <th className="px-2 py-1.5 font-medium">#</th>
               <th className="px-2 py-1.5 font-medium">Profile</th>
-              <th className="px-2 py-1.5 font-medium">Conf.</th>
+              <th className="px-2 py-1.5 font-medium">Evidence</th>
               <th className="px-2 py-1.5 font-medium text-right">Top-1</th>
               <th className="px-2 py-1.5 font-medium">Runner-up</th>
               <th className="px-2 py-1.5 font-medium text-right">Top-2</th>
@@ -1268,9 +1279,9 @@ function RowsTable({
                 </td>
                 <td className="px-2 py-1.5">
                   <span
-                    className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${CONFIDENCE_COLORS[s.confidence]}`}
+                    className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${EVIDENCE_COLORS[s.evidence]}`}
                   >
-                    {s.confidence}
+                    {s.evidence}
                   </span>
                 </td>
                 <td className="px-2 py-1.5 text-right tabular-nums">
@@ -1334,10 +1345,12 @@ function RowsTable({
         </table>
       </div>
       <p className="text-xs text-zinc-500">
-        <span className="font-medium">Conf.</span> = confidence bucket from the
-        top-1/top-2 split. <span className="font-medium">Pctile</span> =
-        within-cohort percentile of the row's distance to its centroid (high
-        = atypical). Download to get full z-scores per row.
+        <span className="font-medium">Evidence</span> = Strong (score ≥ 7),
+        Moderate (4.5–7), Weak (&lt; 4.5), where score combines coverage and
+        imputation top-1/top-2 share on a 0–10 scale.{' '}
+        <span className="font-medium">Pctile</span> = within-cohort percentile
+        of the row's distance to its centroid (high = atypical). Download to
+        get full z-scores per row.
       </p>
     </article>
   );

@@ -18,6 +18,7 @@ import {
   formatPValue,
 } from '../lib/cohort-stats';
 import type { Country } from '../lib/profiler';
+import type { Evidence } from '../lib/evidence';
 
 type Confidence = 'confident' | 'borderline' | 'weak';
 
@@ -36,6 +37,8 @@ export type CohortRow = {
   coerced: Record<string, number>;
   validation: { var: string; reason: string; detail: string }[];
   coverage?: { observed: number; total: number };
+  evidence?: Evidence;
+  imputation_top1_share?: number;
 };
 
 type Props = {
@@ -175,6 +178,35 @@ export default function CohortDashboard({
     };
   }, [rows]);
 
+  // ---------- Cohort reliability stats (partial-mapping cohorts) ---------
+
+  const reliability = useMemo(() => {
+    if (rows.length === 0) return null;
+    const totalRows = rows.length;
+    const totalVars = rows[0]?.coverage?.total ?? 10;
+    const anyPartial = rows.some(
+      (r) => (r.coverage?.observed ?? 10) < (r.coverage?.total ?? 10),
+    );
+    if (!anyPartial) return null;
+    const avgCoverage =
+      rows.reduce((s, r) => s + (r.coverage?.observed ?? 10), 0) / totalRows;
+    const strongCount = rows.filter((r) => r.evidence === 'strong').length;
+    const highImpCount = rows.filter(
+      (r) => (r.imputation_top1_share ?? 0) >= 0.7,
+    ).length;
+    const strongPct = Math.round((strongCount / totalRows) * 100);
+    const highImpPct = Math.round((highImpCount / totalRows) * 100);
+    return {
+      total: totalRows,
+      totalVars,
+      avgCoverage,
+      strongCount,
+      strongPct,
+      highImpCount,
+      highImpPct,
+    };
+  }, [rows]);
+
   // ---------- Coverage subtitle (partial-mapping cohorts) ----------------
 
   const coverageLine = useMemo(() => {
@@ -227,6 +259,49 @@ export default function CohortDashboard({
             : ' The cohort distribution is statistically indistinguishable from the national baseline.'}
         </p>
       </div>
+
+      {reliability && (
+        <article className="rounded-2xl bg-white border border-zinc-200 p-6 space-y-4">
+          <p className="eyebrow">Cohort reliability</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <p className="text-[10px] uppercase tracking-wider text-zinc-500">
+                Mean coverage
+              </p>
+              <p className="text-2xl font-semibold tabular-nums text-slate-900 mt-1">
+                {reliability.avgCoverage.toFixed(1)} / {reliability.totalVars}
+              </p>
+              <p className="text-xs text-zinc-600 mt-1">
+                variables observed per row
+              </p>
+            </div>
+            <div>
+              <p className="text-[10px] uppercase tracking-wider text-zinc-500">
+                Strong evidence rows
+              </p>
+              <p className="text-2xl font-semibold tabular-nums text-slate-900 mt-1">
+                {reliability.strongCount} / {reliability.total} (
+                {reliability.strongPct}%)
+              </p>
+              <p className="text-xs text-zinc-600 mt-1">
+                actionable assignments
+              </p>
+            </div>
+            <div>
+              <p className="text-[10px] uppercase tracking-wider text-zinc-500">
+                High imputation top-1
+              </p>
+              <p className="text-2xl font-semibold tabular-nums text-slate-900 mt-1">
+                {reliability.highImpCount} / {reliability.total} (
+                {reliability.highImpPct}%)
+              </p>
+              <p className="text-xs text-zinc-600 mt-1">
+                top-1 imputation share ≥ 70%
+              </p>
+            </div>
+          </div>
+        </article>
+      )}
 
       {/* (b) Cluster distribution chart */}
       <DistributionChart
