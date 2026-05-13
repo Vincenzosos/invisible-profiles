@@ -4,7 +4,15 @@ import questionsData from '../data/profiler_questions.json';
 import sampleCohortCsv from '../data/test_cohort.csv?raw';
 import { matchProfile } from '../lib/profiler';
 import { downloadFile, readCSV, writeCSV } from '../lib/csv';
-import { coerceValue, suggestMapping, type ColumnSuggestion, type MappingSource } from '../lib/csv-mapping';
+import {
+  applyRescaling,
+  coerceValue,
+  precomputeECDF,
+  suggestMapping,
+  type ColumnSuggestion,
+  type MappingSource,
+  type RescalingRule,
+} from '../lib/csv-mapping';
 import { VAR_LIST, VAR_SPECS } from '../lib/var-specs';
 import CohortDashboard from './CohortDashboard';
 import {
@@ -61,6 +69,7 @@ const SOURCE_LABEL: Record<MappingSource, string> = {
   fuzzy: 'fuzzy name',
   range: 'value range',
   manual: 'manual',
+  rank_quantile: 'rank-quantile',
   none: '—',
 };
 
@@ -85,6 +94,7 @@ const SOURCE_TONE: Record<MappingSource, string> = {
   fuzzy: 'text-blue-600',
   range: 'text-amber-700',
   manual: 'text-zinc-700',
+  rank_quantile: 'text-teal-700',
   none: 'text-zinc-400',
 };
 
@@ -95,6 +105,7 @@ export default function CsvUpload({ country, onBack }: Props) {
   } | null>(null);
   const [mapping, setMapping] = useState<Record<string, string>>({});
   const [suggestions, setSuggestions] = useState<Record<string, ColumnSuggestion>>({});
+  const [rescaling, setRescaling] = useState<Record<string, RescalingRule>>({});
   const [filename, setFilename] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [scored, setScored] = useState<ScoredRow[] | null>(null);
@@ -132,6 +143,7 @@ export default function CsvUpload({ country, onBack }: Props) {
       setParsed(out);
       setSuggestions(sug);
       setMapping(initialMapping);
+      setRescaling({});
     } catch (e) {
       setError(`Could not parse: ${(e as Error).message}`);
     }
@@ -177,6 +189,21 @@ export default function CsvUpload({ country, onBack }: Props) {
         const col = mapping[v.var];
         if (!col) continue; // unmapped — not a validation issue
         const raw = inputRow[col];
+        const rule = rescaling[v.var];
+        if (rule) {
+          const mapped = applyRescaling(raw ?? '', rule, v);
+          if (mapped !== null) {
+            coerced[v.var] = mapped;
+            accumulated.find((a) => a.var === v.var)?.values.push(mapped);
+          } else {
+            validation.push({
+              var: v.var,
+              reason: 'empty',
+              detail: 'missing in column',
+            });
+          }
+          continue;
+        }
         const c = coerceValue(raw, v);
         if (c.ok) {
           coerced[v.var] = c.value;
@@ -384,7 +411,15 @@ export default function CsvUpload({ country, onBack }: Props) {
             parsed={parsed}
             mapping={mapping}
             suggestions={suggestions}
+            rescaling={rescaling}
             onChange={(v, h) => {
+              // Changing or clearing a mapping invalidates any existing
+              // rescaling rule for this variable.
+              setRescaling((prev) => {
+                if (!(v in prev)) return prev;
+                const { [v]: _drop, ...rest } = prev;
+                return rest;
+              });
               if (h === '') {
                 setMapping((prev) => {
                   const { [v]: _drop, ...rest } = prev;
@@ -393,6 +428,51 @@ export default function CsvUpload({ country, onBack }: Props) {
               } else {
                 setMapping((prev) => ({ ...prev, [v]: h }));
               }
+            }}
+            onApplyRescaling={(varName, invert) => {
+              const col = mapping[varName];
+              if (!col || !parsed) return;
+              const values = parsed.rows.map((r) => r[col] ?? '');
+              const sorted = precomputeECDF(values);
+              if (sorted.length === 0) return;
+              setRescaling((prev) => ({
+                ...prev,
+                [varName]: { mode: 'rank_quantile', invert, sortedCohortValues: sorted },
+              }));
+              setSuggestions((prev) => {
+                const cur = prev[varName];
+                return {
+                  ...prev,
+                  [varName]: {
+                    header: col,
+                    source: 'rank_quantile',
+                    confidence: cur?.confidence ?? 0.7,
+                    reason: invert
+                      ? 'rank-quantile (inverted direction)'
+                      : 'rank-quantile rescaling',
+                  },
+                };
+              });
+            }}
+            onRemoveRescaling={(varName) => {
+              setRescaling((prev) => {
+                if (!(varName in prev)) return prev;
+                const { [varName]: _drop, ...rest } = prev;
+                return rest;
+              });
+              setSuggestions((prev) => {
+                const cur = prev[varName];
+                if (!cur || cur.source !== 'rank_quantile') return prev;
+                return {
+                  ...prev,
+                  [varName]: {
+                    header: cur.header,
+                    source: 'manual',
+                    confidence: 0,
+                    reason: 'manual override',
+                  },
+                };
+              });
             }}
             missingStrategy={missingStrategy}
             onChangeMissing={setMissingStrategy}
@@ -404,6 +484,7 @@ export default function CsvUpload({ country, onBack }: Props) {
               setParsed(null);
               setMapping({});
               setSuggestions({});
+              setRescaling({});
               setFilename('');
             }}
           />
@@ -454,6 +535,7 @@ export default function CsvUpload({ country, onBack }: Props) {
                 setParsed(null);
                 setMapping({});
                 setSuggestions({});
+                setRescaling({});
                 setFilename('');
                 setPivotColumn('');
                 setSelectedCluster(null);
@@ -612,7 +694,10 @@ function MappingCard({
   parsed,
   mapping,
   suggestions,
+  rescaling,
   onChange,
+  onApplyRescaling,
+  onRemoveRescaling,
   missingStrategy,
   onChangeMissing,
   onScore,
@@ -624,7 +709,10 @@ function MappingCard({
   parsed: { headers: string[]; rows: Record<string, string>[] };
   mapping: Record<string, string>;
   suggestions: Record<string, ColumnSuggestion>;
+  rescaling: Record<string, RescalingRule>;
   onChange: (varName: string, header: string) => void;
+  onApplyRescaling: (varName: string, invert: boolean) => void;
+  onRemoveRescaling: (varName: string) => void;
   missingStrategy: MissingStrategy;
   onChangeMissing: (s: MissingStrategy) => void;
   onScore: () => void;
@@ -641,6 +729,15 @@ function MappingCard({
       : mappedCount >= 5
       ? 'text-amber-700'
       : 'text-rose-600';
+  const [openRescale, setOpenRescale] = useState<Set<string>>(new Set());
+  const toggleRescale = (varName: string) => {
+    setOpenRescale((prev) => {
+      const next = new Set(prev);
+      if (next.has(varName)) next.delete(varName);
+      else next.add(varName);
+      return next;
+    });
+  };
   return (
     <article className="rounded-2xl bg-white border border-zinc-200 p-6 space-y-5">
       <div>
@@ -695,6 +792,16 @@ function MappingCard({
           const sug = suggestions[kv.var];
           const tone = sug ? SOURCE_TONE[sug.source] : SOURCE_TONE.none;
           const label = sug ? SOURCE_LABEL[sug.source] : '—';
+          const mappedCol = mapping[kv.var];
+          const hasRule = !!rescaling[kv.var];
+          // Auto-show the affordance when the auto-mapper had nothing
+          // good, or the user has overridden it. Also show when a rule
+          // already exists (so the operator can change direction or
+          // remove it), or when the user explicitly opened the panel.
+          const autoOpen =
+            !!mappedCol &&
+            (!sug || sug.source === 'none' || sug.source === 'manual');
+          const showRescale = !!mappedCol && (autoOpen || hasRule || openRescale.has(kv.var));
           return (
             <div
               key={kv.var}
@@ -736,6 +843,27 @@ function MappingCard({
                   <p className="text-[11px] text-zinc-500 italic leading-relaxed">
                     Typical company-DB proxy: {COMMERCIAL_PROXIES[kv.var]}
                   </p>
+                )}
+                {mappedCol && !showRescale && (
+                  <button
+                    type="button"
+                    onClick={() => toggleRescale(kv.var)}
+                    className="text-[11px] text-teal-700 hover:text-teal-900 underline-offset-2 hover:underline"
+                  >
+                    Rescale via rank-quantile…
+                  </button>
+                )}
+                {showRescale && (
+                  <RescalePanel
+                    spec={kv}
+                    columnName={mappedCol as string}
+                    values={parsed.rows.map((r) => r[mappedCol as string] ?? '')}
+                    rule={rescaling[kv.var]}
+                    onApply={(invert) => onApplyRescaling(kv.var, invert)}
+                    onRemove={() => onRemoveRescaling(kv.var)}
+                    onClose={() => toggleRescale(kv.var)}
+                    canClose={!autoOpen}
+                  />
                 )}
               </div>
             </div>
@@ -789,6 +917,132 @@ function MappingCard({
         </button>
       </div>
     </article>
+  );
+}
+
+function RescalePanel({
+  spec,
+  columnName,
+  values,
+  rule,
+  onApply,
+  onRemove,
+  onClose,
+  canClose,
+}: {
+  spec: { var: string; min: number; max: number; rangeHint: string };
+  columnName: string;
+  values: string[];
+  rule: RescalingRule | undefined;
+  onApply: (invert: boolean) => void;
+  onRemove: () => void;
+  onClose: () => void;
+  canClose: boolean;
+}) {
+  const [invert, setInvert] = useState<boolean>(rule?.invert ?? false);
+  const numericStats = useMemo(() => {
+    const nums: number[] = [];
+    for (const v of values) {
+      if (v === undefined || v === null) continue;
+      const s = String(v).trim();
+      if (s === '') continue;
+      const n = Number(s);
+      if (!Number.isNaN(n)) nums.push(n);
+    }
+    const unique = new Set(nums).size;
+    return { count: nums.length, unique };
+  }, [values]);
+  const canApply = numericStats.count > 0;
+  const fewDistinct = numericStats.unique > 0 && numericStats.unique <= 3;
+  return (
+    <div className="mt-1 rounded-lg border border-teal-200 bg-teal-50/60 p-3 space-y-2">
+      <div className="flex items-baseline justify-between gap-2">
+        <p className="text-xs font-medium text-teal-900">
+          Rescale <span className="font-mono">{columnName}</span> to{' '}
+          <span className="font-mono">{spec.var}</span> (SHARE range {spec.min}
+          –{spec.max})
+        </p>
+        {canClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-[11px] text-zinc-500 hover:text-slate-900"
+          >
+            close
+          </button>
+        )}
+      </div>
+      <p className="text-[11px] text-teal-900/80 leading-relaxed">
+        Map by rank: lowest values in your column become the lowest SHARE
+        codes, highest become highest. Order-preserving.
+      </p>
+      <p className="text-[11px] text-zinc-600 italic">
+        {spec.var}: {spec.rangeHint}
+      </p>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-[11px] text-zinc-600">Direction:</span>
+        <button
+          type="button"
+          onClick={() => setInvert(false)}
+          className={[
+            'rounded-full px-3 py-1 text-[11px] border transition-colors',
+            !invert
+              ? 'bg-teal-700 text-white border-teal-700'
+              : 'bg-white text-zinc-700 border-zinc-300 hover:border-teal-500',
+          ].join(' ')}
+        >
+          {columnName} high → SHARE high
+        </button>
+        <button
+          type="button"
+          onClick={() => setInvert(true)}
+          className={[
+            'rounded-full px-3 py-1 text-[11px] border transition-colors',
+            invert
+              ? 'bg-teal-700 text-white border-teal-700'
+              : 'bg-white text-zinc-700 border-zinc-300 hover:border-teal-500',
+          ].join(' ')}
+        >
+          {columnName} high → SHARE low
+        </button>
+      </div>
+      {!canApply && (
+        <p className="text-[11px] text-rose-700">
+          No numeric values to rescale.
+        </p>
+      )}
+      {canApply && fewDistinct && (
+        <p className="text-[11px] text-amber-700">
+          Only {numericStats.unique} distinct values — rank mapping will
+          produce only {numericStats.unique} bins.
+        </p>
+      )}
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={() => onApply(invert)}
+          disabled={!canApply}
+          className="rounded-lg bg-teal-700 text-white text-xs px-3 py-1.5 hover:bg-teal-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        >
+          {rule ? 'Update rescaling' : 'Apply rescaling'}
+        </button>
+        {rule && (
+          <button
+            type="button"
+            onClick={onRemove}
+            className="rounded-lg border border-zinc-300 bg-white text-xs px-3 py-1.5 text-zinc-700 hover:border-rose-400 hover:text-rose-700 transition-colors"
+          >
+            Remove
+          </button>
+        )}
+        {rule && (
+          <span className="text-[11px] text-teal-700">
+            Active · {rule.invert ? 'inverted' : 'direct'} · n=
+            {rule.sortedCohortValues.length}
+          </span>
+        )}
+      </div>
+    </div>
   );
 }
 

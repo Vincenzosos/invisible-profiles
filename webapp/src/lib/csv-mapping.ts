@@ -117,7 +117,102 @@ export function coerceValue(raw: string, spec: VarSpec): CoerceResult {
 
 // ---- mapping orchestration -------------------------------------------------
 
-export type MappingSource = 'synonym' | 'fuzzy' | 'range' | 'manual' | 'none';
+export type MappingSource = 'synonym' | 'fuzzy' | 'range' | 'manual' | 'rank_quantile' | 'none';
+
+// ---- rank-quantile rescaling -----------------------------------------------
+//
+// Opt-in mapping mode for proxy variables on arbitrary scales (NPS,
+// credit score, login counts, Likert 1-7…). Rescales a column onto a
+// SHARE variable's coded range via empirical CDF, preserving the
+// monotonic order of the column. Optionally inverts direction.
+
+export type RescalingRule = {
+  mode: 'rank_quantile';
+  invert: boolean;
+  sortedCohortValues: number[]; // pre-sorted ascending, NaN dropped
+};
+
+// Variables whose SHARE coding is integer ordinal/count.
+// Binary vars are handled separately via spec.isBinary.
+const INTEGER_CODED_VARS = new Set([
+  'eurod',
+  'iadl',
+  'casp',
+  'loneliness',
+  'sn_size_w9',
+  'fluency',
+  'fdistress',
+  'sphus',
+]);
+
+export function precomputeECDF(values: string[]): number[] {
+  const nums: number[] = [];
+  for (const v of values) {
+    if (v === undefined || v === null) continue;
+    const s = String(v).trim();
+    if (s === '') continue;
+    const n = Number(s);
+    if (!Number.isNaN(n)) nums.push(n);
+  }
+  nums.sort((a, b) => a - b);
+  return nums;
+}
+
+// Average-rank lookup (ties → mean of their index range). Returns a
+// rank in [0, n-1]. Binary search bounds.
+function averagedRank(sorted: number[], x: number): number {
+  let lo = 0;
+  let hi = sorted.length;
+  // lower_bound
+  let l = lo;
+  let h = hi;
+  while (l < h) {
+    const m = (l + h) >>> 1;
+    if (sorted[m] < x) l = m + 1;
+    else h = m;
+  }
+  const lower = l;
+  // upper_bound
+  l = lo;
+  h = hi;
+  while (l < h) {
+    const m = (l + h) >>> 1;
+    if (sorted[m] <= x) l = m + 1;
+    else h = m;
+  }
+  const upper = l;
+  if (upper === lower) {
+    // value not present; place at the lower boundary
+    return lower;
+  }
+  return (lower + upper - 1) / 2;
+}
+
+export function applyRescaling(
+  rawValue: string,
+  rule: RescalingRule,
+  spec: VarSpec,
+): number | null {
+  if (rawValue === undefined || rawValue === null) return null;
+  const trimmed = String(rawValue).trim();
+  if (trimmed === '') return null;
+  const x = Number(trimmed);
+  if (Number.isNaN(x)) return null;
+  const n = rule.sortedCohortValues.length;
+  if (n === 0) return null;
+  const rank = averagedRank(rule.sortedCohortValues, x);
+  let q = (rank + 1) / (n + 1);
+  if (rule.invert) q = 1 - q;
+  let mapped = spec.min + q * (spec.max - spec.min);
+  if (spec.isBinary) {
+    return mapped >= 0.5 ? 1 : 0;
+  }
+  if (INTEGER_CODED_VARS.has(spec.var)) {
+    const rounded = Math.round(mapped);
+    return Math.min(spec.max, Math.max(spec.min, rounded));
+  }
+  return mapped;
+}
 
 export type ColumnSuggestion = {
   header: string | null;
