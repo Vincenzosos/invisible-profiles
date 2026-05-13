@@ -5,8 +5,14 @@
 # webapp/src/lib/marginals.ts for the KS pre-flight diagnostic.
 #
 # Inputs:
-#   outputs/step2_italy_std.rds  (same as 28_imputation_export.R)
-#   outputs/step4_sweden_std.rds
+#   outputs/step2_italy_clean.rds   (raw SHARE-coded scale — what the KS
+#   outputs/step4_sweden_clean.rds   pre-flight needs to compare against
+#                                   the cohort's coerced values)
+#
+# Note: 28_imputation_export.R reads the *_std.rds (z-standardised)
+# counterparts because the conditional-Gaussian kernel needs unit
+# variance. Here we use the *_clean.rds files instead — same pipeline
+# stage, pre-standardisation.
 #
 # Output:
 #   ../webapp/src/data/share_marginals.json  (overwrites placeholder)
@@ -23,16 +29,16 @@ suppressPackageStartupMessages({
 out_dir  <- "outputs"
 json_out <- file.path("..", "webapp", "src", "data", "share_marginals.json")
 
-italy_std  <- readRDS(file.path(out_dir, "step2_italy_std.rds"))
-sweden_std <- readRDS(file.path(out_dir, "step4_sweden_std.rds"))
+italy_raw  <- readRDS(file.path(out_dir, "step2_italy_clean.rds"))
+sweden_raw <- readRDS(file.path(out_dir, "step4_sweden_clean.rds"))
 
 profiler_vars <- c(
   "sphus", "eurod", "iadl", "fdistress", "internet",
   "sn_size_w9", "fluency", "casp", "loneliness", "hope_future"
 )
 
-stopifnot(all(profiler_vars %in% colnames(italy_std)))
-stopifnot(all(profiler_vars %in% colnames(sweden_std)))
+stopifnot(all(profiler_vars %in% colnames(italy_raw)))
+stopifnot(all(profiler_vars %in% colnames(sweden_raw)))
 
 # Sanity guard: the data feeding the K-means engine is z-standardised
 # upstream — but the marginals consumed by the KS pre-flight need to be
@@ -54,8 +60,8 @@ check_scale <- function(df, name) {
   }
   invisible(NULL)
 }
-check_scale(italy_std,  "italy_std")
-check_scale(sweden_std, "sweden_std")
+check_scale(italy_raw,  "italy_raw")
+check_scale(sweden_raw, "sweden_raw")
 
 # 500 equally-spaced quantile positions, midpoint convention (matches
 # the empirical-CDF sampling used downstream by ksTwoSample on the JS
@@ -78,8 +84,8 @@ extract_quantiles <- function(df, vars) {
   out
 }
 
-italy_marginals  <- extract_quantiles(italy_std,  profiler_vars)
-sweden_marginals <- extract_quantiles(sweden_std, profiler_vars)
+italy_marginals  <- extract_quantiles(italy_raw,  profiler_vars)
+sweden_marginals <- extract_quantiles(sweden_raw, profiler_vars)
 
 payload <- list(
   meta = list(
@@ -88,9 +94,9 @@ payload <- list(
     method       = "500 equally-spaced empirical quantiles per variable per country",
     n_quantiles  = n_q,
     placeholder  = FALSE,
-    italy_n      = nrow(italy_std),
-    sweden_n     = nrow(sweden_std),
-    note         = "Empirical marginals from SHARE Wave 9 standardised subset (step2_italy_std.rds / step4_sweden_std.rds), on the SHARE-coded scale."
+    italy_n      = nrow(italy_raw),
+    sweden_n     = nrow(sweden_raw),
+    note         = "Empirical marginals from SHARE Wave 9 cleaned subset (step2_italy_clean.rds / step4_sweden_clean.rds), on the SHARE-coded raw scale."
   ),
   vars   = profiler_vars,
   italy  = italy_marginals,
@@ -106,5 +112,5 @@ write_json(
 )
 
 cat("Wrote", json_out, "\n")
-cat("Italy  n =", nrow(italy_std),  "\n")
-cat("Sweden n =", nrow(sweden_std), "\n")
+cat("Italy  n =", nrow(italy_raw),  "\n")
+cat("Sweden n =", nrow(sweden_raw), "\n")
