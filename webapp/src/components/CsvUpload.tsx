@@ -5,6 +5,8 @@ import sampleCohortCsv from '../data/test_cohort.csv?raw';
 import { matchProfile } from '../lib/profiler';
 import { matchProfileWithImputation } from '../lib/imputation';
 import { computeEvidence, type Evidence } from '../lib/evidence';
+import { ksTwoSample } from '../lib/ks_test';
+import { getQuantiles, isPlaceholder } from '../lib/marginals';
 import { downloadFile, readCSV, writeCSV } from '../lib/csv';
 import {
   applyRescaling,
@@ -107,6 +109,26 @@ const SOURCE_TONE: Record<MappingSource, string> = {
   none: 'text-zinc-400',
 };
 
+// ---- Pre-flight (Sprint 4) ------------------------------------------------
+
+type PreflightSeverity = 'pass' | 'warn' | 'strong';
+
+type PreflightEntry =
+  | { var: string; kind: 'ks'; D: number; p: number; severity: PreflightSeverity }
+  | {
+      var: string;
+      kind: 'binary';
+      cohortRate: number;
+      shareRate: number;
+      absDiff: number;
+      severity: PreflightSeverity;
+    }
+  | { var: string; kind: 'insufficient'; reason: string };
+
+type Preflight =
+  | { state: 'placeholder' }
+  | { state: 'ready'; entries: PreflightEntry[]; tested: number; anyWarn: boolean };
+
 export default function CsvUpload({ country, onBack }: Props) {
   const [parsed, setParsed] = useState<{
     headers: string[];
@@ -126,6 +148,84 @@ export default function CsvUpload({ country, onBack }: Props) {
   const mappedCount = VAR_LIST.filter((v) => mapping[v.var]).length;
   const MIN_MAPPED = 3;
   const canScore = parsed && mappedCount >= MIN_MAPPED && parsed.rows.length > 0;
+
+  // Pre-flight distributional check (Sprint 4): for each mapped non-binary
+  // variable run a two-sample KS against the SHARE reference marginal; for
+  // binary variables compare proportions. Disabled when the marginals
+  // file is still the placeholder.
+  const preflight = useMemo<Preflight>(() => {
+    if (!parsed) return { state: 'ready', entries: [], tested: 0, anyWarn: false };
+    if (isPlaceholder()) return { state: 'placeholder' };
+    const entries: PreflightEntry[] = [];
+    let tested = 0;
+    for (const spec of VAR_LIST) {
+      const col = mapping[spec.var];
+      if (!col) continue;
+      const rule = rescaling[spec.var];
+      const values: number[] = [];
+      for (const row of parsed.rows) {
+        const raw = row[col] ?? '';
+        let v: number | null = null;
+        if (rule) {
+          v = applyRescaling(raw, rule, spec);
+        } else {
+          const c = coerceValue(raw, spec);
+          if (c.ok) v = c.value;
+        }
+        if (v !== null && !Number.isNaN(v)) values.push(v);
+      }
+      if (values.length < 5) {
+        entries.push({
+          var: spec.var,
+          kind: 'insufficient',
+          reason: 'fewer than 5 parseable values',
+        });
+        continue;
+      }
+      const ref = getQuantiles(country, spec.var);
+      if (!ref || ref.length === 0) {
+        entries.push({
+          var: spec.var,
+          kind: 'insufficient',
+          reason: 'reference marginal missing',
+        });
+        continue;
+      }
+      if (spec.isBinary) {
+        const cohortRate = values.reduce((s, x) => s + x, 0) / values.length;
+        const shareRate = ref.reduce((s, x) => s + x, 0) / ref.length;
+        const absDiff = Math.abs(cohortRate - shareRate);
+        const severity: PreflightSeverity =
+          absDiff < 0.1 ? 'pass' : absDiff < 0.25 ? 'warn' : 'strong';
+        entries.push({
+          var: spec.var,
+          kind: 'binary',
+          cohortRate,
+          shareRate,
+          absDiff,
+          severity,
+        });
+        tested++;
+      } else {
+        // ref is pre-sorted (quantiles are ascending by construction).
+        const ks = ksTwoSample(values, ref);
+        const severity: PreflightSeverity =
+          ks.p >= 0.05 ? 'pass' : ks.p >= 0.001 ? 'warn' : 'strong';
+        entries.push({
+          var: spec.var,
+          kind: 'ks',
+          D: ks.D,
+          p: ks.p,
+          severity,
+        });
+        tested++;
+      }
+    }
+    const anyWarn = entries.some(
+      (e) => e.kind !== 'insufficient' && (e.severity === 'warn' || e.severity === 'strong'),
+    );
+    return { state: 'ready', entries, tested, anyWarn };
+  }, [parsed, mapping, rescaling, country]);
 
   // Shared parser used by both the file-upload path and the
   // "Try with sample data" path. Takes the CSV as a string.
@@ -550,6 +650,7 @@ export default function CsvUpload({ country, onBack }: Props) {
             canScore={!!canScore}
             mappedCount={mappedCount}
             minMapped={MIN_MAPPED}
+            preflight={preflight}
             onReset={() => {
               setParsed(null);
               setMapping({});
@@ -775,6 +876,7 @@ function MappingCard({
   onReset,
   mappedCount,
   minMapped,
+  preflight,
 }: {
   parsed: { headers: string[]; rows: Record<string, string>[] };
   mapping: Record<string, string>;
@@ -790,6 +892,7 @@ function MappingCard({
   onReset: () => void;
   mappedCount: number;
   minMapped: number;
+  preflight: Preflight;
 }) {
   const total = VAR_LIST.length;
   const coveragePct = (mappedCount / total) * 100;
@@ -969,6 +1072,8 @@ function MappingCard({
         </p>
       </div>
 
+      <PreflightPanel preflight={preflight} />
+
       <div className="flex items-center justify-between pt-2">
         <button
           type="button"
@@ -987,6 +1092,104 @@ function MappingCard({
         </button>
       </div>
     </article>
+  );
+}
+
+function PreflightPanel({ preflight }: { preflight: Preflight }) {
+  if (preflight.state === 'placeholder') {
+    return (
+      <div className="rounded-xl bg-zinc-50 border border-zinc-200 p-4 text-xs text-zinc-700 leading-relaxed">
+        Pre-flight distributional check is unavailable: SHARE reference
+        marginals not yet exported. Run{' '}
+        <code className="font-mono">pipeline/v9/29_marginals_export.R</code>{' '}
+        to enable Kolmogorov-Smirnov comparison of your cohort against the
+        SHARE Wave 9 reference.
+      </div>
+    );
+  }
+  if (preflight.tested === 0) {
+    // Nothing mapped yet — render nothing (the mapping prompt itself is the signal).
+    return null;
+  }
+  if (!preflight.anyWarn) {
+    return (
+      <div className="rounded-xl bg-zinc-50 border border-zinc-200 p-4 text-xs text-zinc-700 leading-relaxed">
+        Pre-flight distributional check: {preflight.tested} of{' '}
+        {preflight.tested} mapped variables tested, all consistent with the
+        SHARE Wave 9 reference (p ≥ 0.05). Proceed.
+      </div>
+    );
+  }
+  type FailingEntry = Exclude<PreflightEntry, { kind: 'insufficient' }>;
+  const failing: FailingEntry[] = preflight.entries.filter(
+    (e): e is FailingEntry =>
+      e.kind !== 'insufficient' && (e.severity === 'warn' || e.severity === 'strong'),
+  );
+  return (
+    <div className="rounded-2xl bg-amber-50 border border-amber-200 p-5 space-y-3">
+      <p className="eyebrow text-amber-800">Sample-skew check</p>
+      <p className="text-sm font-medium text-amber-900">
+        {failing.length} of {preflight.tested} mapped variables differ from
+        the SHARE Wave 9 reference.
+      </p>
+      <p className="text-xs text-amber-900/80 leading-relaxed">
+        Your cluster assignment will be conditional on this skew. Per-row
+        evidence remains valid as a within-cohort estimate; do not generalise
+        the cohort distribution to the national population without the caveats
+        below.
+      </p>
+      <details open className="text-xs">
+        <summary className="cursor-pointer text-amber-900 font-medium">
+          Per-variable details
+        </summary>
+        <ul className="mt-2 space-y-1.5">
+          {failing.map((e) => {
+            const tone =
+              e.severity === 'strong'
+                ? 'bg-rose-100 text-rose-800'
+                : 'bg-amber-100 text-amber-800';
+            const label =
+              e.severity === 'strong' ? 'differs significantly' : 'differs';
+            if (e.kind === 'ks') {
+              return (
+                <li key={e.var} className="flex items-baseline justify-between gap-3">
+                  <span className="text-zinc-800">
+                    <span className="font-mono">{e.var}</span> · D ={' '}
+                    {e.D.toFixed(3)}, p = {e.p < 1e-4 ? e.p.toExponential(2) : e.p.toFixed(4)}
+                  </span>
+                  <span
+                    className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${tone} whitespace-nowrap`}
+                  >
+                    {label}
+                  </span>
+                </li>
+              );
+            }
+            // binary
+            return (
+              <li key={e.var} className="flex items-baseline justify-between gap-3">
+                <span className="text-zinc-800">
+                  <span className="font-mono">{e.var}</span> · cohort{' '}
+                  {(e.cohortRate * 100).toFixed(0)}% vs SHARE{' '}
+                  {(e.shareRate * 100).toFixed(0)}% (Δ{' '}
+                  {(e.absDiff * 100).toFixed(0)} pp)
+                </span>
+                <span
+                  className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${tone} whitespace-nowrap`}
+                >
+                  {label}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      </details>
+      <p className="text-[11px] text-amber-900/70 leading-relaxed">
+        Test: two-sample Kolmogorov-Smirnov, asymptotic p-value, n_eff =
+        n_cohort · n_SHARE / (n_cohort + n_SHARE). Binary variables compared
+        via proportion difference instead.
+      </p>
+    </div>
   );
 }
 
