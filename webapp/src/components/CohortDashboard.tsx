@@ -35,6 +35,7 @@ export type CohortRow = {
   distance_percentile: number;
   coerced: Record<string, number>;
   validation: { var: string; reason: string; detail: string }[];
+  coverage?: { observed: number; total: number };
 };
 
 type Props = {
@@ -174,10 +175,33 @@ export default function CohortDashboard({
     };
   }, [rows]);
 
+  // ---------- Coverage subtitle (partial-mapping cohorts) ----------------
+
+  const coverageLine = useMemo(() => {
+    if (rows.length === 0) return null;
+    let sum = 0;
+    let totalSum = 0;
+    let anyPartial = false;
+    for (const r of rows) {
+      const obs = r.coverage?.observed ?? 10;
+      const tot = r.coverage?.total ?? 10;
+      sum += obs;
+      totalSum += tot;
+      if (obs < tot) anyPartial = true;
+    }
+    if (!anyPartial) return null;
+    const avgObs = (sum / rows.length).toFixed(1);
+    const tot = Math.round(totalSum / rows.length);
+    return `Average coverage: ${avgObs} / ${tot} variables observed across cohort.`;
+  }, [rows]);
+
   // ---------- Render ------------------------------------------------------
 
   return (
     <section className="space-y-8">
+      {coverageLine && (
+        <p className="text-xs text-zinc-600 -mt-4">{coverageLine}</p>
+      )}
       {/* (a) KPI strip */}
       <KpiStrip
         total={total}

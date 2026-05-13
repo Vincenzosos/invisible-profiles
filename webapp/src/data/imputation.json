@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "generated_on": "2026-05-13",
+    "pipeline": "placeholder_identity",
+    "method": "conditional Gaussian over 10 z-standardised profiler variables",
+    "note": "Placeholder identity correlation matrix. Run v9/28_imputation_export.R to replace with the empirical SHARE correlation matrix."
+  },
+  "vars": ["sphus", "eurod", "iadl", "fdistress", "internet", "sn_size_w9", "fluency", "casp", "loneliness", "hope_future"],
+  "italy": {
+    "corr": [
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+    ]
+  },
+  "sweden": {
+    "corr": [
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+    ]
+  }
+}

@@ -3,6 +3,7 @@ import centroidsData from '../data/centroids.json';
 import questionsData from '../data/profiler_questions.json';
 import sampleCohortCsv from '../data/test_cohort.csv?raw';
 import { matchProfile } from '../lib/profiler';
+import { matchProfileWithImputation } from '../lib/imputation';
 import { downloadFile, readCSV, writeCSV } from '../lib/csv';
 import {
   applyRescaling,
@@ -49,6 +50,12 @@ type ScoredRow = {
   confidence: 'confident' | 'borderline' | 'weak';
   distance_percentile: number; // filled after scoring all rows
   validation: { var: string; reason: string; detail: string }[];
+  coverage: { observed: number; total: number };
+  imputation_top1_cluster: string;
+  imputation_top1_share: number;
+  imputation_top2_cluster: string;
+  imputation_top2_share: number;
+  imputation_distribution: { name: string; probability: number; meanDistance: number }[];
 };
 
 type MissingStrategy = 'skip' | 'mean' | 'median';
@@ -247,13 +254,47 @@ export default function CsvUpload({ country, onBack }: Props) {
           answers[v.var] = imputeMap.get(v.var) ?? 0;
         }
       }
-      const result = matchProfile(country, answers, centroidsData);
+      // Count mapped vars that have a numeric value. Full coverage =>
+      // deterministic matchProfile path. Partial coverage => conditional
+      // Gaussian imputation over the missing dimensions.
+      const observedCount = VAR_LIST.reduce(
+        (acc, v) => acc + (v.var in answers ? 1 : 0),
+        0,
+      );
+      const useImputation = observedCount < VAR_LIST.length;
+      const result = useImputation
+        ? matchProfileWithImputation(country, answers, centroidsData)
+        : matchProfile(country, answers, centroidsData);
       const top1 = result.membership[0];
       const top2 = result.membership[1];
       const conf = confidenceBucket(
         top1?.probability ?? 0,
         top2?.probability ?? 0,
       );
+      let coverage: { observed: number; total: number };
+      let imp_top1_cluster = result.best.name;
+      let imp_top1_share = 1;
+      let imp_top2_cluster = result.ranking[1]?.name ?? '';
+      let imp_top2_share = 0;
+      let imp_distribution: ScoredRow['imputation_distribution'] = [
+        {
+          name: result.best.name,
+          probability: 1,
+          meanDistance: result.best.distance,
+        },
+      ];
+      if (useImputation) {
+        const r2 = result as ReturnType<typeof matchProfileWithImputation>;
+        coverage = r2.coverage;
+        const tops = r2.imputation.topClusters;
+        imp_top1_cluster = tops[0]?.name ?? result.best.name;
+        imp_top1_share = tops[0]?.probability ?? 0;
+        imp_top2_cluster = tops[1]?.name ?? '';
+        imp_top2_share = tops[1]?.probability ?? 0;
+        imp_distribution = tops;
+      } else {
+        coverage = { observed: VAR_LIST.length, total: VAR_LIST.length };
+      }
       // Track all input columns; also keep raw row + the SHARE-coded
       // values that fed the scoring (used by the cluster dossier to
       // compute cohort means within each cluster).
@@ -270,6 +311,12 @@ export default function CsvUpload({ country, onBack }: Props) {
         twin_country_distance: result.twinDistance ?? 0,
         confidence: conf,
         validation: r.validation,
+        coverage,
+        imputation_top1_cluster: imp_top1_cluster,
+        imputation_top1_share: imp_top1_share,
+        imputation_top2_cluster: imp_top2_cluster,
+        imputation_top2_share: imp_top2_share,
+        imputation_distribution: imp_distribution,
       });
     }
     // Compute within-cohort distance percentile
@@ -356,6 +403,12 @@ export default function CsvUpload({ country, onBack }: Props) {
       'membership_top2_pct',
       'twin_country_profile',
       'twin_country_distance',
+      'coverage_observed',
+      'coverage_total',
+      'imputation_top1_cluster',
+      'imputation_top1_share',
+      'imputation_top2_cluster',
+      'imputation_top2_share',
       ...zCols,
     ];
     const rows = scored.map((s) => {
@@ -369,6 +422,12 @@ export default function CsvUpload({ country, onBack }: Props) {
       row.membership_top2_pct = (s.membership_top2_pct * 100).toFixed(2);
       row.twin_country_profile = s.twin_country_profile;
       row.twin_country_distance = s.twin_country_distance.toFixed(4);
+      row.coverage_observed = String(s.coverage.observed);
+      row.coverage_total = String(s.coverage.total);
+      row.imputation_top1_cluster = s.imputation_top1_cluster;
+      row.imputation_top1_share = (s.imputation_top1_share * 100).toFixed(2);
+      row.imputation_top2_cluster = s.imputation_top2_cluster;
+      row.imputation_top2_share = (s.imputation_top2_share * 100).toFixed(2);
       for (const v of VAR_LIST) {
         row[`z_${v.var}`] = (s.zScores[v.var] ?? 0).toFixed(3);
       }
@@ -1161,6 +1220,10 @@ function RowsTable({
   onToggle: () => void;
 }) {
   const visible = showAll ? scored : scored.slice(0, 10);
+  // Hide the imputation columns entirely when every row has full
+  // coverage — preserves the visual surface of the sample-data path.
+  const showImputationCols = scored.some((s) => s.coverage.observed < s.coverage.total);
+  const [openImpRow, setOpenImpRow] = useState<number | null>(null);
   return (
     <article className="rounded-2xl bg-white border border-zinc-200 p-6 space-y-3">
       <div className="flex items-baseline justify-between">
@@ -1187,6 +1250,12 @@ function RowsTable({
               <th className="px-2 py-1.5 font-medium text-right">Top-2</th>
               <th className="px-2 py-1.5 font-medium text-right">Dist.</th>
               <th className="px-2 py-1.5 font-medium text-right">Pctile</th>
+              {showImputationCols && (
+                <>
+                  <th className="px-2 py-1.5 font-medium text-right">Coverage</th>
+                  <th className="px-2 py-1.5 font-medium text-right">Imp. top-1</th>
+                </>
+              )}
               <th className="px-2 py-1.5 font-medium">Cross-country twin</th>
             </tr>
           </thead>
@@ -1219,6 +1288,43 @@ function RowsTable({
                 <td className="px-2 py-1.5 text-right tabular-nums text-zinc-500">
                   {s.distance_percentile.toFixed(0)}
                 </td>
+                {showImputationCols && (
+                  <>
+                    <td className="px-2 py-1.5 text-right tabular-nums text-zinc-600">
+                      {s.coverage.observed}/{s.coverage.total}
+                    </td>
+                    <td className="px-2 py-1.5 text-right tabular-nums text-zinc-700 relative">
+                      <button
+                        type="button"
+                        onClick={() => setOpenImpRow((p) => (p === i ? null : i))}
+                        className="rounded px-1 hover:bg-zinc-100"
+                        title="Show imputation distribution"
+                      >
+                        {(s.imputation_top1_share * 100).toFixed(0)}%
+                      </button>
+                      {openImpRow === i && s.imputation_distribution.length > 0 && (
+                        <div className="absolute z-10 right-0 mt-1 w-56 rounded-lg border border-zinc-200 bg-white shadow-lg p-2 text-left">
+                          <p className="text-[10px] uppercase tracking-wider text-zinc-500 mb-1">
+                            Imputation distribution
+                          </p>
+                          <ul className="space-y-1">
+                            {s.imputation_distribution.slice(0, 5).map((c) => (
+                              <li
+                                key={c.name}
+                                className="flex items-baseline justify-between gap-2 text-xs"
+                              >
+                                <span className="text-slate-900 truncate">{c.name}</span>
+                                <span className="tabular-nums text-zinc-600">
+                                  {(c.probability * 100).toFixed(0)}%
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </td>
+                  </>
+                )}
                 <td className="px-2 py-1.5 text-zinc-700">
                   {s.twin_country_profile}
                 </td>
