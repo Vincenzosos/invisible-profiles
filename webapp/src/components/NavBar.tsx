@@ -9,7 +9,7 @@ const SECTIONS: {
   members: View[];     // all views that belong to this section (for active state)
 }[] = [
   { id: 'home',     label: 'Overview',          members: ['home'] },
-  { id: 'atlas',    label: 'The Five Segments', members: ['atlas', 'benchmark', 'opportunity'] },
+  { id: 'atlas',    label: 'The Five Segments', members: ['atlas', 'benchmark', 'opportunity', 'validation'] },
   { id: 'methods',  label: 'Methodology',       members: ['methods', 'robustness'] },
   { id: 'profiler', label: 'Try the model',     members: ['profiler'] },
 ];

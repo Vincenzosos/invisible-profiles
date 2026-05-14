@@ -4,6 +4,7 @@ export type View =
   | 'atlas'
   | 'benchmark'
   | 'opportunity'
+  | 'validation'
   | 'profiler'
   | 'robustness'
   | 'methods';

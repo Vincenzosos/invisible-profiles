@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Atlas from './components/Atlas';
 import Benchmark from './components/Benchmark';
 import OpportunityExplorer from './components/OpportunityExplorer';
+import ExternalValidation from './components/ExternalValidation';
 import ProfilerFlow from './components/ProfilerFlow';
 import Robustness from './components/Robustness';
 import Methods from './components/Methods';
@@ -12,7 +13,7 @@ import type { View } from './types';
 import { readUrlState, writeUrlState } from './lib/url-state';
 import { buildMailto } from './lib/contact';
 
-const FINDINGS: View[] = ['atlas', 'benchmark'];
+const FINDINGS: View[] = ['atlas', 'benchmark', 'validation', 'opportunity'];
 const METHODOLOGY: View[] = ['methods', 'robustness'];
 
 export default function App() {
@@ -72,6 +73,7 @@ export default function App() {
         )}
         {view === 'benchmark' && <Benchmark onNavigate={setView} />}
         {view === 'opportunity' && <OpportunityExplorer />}
+        {view === 'validation' && <ExternalValidation onNavigate={setView} />}
         {view === 'profiler' && <ProfilerFlow />}
         {view === 'robustness' && <Robustness onNavigate={setView} />}
         {view === 'methods' && <Methods onNavigate={setView} />}

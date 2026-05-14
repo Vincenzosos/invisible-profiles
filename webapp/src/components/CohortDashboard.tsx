@@ -17,6 +17,10 @@ import {
   cohortDistribution,
   formatPValue,
 } from '../lib/cohort-stats';
+import {
+  cohortForecast,
+  type CohortForecastEntry,
+} from '../lib/external-validation';
 import type { Country } from '../lib/profiler';
 import type { Evidence } from '../lib/evidence';
 
@@ -144,6 +148,22 @@ export default function CohortDashboard({
   const intermediatedBenchmark = benchmarkShareInClusters(cat.intermediated);
 
   // ---------- Aggregate cohort means --------------------------------------
+
+  // ---------- Cohort outcome forecast ------------------------------------
+  // Share-weighted projection of cluster-level rates onto held-out
+  // external validators. Empty cohort → no forecast.
+  const outcomeForecast = useMemo<CohortForecastEntry[]>(() => {
+    if (rows.length === 0) return [];
+    const shares = new Map<string, number>();
+    const denom = rows.length;
+    for (const r of rows) {
+      shares.set(
+        r.predicted_profile,
+        (shares.get(r.predicted_profile) ?? 0) + 1 / denom,
+      );
+    }
+    return cohortForecast(country, shares);
+  }, [rows, country]);
 
   const cohortMeans = useMemo(() => {
     const acc = {
@@ -325,6 +345,11 @@ export default function CohortDashboard({
           />
           <ActionCard cluster={selectedCluster} />
         </>
+      )}
+
+      {/* (c2) Cohort outcome forecast on held-out validators */}
+      {outcomeForecast.length > 0 && (
+        <ForecastPanel entries={outcomeForecast} />
       )}
 
       {/* (d) Aggregate cohort metrics */}
@@ -621,6 +646,80 @@ function DistributionChart({
         })}
       </div>
     </article>
+  );
+}
+
+// ============================================================================
+//  (c2) Cohort outcome forecast — held-out external validators
+// ============================================================================
+
+function ForecastPanel({ entries }: { entries: CohortForecastEntry[] }) {
+  return (
+    <article className="rounded-2xl bg-white border border-zinc-200 p-6 space-y-5">
+      <div>
+        <p className="eyebrow">Cohort outcome forecast</p>
+        <p className="display-3 text-slate-900 mt-2">
+          Expected behaviour of this cohort on held-out variables
+        </p>
+        <p className="text-sm text-zinc-600 mt-2 max-w-2xl leading-relaxed">
+          Share-weighted projection of cluster-level rates. Conditional on
+          the cohort's distributional skew — see the Sample-skew check
+          above for variables where the cohort differs from SHARE.
+        </p>
+      </div>
+      <div className="border-t border-zinc-200">
+        <div className="grid grid-cols-12 gap-3 py-2 text-[10px] uppercase tracking-wider text-zinc-500 border-b border-zinc-100">
+          <div className="col-span-5">Variable</div>
+          <div className="col-span-3 text-right">Cohort expected</div>
+          <div className="col-span-2 text-right">National</div>
+          <div className="col-span-2 text-right">Δ</div>
+        </div>
+        {entries.map((e) => (
+          <ForecastRow key={e.varKey} entry={e} />
+        ))}
+      </div>
+    </article>
+  );
+}
+
+function ForecastRow({ entry }: { entry: CohortForecastEntry }) {
+  const fmt = (v: number) =>
+    entry.unit === 'pct'
+      ? `${(v * 100).toFixed(1)}%`
+      : entry.unit === 'count'
+      ? v.toFixed(1)
+      : v.toFixed(1);
+  const fmtDelta = (d: number) => {
+    const sign = d >= 0 ? '+' : '−';
+    const abs = Math.abs(d);
+    return entry.unit === 'pct'
+      ? `${sign}${(abs * 100).toFixed(1)}pp`
+      : `${sign}${abs.toFixed(1)}`;
+  };
+  const orientedSign =
+    entry.orientation === 'lower_better' ? -entry.delta : entry.delta;
+  const smallEpsilon = entry.unit === 'pct' ? 0.005 : 0.05;
+  const tone =
+    Math.abs(entry.delta) < smallEpsilon
+      ? 'text-zinc-500'
+      : entry.orientation === 'neutral'
+      ? 'text-zinc-700'
+      : orientedSign >= 0
+      ? 'text-blue-700'
+      : 'text-rose-700';
+  return (
+    <div className="grid grid-cols-12 gap-3 items-baseline py-2.5 border-b border-zinc-100 last:border-b-0">
+      <div className="col-span-5 text-sm text-slate-900">{entry.label}</div>
+      <div className="col-span-3 text-right text-sm tabular-nums font-medium text-slate-900">
+        {fmt(entry.cohortExpected)}
+      </div>
+      <div className="col-span-2 text-right text-sm tabular-nums text-zinc-600">
+        {fmt(entry.national)}
+      </div>
+      <div className={`col-span-2 text-right text-sm tabular-nums font-medium ${tone}`}>
+        {fmtDelta(entry.delta)}
+      </div>
+    </div>
   );
 }
 

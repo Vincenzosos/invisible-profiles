@@ -11,6 +11,7 @@ const VALID_VIEWS: readonly View[] = [
   'atlas',
   'benchmark',
   'opportunity',
+  'validation',
   'profiler',
   'robustness',
   'methods',
