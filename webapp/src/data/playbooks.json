@@ -8,7 +8,7 @@
       "targets": [
         {
           "profile": "Connected Active",
-          "rationale": "3.6M individuals, €95.7B aggregate annual income, 75% internet penetration. Highest digital reach and willingness-to-pay; primary target for digital-first dental + private specialist bundle.",
+          "rationale": "25.4% of the Italian analytical sample, highest income and digital reach (75% internet penetration). Strongest willingness-to-pay signal; primary target for digital-first dental + private specialist bundle.",
           "fit_score": 9.5,
           "addressable_market_individuals": 3601600,
           "addressable_market_eur_m_per_year": {
@@ -21,7 +21,7 @@
         },
         {
           "profile": "Moderate Isolated",
-          "rationale": "3.8M individuals, €54.9B aggregate income, asset-rich (90% home owners). Only 21% dentist uptake vs Traditional Social's 48%. Largest absolute behavioural-gap target if paired with a navigator-mediated channel (e.g. community pharmacy, GP referral).",
+          "rationale": "26.9% of the Italian analytical sample (the largest single cluster), asset-rich (90% home owners). Only 21% dentist uptake vs Traditional Social's 48%. Largest absolute behavioural-gap target if paired with a navigator-mediated channel (e.g. community pharmacy, GP referral).",
           "fit_score": 8.0,
           "addressable_market_individuals": 3810400,
           "addressable_market_eur_m_per_year": {
@@ -34,7 +34,7 @@
         },
         {
           "profile": "Traditional Social",
-          "rationale": "1.1M individuals; smaller segment but 48% dentist uptake — the highest of any Italian profile, indicating community-channel receptivity (associations, parishes, broker network). Best fit for traditional broker-channel insurance products.",
+          "rationale": "7.7% of the Italian analytical sample (smallest cluster) but 48% dentist uptake — the highest of any Italian profile, indicating community-channel receptivity (associations, parishes, broker network). Best fit for traditional broker-channel insurance products.",
           "fit_score": 6.5,
           "addressable_market_individuals": 1097200,
           "addressable_market_eur_m_per_year": {
@@ -84,7 +84,7 @@
       "targets": [
         {
           "profile": "Connected Active",
-          "rationale": "€931.8B aggregate net wealth, highest digital reach. Best fit for digital-native robo-advisor + private banking hybrid platforms, succession planning tools, longevity-linked products.",
+          "rationale": "Highest mean net wealth and digital reach in the Italian typology (cluster centroid). Best fit for digital-native robo-advisor + private banking hybrid platforms, succession planning tools, longevity-linked products.",
           "fit_score": 9.8,
           "addressable_market_individuals": 3601600,
           "addressable_market_eur_m_per_year": {
@@ -92,12 +92,12 @@
             "central": 560,
             "high": 933
           },
-          "addressable_market_eur_assumption": "5% AUM penetration on €30k median investable per individual × 0.5-1.5% all-in fee load (range from fee-only / robo to full-service hybrid). Aggregate: 0.05 × €30k × 3.6M × [0.005, 0.01, 0.015] ≈ €280-933M / year.",
+          "addressable_market_eur_assumption": "Illustrative B2B sizing: 5% AUM penetration on €30k median investable per individual × 0.5-1.5% all-in fee load (range from fee-only / robo to full-service hybrid), applied to the cluster's projected Istat 2024 reference scale as illustrative scenario, not as a probabilistic generalisation of the descriptive K-means partition.",
           "sources": ["aipb_2024", "asset_mgmt_fees_2024", "bankitalia_wealth_2024"]
         },
         {
           "profile": "Moderate Isolated",
-          "rationale": "€567.7B aggregate net wealth, 90% home-ownership, but only 34% internet. Hybrid-channel wealth management with branch + digital-light interface and navigator support is the white-space.",
+          "rationale": "Second-highest mean net wealth in the Italian typology, 90% home-ownership, but only 34% internet. Hybrid-channel wealth management with branch + digital-light interface and navigator support is the white-space.",
           "fit_score": 8.7,
           "addressable_market_individuals": 3810400,
           "addressable_market_eur_m_per_year": {
@@ -110,7 +110,7 @@
         },
         {
           "profile": "Traditional Social",
-          "rationale": "€271.3B aggregate net wealth concentrated in property and family-decided savings. Traditional broker / family-office channel still dominant. Differentiator: succession + intergenerational planning.",
+          "rationale": "Third-highest mean net wealth in the Italian typology, concentrated in property and family-decided savings. Traditional broker / family-office channel still dominant. Differentiator: succession + intergenerational planning.",
           "fit_score": 7.0,
           "addressable_market_individuals": 1097200,
           "addressable_market_eur_m_per_year": {
@@ -155,7 +155,7 @@
       "id": "senior_living",
       "label": "Senior living and home services",
       "tagline": "Independent living residences, home-care subscriptions, age-in-place tech",
-      "summary": "Italian RSA monthly costs average €1,700 (range €1,300-2,500); cohousing senior solutions €1,800-3,000; luxury senior living above €3,000. The largest opportunity is the Moderate Isolated profile (3.8M individuals, asset-rich, socially under-served, 90% home owners), which is the structural target for community-focused independent living that combines a private apartment with a residency-led activity programme and a navigator service — not assisted living.",
+      "summary": "Italian RSA monthly costs average €1,700 (range €1,300-2,500); cohousing senior solutions €1,800-3,000; luxury senior living above €3,000. The largest opportunity is the Moderate Isolated profile (26.9% of the Italian analytical sample, asset-rich, socially under-served, 90% home owners), which is the structural target for community-focused independent living that combines a private apartment with a residency-led activity programme and a navigator service — not assisted living.",
       "targets": [
         {
           "profile": "Moderate Isolated",
