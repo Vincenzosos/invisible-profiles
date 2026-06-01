@@ -1,126 +1,164 @@
-\chapter{Cross-country comparison: Italy and Sweden}
+\chaptertitlepage{The Swedish Typology}{The structure of late-life experience under universal welfare}
 \label{ch:ch5}
 
-This chapter extends the segmentation framework of Chapter~\ref{ch:ch4} to Sweden, applying identical preprocessing and clustering rules on the Swedish sub-sample, and then compares the two country segmentations at the profile level. The comparison is motivated by the polar welfare-regime contrast --- Italy's familistic model against Sweden's universalist model (Esping-Andersen, 1990; Ferrera, 1996) --- and the expectation that the same analytical pipeline should yield profile structures that rhyme across countries while differing systematically in levels.
+\section{Overview}
+\label{sec:ch5-overview}
 
-\section{The six Swedish profiles}
-\label{sec:ch5-swedish-profiles}
+The K-means segmentation of Chapter~3 recovers six archetypes spanning the Swedish over-65 analytical sample. The Swedish typology is not, however, a Nordic counterpart of the Italian inventory of Chapter~4. The two partitions differ on the structural shape of the fragility-and-resources gradient, on the level of digital adoption, and on the role of age in shaping the high-resource pole. This chapter develops these differences as the empirical signature of the Nordic-universalistic welfare regime.
 
-The Swedish analytical sample comprises $n = 1{,}787$ respondents, obtained from the $2{,}202$ first-implicate over-65 Swedes after complete-case listwise deletion ($n = 2{,}045$) and the removal of 258 Mahalanobis outliers at the $\chi^{2}$ cut-off of $p = 0.001$ with 31 degrees of freedom. Unlike Italy, Sweden retains all thirty-one analytical variables in the clustering input: \emph{ac035d4} and \emph{ac035d7} exhibit low but non-zero variance (four to six per cent positive responses) and therefore contribute to the analysis.
+The chapter has two halves. The first (\S\ref{sec:ch5-six-archetypes}--\S\ref{sec:ch5-five-autonomous}) introduces the six archetypes, with particular attention to the single fragile cluster that carries the entire functional burden of the Swedish over-65 analytical sample and to the five autonomous configurations that share the remainder. The second (\S\ref{sec:ch5-distinctive-features}--\S\ref{sec:ch5-no-paradox}) develops three substantive findings that distinguish the Swedish typology from the Italian one and provide the empirical foundation for the cross-country comparison of Chapter~6: the \emph{binary} rather than graduated structure of Swedish fragility, the \emph{universal digital saturation} that extends across the autonomous profiles and cuts at the functional-fragility line, and the \emph{age-driven rotation} of the high-resource pole from a digital-engagement to a wealth-accumulation anchor. \S\ref{sec:ch5-no-paradox} closes the second half by documenting the absence in Sweden of the Isolation Paradox developed in Chapter~4. \S\ref{sec:ch5-synthesis} synthesises.
 
-K-means with $k = 6$ on the standardised-variable matrix yields six interpretable profiles (Table~\ref{tab:ch5-swedish-profiles}). The solution is retained at $k = 6$ without the micro-cluster removal step applied to Italy, since no micro-cluster smaller than five per cent of the sample emerges from the Swedish fit.
+All centroid coordinates are reported as z-scores within Sweden on the analytical sample ($n = 1{,}787$). Cluster shares are reported as percentages of the analytical sample; see \S\ref{sec:ch3-preprocessing} for the descriptive/predictive interpretation of the partition.
 
-\begin{table}[ht]
+\section{The six archetypes}
+\label{sec:ch5-six-archetypes}
+
+The K-means partition ($k = 6$) groups the 1,787 Swedish respondents into six clusters. Figure~\ref{fig:ch5-profiles} reports cluster mean values on eight diagnostic variables, with profiles ordered from most fragile (left) to most connected (right). Table~\ref{tab:ch5-archetypes} lists the archetypes with their headline signature and sample shares.
+
+A note on the \emph{Social Decline} label: it is retained for nomenclature consistency with the SHARE Wave~8 partition (\S\ref{sec:ch7-cross-wave}), although the Wave~9 cluster signature is qualitatively distinct from declining engagement; its substantive Wave~9 content is described in \S\ref{sec:ch5-five-autonomous}.
+
+\begin{figure}[!t]
   \centering
-  \caption{Swedish profile sizes and cluster means on key variables ($n = 1{,}787$).}
-  \label{tab:ch5-swedish-profiles}
+  \makebox[\textwidth][c]{\includegraphics[width=1.12\textwidth,keepaspectratio]{figures/05_sweden/fig_5_1_profile_characteristics_sweden.png}}
+  \caption[Profile characteristics, Sweden]{Profile characteristics, Sweden. Cluster means on eight key dimensions: age, CASP-12, internet use (\%), social network size, hope for the future (\%), loneliness (UCLA-3), EURO-D, mobility limitations. Profiles ordered from most fragile to most connected. $N = 1{,}787$.}
+  \label{fig:ch5-profiles}
+\end{figure}
+
+\begin{table}[!t]
+  \centering
   \small
-  \begin{tabular}{@{}lrrrrrrrr@{}}
+  \caption[Headline signature, Swedish archetypes]{Headline signature of the six Swedish archetypes}
+  \label{tab:ch5-archetypes}
+  \renewcommand{\arraystretch}{1.2}
+  \setlength{\tabcolsep}{8pt}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash\bfseries}p{2.7cm}>{\centering\arraybackslash}p{1.2cm}>{\raggedright\arraybackslash}X@{}}
     \toprule
-    \textbf{Profile} & \textbf{n} & \textbf{\%} & \textbf{Age} & \textbf{Internet} & \textbf{CASP} & \textbf{Lone.} & \textbf{Hope} & \textbf{LifeSat}\\
+    \textbf{Archetype} & \textbf{Share} & \textbf{Headline signature} \\
     \midrule
-    Fragile            & 206 & 11.5 & 80.4 & 0.64 & 33.6 & 4.9 & 0.81 & 7.42\\
-    Social Decline     & 149 &  8.3 & 72.6 & 0.99 & 40.3 & 3.5 & 0.98 & 8.51\\
-    Moderate           & 417 & 23.3 & 76.6 & 0.94 & 37.1 & 3.8 & 0.91 & 8.06\\
-    Asset Rich         & 341 & 19.1 & 77.7 & 0.75 & 39.3 & 3.8 & 0.96 & 8.48\\
-    Wealthy Digital    & 138 &  7.7 & 74.9 & 0.96 & 40.3 & 3.5 & 0.99 & 8.47\\
-    Connected Wealthy  & 536 & 30.0 & 73.1 & 0.99 & 42.1 & 3.3 & 0.99 & 8.88\\
+    Fragile & 11.5\% & Worst health (mobility 3.8, ADL 0.69, IADL 1.54), oldest age (80.4 yr), lowest internet use (63.6\%), lowest CASP (33.6) and lowest hope (80.6\%). The only true fragile configuration in Sweden. \\
+    Social Decline & 8.3\% & Despite the canonical label, the youngest archetype (72.6 yr) with full digital adoption (98.7\%) and the largest network (4.14). A residual W9 cluster discussed in \S\ref{sec:ch5-five-autonomous}. \\
+    Moderate & 23.3\% & Average health and resources, internet 93.8\%, network 3.91. The Swedish middle stratum. \\
+    Asset Rich & 19.1\% & Older (77.7 yr), wealth-anchored, intact health, internet 75.1\%, smallest network (2.77). \\
+    Wealthy Digital & 7.7\% & Younger well-resourced cluster (74.9 yr), high digital adoption (96.4\%), high CASP (40.3). \\
+    Connected Wealthy & 30.0\% & Highest digital adoption (98.5\%), best resources, intact health, highest CASP (42.1) and lowest loneliness (3.3). The largest single archetype. \\
     \bottomrule
-  \end{tabular}
-  \par\smallskip
-  \footnotesize \emph{Note.} Internet and Hope are binary proportions. Profile ordering within the table is alphabetical; the substantive ordering in the text follows CASP ascending from Fragile to Connected Wealthy.
+  \end{tabularx}
+  \par\medskip
+  \begin{minipage}{\linewidth}
+    \footnotesize\textit{Note.} Headline values are raw means of the diagnostic variables of Figure~\ref{fig:ch5-profiles}. Standardised centroid coordinates are reported in \S\ref{sec:ch5-profile-descriptions}.
+  \end{minipage}
 \end{table}
 
-Two features distinguish the Swedish segmentation from the Italian one. First, three out of six Swedish profiles have internet penetration above 94\% --- a level that in Italy is approached only by Connected Active. Second, even the most fragile Swedish profile (Fragile, CASP = 33.6) reports subjective well-being comparable to the Italian Fragile Depressed (CASP = 30.7) or Moderate Isolated (CASP = 36.8) profiles, confirming a structural welfare-regime gap that is visible across the entire distribution rather than concentrated at the margins.
+Two raw-scale observations from Figure~\ref{fig:ch5-profiles} anchor the descriptions that follow. First, the Fragile cluster is the only profile with non-trivial functional burden (mobility 3.79, ADL 0.69, IADL 1.54); the remaining five profiles are all in the autonomous range (mobility $\leq 1.55$, ADL $\leq 0.10$). Second, only the Fragile cluster is below 75\% internet use (63.6\%); the other five profiles span 75.1\% to 98.7\%. Both observations have no parallel in the Italian typology and are developed as substantive findings in \S\ref{sec:ch5-distinctive-features}.
 
-\subsection{Fragile}
-The smallest and oldest profile ($n = 206$; 11.5\%; mean age 80.4) is the Swedish counterpart of the Italian Fragile Resigned: low CASP (33.6), high loneliness (4.9), reduced hope (81\%). Internet use is 64\%, dramatically higher than the Italian Fragile Resigned (9\%) at comparable age and clinical conditions.
-\subsection{Social Decline}
-A compact profile ($n = 149$; 8.3\%) characterised by intact digital integration (99\% internet) but elevated loneliness (3.5) and a CASP of 40.3. It is the Swedish analogue of the Italian Fragile Depressed.
-\subsection{Moderate}
-The largest middle-aged profile ($n = 417$; 23.3\%) combines good health, average digital use (94\%), and moderate social integration (loneliness 3.8, CASP 37.1). It maps onto the Italian Traditional Social in the matched-pair framework introduced below.
-\subsection{Asset Rich}
-A wealth-driven profile ($n = 341$; 19.1\%) with high life satisfaction (8.48) but below-average internet use (75\%) and smaller social networks than Connected Wealthy. It has no Italian analogue and is one of the two welfare-regime-specific Swedish types.
-\subsection{Wealthy Digital}
-The smallest Swedish profile ($n = 138$; 7.7\%) combines very high internet use (96\%), high CASP (40.3), and strong hope (99\%). Like Asset Rich, this is a Swedish-specific type with no Italian counterpart.
-\subsection{Connected Wealthy}
-The largest Swedish profile ($n = 536$; 30.0\%) represents the upper tail of the distribution: near-universal internet use (99\%), lowest loneliness (3.3), highest CASP (42.1), highest life satisfaction (8.88). It is the Swedish counterpart of the Italian Connected Active.
+\section{Profile descriptions}
+\label{sec:ch5-profile-descriptions}
 
-\section{Matched-pair comparison}
-\label{sec:ch5-matched-pairs}
+The six archetypes are described below from most fragile to most connected, in the order of Table~\ref{tab:ch5-archetypes}. Standardised values are z-units within Sweden ($\bar{x} = 0$, $\sigma = 1$); raw means in parenthesis where useful.
 
-The cross-country comparison uses the four matched pairs introduced in Table~\ref{tab:ch3-matched-pairs}. Table~\ref{tab:ch5-gap} reports the Sweden-minus-Italy gap on seven outcome variables for each of the four pairs.
+\label{sec:ch5-fragile}
+\textbf{Fragile} (11.5\%; mean age 80.4) is the only archetype with substantial burden on every health and functional dimension: mobility $+1.95$, IADL $+1.79$, ADL $+1.55$, EURO-D $+1.05$. The subjective signature is uniformly the lowest in the typology: CASP $-1.43$ (raw 33.6), loneliness $+1.07$ (raw 4.9), hope $-1.45$ (80.6\% report hopes vs $\geq 90\%$ in the non-fragile profiles). Internet use is 63.6\% --- materially below the other five Swedish profiles (all $\geq 75\%$) but several times higher than the Italian fragile profiles (8.6\% Fragile Resigned, 17.3\% Fragile Depressed; \S\ref{sec:ch4-profile-descriptions}). The Swedish fragile cluster is digitally engaged at a level the Italian fragile clusters never approach --- a baseline that reflects the universal-access information infrastructure of the Nordic welfare state \citep{anttonen1996, bambra2007} rather than the cluster's own digital capacity. The cluster carries the entire age burden, with the Fragile share rising from 6\% in 65--74 to 37\% in 85+ (\S\ref{sec:ch5-demographics}), and is the principal target of the Swedish municipal long-term-care system \citep{bonsang2009}. The contrast with Italy --- where the equivalent burden splits across two qualitatively distinct profiles requiring distinct policy responses --- is the first distinctive feature, developed in \S\ref{sec:ch5-binary-fragility}.
 
-\begin{table}[ht]
+\label{sec:ch5-five-autonomous}
+The remaining 88.5\% partitions across five autonomous profiles that share intact functional health (mobility $\leq 1.55$, ADL $\leq 0.10$, IADL $\leq 0.23$) and high subjective well-being (CASP $\geq 37$, life satisfaction $\geq 8.0$), separating primarily on economic resources and engagement style.
+
+\textbf{Connected Wealthy} (30.0\%; mean age 73.1) is the largest single archetype and sits at the high-resource, high-digital pole on every dimension (internet 98.5\%, network 4.07, CASP 42.1, loneliness 3.3, hope 99.4\%). The configuration matches the Swedish ``successful aging'' pattern \citep{rowekahn1997} and is the structural analogue of the Italian Connected Active archetype (\S\ref{sec:ch4-connected-active}), with a larger share (30.0\% vs 25.4\%) reflecting the deeper diffusion of the digitally-integrated profile under universal welfare.
+
+\textbf{Asset Rich} (19.1\%; mean age 77.7) is the older, wealth-anchored variant: positive on net wealth and home-ownership, intact health despite the higher mean age, internet 75.1\% (the second-lowest after Fragile), smallest network in the typology (2.77). The contrast Connected Wealthy vs Asset Rich is not on resources but on the engagement-and-age dimension, and is the substantive content of the age-prosperity rotation developed in \S\ref{sec:ch5-age-prosperity-rotation}.
+
+\textbf{Wealthy Digital} (7.7\%; mean age 74.9) combines moderate economic resources with the digital-and-social engagement profile of Connected Wealthy (internet 96.4\%, network 3.91, CASP 40.3); the cross-method LCA convergence is the lowest in the Swedish typology (49.3\%), indicating a thin cluster boundary with Connected Wealthy.
+
+\textbf{Moderate} (23.3\%; mean age 76.6) is the middle-stratum cluster, centred on the Swedish mean across health, resources, and subjective indicators (internet 93.8\%, network 3.91); it is the Swedish counterpart of the autonomous middle stratum that splits in Italy into Moderate Isolated and Traditional Social --- a split that does not occur in Sweden.
+
+\textbf{Social Decline} (8.3\%; mean age 72.6) is, despite the canonical label, the youngest archetype and the residual cluster with the most ambiguous substantive content: internet 98.7\%, network 4.14 (the largest), social integration $+0.63$, EURO-D 2.0, CASP 40.3, hope 98.0\% --- far from a declining pattern. In Wave~9 the configuration captures a small population of younger, fully digital, socially-integrated individuals whose distinguishing feature is moderate income rather than declining engagement; the label is retained for cross-wave nomenclature consistency, with cross-wave persistence examined in Chapter~\ref{ch:ch7}.
+
+\section{Three distinctive features of the Swedish typology}
+\label{sec:ch5-distinctive-features}
+
+The cross-country comparison developed in Chapter~6 rests on three substantive findings that distinguish the Swedish partition from the Italian one. Each emerges from the centroid configuration of the six Swedish archetypes set against the five Italian archetypes of Chapter~4 and identifies a structural feature of late-life experience that the Nordic-universalistic welfare regime produces and the Mediterranean-familistic regime does not. The three findings are the binary structure of Swedish fragility (\S\ref{sec:ch5-binary-fragility}), the universal digital saturation across the autonomous profiles (\S\ref{sec:ch5-digital-saturation}), and the age-driven rotation of the high-resource pole (\S\ref{sec:ch5-age-prosperity-rotation}).
+
+\subsection{Binary fragility versus graduated fragility}
+\label{sec:ch5-binary-fragility}
+
+The Swedish typology partitions the over-65 population along a binary fragility line: a single Fragile cluster (11.5\%) carries the entire functional burden, against five autonomous profiles (88.5\%) that share intact health and high subjective well-being. The Italian typology partitions the same population along a graduated fragility line: two qualitatively distinct fragile profiles (Fragile Resigned 13.2\% and Fragile Depressed 26.7\%, jointly 39.9\%) span an active-depression-versus-settled-resignation contrast that drives separate policy responses (mental-health services in the first case, long-term-care provision in the second; \S\ref{sec:ch4-profile-descriptions}).
+
+\begin{figure}[!htbp]
   \centering
-  \caption{Cross-country gap (Sweden minus Italy) on matched profile pairs.}
-  \label{tab:ch5-gap}
-  \small
-  \begin{tabular}{@{}lrrrr@{}}
-    \toprule
-    \textbf{Variable} & \textbf{Fragile} & \textbf{Declining} & \textbf{Socially-oriented} & \textbf{Connected}\\
-    \midrule
-    CASP-12             & $+5.73$   & $+9.63$   & $-1.37$   & $+4.31$\\
-    Loneliness (3--9)   & $-1.24$   & $-1.90$   & $+0.07$   & $-0.45$\\
-    Internet (pp)       & $+55.0$   & $+81.4$   & $+28.0$   & $+23.7$\\
-    Fluency             & $+8.67$   & $+13.61$  & $+4.18$   & $+7.30$\\
-    Hope (pp)           & $+35.2$   & $+30.4$   & $+1.21$   & $+8.55$\\
-    EURO-D (0--12)      & $-2.29$   & $-2.23$   & $+1.21$   & $-0.80$\\
-    Life satisfaction   & $+0.97$   & $+1.34$   & $-0.13$   & $+0.76$\\
-    \bottomrule
-  \end{tabular}
-  \par\smallskip
-  \footnotesize \emph{Note.} Matched pairs: \emph{Fragile} = Fragile Resigned vs Fragile; \emph{Declining} = Fragile Depressed vs Social Decline; \emph{Socially-oriented} = Traditional Social vs Moderate; \emph{Connected} = Connected Active vs Connected Wealthy. Internet and Hope are expressed in percentage points (of the binary rate). Loneliness and EURO-D negative values mean Sweden is lower (less lonely, less depressed) than Italy.
-\end{table}
-
-Welch's $t$-tests on every cell of Table~\ref{tab:ch5-gap} confirm that all gaps in the Fragile, Declining and Connected pairs are statistically significant at $p < 0.01$, with most of them at $p < 10^{-15}$. The Socially-oriented pair is the only exception: on loneliness, Hope, and life satisfaction, Traditional Social Italians and Moderate Swedes are indistinguishable; on CASP, the Italian Traditional Social exceeds the Swedish Moderate by $1.37$ points ($p = 0.001$), the only case in which Italy \emph{leads} Sweden in the matched-pair design. Figure~\ref{fig:ch5-matched-pairs-gap} visualises the same comparison.
-
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.90\linewidth]{figures/06_comparison/fig_14_matched_pairs_gap.png}
-  \caption{Sweden-minus-Italy gap by matched pair, seven outcome variables. Source: v9 pipeline.}
-  \label{fig:ch5-matched-pairs-gap}
+  \includegraphics[width=0.95\linewidth]{figures/05_sweden/fig_5_A_binary_fragility.png}
+  \caption[Cluster centroids on the functional-affective plane]{Cluster centroids on the joint functional-affective burden plane, Italy and Sweden. Functional burden is the within-country mean of z(mobility), z(ADL), z(IADL); affective burden is the within-country mean of z(EURO-D), z(loneliness). Italy (circles) places two profiles in the above-mean region: Fragile Resigned in the upper-right corner (high on both axes) and Fragile Depressed in the upper-left (high affective burden, modest functional burden). Sweden (triangles) places a single profile (Fragile) in the upper-right; the five non-fragile profiles cluster near the origin.}
+  \label{fig:ch5-fa-scatter}
 \end{figure}
 
-\section{The systematic Swedish-over-Italian gap}
-\label{sec:ch5-gap}
+Figure~\ref{fig:ch5-fa-scatter} visualises the contrast on the joint functional-affective burden plane. The two countries place their respective \emph{principal} fragile cluster in the same region of the burden space (upper-right), but Italy populates the fragile region with a second, qualitatively distinct cluster (Fragile Depressed, upper-left) that has high affective burden without proportionate functional burden --- the affective-versus-functional contrast that defines the Italian graduated structure. Sweden does not produce an analogous second cluster: the Moderate profile sits at the boundary of the burden region but with sub-clinical affective scores, and the four other profiles cluster well below zero on both axes. The substantive interpretation is that the Swedish universal-care infrastructure absorbs the functional burden of advanced old age into a single targetable segment, against which a structured set of municipal long-term-care services is deployed \citep{anttonen1996, bonsang2009}. The Italian regime, where elderly care is largely intra-family \citep{ferrera1996, naldini2008, saraceno2010}, distributes the burden across two profiles that vary not in care need but in affective trajectory, with implications for the design of mental-health and long-term-care services that the binary Swedish structure does not face.
 
-The quantitative pattern of Table~\ref{tab:ch5-gap} can be summarised as follows. On CASP-12, Swedes exceed matched Italians by between $+4.31$ (Connected pair) and $+9.63$ (Declining pair), with the largest gap falling on the most vulnerable groups. On the internet variable, the gap ranges from $+23.7$ percentage points (Connected pair) to $+81.4$ points (Declining pair) --- essentially a wholesale transformation of the digital-access profile at the bottom of the distribution. On fluency, Swedes outperform Italians by 4 to 14 words per minute, with the same distribution-concentration pattern. On depression (EURO-D), Swedes score between $0.80$ and $2.29$ points lower, with the gap again largest among the most fragile.
+\subsection{Universal digital saturation}
+\label{sec:ch5-digital-saturation}
 
-The gap is therefore \emph{structural} rather than compositional: the same analytical pipeline applied to both samples reveals a Sweden-over-Italy shift that is preserved across profiles, rules out sample-level composition effects, and is largest at the vulnerable end of each distribution. The interpretation in terms of welfare-regime architecture is developed in Chapter~\ref{ch:ch8}.
+Internet adoption in the five autonomous Swedish profiles ranges from 75.1\% (Asset Rich) to 98.7\% (Social Decline), with four of the five profiles above 93\% (Moderate 93.8\%, Wealthy Digital 96.4\%, Connected Wealthy 98.5\%, Social Decline 98.7\%; Asset Rich 75.1\%). The Italian autonomous profiles span a much wider range, from 17.3\% (Fragile Depressed) and 34.1\% (Moderate Isolated) at the lower end to 65.8\% (Traditional Social) and 74.8\% (Connected Active) at the upper end (\S\ref{sec:ch4-profile-descriptions}). Figure~\ref{fig:ch5-digital} plots the per-profile internet-use means side by side, with a 75\% reference line: in Sweden only the Fragile cluster lies below the line, while in Italy no profile reaches it (Connected Active is at 74.8\%). The Swedish digital floor is the Italian digital ceiling.
 
-\section{Welfare-regime-specific profiles}
-\label{sec:ch5-unmatched}
-
-Three profiles fall outside the matched-pair design and are interpreted as welfare-regime-specific types. The Italian \emph{Moderate Isolated} ($n = 639$) is the large objectively-healthy-but-socially-isolated group that is absent from the Swedish segmentation; its substantive importance is developed in Chapter~\ref{ch:ch7}. On the Swedish side, \emph{Asset Rich} ($n = 341$) and \emph{Wealthy Digital} ($n = 138$) are two prosperous profiles that occupy different positions in the digital-access space (75\% vs 96\% internet use, respectively) and in the social-network dimension; together they account for 26.8\% of the Swedish sample and have no Italian analogue. Figure~\ref{fig:ch5-country-unique} displays the unique profiles in each country.
-
-\begin{figure}[ht]
+\begin{figure}[!htbp]
   \centering
-  \includegraphics[width=0.78\linewidth]{figures/06_comparison/fig_15_country_unique.png}
-  \caption{Welfare-regime-specific profiles in Italy and Sweden. Source: v9 pipeline.}
-  \label{fig:ch5-country-unique}
+  \includegraphics[width=0.95\linewidth]{figures/05_sweden/fig_5_B_digital_saturation.png}
+  \caption[Internet use by profile, Italy and Sweden]{Internet use by profile, Italy and Sweden. Cluster means on the binary internet-use indicator (SHARE Wave~9). Dashed reference line at 75\%. In Sweden only the Fragile cluster lies below 75\%; in Italy no profile reaches 75\%. The digital cut in Sweden tracks the functional-fragility line; in Italy it tracks the resource gradient.}
+  \label{fig:ch5-digital}
 \end{figure}
 
-\section{Pooled latent space}
-\label{sec:ch5-pooled}
+The reading that follows is not that Sweden is more digitally adopted on average --- this is well documented in cross-national statistics on older-adult internet use --- but that digital adoption in Sweden cuts at the functional-fragility line, while in Italy it cuts at the resource line. The implication for the silver-economy market structure is structural: in Sweden, direct-to-consumer digital products are addressable across the 88.5\% of the Swedish analytical sample classified into the five autonomous profiles, with intermediated designs required only for the 11.5\% Fragile segment. In Italy, direct-to-consumer designs are addressable for approximately one third of the Italian analytical sample (Connected Active 25.4\% + Traditional Social 7.7\%), with intermediated or alternative-channel designs required for the remaining 66.9\%. The cross-country implications for product design are developed in Chapter~6.
 
-As an additional check on cross-country commensurability, PCA and factor analysis were re-estimated on the pooled $n = 4{,}165$ sample after joint standardisation. Figure~\ref{fig:ch5-pc-pooled} and Figure~\ref{fig:ch5-fa-pooled} show respondents from both countries in the first principal-component and principal-axis planes respectively. The two country distributions overlap substantially on the second axis but separate on the first --- consistent with a shared latent structure and a country-specific level gradient, i.e.\ the same interpretation supported by Table~\ref{tab:ch5-gap}.
+\subsection{The age-prosperity rotation}
+\label{sec:ch5-age-prosperity-rotation}
 
-\begin{figure}[ht]
+The Swedish high-resource pole is not occupied by a single archetype across the late-life trajectory. Figure~\ref{fig:ch5-rotation} plots the within-age-band share of the two well-resourced profiles in each country across the 65--74, 75--84, 85+ bands.
+
+\begin{figure}[!htbp]
   \centering
-  \includegraphics[width=0.85\linewidth]{figures/06_comparison/fig_56_pc_pooled_by_country.png}
-  \caption{Respondents in the pooled PC1--PC2 space, coloured by country. Source: v9 pipeline.}
-  \label{fig:ch5-pc-pooled}
+  \includegraphics[width=0.95\linewidth]{figures/05_sweden/fig_5_C_age_prosperity_rotation.png}
+  \caption[Well-resourced profiles by age band, Italy and Sweden]{Share of well-resourced profiles within age band, Italy and Sweden. Italy (left) shows both Connected Active and Traditional Social declining in parallel with age. Sweden (right) shows Connected Wealthy contracting (41\%$\to$7\%) while Asset Rich expands (14\%$\to$31\%): the high-resource pole rotates from a digital-engagement anchor (young-old) to a wealth-accumulation anchor (oldest-old).}
+  \label{fig:ch5-rotation}
 \end{figure}
 
-\begin{figure}[ht]
+In Sweden, the Connected Wealthy share declines from 41\% to 7\% across the three bands --- a near six-fold contraction --- while the Asset Rich share rises from 14\% to 31\%, with the crossover occurring in the 75--84 band where both profiles meet at approximately 22--23\%. The two well-resourced profiles thus carry the high-resource pole at different stages: Connected Wealthy is the digital-anchored profile of the young-old cohort (mean age 73.1), while Asset Rich is the wealth-anchored profile of the oldest-old cohort (mean age 77.7). The pole rotates from a digital-engagement anchor to a wealth-accumulation anchor as the cohort ages.
+
+The Italian typology has no analogous rotation: both well-resourced profiles (Connected Active and Traditional Social) decline in parallel with age, with Connected Active falling from 31\% to 11\% and Traditional Social from 9\% to 3\%. The substantive interpretation is that the Swedish welfare regime preserves a wealth-anchored autonomous configuration into advanced old age, supported by the institutional infrastructure that allows asset-rich older households to remain functionally autonomous without dense social or family-mediated care provision \citep{dykstra2009, bonsang2009}. The Italian regime, where digital and cultural engagement contract uniformly with age and where the intra-family care relationship is the substitute infrastructure, does not produce the rotation.
+
+\section{External validation: compressed variance under universal welfare}
+\label{sec:ch5-external-validation}
+
+Life satisfaction (SHARE Wave~9 item AC012, eleven-point scale), administered in a separate questionnaire block from the analytical input set (\S\ref{sec:ch3-subjective-circularity}), provides an external validation outcome. Figure~\ref{fig:ch5-lifesat} reports the distribution across the six Swedish archetypes; the F-statistic of a one-way ANOVA is reported in the caption.
+
+\begin{figure}[H]
   \centering
-  \includegraphics[width=0.85\linewidth]{figures/06_comparison/fig_62_fa_pooled_by_country.png}
-  \caption{Respondents in the pooled PA1--PA2 factor-score space, coloured by country. Source: v9 pipeline.}
-  \label{fig:ch5-fa-pooled}
+  \includegraphics[width=0.95\linewidth]{figures/05_sweden/fig_5_4_lifesat_anova_sweden.png}
+  \caption[Life satisfaction by profile, Sweden]{Life satisfaction by profile, Sweden. Boxplots of SHARE Wave~9 item AC012 (eleven-point scale, 0--10) by cluster membership; diamonds report cluster means. One-way ANOVA: $F(5, 1779) = 44.3$, $p < .001$. Lifesat is external to the K-means input set. $n = 1{,}785$.}
+  \label{fig:ch5-lifesat}
 \end{figure}
 
-\section{Chapter summary}
-\label{sec:ch5-summary}
+Mean life satisfaction is 7.42 in Fragile, against 8.06 (Moderate), 8.47 (Wealthy Digital), 8.48 (Asset Rich), 8.51 (Social Decline), and 8.88 (Connected Wealthy). The F-statistic of 44.3 on $(5, 1779)$ degrees of freedom ($p < 0.001$) confirms significant discriminative power but at less than half the magnitude observed in the Italian typology ($F(4, 2183) = 124.6$; \S\ref{sec:ch4-external-validation}). Because the F-statistic is not directly comparable across partitions with different numbers of clusters, the effect size is reported as $\eta^2$: the typology accounts for approximately 19\% of the life-satisfaction variance in Italy ($\eta^2 \approx 0.19$) against 11\% in Sweden ($\eta^2 \approx 0.11$). The larger Italian effect size --- robust to the difference in cluster count --- is consistent with the Swedish universal-welfare baseline compressing between-cluster variation in subjective wellbeing: even the structurally most adverse Swedish segment retains a level of life satisfaction (7.42) that exceeds the mean of both Italian fragile profiles (6.5 and 7.2). The non-fragile Swedish clusters span only 0.82 points of life satisfaction (8.06--8.88) on the eleven-point scale, against the wider separation between the Italian fragile profiles (means 6.5 and 7.2) and non-fragile profiles (8.1--8.2). The reading is consistent with the welfare-regime literature on the de-commodification of late-life well-being under universal-access institutions \citep{espingandersen1990, bambra2007}: where the institutional infrastructure substitutes for individual or family-based provision, the variance in subjective experience attributable to cluster membership contracts.
 
-The same analytical pipeline produces rhyming profile structures in Italy and Sweden, confirming the cross-country usability of the segmentation framework. Within this common structure, Sweden exceeds Italy on every positive indicator of subjective well-being, cognitive function, and digital inclusion, with gaps that are largest for the most vulnerable profiles. Two profiles have no cross-country analogue: the Italian \emph{Moderate Isolated}, whose characterisation prepares the healthcare chapter that follows, and the Swedish \emph{Asset Rich} and \emph{Wealthy Digital} types, interpretable as welfare-regime-specific signatures of the universalist model.
+\section{Demographic distributions across profiles}
+\label{sec:ch5-demographics}
+
+Figure~\ref{fig:ch5-demographics} reports profile composition by gender and age band, each as a 100\% stacked bar.
+
+\begin{figure}[!t]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/05_sweden/fig_5_5_demographics_sweden.png}
+  \caption[Profile composition by gender and age, Sweden]{Profile composition by gender and age band, Sweden. Each column shows the percentage of the demographic group falling in each archetype; columns sum to 100\%. Panel (b) reports the age-prosperity rotation discussed in \S\ref{sec:ch5-age-prosperity-rotation}: the Fragile share rises from 6\% in 65--74 to 37\% in 85+; the Connected Wealthy share declines from 41\% to 7\% over the same range, while the Asset Rich share rises from 14\% to 31\%. Legend on panel (b) applies to both panels.}
+  \label{fig:ch5-demographics}
+\end{figure}
+
+The feminisation of fragility is present in Sweden but materially attenuated relative to Italy. The Fragile and Social Decline profiles together account for 23\% of Swedish women (13.9\% Fragile + 9.3\% Social Decline) against 16\% of men (8.8\% + 7.2\%) --- a 7-percentage-point gap, against the 15-percentage-point gap observed in Italy (\S\ref{sec:ch4-demographics}). The high-resource profiles (Asset Rich, Wealthy Digital, Connected Wealthy) account for 60\% of men against 54\% of women, again a smaller asymmetry than in Italy. The reading is consistent with the welfare-regime literature on the de-familisation of elderly care in the Nordic countries \citep{anttonen1996, espingandersen1990}: where institutional care provision is universal, the gender gap in late-life socio-economic outcomes is partially absorbed by public-service substitution rather than amplified by intra-household care obligations.
+
+The age gradient confirms the asymmetric burden of late-life functional decline and the age-prosperity rotation already developed in \S\ref{sec:ch5-age-prosperity-rotation} and visualised in Figure~\ref{fig:ch5-demographics}.
+
+\section{The absence of the Isolation Paradox}
+\label{sec:ch5-no-paradox}
+
+The Italian typology of Chapter~4 identifies the Isolation Paradox as a country-specific configuration in which a substantial population segment (Moderate Isolated, 26.9\% of the Italian analytical sample) is functionally and economically autonomous but socially and digitally disconnected (\S\ref{sec:ch4-isolation-paradox}). The Swedish typology developed in this chapter does not contain a structural counterpart of this configuration: the diagnostic position of intact autonomy combined with social and digital thinness is not replicated by any of the six Swedish archetypes. The Swedish Moderate cluster, which occupies the corresponding middle-stratum position by health and resources, is instead socially integrated at or above the Swedish population mean (network 3.91, internet 93.8\%, social integration above zero), and the four other autonomous profiles are more strongly integrated still. The full cross-country treatment --- the Hungarian-matched alignment that confirms the absence of a Swedish twin and the healthcare-utilisation quantification across the matched pairs --- is reported in Chapter~\ref{ch:ch6}.
+
+\section{Synthesis}
+\label{sec:ch5-synthesis}
+
+The Swedish typology partitions the over-65 population into six archetypes spanning a fragility-and-resources gradient with a structural shape that differs systematically from the Italian one. The substantive content of the chapter is not a Nordic catalogue of profiles parallel to the Italian inventory of Chapter~4 but an empirical argument about the structural effects of the Nordic-universalistic welfare regime on the partition of late-life experience. Three findings carry the argument: the binary structure of Swedish fragility against the graduated Italian structure; the universal digital saturation that extends across the five autonomous profiles and cuts at the functional-fragility line rather than the resource line; and the age-driven rotation of the high-resource pole from a digital-engagement anchor (Connected Wealthy, young-old) to a wealth-accumulation anchor (Asset Rich, oldest-old), with no analogous rotation in Italy.
+
+External validation against life satisfaction confirms significant discriminative power ($F(5, 1779) = 44.3$, $p < 0.001$) at less than half the Italian magnitude --- a reading consistent with the welfare-regime compression of between-cluster variance on subjective well-being. And the absence of the Isolation Paradox in the Swedish typology documents that the country-specific Italian Moderate Isolated configuration emerges where the welfare regime substitutes family-based provision for universal-access institutions, rather than as a generic feature of late-life experience in advanced economies. Chapter~6 develops the matched-pair cross-country comparison and quantifies the healthcare-utilisation differential that substantiates the Isolation Paradox; Chapter~7 reports the full battery of robustness diagnostics.
