@@ -4,185 +4,273 @@
 \section{Overview}
 \label{sec:ch4-overview}
 
-This chapter presents the five-archetype typology of the Italian over-65 population recovered from the K-means segmentation of Chapter~3. \S\ref{sec:ch4-five-archetypes} reports the population-level structure of the partition. \S\ref{sec:ch4-profile-descriptions} describes the five archetypes profile by profile. \S\ref{sec:ch4-integrative-view} presents the integrative profile fingerprint. \S\ref{sec:ch4-external-validation} reports external validation against life satisfaction. \S\ref{sec:ch4-demographics} reports the demographic composition by gender and age band. \S\ref{sec:ch4-isolation-paradox} develops the Isolation Paradox --- the most distinctive and policy-relevant finding of the Italian typology. \S\ref{sec:ch4-synthesis} closes with synthesis.
+The K-means segmentation of Chapter~3 recovers five archetypes spanning the Italian over-65 population, organised along a fragility-and-resources gradient: two fragile profiles at one pole, two well-resourced profiles at the other, and a country-specific middle cluster --- \emph{Moderate Isolated} (26.9\% of the analytical sample) --- characterised by social and digital thinness without health or economic adversity. This last profile has no structural counterpart in the Swedish typology of Chapter~5 and is the empirical foundation for the \emph{Isolation Paradox} developed in \S\ref{sec:ch4-isolation-paradox}.
 
-All centroid coordinates are reported as z-scores within Italy on the analytical sample ($n = 2{,}378$). The substantive direction of each variable is reported in parenthesis at first mention. National projection uses the Istat 2024 estimate of 14.18 million Italian residents aged 65 or older.
+All centroid coordinates are reported as z-scores within Italy on the analytical sample ($n = 2{,}378$). For each variable, the substantive direction (whether higher values indicate better or worse outcomes) is noted in parenthesis at first mention. Cluster shares are reported as percentages of the analytical sample; see \S\ref{sec:ch3-preprocessing} for the descriptive/predictive interpretation of the partition.
 
 \section{The five archetypes}
 \label{sec:ch4-five-archetypes}
 
-The K-means segmentation with $k = 5$ partitions the 2,378 Italian respondents into five clusters. Figure~\ref{fig:ch4-profiles} reports cluster mean values on eight diagnostic variables, with profiles ordered from most fragile (left) to most connected (right). Table~\ref{tab:ch4-archetypes} lists the archetypes with their headline signature and population shares.
+The K-means partition ($k = 5$) groups the 2,378 Italian respondents into five clusters. Figure~\ref{fig:ch4-profiles} reports cluster mean values on eight diagnostic variables, with profiles ordered from most fragile (left) to most connected (right). Table~\ref{tab:ch4-archetypes} lists the archetypes with their headline signature and sample shares.
 
-\begin{figure}[ht]
+\begin{figure}[!t]
   \centering
-  \includegraphics[width=0.95\linewidth]{figures/04_italy/fig_4_1_NEW.png}
-  \caption{Profile characteristics, Italy. Mean values for each of the five archetypes on eight key dimensions: age, CASP-12 (12--48), internet (\% in past seven days), loneliness (UCLA-3, higher = lonelier), hope for the future (\% reporting hopes), social-network size, EURO-D depression (higher = more depressive symptoms), mobility limitations. Profiles ordered from most fragile to most connected. $N = 2{,}378$.}
+  \makebox[\textwidth][c]{\includegraphics[width=1.12\textwidth,keepaspectratio]{figures/04_italy/fig_4_1_NEW.png}}
+  \caption[Profile characteristics, Italy]{Profile characteristics, Italy. Cluster means on eight key dimensions: age, CASP-12, internet use (\%), loneliness (UCLA-3), hope for the future (\%), network size, EURO-D, mobility limitations. Profiles ordered from most fragile to most connected. $N = 2{,}378$.}
   \label{fig:ch4-profiles}
 \end{figure}
 
-\begin{table}[ht]
+\begin{table}[!htbp]
   \centering
-  \caption{Headline signature of the five Italian archetypes}
+  \small
+  \caption[Headline signature, Italian archetypes]{Headline signature of the five Italian archetypes}
   \label{tab:ch4-archetypes}
-  \begin{tabular}{p{2.5cm}p{1.2cm}p{7cm}}
+  \renewcommand{\arraystretch}{1.2}
+  \setlength{\tabcolsep}{8pt}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash\bfseries}p{2.7cm}>{\centering\arraybackslash}p{1.2cm}>{\raggedright\arraybackslash}X@{}}
     \toprule
     \textbf{Archetype} & \textbf{Share} & \textbf{Headline signature} \\
     \midrule
-    Fragile Resigned & 14.4\% & Worst health, oldest age (mean 81.5 yr), lowest internet use (8.6\%) and CASP (27.8). Sub-clinical depression (EURO-D 6.1). Withdrawn evaluative orientation (hope 45.4\%). \\
-    Fragile Depressed & 11.7\% & Persistent depressive affect (EURO-D 4.2, loneliness 5.4) with intermediate functional health and below-average resources. \\
-    Moderate Isolated & 28.1\% & Average to good health (mobility 0.6, EURO-D 1.2) and resources, but restricted social engagement (network 2.3, internet 34.1\%). The largest single archetype and the country-specific Italian configuration. \\
-    Traditional Social & 25.1\% & Good health and resources, dense cultural participation (hope 89.7\%), moderate internet adoption (65.8\%). Highest CASP (38.5). \\
-    Connected Active & 20.7\% & Highest digital adoption (74.8\%), largest network (3.0), best resources, intact health. CASP 37.8. The silver-economy frontier of the Italian over-65 population. \\
+    Fragile Resigned & 13.2\% & Worst health, oldest age (mean 81.5 yr), lowest internet use (8.6\%) and CASP (27.8). Marked depressive load (EURO-D 6.1, well above the four-point clinical threshold). Withdrawn evaluative orientation (hope 45.4\%). \\
+    Fragile Depressed & 26.7\% & Persistent depressive affect (EURO-D 4.2, loneliness 5.4) with intermediate functional health and below-average resources. The largest fragile cluster. \\
+    Moderate Isolated & 26.9\% & Average-to-good health (mobility 0.6, EURO-D 1.2) and resources, but restricted social engagement (network 2.3, internet 34.1\%). The largest single archetype and the country-specific Italian configuration. \\
+    Traditional Social & 7.7\% & Good health and resources, dense cultural participation (hope 89.7\%), moderate internet adoption (65.8\%). Highest CASP (38.5). A small cluster in W9 (see \S\ref{sec:ch4-traditional-social}). \\
+    Connected Active & 25.4\% & Highest digital adoption (74.8\%), largest network (3.0), best resources, intact health. CASP 37.8. The silver-economy frontier of the Italian over-65 population. \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
+  \par\medskip
+  \begin{minipage}{\linewidth}
+    \footnotesize\textit{Note.} Headline values are raw means of the diagnostic variables of Figure~\ref{fig:ch4-profiles}. Standardised centroid coordinates are reported in \S\ref{sec:ch4-profile-descriptions}.
+  \end{minipage}
 \end{table}
 
-\noindent\small Note. Headline values are raw means of the diagnostic variables of Figure~\ref{fig:ch4-profiles}. Standardised centroid coordinates are reported in \S\ref{sec:ch4-profile-descriptions}. \normalsize
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=\linewidth]{figures/04_italy/fig_4_8_NEW.png}
+  \caption[Sample shares and population projections, Italy]{Sample shares and population projections of the five Italian archetypes. Bars report within-sample shares of the K-means partition on the SHARE Wave~9 Italian analytical sample ($n = 2{,}378$); each bar label gives the within-sample share and the weighted national projection (in millions). Projections to the national over-65 population apply post-hoc re-weighting with the SHARE design weight (\texttt{cciw\_w9}; see Table~\ref{tab:ch3-weighted-shares}) and the 2024 Istat over-65 estimate (14.18~million). Moderate Isolated (26.9\%) is the largest single cluster by within-sample share, narrowly above Fragile Depressed (26.7\%) and Connected Active (25.4\%). Traditional Social is the smallest cluster (7.7\%); see \S\ref{sec:ch4-traditional-social} for the substantive interpretation.}
+  \label{fig:ch4-shares}
+\end{figure}
 
-Two raw-scale observations from Figure~\ref{fig:ch4-profiles} anchor the standardised description that follows. First, the age gradient: the Fragile Resigned cluster has a mean age of 81.5 years, against 77.3 (Fragile Depressed), 72.8 (Moderate Isolated), 73.8 (Traditional Social) and 73.9 (Connected Active). The Fragile Resigned are on average eight years older than the four other archetypes, identifying the oldest-old segment of the population. Second, the digital divide: 8.6\% in Fragile Resigned versus 74.8\% in Connected Active --- a near nine-fold gap on a single behavioural indicator. From the EMIT-relevant silver-economy perspective, this gap defines the boundary between sub-populations served by digital products and those for whom traditional welfare and family-based provision remain the only operational channel.
+Two raw-scale observations from Figure~\ref{fig:ch4-profiles} anchor the standardised description that follows. First, the age gradient: the Fragile Resigned cluster has a mean age of 81.5 years, against 77.3 (Fragile Depressed), 72.8 (Moderate Isolated), 73.8 (Traditional Social) and 73.9 (Connected Active). The Fragile Resigned are on average approximately seven years older than the four other archetypes, identifying the oldest-old segment of the population. Second, the digital divide: 8.6\% in Fragile Resigned versus 74.8\% in Connected Active --- a near nine-fold gap on a single behavioural indicator. From the silver-economy perspective, this gap defines the boundary between cluster groups served by digital products and those for whom traditional welfare and family-based provision remain the only operational channel.
 
 \section{Profile descriptions}
 \label{sec:ch4-profile-descriptions}
 
-\subsection{Fragile Resigned}
+The five archetypes are described below in the same order as Table~\ref{tab:ch4-archetypes}, from most fragile to most connected. Standardised centroid values are reported in z-units within Italy ($\bar{x} = 0$, $\sigma = 1$); raw means are given in parenthesis where useful for interpretation.
+
 \label{sec:ch4-fragile-resigned}
+\textbf{Fragile Resigned} (13.2\%; mean age 81.5) occupies the most adverse position in the typology on every health and functional dimension: self-rated health $+1.06$, IADL $+1.97$, ADL $+1.74$, mobility $+1.38$, chronic conditions $+0.85$, EURO-D $+1.04$, physical inactivity $+1.05$. Economic resources are only modestly below the mean (log\_thinc $-0.19$, log\_hnetw $-0.34$); the principal axis of fragility is functional autonomy, not income. The subjective signature is the lowest in the typology on every evaluative dimension --- CASP-12 $-1.02$ (raw 27.8), loneliness $+0.88$, only 45.4\% reporting hopes for the future against $\geq 90\%$ in the non-fragile profiles, parallel deficits on interest ($-0.50$) and expected survival ($-0.59$), pronounced cognitive deficits (orientation $-1.00$, fluency $-0.75$) --- supporting the descriptive label ``Resigned'': a cluster evaluatively withdrawn from the future, consistent with chronic adaptation to the constraints of advanced old age. The cluster is the principal target of the Italian long-term-care welfare branch and identifies the lower bound of the silver-economy market: digital and behavioural channels are essentially closed, and service consumption is mediated by family caregivers and institutional providers \citep{ferrera1996, saraceno2010}.
 
-The Fragile Resigned cluster accounts for 14.4\% of the Italian over-65 population ($\approx 2.04$ million individuals). It sits at the most adverse end of every health dimension: self-rated health $+1.06$ (higher = worse), IADL $+1.97$, mobility $+1.38$, ADL $+1.74$, chronic conditions $+0.85$, EURO-D $+1.04$, physical inactivity $+1.05$. Mean age is 81.5 years --- eight years above the typology average --- identifying the oldest-old segment. Economic resources are below the Italian mean (log\_thinc $-0.19$, log\_hnetw $-0.34$) but the gap is small in standardised terms; the principal axis of fragility is health and functional autonomy, not income.
-
-The subjective signature is the lowest in the typology on every evaluative dimension. CASP-12 is at $-1.02$ (raw 27.8), hope for the future at $-0.82$ (45.4\% report hopes, against $\geq 90\%$ in non-fragile profiles), interest at $-0.50$, expected survival at $-0.59$, loneliness at $+0.88$. The combination --- high subjective burden, low evaluative function, low expectation --- supports the descriptive label ``Resigned'': a cluster evaluatively withdrawn, with a configuration consistent with chronic adaptation to the constraints of advanced old age. Cognitive deficits are pronounced (orienti $-1.00$, fluency $-0.75$). The cluster is the principal target of the Italian long-term-care welfare branch and identifies the lower bound of the silver-economy market: a sub-population whose digital and behavioural channels are essentially closed and whose service consumption is mediated by family caregivers and institutional providers \citep{ferrera1996, saraceno2010}.
-
-\subsection{Fragile Depressed}
 \label{sec:ch4-fragile-depressed}
+\textbf{Fragile Depressed} (26.7\%; mean age 77.3) --- the second-largest archetype --- occupies an intermediate position on objective health (sphus $+0.47$, mobility $+0.36$, chronic $+0.32$) coupled with elevated depressive affect (EURO-D $+0.54$, raw 4.2 just above the four-point clinical threshold). Economic resources are below the Italian mean across all indicators. The subjective signature is the second-lowest in the typology but qualitatively distinct from Fragile Resigned: CASP $-0.67$, loneliness $+0.59$ (raw 5.4), hope $-0.28$ (67.6\% reporting hopes --- materially above 45.4\% but below the non-fragile profiles). The cluster displays elevated depressive affect and loneliness without the same withdrawal from hope and interest --- an active depressive episode rather than a settled evaluative resignation. The contrast with Fragile Resigned is among the most substantively important findings of the Italian typology and one of the principal arguments for retaining $k = 5$ over $k = 4$ (\S\ref{sec:ch3-kmeans}); the cluster is over-represented among Italian women (31\% of women vs 22\% of men; \S\ref{sec:ch4-demographics}). With internet use at 17.3\%, behavioural and digital channels remain partially open but the affective barrier is the binding constraint on adoption.
 
-The Fragile Depressed cluster accounts for 11.7\% ($\approx 1.66$ million). It is intermediate on objective health and functional dimensions (sphus $+0.47$, EURO-D $+0.54$ with raw mean 4.2 just above the four-point clinical threshold, mobility $+0.36$, chronic conditions $+0.32$). Mean age is 77.3 years. Economic resources are below the Italian mean (log\_thinc $-0.39$, log\_hnetw $-0.40$, fdistress $-0.51$). The subjective signature is the second-lowest in the typology but qualitatively different from Fragile Resigned: CASP $-0.67$ (raw 30.7), loneliness $+0.59$ (raw 5.4), hope $-0.28$ (67.6\% report hopes --- clearly above 45.4\% of Fragile Resigned but below the non-fragile profiles). The cluster displays elevated depressive affect and loneliness without the same magnitude of withdrawal from hope and interest --- an active depressive episode rather than a settled withdrawal.
-
-The contrast with Fragile Resigned is among the most substantively important findings of the Italian typology and one of the principal arguments for retaining $k = 5$ over $k = 4$ (\S\ref{sec:ch3-kmeans}). Demographically, the cluster is over-represented among Italian women: 31\% of women fall in Fragile Depressed against 22\% of men (\S\ref{sec:ch4-demographics}). Internet use is 17.3\% --- non-trivial but well below the non-fragile profiles. From the silver-economy perspective, the Fragile Depressed represent a configuration in which behavioural and digital channels remain partially open but the affective barrier is the binding constraint on adoption.
-
-\subsection{Moderate Isolated}
 \label{sec:ch4-moderate-isolated}
+\textbf{Moderate Isolated} (26.9\%; mean age 72.8) is the largest single archetype and the youngest. It is not characterised by adversity on objective dimensions --- health, functional and economic indicators sit at or close to the Italian mean (sphus $-0.58$, EURO-D $-0.68$ with raw 1.2 below clinical threshold, mobility $-0.61$, IADL $-0.42$, log\_thinc $-0.33$, log\_hnetw $-0.22$). The diagnostic feature is the joint position on social, cultural and digital engagement, where the centroid lies systematically below the Italian mean: network size $-0.22$ (raw 2.3 confidants), internet use $-0.11$ (raw 34.1\%), three cultural-engagement indicators between $-0.15$ and $-0.37$, help to grandchildren $-0.15$. The cluster is not extremely isolated on any single variable; it is moderately and consistently thinner across the whole social-information block. The substantive content of the archetype rests on the consistency of the pattern across several indicators rather than on the size of any single gap. The cluster does not report itself as lonely despite the thin network (loneliness raw 3.6) --- consistent with the observation that loneliness in older age is less a function of absolute network size than of the discrepancy between desired and actual configuration \citep{hawkleycacioppo2010}. The Moderate Isolated archetype is the most distinctive feature of the Italian typology and has no structural counterpart in the Swedish typology of Chapter~\ref{ch:ch5}; the substantive interpretation as the empirical signature of the Mediterranean familistic regime is developed in Chapter~\ref{ch:ch6}, and its behavioural and policy consequences --- including the under-utilisation of healthcare relative to Traditional Social peers --- in \S\ref{sec:ch4-isolation-paradox} as the Isolation Paradox.
 
-The Moderate Isolated cluster is the largest, at 28.1\% of the over-65 population ($\approx 3.98$ million individuals). The cluster sits at or near the Italian mean on most objective health and resource dimensions: sphus $-0.58$ (better than mean), EURO-D $-0.68$ (raw 1.2, well below the clinical threshold), mobility $-0.61$, IADL $-0.42$, log\_thinc $-0.33$, log\_hnetw $-0.22$, fdistress $-0.16$. Mean age is 72.8 years (the youngest of the five archetypes). The cluster is not characterised by adversity on health or economic dimensions: it is, in absolute terms, an averagely-resourced and averagely-healthy segment.
-
-The diagnostic feature is the position on social, cultural and digital dimensions: network size $-0.22$ (raw 2.3 confidants), social\_integration $-0.11$, internet $-0.11$ (raw 34.1\%), three cultural-engagement indicators between $-0.15$ and $-0.37$, provision of help to grandchildren $-0.15$. None of these distances is large in absolute terms, but the joint pattern across the social and cultural variables identifies a configuration in which the social and informational ecosystem is materially thinner than in the rest of the typology. The cluster does not report itself as particularly lonely (loneliness raw 3.6, well below the Italian mean), despite the thin network --- consistent with the observation that loneliness in older age is less a function of absolute network size than of the discrepancy between desired and actual configuration \citep{hawkleycacioppo2010}.
-
-The Moderate Isolated archetype is the most distinctive feature of the Italian typology and does not have a structural counterpart in the Swedish typology of Chapter~5. The substantive interpretation, developed in Chapter~6, is that this configuration reflects the Mediterranean familistic regime: a substantial fraction of the Italian middle stratum is socially anchored to the immediate family and the residential neighbourhood, with limited participation in the kinds of associational and cultural activities that the Swedish welfare state and civil society make available to comparable individuals. The behavioural and policy consequences --- including the under-utilisation of healthcare relative to Traditional Social peers --- are developed in \S\ref{sec:ch4-isolation-paradox} as the Isolation Paradox.
-
-\subsection{Traditional Social}
 \label{sec:ch4-traditional-social}
+\textbf{Traditional Social} (7.7\%; mean age 73.8) --- the smallest archetype --- sits in the upper region of resource and health distributions, broadly comparable to Connected Active. The diagnostic feature is the configuration of cultural and social engagement, where the centroid reaches its most extreme position in the typology ($+3.29$ on the cultural-engagement indicator ac035d5, with parallel positive loadings on ac035d1 $+0.43$, educational participation $+0.50$, help to grandchildren $+0.50$, social integration $+0.62$). Internet use is $+0.53$ (raw 65.8\%) --- well above the Italian mean but below Connected Active (74.8\%). The cluster carries a dense traditional pattern of cultural attendance, organised volunteering, and intergenerational support, with moderate digital engagement that complements rather than substitutes offline activities; CASP-12 is the highest in the typology (raw 38.5), loneliness low, hope positive (89.7\%). The small size in SHARE Wave~9 ($n = 184$) is itself a substantive finding: in pre-pandemic European segmentation studies a substantial ``traditional'' cluster combining dense offline networks with limited digital engagement consistently emerged, but in the W9 Italian sample (2021--2022) the densely-connected over-65 individuals are also the most digitally integrated and largely fall into Connected Active. The residual Traditional Social cluster captures the population that retains the historical signature (high cultural participation + moderate-only internet) and represents a numerically narrow but substantively distinct market for hybrid intermediated designs in which the digital interface is layered onto an existing offline trust relationship.
 
-The Traditional Social cluster accounts for 25.1\% ($\approx 3.56$ million). It sits in the upper region of the resource and health distributions (sphus $-0.40$, IADL $-0.42$, log\_thinc $+0.41$, log\_hnetw $+0.55$, fdistress $+0.43$; mean age 73.8 years), in a comparable position to the Connected Active. The diagnostic feature is the configuration of social, cultural and digital engagement: the centroid is at $+3.29$ standard deviations on the cultural-engagement indicator ac035d5, $+0.43$ on ac035d1, $+0.50$ on educational participation (ac035d8), $+0.50$ on provision of help to grandchildren (sp008\_), $+0.62$ on social integration. Internet use is at $+0.53$ (raw 65.8\%) --- well above the Italian mean but materially below Connected Active (74.8\%).
-
-The cluster is the carrier of a dense and traditional pattern of social and cultural participation: institutionalised cultural attendance, organised volunteering, intergenerational support, and a moderate digital engagement that complements rather than substitutes for offline activities. CASP-12 is the highest in the typology (raw 38.5, $z = +0.66$), loneliness is low ($z = -0.39$), hope is positive (89.7\%). From the silver-economy perspective, the cluster is the segment most receptive to hybrid product designs that combine digital interfaces with offline community channels (parish-based or club-based intermediation of digital services), while the Connected Active cluster supports direct-to-consumer digital products without intermediation.
-
-\subsection{Connected Active}
 \label{sec:ch4-connected-active}
-
-The Connected Active cluster accounts for 20.7\% ($\approx 2.94$ million). It sits at the high-resource end of the typology on every economic dimension (log\_thinc $+0.72$, log\_hnetw $+0.64$, ypen1 $+0.53$, home\_own $+0.24$, fdistress $+0.68$) and on every health dimension (sphus $-0.28$, EURO-D $-0.25$, mobility $-0.30$, chronic $-0.12$). Mean age is 73.9 years. The diagnostic feature is digital integration and informational engagement: internet use at $+0.72$ (raw 74.8\%, the highest in the Italian typology), educational participation at $+0.74$, verbal fluency at $+0.63$ (the highest cognitive score), network size at $+0.42$ (raw 3.0, the highest). The configuration is the ``successful aging'' pattern of the gerontological literature \citep{rowekahn1997} operationalised on a contemporary Italian sample. CASP-12 is high (raw 37.8, $z = +0.56$), loneliness is low (raw 3.7), hope is at 90.9\%, expected survival at $+0.18$.
-
-The Connected Active cluster maps onto the Swedish Connected Wealthy archetype with broadly similar standardised positions, but represents a smaller share (20.7\% vs 29.5\% in Sweden (Connected Wealthy archetype) --- Chapter~6). From the EMIT-relevant silver-economy perspective, the cluster constitutes the immediate and ready-to-serve market for digital products and services targeted at older adults in Italy: 2.94 million individuals with high digital adoption, high economic resources, and intact health. Together with Traditional Social (3.56 million, partially digitally engaged), the Connected Active cluster defines the upper bound of the Italian silver-economy addressable market under current technology-adoption conditions.
+\textbf{Connected Active} (25.4\%; mean age 73.9) --- the largest well-resourced profile --- sits at the high-resource end of the typology on every economic dimension (log\_thinc $+0.72$, log\_hnetw $+0.64$, ypen1 $+0.53$, fdistress $+0.68$) and on every health dimension (sphus $-0.28$, EURO-D $-0.25$, mobility $-0.30$, chronic $-0.12$). The diagnostic feature is digital integration and informational engagement: internet use $+0.72$ (raw 74.8\%, the highest), educational participation $+0.74$, verbal fluency $+0.63$ (the highest cognitive score), network size $+0.42$ (raw 3.0, the largest). The configuration matches the ``successful aging'' pattern of the gerontological literature \citep{rowekahn1997} operationalised on a contemporary Italian sample (CASP-12 raw 37.8, loneliness raw 3.7, 90.9\% reporting hopes, expected survival $+0.18$). The cluster maps onto the Swedish Connected Wealthy archetype with broadly similar standardised positions but a smaller share (25.4\% vs 30.0\%; Chapter~\ref{ch:ch6}). It constitutes the immediate ready-to-serve segment for direct-to-consumer digital products targeted at the Italian over-65 population: a 25.4\% sample share characterised by high digital adoption, high economic resources, and intact health. Together with the smaller Traditional Social cluster, the high-resource pole accounts for 33.1\% of the analytical sample; the addressability and design-logic implications of this two-fold split are developed in Chapter~\ref{ch:ch6}.
 
 \section{Integrative view: the typology fingerprint}
 \label{sec:ch4-integrative-view}
 
-The five-archetype centroid configuration is visualised in two complementary forms. Figure~\ref{fig:ch4-fingerprint} reports the profile fingerprint as a faceted view, with one panel per archetype showing the standardised mean across the 29 active variables; variables are grouped by dominant Factor Analysis loading (\S\ref{sec:ch3-fa}). Figure~\ref{fig:ch4-fa-scatter} plots all Italian respondents on the FA1 $\times$ FA2 plane (FA1: physical and functional fragility; FA2: high values correspond to worse subjective wellbeing), with diamonds marking cluster centroids and ellipses marking 50\% confidence regions per profile.
+The five-archetype centroid configuration is visualised in two complementary forms. Figure~\ref{fig:ch4-fingerprint} reports the profile fingerprint as a faceted view, with one panel per archetype showing the standardised mean across the 29 active variables; variables are grouped by dominant factor loading (\S\ref{sec:ch3-fa}). Figure~\ref{fig:ch4-fa-scatter} plots all Italian respondents on the Factor~1 $\times$ Factor~2 plane (Factor~1: physical and functional fragility; Factor~2: subjective burden, with high values corresponding to elevated EURO-D and loneliness), with diamonds marking cluster centroids and ellipses marking 50\% confidence regions per profile.
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
   \centering
-  \includegraphics[width=0.95\linewidth]{figures/04_italy/fig_fingerprint_facet_italy.png}
-  \caption{Profile fingerprint, Italy. Mean z-score per profile across the 29 active analytical variables, with 95\% bootstrap confidence ribbons ($n = 2{,}378$). Variables grouped by dominant Factor Analysis loading and ordered within factor; x-axis labels colour-coded by dimension.}
+  \includegraphics[width=0.9\linewidth]{figures/04_italy/fig_fingerprint_facet_italy.png}
+  \caption[Profile fingerprint, Italy]{Profile fingerprint, Italy. Mean z-score per profile across the 29 active analytical variables, with 95\% bootstrap confidence ribbons ($n = 2{,}378$). Variables grouped by dominant factor loading and ordered within factor; x-axis labels colour-coded by dimension.}
   \label{fig:ch4-fingerprint}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
   \centering
-  \includegraphics[width=0.95\linewidth]{figures/04_italy/fig_fa_scatter_pa1_pa2_italy.png}
-  \caption{Profile scatter on the FA1 $\times$ FA2 plane, Italy. Each point is one Italian respondent positioned on the two dominant factors (FA1 = physical and functional fragility; FA2 = high values correspond to worse subjective wellbeing). Diamonds mark cluster centroids; ellipses mark 50\% confidence regions per profile.}
+  \includegraphics[width=0.85\linewidth]{figures/04_italy/fig_fa_scatter_pa1_pa2_italy.png}
+  \caption[Profile scatter on the factor plane, Italy]{Profile scatter on the Factor~1 $\times$ Factor~2 plane, Italy. Small-multiple layout: one panel per archetype highlighting that profile against the rest of the sample, plus a summary panel showing the five cluster centroids on the common plane. Each point is one Italian respondent positioned on the two dominant factors: Factor~1 = physical and functional fragility; Factor~2 = subjective wellbeing, plotted inverted (in-figure axis ``subjective wellbeing (inv.)'') so that high values correspond to elevated EURO-D and loneliness. Diamonds mark cluster centroids; ellipses mark 50\% confidence regions per profile.}
   \label{fig:ch4-fa-scatter}
 \end{figure}
 
-The visual reading of Figures~\ref{fig:ch4-fingerprint} and \ref{fig:ch4-fa-scatter} confirms the three-fold structure of the typology. The two fragile profiles lie above zero on health-burden variables and below zero on resource and digital variables, with Fragile Resigned systematically further from zero than Fragile Depressed. The Moderate Isolated and Traditional Social profiles overlap closely on resources and health and diverge sharply on social and digital engagement --- the country-specific Italian middle-stratum split. The Connected Active profile reaches the resource-and-digital pole on FA1 while remaining centred on FA2 --- the ``successful aging'' shape. The FA1 $\times$ FA2 scatter confirms that the five profiles occupy distinct regions of the latent space rather than a single severity gradient --- the visual counterpart of the substantive argument of \S\ref{sec:ch4-profile-descriptions}.
+The two figures provide complementary readings of the typology. The fingerprint (Figure~\ref{fig:ch4-fingerprint}) confirms its three-fold structure: the two fragile profiles lie above zero on health-burden variables and below zero on resource and digital variables, with Fragile Resigned systematically further from zero than Fragile Depressed; the Moderate Isolated and Traditional Social profiles overlap closely on resources and health and diverge sharply on social and digital engagement --- the country-specific Italian middle-stratum split; the Connected Active profile reaches the high-resource and high-digital poles on the economic and engagement factors, with the ``successful aging'' shape \citep{rowekahn1997}. The Factor~1 $\times$ Factor~2 scatter (Figure~\ref{fig:ch4-fa-scatter}) confirms that the five profiles occupy distinct regions of the latent space rather than a single severity gradient: Connected Active sits at the low-fragility pole on Factor~1 while remaining centred on Factor~2, and Fragile Resigned occupies the opposite corner on both axes --- the visual counterpart of the substantive argument of \S\ref{sec:ch4-profile-descriptions}.
 
 \section{External validation: life satisfaction}
 \label{sec:ch4-external-validation}
 
-Life satisfaction (SHARE Wave 9 item AC012, eleven-point scale) is administered in a separate questionnaire block and is not part of the analytical input set, providing an external validation outcome (\S\ref{sec:ch3-subjective-circularity}). Figure~\ref{fig:ch4-lifesat} reports the distribution across the five Italian archetypes with the F-statistic of a one-way ANOVA in the figure caption.
+Life satisfaction (SHARE Wave~9 item AC012, eleven-point scale), administered in a separate questionnaire block from the analytical input set, provides an external validation outcome (\S\ref{sec:ch3-subjective-circularity}). Figure~\ref{fig:ch4-lifesat} reports the distribution across the five Italian archetypes; the F-statistic of a one-way ANOVA is reported in the caption.
 
-\begin{figure}[ht]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.95\linewidth]{figures/04_italy/fig_lifesat_anova_italy.png}
-  \caption{Life satisfaction by profile, Italy. Boxplots of SHARE Wave 9 item AC012 (eleven-point scale, 0--10) by cluster membership; diamonds report cluster means. One-way ANOVA: $F(4, 2183) = 124.6$, $p < .001$. $n = 2{,}188$ (item-level non-response on lifesat reduces the analytical sample by 190 respondents from the 2,378 used for the segmentation).}
+  \caption[Life satisfaction by profile, Italy]{Life satisfaction by profile, Italy. Boxplots of SHARE Wave~9 item AC012 (eleven-point scale, 0--10) by cluster membership; diamonds report cluster means. One-way ANOVA: $F(4, 2183) = 124.6$, $p < .001$. The contrast is principally between fragile (6.5--7.2) and non-fragile profiles (8.1--8.2). Lifesat is external to the K-means input set. $n = 2{,}188$.}
   \label{fig:ch4-lifesat}
 \end{figure}
 
-Mean life satisfaction is 6.5 in Fragile Resigned, 7.2 in Fragile Depressed, and clusters around 8.1--8.2 in the three non-fragile profiles, which are not statistically distinguishable from each other on this single item. The F-statistic of 124.6 on (4, 2183) degrees of freedom ($p < 0.001$) confirms substantial discriminative power of the typology on an outcome external to the input set. The lifesat outcome detects principally the binary contrast between fragile and non-fragile profiles (a roughly 1.5-point gap on the eleven-point scale); the within-non-fragile contrasts are minor --- consistent with the observation that life satisfaction in older age is dominated by the absence of major health and affective burdens. This supports the inclusion of the affective and evaluative subjective block as a constituent input to the typology, which preserves the within-fragile contrast (Fragile Resigned vs Fragile Depressed) that the lifesat outcome alone would not.
+Mean life satisfaction is 6.5 in Fragile Resigned, 7.2 in Fragile Depressed, and clusters around 8.1--8.2 in the three non-fragile profiles, which appear close in mean and not separated in the boxplot distributions. The F-statistic of 124.6 on (4, 2183) degrees of freedom ($p < 0.001$) confirms substantial discriminative power of the typology on an outcome external to the input set, mainly along the fragile/non-fragile divide. The life-satisfaction outcome detects principally the binary contrast between fragile and non-fragile profiles (a roughly 1.5-point gap on the eleven-point scale); the within-non-fragile contrasts are minor --- consistent with the observation that life satisfaction in older age is dominated by the absence of major health and affective burdens. This supports the inclusion of the affective and evaluative subjective block as a constituent input to the typology, which preserves the within-fragile contrast (Fragile Resigned vs Fragile Depressed) that the life-satisfaction outcome alone would not.
+
+Life satisfaction is external in measurement terms (administered in a separate questionnaire block from the analytical input set) but is conceptually adjacent to the subjective block constituents (CASP-12, EURO-D, loneliness, hope for the future), all of which enter the K-means partition as inputs. The validation reported here is therefore best read as a construct-validity test on a partially-overlapping latent dimension rather than a fully independent confirmation; complementary external validation against indicators with no measurement adjacency to the input set --- healthcare-utilisation patterns at the country-aggregate and matched-pair level --- is developed in Chapter~\ref{ch:ch6} (\S\ref{sec:ch6-healthcare}) and consolidated in Chapter~\ref{ch:ch7} (\S\ref{sec:ch7-external-validation-healthcare}).
 
 \section{Demographic distributions across profiles}
 \label{sec:ch4-demographics}
 
-The five archetypes are not uniformly distributed across gender and age. Figure~\ref{fig:ch4-gender} reports profile composition by gender on a 100\% stacked bar; Figure~\ref{fig:ch4-age} reports the parallel decomposition by age band (65--74, 75--84, 85+).
+The five archetypes are not uniformly distributed across gender and age. Figure~\ref{fig:ch4-demographics} reports profile composition by gender (panel a) and by age band 65--74, 75--84, 85+ (panel b), each as a 100\% stacked bar.
 
-\begin{figure}[ht]
+\begin{figure}[!t]
   \centering
-  \includegraphics[width=0.95\linewidth]{figures/04_italy/fig_demographics_gender_italy.png}
-  \caption{Profile composition by gender, Italy. Each column shows the percentage of the gender group falling in each archetype; columns sum to 100\%.}
-  \label{fig:ch4-gender}
+  \makebox[\textwidth][c]{%
+    \begin{minipage}{1.12\textwidth}
+      \centering
+      \begin{minipage}[b]{0.42\linewidth}
+        \centering
+        \includegraphics[width=\linewidth,keepaspectratio]{figures/04_italy/fig_demographics_gender_italy_nolegend.png}\\
+        \footnotesize (a) By gender
+      \end{minipage}%
+      \hspace{0.02\linewidth}%
+      \begin{minipage}[b]{0.55\linewidth}
+        \centering
+        \includegraphics[width=\linewidth,keepaspectratio]{figures/04_italy/fig_demographics_age_italy.png}\\
+        \footnotesize (b) By age band (65--74, 75--84, 85+)
+      \end{minipage}
+    \end{minipage}%
+  }
+  \caption[Profile composition by gender and age, Italy]{Profile composition by gender and age band, Italy. Each column shows the percentage of the demographic group falling in each archetype; columns sum to 100\%. Panel (b): the Fragile Resigned share rises from 4\% in 65--74 to 38\% in 85+; the Connected Active share declines from 31\% to 11\% over the same range. Legend on panel (b) applies to both panels.}
+  \label{fig:ch4-demographics}
 \end{figure}
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.95\linewidth]{figures/04_italy/fig_demographics_age_italy.png}
-  \caption{Profile composition by age band, Italy. The Fragile Resigned share rises from 4\% in 65--74 to 38\% in 85+; the Connected Active share declines from 31\% to 11\% over the same range.}
-  \label{fig:ch4-age}
-\end{figure}
+Two patterns emerge. First, the feminisation of fragility: 47\% of Italian over-65 women fall in one of the two fragile profiles (16\% Fragile Resigned + 31\% Fragile Depressed), against 32\% of men (10\% + 22\%). Symmetrically, 39\% of men are in the high-resource profiles (28\% Connected Active + 11\% Traditional Social), against 28\% of women. The pattern is consistent with the broader epidemiological literature on the differential aging of Italian women --- longer life expectancy paired with higher widowhood rates, lower lifetime labour-market attachment, lower individual pension income \citep{dykstra2009, pampel2001}.
 
-Two patterns emerge. First, the feminisation of fragility: 47\% of Italian over-65 women fall in one of the two fragile profiles (16\% Fragile Resigned + 31\% Fragile Depressed), against 32\% of men (10\% + 22\%). Conversely, 39\% of men are in the high-resource profiles (28\% Connected Active + 11\% Traditional Social), against 28\% of women. The pattern is consistent with the broader epidemiological literature on the differential aging of Italian women --- longer life expectancy paired with higher widowhood rates, lower lifetime labour-market attachment, lower individual pension income \citep{dykstra2009, pampel2001}.
+Second, the age gradient is strong. Comparing the 65--74 and 85+ bands, the Fragile Resigned share rises from 4\% to 38\%, the Fragile Depressed share from 20\% to 36\% (with a monotonic increase across the three bands: 20\% $\to$ 33\% $\to$ 36\%), the Moderate Isolated share declines from 36\% to 12\%, the Traditional Social share from 9\% to 3\%, and the Connected Active share from 31\% to 11\%. Both well-resourced profiles thus contract sharply with age, while both fragile profiles expand --- a pattern consistent with both age-related shifts out of the autonomous clusters and cohort-level differences in social, cultural and digital engagement that the cross-sectional design cannot disentangle. The most vulnerable group (women, oldest old, fragile) is also the segment for whom standard digital channels of the silver economy are essentially inaccessible without family or institutional intermediation --- a finding with direct implications for the design of long-term-care services and digital products targeting the Italian over-65 population.
 
-Second, the age gradient is strong. In the 65--74 band, 31\% of respondents are in the Connected Active cluster and only 4\% in Fragile Resigned; in the 85+ band, the proportions are reversed (11\% Connected Active, 38\% Fragile Resigned). The Fragile Depressed share also increases monotonically with age (20\% $\to$ 33\% $\to$ 36\%); the Moderate Isolated share declines from 36\% to 12\%, reflecting the cohort transition from socially-disengaged but functionally autonomous late-young-old to functionally impaired oldest-old respondents. The most vulnerable sub-population (women, oldest old, fragile) is also the sub-population for whom standard digital channels of the silver economy are essentially inaccessible without family or institutional intermediation --- a finding with direct implications for the design of long-term-care services and digital products targeting the Italian over-65 population.
+Beyond gender and age, two further demographic dimensions vary systematically across the typology. The educational gradient is monotone --- mean years of schooling rise from 6.8 in Fragile Resigned to 10.9 in Connected Active --- and the share at the lower end of the distribution (ISCED 0--2) contracts from 82\% in Fragile Resigned to 52\% in Connected Active, against 72\% in Moderate Isolated. Living arrangement shows a more selective pattern: the two fragile profiles report 40--45\% of respondents living alone, against 15--19\% in all three non-fragile profiles. Notably, the Moderate Isolated archetype --- the cluster developed as the empirical signature of the Isolation Paradox in \S\ref{sec:ch4-isolation-paradox} --- reports only 18\% of respondents living alone, close to Connected Active (15\%). Its social thinness therefore persists \emph{within} intact coupled households and is not residentially reducible to widowhood or solitary living. This pattern is consistent with the loneliness--network configuration discussed in \S\ref{sec:ch4-moderate-isolated} (raw loneliness 3.6 against a network size of 2.3 confidants) and reinforces the substantive claim of \S\ref{sec:ch4-isolation-paradox}: the diagnostic feature of Moderate Isolated is a thin informational and social ecosystem, not the structural absence of a co-resident partner.
+
+\subsection{Demographic predictors of cluster membership}
+\label{sec:ch4-multinomial}
+
+To quantify how much of the typological structure recovered in \S\ref{sec:ch4-profile-descriptions} is reducible to standard demographic stratifiers, a multinomial logistic regression of cluster membership on age, gender, years of education, living-alone status and homeownership is estimated on the $n = 2{,}188$ Italian respondents with complete predictor coverage. Moderate Isolated is set as the reference category to mirror the focus of \S\ref{sec:ch4-isolation-paradox} on the Isolation Paradox. Table~\ref{tab:ch4-multinomial} reports the resulting odds ratios with 95\% confidence intervals.
+
+\begin{table}[ht]
+\centering
+\caption[Multinomial regression of cluster membership, Italy]{Multinomial logistic regression of cluster membership on demographic predictors, Italy ($n = 2{,}188$)}
+\label{tab:ch4-multinomial}
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l@{\hskip 8pt} r r r r}
+\toprule
+ & \multicolumn{4}{c}{Odds ratio vs Moderate Isolated $[$95\% CI$]$} \\
+\cmidrule(lr){2-5}
+Predictor & Fragile Resigned & Fragile Depressed & Traditional Social & Connected Active \\
+\midrule
+Age (per year from 75)
+  & 1.05$^{***}$ [1.03, 1.08]
+  & 1.15$^{***}$ [1.12, 1.18]
+  & 0.96$^{***}$ [0.94, 0.98]
+  & 0.98 [0.95, 1.01] \\
+Female (vs male)
+  & 1.13 [0.87, 1.48]
+  & 1.48$^{*}$ [1.05, 2.08]
+  & 0.80 [0.62, 1.03]
+  & 0.44$^{***}$ [0.30, 0.63] \\
+Years of education (per year from 8)
+  & 0.82$^{***}$ [0.80, 0.85]
+  & 0.83$^{***}$ [0.80, 0.87]
+  & 0.88$^{***}$ [0.86, 0.91]
+  & 0.97 [0.93, 1.01] \\
+Living alone (vs partnered)
+  & 3.13$^{***}$ [2.27, 4.31]
+  & 2.64$^{***}$ [1.81, 3.86]
+  & 1.40 [0.99, 1.96]
+  & 1.84$^{*}$ [1.15, 2.94] \\
+Homeowner (vs renter)
+  & 0.22$^{***}$ [0.12, 0.41]
+  & 0.13$^{***}$ [0.07, 0.25]
+  & 0.28$^{***}$ [0.15, 0.51]
+  & 0.48 [0.21, 1.10] \\
+\midrule
+$n$ in cluster & 313 & 607 & 170 & 550 \\
+\bottomrule
+\end{tabular}%
+}
+
+\medskip
+\footnotesize
+\textit{Note.} Reference category is Moderate Isolated ($n = 548$). Cells report the odds ratio of cluster membership relative to Moderate Isolated for a one-unit change in the predictor, with 95\% confidence intervals in brackets. Age is centred at 75 years (sample median) and years of education at 8 years (sample mean rounded). Female, Living alone and Homeowner are 0/1 binary indicators. Nagelkerke pseudo-$R^{2} = 0.309$ (Cox--Snell $0.295$, McFadden $0.114$); likelihood-ratio $\chi^{2}(20) = 763.7$, $p < .001$. Significance: $^{***} p < .001$, $^{**} p < .01$, $^{*} p < .05$.
+\end{table}
+
+The likelihood-ratio test rejects the null of demographic non-association at a very large margin: $\chi^{2}(20) = 763.7$, $p < .001$. The fit measures, however, locate the bulk of the typological variability outside the demographic input set: Nagelkerke pseudo-$R^{2} = 0.309$, indicating that approximately one third of the cluster distribution is captured by age, gender, education, living arrangement and homeownership combined, with the remaining two thirds reflecting the conceptual structure of the segmentation --- factor-analytic dimensions of physical health, subjective burden, digital and social engagement (\S\ref{sec:ch3-fa}, \S\ref{sec:ch4-profile-descriptions}). The typology is therefore demographically structured but not demographically reducible.
+
+The pattern of odds ratios is consistent with the substantive descriptions of \S\ref{sec:ch4-profile-descriptions}, with age and homeownership the strongest single predictors of cluster membership relative to Moderate Isolated.
+
+The regression is descriptive rather than causal: it bounds the demographic explainability of the partition from above, and the residual variability ($1 - R^{2}_{N} \approx 0.69$) is the portion of the cluster signal that originates in the analytical input variables themselves and that the typology of \S\ref{sec:ch4-profile-descriptions} is designed to make legible.
 
 \section{The Isolation Paradox}
 \label{sec:ch4-isolation-paradox}
 
-The most distinctive finding of the Italian typology --- and one of the three original contributions of this thesis articulated in Chapter~1 --- is what we term the Isolation Paradox: the existence in Italy of a substantial population segment that is functionally and economically autonomous but socially and digitally disconnected, and that systematically under-utilises the healthcare system relative to peers with comparable health and resources but denser social engagement. The segment is the Moderate Isolated archetype described in \S\ref{sec:ch4-moderate-isolated}, with 28.1\% population share and approximately 3.98 million individuals.
+The most distinctive finding of the Italian typology --- and one of the central original contributions of this thesis --- is what we term the Isolation Paradox: the existence in Italy of a substantial population segment that is functionally and economically autonomous but socially and digitally disconnected, and that systematically under-utilises the healthcare system relative to peers with comparable health and resources but denser social engagement. The segment is the Moderate Isolated archetype described in \S\ref{sec:ch4-moderate-isolated}, with a 26.9\% share of the Italian analytical sample.
+
+The empirical signature is documented descriptively in \S\ref{sec:ch4-isolation-empirical} and supported by the regression-adjusted analysis of \S\ref{sec:ch4-isolation-healthcare}, Table~\ref{tab:ch4-isolation-regression} (OLS and linear-probability models on the joint Moderate Isolated $+$ Traditional Social sub-sample, controlling for age, chronic conditions, self-rated health, log household income, gender and depressive symptoms). The country-specific character of the configuration is anticipated in \S\ref{sec:ch4-isolation-italian-only} and developed formally through the matched-pair Hungarian analysis of Chapter~\ref{ch:ch6} (\S\ref{sec:ch6-isolation-paradox-comparative}); the Swedish typology that confirms the absence of an analogous configuration is presented in Chapter~\ref{ch:ch5}.
 
 \subsection{The empirical signature}
 \label{sec:ch4-isolation-empirical}
 
-The Moderate Isolated cluster shares with the Traditional Social cluster three core configurations: comparable health (mobility 0.6 vs 0.9 raw count, EURO-D 1.2 vs 1.7), comparable economic resources (log\_thinc within 0.7 z-score units), and comparable subjective evaluation of life (CASP 36.8 vs 38.5; both above the Italian mean). The two clusters diverge sharply on the social, cultural and digital engagement dimensions: the Moderate Isolated cluster is at $z = -0.22$ on network size against $+0.14$ for Traditional Social; at $z = -0.11$ on internet use against $+0.53$ for Traditional Social; at $z$ between $-0.15$ and $-0.37$ on cultural-engagement indicators against $+0.43$ to $+3.29$. In raw figures: 2.3 confidants vs 2.6, 34.1\% internet use vs 65.8\%, half the cultural-event participation rate. Despite these differences, the two clusters report the same mean life satisfaction (8.2 vs 8.2) --- the social isolation is not internalised as a deficit by the affected individuals on standard subjective-well-being indicators.
+The Moderate Isolated cluster shares with the Traditional Social cluster two key configurations: comparable health (mobility 0.6 vs 0.9 raw count, EURO-D 1.2 vs 1.7) and similar subjective evaluation of life (CASP 36.8 vs 38.5; both above the Italian mean). On economic resources, Traditional Social has a moderately higher position than Moderate Isolated (gap of approximately 0.7 SD on income and wealth) --- a difference that the regression-adjusted analysis of \S\ref{sec:ch4-isolation-healthcare} controls for in isolating the social-engagement effect. The two clusters diverge sharply on the social, cultural and digital engagement dimensions: the Moderate Isolated cluster is at $z = -0.22$ on network size against $+0.14$ for Traditional Social; at $z = -0.11$ on internet use against $+0.53$ for Traditional Social; at $z$ between $-0.15$ and $-0.37$ on cultural-engagement indicators against $+0.43$ to $+3.29$. In raw figures: 2.3 confidants vs 2.6, 34.1\% internet use vs 65.8\%, half the cultural-event participation rate. Despite these engagement differences, the two clusters report near-identical life satisfaction (8.2 vs 8.2), differing only on the small CASP-12 gap noted above --- the social isolation is not strongly internalised as a deficit on subjective-well-being indicators.
 
 \subsection{The healthcare under-utilisation pattern}
 \label{sec:ch4-isolation-healthcare}
 
-The Isolation Paradox is substantiated by the analysis of healthcare utilisation across the two middle-stratum clusters, reported in detail in Chapter~6. Relative to Traditional Social, Moderate Isolated reports 1.36 fewer doctor visits per year, 0.72 fewer specialist visits, a 0.4 percentage-point higher rate of forgone care (respondents who report having needed but not received medical attention), and 2.02 fewer nights in hospital per year. The pattern is consistent across age bands and regions and survives adjustment for chronic-condition count, self-rated health, and economic resources. The combined effect is a systematic disengagement from the formal healthcare system, with the segment dropping below population averages on preventive, outpatient and inpatient indicators alike --- a configuration consistent with structural detachment from care channels rather than with delayed care-seeking.
+The Isolation Paradox is substantiated through two complementary analyses. The first reports the descriptive cluster means on the five healthcare-utilisation indicators considered. Relative to Traditional Social, Moderate Isolated reports 1.59 fewer doctor visits per year (raw means 4.61 vs 6.20 on the twelve-month reference period), 0.94 fewer specialist visits (1.08 vs 2.02), a 26.8 percentage-point lower preventive dental-care attendance rate (raw 21.0\% vs 47.8\%), a 0.4 percentage-point higher rate of forgone care for cost (respondents who report having needed but not received medical attention; 5.8\% vs 5.4\%), and 2.0 fewer nights in hospital per year (6.64 vs 8.67 on a small inpatient sub-sample). The cluster lies below the population mean on four of the five indicators (the exception being forgone care, where the small gap with Traditional Social is not informative against the country baseline of 10.1\%). The descriptive signature is consistent with a configuration of systematic disengagement from the formal healthcare system rather than with delayed care-seeking.
 
-\begin{figure}[ht]
+The second analysis tests whether the descriptive gaps are robust to the joint adjustment for the principal confounders --- age, chronic-condition count, self-rated health, log household income, gender, and EURO-D depressive-symptoms score --- through ordinary-least-squares regression on the union of the two cluster sub-samples. Table~\ref{tab:ch4-isolation-regression} reports the cluster coefficient (Moderate Isolated relative to Traditional Social as reference) for the five utilisation indicators (specialist contacts, preventive dental attendance, doctor visits, general-practitioner contacts, and forgone care for cost).
+
+\begin{table}[!htbp]
+  \centering
+  \small
+  \caption[Regression-adjusted gap, Moderate Isolated vs Traditional Social]{Regression-adjusted cluster gap, Moderate Isolated vs Traditional Social}
+  \label{tab:ch4-isolation-regression}
+  \renewcommand{\arraystretch}{1.2}
+  \setlength{\tabcolsep}{6pt}
+  \begin{tabular}{@{}lrrrrrr@{}}
+    \toprule
+    \textbf{Outcome} & \textbf{Coef.} & \textbf{SE} & \textbf{95\% CI} & \textbf{$p$} & \textbf{$n$} & \textbf{Sig.} \\
+    \midrule
+    Specialist contacts (12m count)        & $-0.669$ & 0.173 & $[-1.01,\,-0.33]$ & $<\!0.001$ & 699 & *** \\
+    Dentist 12m attendance (\%)            & $-27.9$  & 3.7   & $[-35.2,\,-20.6]$ & $<\!0.001$ & 823 & *** \\
+    Doctor visits (12m count)              & $-0.864$ & 0.612 & $[-2.06,\,+0.34]$ & $0.159$    & 818 & n.s. \\
+    GP contacts (12m count)                & $+0.264$ & 0.348 & $[-0.42,\,+0.95]$ & $0.448$    & 700 & n.s. \\
+    Forgone care for cost (\%)             & $+0.5$   & 2.0   & $[-3.4,\,+4.4]$   & $0.788$    & 823 & n.s. \\
+    \bottomrule
+  \end{tabular}
+  \par\medskip
+  \begin{minipage}{\linewidth}
+    \footnotesize\textit{Note.} OLS regression on the joint Moderate Isolated $+$ Traditional Social sub-sample. Reference category: Traditional Social. Controls: age, chronic conditions, self-rated health, log household income, gender, EURO-D depressive-symptoms score. Coefficients on binary outcomes (dentist attendance, forgone care) are linear-probability-model estimates expressed in percentage points. Significance: *** $p < 0.001$, ** $p < 0.01$, * $p < 0.05$, n.s.\ $p \geq 0.05$.
+  \end{minipage}
+\end{table}
+
+The regression returns two robust gaps and three gaps that do not survive adjustment. The Moderate Isolated cluster reports 0.67 fewer specialist contacts per year and a 27.9 percentage-point lower dental-care attendance rate than the Traditional Social cluster, both highly significant ($p < 0.001$) and large relative to the Traditional Social baseline: a 0.67-contact reduction against a Traditional Social specialist mean of 2.02 per year, and a 27.9-percentage-point reduction against a Traditional Social dental-attendance rate of 47.8\%. The doctor-visit and GP-contact gaps observed in raw means are absorbed by the joint controls --- principally by the age and chronic-condition adjustments --- and the forgone-care gap is not statistically distinguishable from zero in either descriptive or regression-adjusted analysis.
+
+The substantively important reading is that the Isolation Paradox is robust on the two indicators that capture engagement with the discretionary, navigation-intensive segments of the healthcare system: the specialist channel, which in the Italian regional health-service architecture requires explicit information-seeking and out-of-pocket co-payment, and the preventive dental channel, which is largely outside the universal health-service entitlement and requires private expenditure. The under-engagement on these two channels --- 0.67 specialist contacts per year and 28 percentage points on dental attendance, both controlling for the principal confounders --- is the operational core of the Isolation Paradox. The aggregate doctor-visit and GP-contact behaviour is not informative once age and chronic load are controlled for, indicating that the descriptive volume of contact with the universal-coverage primary-care channel is approximately invariant to the social-and-informational thinness that distinguishes Moderate Isolated from Traditional Social.
+
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.95\linewidth]{figures/04_italy/fig_healthcare_italy.png}
-  \caption{Healthcare utilisation across the five Italian archetypes. Cluster means on four healthcare indicators (doctor visits, specialist visits, forgone care percentage, hospital nights). Note the Moderate Isolated under-utilisation of preventive and outpatient care paired with over-utilisation of inpatient care --- the empirical signature of the Isolation Paradox (\S\ref{sec:ch4-isolation-paradox}).}
+  \caption[Healthcare utilisation, Italian archetypes]{Healthcare utilisation across the five Italian archetypes. Cluster means on four indicators over the twelve months preceding interview: doctor visits per year, specialist contacts per year, forgone care for cost (\%, with both the y-axis and the bar labels in percentage points), and hospital nights per year. The Moderate Isolated profile shows the Isolation Paradox signature on the outpatient and inpatient channels visualised here (doctor visits 4.61 against a country mean of approximately 7.0; specialist contacts 1.08 against a country mean of 2.1; hospital nights 6.64); the preventive (dental) channel is not displayed in this figure and is reported in the regression-adjusted analysis of \S\ref{sec:ch4-isolation-empirical} and Table~\ref{tab:ch4-isolation-regression}.}
   \label{fig:ch4-healthcare}
 \end{figure}
 
-The mechanism is consistent with three convergent literatures. The literature on social capital and healthcare access \citep{berkmankawachi2000, putnam2000} documents the role of dense social networks in transmitting symptom information and signposting individuals towards appropriate care. The gerontological literature on the gateway role of grandchildren and adult children in mediating digital and informational access of older adults \citep{quanhaase2017} identifies a role that the Moderate Isolated cluster, with its thin family-network structure, is by definition unable to leverage. The Italian welfare-state literature on regional fragmentation of public health services \citep{loscalzo2009} makes informal social capital a more critical input for healthcare navigation than in welfare regimes designed for universal access.
+The mechanism is consistent with three convergent literatures. The literature on social capital and healthcare access \citep{berkmankawachi2000, putnam2000} documents the role of dense social networks in transmitting symptom information and signposting individuals towards appropriate care. The gerontological literature on the gateway role of grandchildren and adult children in mediating digital and informational access of older adults \citep{quanhaase2017} identifies a channel to which the Moderate Isolated cluster, with its below-average network density and limited cultural and social participation, has materially reduced access. The Italian welfare-state literature on regional fragmentation of public health services \citep{loscalzo2009} makes informal social capital a more critical input for healthcare navigation than in welfare regimes designed for universal access.
 
 \subsection{Why the Paradox is Italian-only}
 \label{sec:ch4-isolation-italian-only}
 
-The Isolation Paradox does not have a structural counterpart in the Swedish typology of Chapter~5. The Swedish Moderate archetype is socially integrated at a level comparable to the Swedish population mean, with internet use above 90\% and network size at the population mean. The Hungarian-matched cross-country analysis of Chapter~6 confirms that the Moderate Isolated cluster has no Swedish twin within a structural distance $\leq 2.0$ in standardised space --- it is a country-specific Italian phenomenon. The reading is that the Moderate Isolated configuration emerges where the welfare regime substitutes individual responsibility and family-based provision for universal-access institutions \citep{espingandersen1990, ferrera1996}. In Italy, individuals not embedded in a dense family or community network face a thin informational environment and a fragmented public-service infrastructure; in Sweden, the universal-access infrastructure provides a substitute baseline that prevents the emergence of an analogous configuration.
+The Isolation Paradox does not have a structural counterpart in the Swedish typology: the Swedish Moderate archetype is socially integrated at the Swedish population mean, with internet use above 90\%, and the matched-pair cross-country analysis (Hungarian algorithm) of Chapter~6 confirms that the Moderate Isolated cluster has no Swedish twin within a structural distance $\leq 2.0$ in standardised space. The reading is that the configuration emerges where the welfare regime substitutes family-based provision for universal-access institutions \citep{espingandersen1990, ferrera1996}: in Italy, individuals not embedded in a dense family or community network face a thin informational environment and a fragmented public-service infrastructure; in Sweden, the universal-access infrastructure provides a substitute baseline that prevents the emergence of an analogous configuration.
 
 \subsection{Policy and silver-economy implications}
 \label{sec:ch4-isolation-implications}
 
-The Isolation Paradox has three implications for the design of services and technologies targeted at the Italian over-65 population. First, the size of the affected segment (3.98 million individuals) makes it a first-order policy and market reality, not a residual category. Second, the segment is not characterised by health or economic adversity that would route it into the existing long-term-care or income-support branches of the Italian welfare system; it is invisible to those branches. Third, the segment is not characterised by the absence of digital channels in absolute terms (34.1\% internet use is non-trivial); it is characterised by the absence of social and informational mediation that would route the available digital channels towards healthcare and service utilisation. The implication for silver-economy product design is that the Moderate Isolated segment is not addressable by direct-to-consumer digital products in the same way as the Connected Active segment; product designs that combine a digital channel with a social-mediation layer (peer-network platforms, community-based digital intermediaries, family-network-augmented service interfaces) are the candidate operational solution. The strategic case for this product-design gap as an opportunity for innovation in the Italian silver economy is developed in Chapter~6.
+The Isolation Paradox has three implications for the design of services and technologies targeted at the Italian over-65 population. First, the size of the affected segment (26.9\% of the analytical sample, the largest single cluster) makes it a first-order policy and market reality, not a residual category. Second, the segment is not characterised by health or economic adversity that would route it into the existing long-term-care or income-support branches of the Italian welfare system; it is invisible to those branches. Third, the segment is not characterised by the absence of digital channels in absolute terms (34.1\% internet use is non-trivial); it is characterised by the absence of social and informational mediation that would route the available digital channels towards healthcare and service utilisation. The implication for silver-economy product design is that the Moderate Isolated segment is not addressable by direct-to-consumer digital products in the same way as the Connected Active segment; product designs that combine a digital channel with a social-mediation layer (peer-network platforms, community-based digital intermediaries, family-network-augmented service interfaces) are the candidate operational solution. The strategic case for this product-design gap as an opportunity for innovation in the Italian silver economy is developed in Chapter~6.
 
 \section{Synthesis}
 \label{sec:ch4-synthesis}
 
-The Italian typology partitions the over-65 population into five archetypes spanning an interpretable severity gradient on health and resources, an orthogonal affective contrast within the fragile stratum, and an orthogonal cultural-versus-digital contrast within the high-resource stratum. The five archetypes are unequally distributed (28.1\% in the largest cluster, 11.7\% in the smallest), with population-projected sizes from 1.66 million (Fragile Depressed) to 3.98 million (Moderate Isolated). External validation against life satisfaction confirms substantial discriminative power ($F(4, 2183) = 124.6$, $p < 0.001$).
-
-Three findings of substantive importance emerge. The qualitative distinction between Fragile Resigned and Fragile Depressed identifies two distinct configurations with different functional and affective signatures, calling for distinct policy responses (long-term-care provision in the first case, mental-health services in the second). The country-specific Moderate Isolated archetype --- the largest single cluster at 28.1\% --- identifies a substantial fraction of the Italian over-65 population whose late-life experience is socially and digitally thin. The Isolation Paradox documents that this segment, despite being functionally and economically autonomous, systematically under-utilises preventive and outpatient healthcare and over-utilises inpatient care, in a pattern consistent with the welfare-regime literature on Italian familism and the gerontological literature on social capital and healthcare access. The next chapter develops the parallel typology for Sweden; Chapter~6 maps the four matched cross-country pairs and develops the comparative reading of the Isolation Paradox; Chapter~7 reports the full battery of robustness diagnostics.
-
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.95\linewidth]{figures/04_italy/fig_4_8_NEW.png}
-  \caption{Population shares of the five Italian archetypes. Bar chart of within-sample shares projected to the Istat 2024 estimate of 14.18 million Italian residents aged 65 or older.}
-  \label{fig:ch4-shares}
-\end{figure}
+The Italian typology partitions the over-65 population into five archetypes spanning a fragility-and-resources gradient, with an affective contrast (Fragile Resigned versus Fragile Depressed) within the fragile stratum and a country-specific middle cluster, Moderate Isolated, that lies off the principal gradient; external validation against life satisfaction confirms substantial discriminative power ($F(4, 2183) = 124.6$, $p < 0.001$). The headline finding is the Isolation Paradox: the Moderate Isolated segment, the largest single cluster at 26.9\%, despite being functionally and economically autonomous, systematically disengages from the formal healthcare system, in a pattern consistent with the welfare-regime literature on Italian familism and the gerontological literature on social capital and healthcare access. The parallel typology for Sweden is developed in Chapter~\ref{ch:ch5}.

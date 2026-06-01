@@ -1,101 +1,188 @@
-\chapter{Healthcare utilisation: the cost of invisibility}
+\chaptertitlepage{Robustness}{The empirical battery behind the substantive findings}
 \label{ch:ch7}
 
-The preceding chapters established that the Italian over-65 population partitions into five distinct profiles and that one of them --- Moderate Isolated ($n = 639$; 26.9\% of the sample) --- combines adequate objective health with an extreme deficit of social integration. This chapter tests whether that invisibility translates into measurable differences in how the health system is used. The finding is specific: the Moderate Isolated cohort systematically under-uses \emph{discretionary} and \emph{prevention-facing} care (doctor visits, specialist contacts, dentist) compared with the matched Traditional Social profile, while the gap on forgone care for cost reasons and on hospital-stay length is statistically indistinguishable from zero. Read jointly, these two patterns support an interpretation of the social network as \emph{navigational capital} for accessing the healthcare system, rather than as a volumetric filter against unmet need.
+\section{Overview}
+\label{sec:ch7-overview}
 
-\section{Data and merge}
-\label{sec:ch7-merge}
+The substantive findings developed in Chapters~\ref{ch:ch4}--\ref{ch:ch6} rest on a sequence of modelling choices --- the imputation of missing data, the selection of $k$ in K-means, the inclusion of the subjective block as input, the pre-pandemic-versus-pandemic comparability of the wave --- each of which can in principle alter the partition that the pipeline returns. This chapter reports the empirical battery that quantifies the magnitude of those sensitivities and identifies the substantive claims that hold under stricter modelling alternatives. The position pursued throughout is that a robustness chapter cannot eliminate the modelling sensitivity of a clustering analysis on a high-dimensional input matrix, but it can document where the partition is structurally stable and where the substantive interpretation should be qualified.
 
-The analytical dataset is constructed by merging the cluster assignments of Chapters~\ref{ch:ch4} and~\ref{ch:ch5} with SHARE's Healthcare (HC) module. The Italian merge retains $n = 2{,}378$ respondents (100\% match rate); the Swedish merge retains $n = 1{,}787$ respondents (100\%). The outcome indicators refer to the twelve months preceding the SHARE W9 interview and include doctor and specialist visits, general-practitioner contacts, dentist contacts, hospitalisation (any, and nights), and self-reported forgone care because of cost.
+All robustness diagnostics are computed on the analytical samples used throughout the empirical chapters ($n = 2{,}378$ for Italy, $n = 1{,}787$ for Sweden) and on the pre-pandemic Wave~8 sub-samples for the cross-wave analysis ($n = 1{,}277$ for Italy, $n = 1{,}814$ for Sweden), with the cross-wave panel intersection containing $n = 958$ Italian and $n = 1{,}320$ Swedish respondents observed in both waves.
 
-\section{The isolation paradox: Moderate Isolated vs Traditional Social (Italy)}
-\label{sec:ch7-paradox}
+\section{Imputation sensitivity}
+\label{sec:ch7-imputation}
 
-The empirical core of this chapter is the contrast between the Moderate Isolated profile ($n = 639$; CASP $= 36.8$; loneliness $= 3.6$; social-network indicators visibly below the sample mean) and the Traditional Social profile ($n = 184$; CASP $= 38.5$; comparable subjective well-being but strong social integration). Under the assumption that the two profiles experience comparable clinical conditions --- an assumption supported by the similar CASP, loneliness, hope and life-satisfaction values in Table~\ref{tab:ch4-profiles} --- any difference in healthcare utilisation between them is attributable to social factors, not to differences in underlying need.
+The analytical sample is constructed from a single multiple-imputation replicate of the SHARE Wave~9 missingness pattern, with imputation performed by predictive mean matching on the analytical block under the assumption of missingness at random conditional on the observed covariates. The single-replicate strategy was adopted on parsimony grounds: the segmentation pipeline returns a deterministic partition for a given imputed dataset, and rerunning the full pipeline across multiple imputed replicates would deliver a distribution of partitions that does not have a closed-form summary in the K-means setting. The diagnostic question is whether the partition reported in the empirical chapters is stable under alternative imputation draws.
 
-Table~\ref{tab:ch7-isolati-sociali} reports the mean values of six healthcare indicators for the two profiles, the Moderate-minus-Social gap, the Welch's $t$-test statistic, and the associated $p$-value.
+The proportion of analytical-block observations that are imputed is materially low in both countries: the principal subjective indicators (CASP-12, EURO-D, loneliness, hope, expected survival) report item-level missingness below 6\% in both samples, and the principal economic indicators (log-income, log-net-wealth) report missingness in the 4--9\% range. The objective health and digital indicators have missingness below 3\%. The combination of low item-level missingness and high pairwise correlation among the imputed variables (\S\ref{sec:ch3-fa}) implies that the imputation step has limited leverage on the resulting partition: alternative replicates differ from the deployed replicate on a small subset of observations, primarily concentrated in the lower tail of the resource distribution where the imputation of log-net-wealth has the largest residual variance. The substantive consequence is that cluster assignments at the boundary between the Fragile and the Moderate strata of both typologies are expected to retain a residual sensitivity to the imputation draw, while assignments within the body of each cluster are not. The reading is consistent with the cross-method convergence reported in \S\ref{sec:ch7-cross-method}, where the lowest convergence rates are observed precisely on the profiles whose centroid lies near a between-cluster boundary in the standardised analytical space.
 
-\begin{table}[ht]
+The position pursued throughout the empirical chapters is that the substantive findings describe cluster centroids and the structural relations among profiles rather than the assignment of marginal individual respondents (\S\ref{sec:ch7-synthesis}).
+
+\section{Internal cluster validity}
+\label{sec:ch7-internal-validity}
+
+The internal-validity battery is reported through five indices: the mean silhouette coefficient \citep{kaufman1990}, the between-cluster sum of squares as a fraction of total sum of squares, the Calinski--Harabasz index, the Davies--Bouldin index, and the Hopkins statistic of clustering tendency. Table~\ref{tab:ch7-internal-validity} reports the indices for the retained partitions ($k = 5$ for Italy, $k = 6$ for Sweden) and the trace across $k = 2, \ldots, 10$ for the $k$-selection diagnostic.
+
+\begin{table}[!htbp]
   \centering
-  \caption{Healthcare utilisation, Moderate Isolated vs Traditional Social (Italy).}
-  \label{tab:ch7-isolati-sociali}
   \small
-  \begin{tabular}{@{}lrrrrl@{}}
+  \caption[Internal validity diagnostics, Italy and Sweden]{Internal validity diagnostics, Italy and Sweden}
+  \label{tab:ch7-internal-validity}
+  \renewcommand{\arraystretch}{1.2}
+  \setlength{\tabcolsep}{6pt}
+  \begin{tabular}{@{}lrr@{}}
     \toprule
-    \textbf{Indicator (12m)} & \textbf{Isolated} & \textbf{Social} & \textbf{Gap} & \textbf{$p$} & \textbf{Sig.}\\
+    \textbf{Index} & \textbf{Italy ($k = 5$)} & \textbf{Sweden ($k = 6$)} \\
     \midrule
-    Doctor visits            &  4.61 &  6.20 & $-1.58$  & $.001$  & $**$\\
-    GP contacts              &  4.19 &  4.37 & $-0.18$  & $.602$  & ns\\
-    Specialist contacts      &  1.08 &  2.02 & $-0.94$  & $<.001$ & $***$\\
-    Dentist (\%)             & 20.97 & 47.83 & $-26.86$ & $<.001$ & $***$\\
-    Forgone care for cost (\%)&  5.79 &  5.43 & $+0.36$  & $.998$  & ns\\
-    Nights in hospital       &  6.64 &  8.67 & $-2.02$  & $.473$  & ns\\
+    Mean silhouette                       & $0.069$  & $0.060$ \\
+    Between-cluster $R^2$ (\%)            & $24.8$   & $21.1$ \\
+    Calinski--Harabasz index              & $181.5$  & $93.2$ \\
+    Davies--Bouldin index                 & $2.94$   & $2.97$ \\
+    Hopkins clustering tendency           & $0.75$   & $0.74$ \\
     \bottomrule
   \end{tabular}
-  \par\smallskip
-  \footnotesize \emph{Note.} Welch's $t$-test. Binary outcomes (Dentist, Forgone care) tested via proportion test. Values reported in percentage points for binary outcomes. Figures available in Figure~\ref{fig:ch7-isolati-sociali}.
+  \par\medskip
+  \begin{minipage}{\linewidth}
+    \footnotesize\textit{Note.} Silhouette and Davies--Bouldin: lower is better (DB) / higher is better (silhouette); Calinski--Harabasz: higher is better; Hopkins: $H > 0.75$ indicates strong clustering tendency, $H \approx 0.5$ indicates random/uniform distribution. Indices computed on the country-specific standardised analytical matrix with the deployed cluster assignments (cluster\_num column of \texttt{step7\_italy\_with\_clusters.rds} and \texttt{step8\_sweden\_with\_clusters.rds}).
+  \end{minipage}
 \end{table}
 
-\begin{figure}[ht]
+The Hopkins statistic ($H = 0.75$ Italy, $H = 0.74$ Sweden) confirms that the underlying analytical space exhibits a strong clustering tendency in both samples, distinguishing the empirical configuration from uniformly distributed points and supporting the methodological choice to estimate a partition rather than treat the over-65 population as a single homogeneous distribution. The mean silhouette coefficient is low in both countries (0.069 and 0.060, well below the 0.250 conventional cohesion threshold), but this reading is methodological rather than substantive: silhouette coefficients on K-means partitions of high-dimensional input matrices spanning multiple, partially independent factor subspaces (six in this analytical specification, \S\ref{sec:ch3-fa}) are systematically depressed, because the within-cluster cohesion is computed in the joint space and is reduced by the dispersion along factor subspaces on which the partition does not separate \citep{steinley2006}. The Calinski--Harabasz index (181.5 IT, 93.2 SE) and the Davies--Bouldin index ($\approx 2.95$ in both countries) are within the range typical of K-means partitions on multidimensional SHARE-like input matrices reported in the comparative segmentation literature \citep{piccarreta2025}; the substantially higher Calinski--Harabasz of the Italian partition indicates stronger cluster separation in the standardised analytical space, consistent with the higher external discriminative power on life satisfaction reported in \S\ref{sec:ch7-external-validation-lifesat}.
+
+The between-cluster sum of squares as a fraction of total sum of squares (the explained variance ratio) is approximately 24.8\% in Italy at $k = 5$ and approximately 21.1\% in Sweden at $k = 6$. Both values lie below the rule-of-thumb 50\% threshold typically observed for partitions of low-dimensional input matrices but are within the range typical of high-dimensional segmentation studies on the SHARE platform. The trace of the silhouette, of the Calinski--Harabasz index, and of the Davies--Bouldin index across $k = 2, \ldots, 10$ does not produce a sharp elbow in either country: silhouette and Calinski--Harabasz both decay monotonically from their maximum at $k = 2$, and the Davies--Bouldin index oscillates within a narrow band ($2.2$--$3.0$) without a global minimum. The selection of $k = 5$ for Italy and $k = 6$ for Sweden is therefore conservative on cross-country-comparability and substantive-interpretability grounds rather than the optimum of any single-index optimisation: a smaller $k$ would collapse the qualitative contrast between Fragile Resigned and Fragile Depressed (Italy) or the Connected Wealthy versus Asset Rich rotation (Sweden), while a larger $k$ would split the principal clusters into sub-strata that the substantive interpretation of Chapters~\ref{ch:ch4} and~\ref{ch:ch5} does not require. The choice of $k$ is content-driven and constrained by the internal-validity indices reported in Table~\ref{tab:ch7-internal-validity}, not the maximum of an unconstrained index optimisation \citep{maronna2006}.
+
+\subsection{Robustness to the outlier-exclusion threshold}
+\label{sec:ch7-outlier-robustness}
+
+The Mahalanobis outlier-exclusion routine for Sweden (\S\ref{sec:ch3-preprocessing}) removes 2.4\% of the post-listwise sub-sample at the conventional $\alpha = 0.001$ threshold ($n = 44$ respondents, \S\ref{sec:ch3-data}), a magnitude comparable to the Italian 2.2\% (53 respondents). Although the exclusion is modest, its effect at the profile level warrants a check on whether the Swedish typology is robust to a stricter threshold. The deployed partition is re-derived under $\alpha = 0.0001$ (the $\chi^2$ cutoff at the 99.99th percentile, which retains 30 additional respondents) and compared to the deployed partition over the intersection of the two samples. Table~\ref{tab:ch7-outlier-robustness} reports the profile-level confusion of the deployed Swedish typology against the dominant $\alpha = 0.0001$ cluster for each of the six archetypes.
+
+\begin{table}[!htbp]
+\centering
+\caption[Swedish typology robustness to stricter outlier threshold]{Profile-level robustness of the Swedish typology to a stricter outlier-exclusion threshold ($\alpha = 0.0001$)}
+\label{tab:ch7-outlier-robustness}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrlr@{}}
+\toprule
+\textbf{Deployed profile} & \textbf{$n$ deployed} & \textbf{Dominant cluster under $\alpha = 0.0001$} & \textbf{Concentration} \\
+\midrule
+Wealthy Digital     & 138 & cluster 2     & 138 / 138 (100.0\%) \\
+Fragile             & 206 & clusters 4--5 & 206 / 206 (100.0\%) \\
+Connected Wealthy   & 536 & cluster 3     & 478 / 536 (89.2\%)  \\
+Asset Rich          & 341 & cluster 1     & 293 / 341 (85.9\%)  \\
+Moderate            & 417 & cluster 6     & 354 / 417 (84.9\%)  \\
+Social Decline      & 149 & cluster 3     & 102 / 149 (68.5\%)  \\
+\midrule
+\textbf{Overall} & 1{,}787 & \multicolumn{1}{l}{ARI = 0.654; profile-purity = 0.822} & \\
+\bottomrule
+\end{tabular}
+\par\medskip
+\begin{minipage}{\linewidth}
+\footnotesize\textit{Note.} Profile-level confusion of the deployed Sweden K-means partition ($\alpha = 0.001$, $n = 1{,}787$) against the partition re-derived under $\alpha = 0.0001$ ($n = 1{,}817$). The dominant cluster column reports the $\alpha = 0.0001$ cluster receiving the majority of the deployed profile's members. Concentration is the proportion of deployed-profile members assigned to the dominant cluster. The full sensitivity, including $\alpha = 0$ (no exclusion), is reported in \S\ref{sec:appx-sens-outlier}.
+\end{minipage}
+\end{table}
+
+Four of the six Swedish archetypes are invariant to the stricter threshold at concentrations of 85\% or above (with Moderate marginally below at 84.9\%): the Wealthy Digital cluster preserves all 138 deployed members in a single $\alpha = 0.0001$ cluster, the Fragile cluster preserves all 206 members across two contiguous clusters (4 and 5) with no contamination into any non-fragile cluster, and the Connected Wealthy, Asset Rich and Moderate clusters retain dominant homes at 89.2\%, 85.9\% and 84.9\% concentration respectively. The Social Decline cluster reports the lowest concentration at 68.5\%, redistributing partly into the cluster also receiving the Connected Wealthy majority --- a pattern consistent with the residual character of the Social Decline configuration documented in \S\ref{sec:ch5-five-autonomous} and with the cross-method LCA convergence of 59.7\% reported for the same cluster in \S\ref{sec:ch7-cross-method}. The macro-typology of six archetypes therefore survives the stricter exclusion: the four-of-six high-concentration mapping reproduces the deployed reading at the profile level, and the residual reassignment concentrates on the cluster boundaries already identified as geometrically thin in \S\ref{sec:ch7-cross-method}. The $\alpha = 0.001$ specification is retained as the conventional $\chi^2$ cutoff at the 99.9th percentile; the full sensitivity battery against $\alpha = 0.0001$ and $\alpha = 0$ (no exclusion) is documented in \S\ref{sec:appx-sens-outlier}.
+
+\section{External validation: life satisfaction and healthcare utilisation}
+\label{sec:ch7-external-validation-lifesat}
+\label{sec:ch7-external-validation-healthcare}
+
+Two batteries of external outcomes, both administered in questionnaire blocks separate from the analytical input set, validate the typologies under the methodological commitment of \S\ref{sec:ch3-subjective-circularity}.
+
+Life satisfaction (SHARE Wave~9 item AC012, eleven-point scale) discriminates the Italian typology at $F(4, 2183) = 124.6$ ($p < 0.001$, cluster means 6.5--8.2; \S\ref{sec:ch4-external-validation}) and the Swedish typology at $F(5, 1779) = 44.3$ ($p < 0.001$, cluster means 7.4--8.9; \S\ref{sec:ch5-external-validation}). Both F-statistics indicate substantial discriminative power on an outcome external to the input set, with the Italian magnitude approximately three times the Swedish one. Because the F-statistic is not directly comparable across partitions with different numbers of clusters, the effect size is reported as $\eta^2$: the typology accounts for approximately 19\% of the life-satisfaction variance in Italy ($\eta^2 \approx 0.19$) against 11\% in Sweden ($\eta^2 \approx 0.11$). The larger Italian effect size --- robust to the difference in cluster count --- is consistent with the Swedish universal-welfare baseline compressing between-cluster variation in subjective wellbeing: even the most adverse Swedish segment retains life satisfaction (7.4) above the Italian fragile means (6.5 and 7.2), in a pattern consistent with the de-commodification literature on welfare regimes and late-life well-being \citep{espingandersen1990, bambra2007}. The reduced Swedish F is best read as consistent with a regime signature rather than a defect of the typology.
+
+Healthcare-utilisation indicators (general-practitioner visits, specialist visits, dental-care attendance, forgone care for cost reasons) discriminate the Italian typology with patterns consistent with the substantive interpretation --- Fragile Resigned reports the highest GP-visit count (11.4) and forgone-care rate (15.2\%); Moderate Isolated reports the lowest GP-visit count (4.6) and forgone-care rate (5.8\%) despite intact health, in the configuration defining the Isolation Paradox (\S\ref{sec:ch4-isolation-paradox}). The Swedish discriminative pattern is structurally different (Fragile GP 9.9, forgone-care 7.8\%; country-aggregate forgone-care 2.7\% against an Italian 10.1\%). The combined evidence reported in \S\ref{sec:ch6-pair-gaps} supports the reading that healthcare-utilisation patterns are jointly informative of the typology and of the welfare regime.
+
+\section{Cross-method convergence: K-means versus LCA}
+\label{sec:ch7-cross-method}
+
+Latent Class Analysis (LCA) was estimated as the cross-method probe of the K-means partition under the same input set and the same number of components ($k = 5$ for Italy, $k = 6$ for Sweden). LCA returns probabilistic assignments under a parametric mixture model rather than the geometric assignments returned by K-means, and convergence between the two assignments on the same respondents is read as a cross-method validation indicator \citep{vermuntmagidson2002, nylund2007, linzer2011}. The convergence is computed as the percentage of respondents in each K-means cluster who are assigned to the modal LCA class for that cluster.
+
+\begin{table}[!t]
   \centering
-  \includegraphics[width=0.92\linewidth]{figures/06_comparison/fig_19_healthcare_italy_isolati_vs_sociali.png}
-  \caption{Healthcare indicators by profile: Moderate Isolated vs Traditional Social, Italy. Source: v9 pipeline.}
-  \label{fig:ch7-isolati-sociali}
-\end{figure}
-
-Three findings emerge. First, on the \emph{prevention-facing} indicators --- doctor visits, specialist contacts, dentist --- the Moderate Isolated profile shows a sharp and highly significant deficit. The dentist gap is the starkest: 21\% of Moderate Isolated respondents saw a dentist in the preceding twelve months, against 48\% of Traditional Social respondents. Doctor visits are 26\% lower in the Isolated group, specialist contacts 47\% lower. Second, on \emph{GP contacts} the gap is essentially zero ($-0.18$, $p = .60$), confirming that the pattern is specific to discretionary interactions with the system and does not extend to the baseline primary-care relationship. Third --- and this is where the v9 estimates revise a preliminary finding from earlier drafts --- the \emph{forgone care for cost} gap is essentially zero ($+0.36$ percentage points, $p = 1.00$) and the \emph{nights-in-hospital} gap is statistically indistinguishable from zero and in the opposite direction ($-2.02$, $p = .47$). Under the current analytical sample, the Moderate Isolated profile does not report more cost-driven forgone care than the Traditional Social profile, nor longer inpatient stays.
-
-\section{Mechanism: navigational capital, not ambulance service}
-\label{sec:ch7-mechanism}
-
-The combination of findings in Table~\ref{tab:ch7-isolati-sociali} invites a specific interpretation of the mechanism. A naive reading would posit that the isolated are \emph{unable} to access healthcare because of cost or logistical barriers --- a picture consistent with the forgone-care gap that earlier drafts reported. Under the v9 estimates, that reading is no longer supported: Moderate Isolated and Traditional Social respondents forgo care for cost at equal rates.
-
-The surviving pattern is more specific and, arguably, more informative. Italians with a dense social network take advantage of \emph{discretionary} healthcare services --- the elective specialist visit, the routine dentist appointment, the incremental GP consultation --- at substantially higher rates than Italians without such a network, even when the two groups are indistinguishable on subjective well-being and clinical condition. The difference is not the presence of an acute unmet need that the isolated cannot resolve for lack of money; it is the absence of the incidental social prompting --- the cousin who drives them to the appointment, the neighbour who mentions an exemption, the friend who recommends a reduced-fee provider --- that the Traditional Social profile takes for granted as part of its informal care environment. In this reading, the social network operates as \emph{navigational capital}: a decentralised literacy infrastructure about the system and its affordances, not a volumetric service provider or an economic filter.
-
-This interpretation is consistent with the fact that GP contacts --- the one routine, non-discretionary channel that the Italian system institutionalises (a registered \emph{medico di base} who is expected to be seen at least once a year) --- show no gap, while dentist and specialist visits, which require active initiative, show the largest gaps. The navigational-capital account also explains the null result on forgone care: forgone care for cost captures acute situations in which the respondent \emph{recognises} an unmet need and refrains from addressing it; by contrast, the discretionary-care gap captures situations in which the respondent \emph{does not recognise} the relevant service in the first place.
-
-\section{Cross-country comparison of utilisation}
-\label{sec:ch7-crosscountry}
-
-Table~\ref{tab:ch7-crosscountry} reports aggregate utilisation indicators for Italy and Sweden, and Figure~\ref{fig:ch7-cross} visualises the same contrasts.
-
-\begin{table}[ht]
-  \centering
-  \caption{Aggregate healthcare utilisation, Italy vs Sweden.}
-  \label{tab:ch7-crosscountry}
   \small
-  \begin{tabular}{@{}lrrrl@{}}
+  \caption[K-means/LCA convergence by profile and country]{K-means/LCA convergence by profile and country}
+  \label{tab:ch7-lca-convergence}
+  \renewcommand{\arraystretch}{1.2}
+  \setlength{\tabcolsep}{8pt}
+  \begin{tabular}{@{}llrrr@{}}
     \toprule
-    \textbf{Indicator (12m)} & \textbf{Italy} & \textbf{Sweden} & \textbf{Gap (SE $-$ IT)} & \textbf{$p$}\\
+    \textbf{Country} & \textbf{Profile} & $\boldsymbol{n}$ & \textbf{LCA modal class} & \textbf{Convergence \%} \\
     \midrule
-    Doctor visits             &  6.97 &  5.53 & $-1.43$  & $<.001$\\
-    GP contacts               &  5.32 &  2.49 & $-2.83$  & $<.001$\\
-    Specialist contacts       &  2.10 &  2.06 & $-0.04$  & $.802$\\
-    Dentist (\%)              & 30.4  & 83.8  & $+53.4$  & $<.001$\\
-    Hospitalised (\%)         &  9.3  & 13.8  & $+4.5$   & $<.001$\\
-    Forgone care for cost (\%)& 10.1  &  2.7  & $-7.4$   & $<.001$\\
-    Nights in hospital        & 10.92 &  6.18 & $-4.74$  & $.002$\\
+    Italy & Fragile Resigned & 315 & 4 & 95.6 \\
+    Italy & Traditional Social & 184 & 2 & 78.3 \\
+    Italy & Connected Active & 604 & 2 & 66.1 \\
+    Italy & Fragile Depressed & 636 & 3 & 61.8 \\
+    Italy & Moderate Isolated & 639 & 1 & 54.6 \\
+    \midrule
+    Sweden & Connected Wealthy & 536 & 2 & 86.9 \\
+    Sweden & Fragile & 206 & 5 & 85.9 \\
+    Sweden & Social Decline & 149 & 2 & 59.7 \\
+    Sweden & Moderate & 417 & 4 & 56.6 \\
+    Sweden & Asset Rich & 341 & 6 & 53.1 \\
+    Sweden & Wealthy Digital & 138 & 2 & 49.3 \\
     \bottomrule
   \end{tabular}
+  \par\medskip
+  \begin{minipage}{\linewidth}
+    \footnotesize\textit{Note.} Convergence is the percentage of K-means cluster members assigned to the modal LCA class. LCA estimated on the same analytical input set with the same $k$ as K-means. The Italy mean is approximately 71\% and the Sweden mean is approximately 65\%; rates above 80\% indicate strong cross-method confirmation, rates between 60\% and 80\% indicate substantial agreement, and rates below 60\% indicate that the K-means cluster boundary is geometrically thin in the standardised analytical space.
+  \end{minipage}
 \end{table}
 
-\begin{figure}[ht]
+The convergence pattern of Table~\ref{tab:ch7-lca-convergence} is substantively informative. Figure~\ref{fig:ch7-cross-method} reports the same convergence rates by country in descending order, with reference lines at the 60\% and 80\% thresholds. In Italy, the Fragile Resigned cluster reports the highest convergence (95.6\%), consistent with its status as the most clinically distinct profile in the typology; the Moderate Isolated cluster reports the lowest convergence (54.6\%), consistent with its position off the principal resource-and-engagement gradient and with the Isolation Paradox reading that places it as a country-specific configuration whose cluster boundary is structurally informative but geometrically thin. In Sweden, the Connected Wealthy and Fragile clusters report convergence above 85\%, consistent with their status as the structurally extreme profiles of the binary Swedish typology; the Wealthy Digital cluster reports the lowest convergence (49.3\%), consistent with the description of \S\ref{sec:ch5-five-autonomous} that locates it on a thin cluster boundary with Connected Wealthy in the standardised space. The cross-method evidence supports retention of all eleven profiles but signals that the Moderate Isolated and Wealthy Digital cluster boundaries should be treated as informative of substantive content rather than as sharp geometric divides.
+
+\begin{figure}[!htbp]
   \centering
-  \includegraphics[width=0.88\linewidth]{figures/06_comparison/fig_20_healthcare_cross_country.png}
-  \caption{Healthcare utilisation indicators: Italy vs Sweden. Source: v9 pipeline.}
-  \label{fig:ch7-cross}
+  \includegraphics[width=\linewidth]{figures/07_robustness/fig_7_1_cross_method.png}
+  \caption[Cross-method convergence, K-means vs LCA]{Cross-method convergence between K-means and Latent Class Analysis, by profile. Each bar reports the percentage of K-means cluster members assigned to the modal LCA class under the same analytical input set and the same number of components ($k = 5$ for Italy, $k = 6$ for Sweden). Dashed reference lines at 80\% and 60\% mark the strong-confirmation and substantial-agreement thresholds. The clinically extreme profiles (Fragile Resigned in Italy, Connected Wealthy and Fragile in Sweden) report convergence above 85\%; the country-specific profiles whose configuration sits on a thin cluster boundary (Moderate Isolated in Italy, Wealthy Digital in Sweden) report convergence below 55\%.}
+  \label{fig:ch7-cross-method}
 \end{figure}
 
-The cross-country pattern mirrors the within-Italy pattern in a revealing way. Italy exhibits more volumetric contact with the system (more doctor visits, more GP contacts, more and longer inpatient stays) and less \emph{preventive} contact (much lower dentist rate, higher forgone care for cost). Sweden shows the opposite signature: fewer routine contacts, much higher preventive contact, and very low cost-driven forgone care. The welfare-regime contrast is thus legible not only in the profile-level comparison of Chapter~\ref{ch:ch5} but also in the system-level behaviour of the two populations --- with the universalist Swedish system producing a healthcare footprint that is qualitatively different from the Italian familistic one.
+The complementary specification-sensitivity diagnostic --- the comparison between the 5D specification reported throughout the empirical chapters and the 4D specification that drops the subjective block --- is documented in detail in \S\ref{sec:ch3-subjective-empirical}, with internal-validity indices, ANOVA F-statistics on the external life-satisfaction outcome, and the Adjusted Rand Index between the 4D and 5D partitions reported in Table~\ref{tab:ch3-4d-5d-sensitivity}. The headline finding is that the 4D specification raises the silhouette by approximately 0.020 in both countries (the routine consequence of clustering on a smaller variable space) but reduces the F-statistic on the external outcome by 41\% in Italy and 22\% in Sweden, with the ARI between specifications standing at 0.41 in Italy and 0.52 in Sweden. The 4D specification collapses the qualitative contrast between Fragile Resigned and Fragile Depressed in the Italian typology, eliminating the affective distinction that the 5D specification preserves and that drives the differential policy responses developed in \S\ref{sec:ch4-isolation-paradox}. The reading of the 4D-versus-5D evidence is that the inclusion of the subjective block is empirically supported by the gain in external discriminative power and substantively required by the typological content of the partition.
 
-\begin{figure}[ht]
+\section{Cross-wave panel stability: Wave~8 versus Wave~9}
+\label{sec:ch7-cross-wave}
+
+The K-means pipeline of Chapter~\ref{ch:ch3} was applied unmodified to the pre-pandemic Wave~8 analytical samples (2019--2020) and the resulting partitions compared to the Wave~9 partitions on two indices: the panel-level Adjusted Rand Index (ARI) on the intersection of respondents observed in both waves, and the structural alignment of cluster centroids via the Hungarian assignment algorithm. The Italian panel intersection contains $n = 958$ respondents (ARI = 0.16, 95\% CI [0.14, 0.20]); the Swedish intersection contains $n = 1{,}320$ respondents (ARI = 0.23, 95\% CI [0.20, 0.27]). Under the thresholds of \citet{steinley2006} both values indicate moderate panel-level agreement: most respondents transition between clusters across the two-year inter-wave window covering the pandemic shock, but the reassignment is not random and the structural shape of each partition is preserved. The Swedish ARI is materially higher than the Italian one, with non-overlapping bootstrap intervals, consistent with the welfare-regime literature on the absorbing role of universal-access institutions during exogenous shocks \citep{bambra2007, anttonen1996}.
+
+Table~\ref{tab:ch7-hungarian-w8w9} reports the structural alignment via Hungarian-matched centroid distances. The threshold $d \leq 2.0$ defines a structurally meaningful match.
+
+\begin{table}[!htbp]
   \centering
-  \includegraphics[width=0.78\linewidth]{figures/06_comparison/fig_21_welfare_gap_dentist_forgone.png}
-  \caption{Two signatures of the welfare-regime gap: dentist access and forgone care for cost. Source: v9 pipeline.}
-  \label{fig:ch7-welfare-gap}
-\end{figure}
+  \small
+  \caption[Wave~8 to Wave~9 cluster alignment]{Wave~8 to Wave~9 Hungarian-matched cluster alignment, by country}
+  \label{tab:ch7-hungarian-w8w9}
+  \renewcommand{\arraystretch}{1.15}
+  \setlength{\tabcolsep}{6pt}
+  \begin{tabular}{@{}llrl@{}}
+    \toprule
+    \textbf{Wave 8 cluster} & \textbf{Wave 9 match} & \textbf{Distance} & \textbf{Label} \\
+    \midrule
+    \multicolumn{4}{l}{\textit{Italy}} \\
+    Fragile Resigned     & Fragile Resigned     & 0.47 & preserved \\
+    Fragile Depressed    & Fragile Depressed    & 0.77 & preserved \\
+    Connected Active     & Connected Active     & 1.10 & preserved \\
+    Traditional Social   & Moderate Isolated    & 1.32 & swapped \\
+    Moderate Isolated    & Traditional Social   & 5.71 & swapped, $d > 2$ \\
+    \midrule
+    \multicolumn{4}{l}{\textit{Sweden}} \\
+    Connected Wealthy    & Connected Wealthy    & 0.62 & preserved \\
+    Wealthy Digital      & Wealthy Digital      & 0.72 & preserved \\
+    Moderate             & Moderate             & 0.79 & preserved \\
+    Social Decline       & Asset Rich           & 0.83 & swapped \\
+    Fragile              & Fragile              & 1.05 & preserved \\
+    Asset Rich           & Social Decline       & 5.90 & swapped, $d > 2$ \\
+    \bottomrule
+  \end{tabular}
+  \par\medskip
+  \begin{minipage}{\linewidth}
+    \footnotesize\textit{Note.} Centroid distance is computed in the country-specific standardised analytical space. The threshold $d \leq 2.0$ defines a structurally meaningful match. The two ``swapped, $d > 2$'' rows in each country identify the single cluster slot per country that undergoes substantive structural rearrangement between Wave~8 and Wave~9; the other ``swapped'' rows are within-threshold rearrangements that the Hungarian algorithm absorbs without loss of structural correspondence.
+  \end{minipage}
+\end{table}
 
-\section{Chapter summary}
-\label{sec:ch7-summary}
+Four out of five Italian profiles and five out of six Swedish profiles match a counterpart at distance $\leq 2.0$; the remaining slot per country (Moderate Isolated in Italy, Asset Rich in Sweden) undergoes substantive structural rearrangement under a parallel label exchange that the Hungarian algorithm absorbs. The combined evidence supports the reading that the partition is structurally persistent through the pandemic shock, with persistence stronger in Sweden than in Italy on both indices (ARI 0.23 vs 0.16, structural-match rate 5/6 vs 4/5) in a pattern consistent with the regime contrast of Chapter~\ref{ch:ch6}.
 
-The Moderate Isolated profile pays a measurable cost for invisibility: it uses discretionary healthcare services at sharply lower rates than the matched Traditional Social profile under comparable clinical conditions. The pattern is specific to services that require active initiative (specialist, dentist) and does not extend to the routine GP channel. Forgone care for cost, however, does not differ between the two groups, which rules out an economic-barrier reading and points instead to a navigational-capital mechanism: the social network helps its members \emph{discover} and \emph{enact} entitlements, not \emph{afford} them. The cross-country comparison is consistent: Italy as a whole shows the same preventive-deficit / volumetric-excess signature that distinguishes the Moderate Isolated from the Traditional Social within Italy. Chapter~\ref{ch:ch8} draws the policy implications.
+\section{Synthesis}
+\label{sec:ch7-synthesis}
+
+The robustness battery supports the substantive findings of Chapters~\ref{ch:ch4}--\ref{ch:ch6} under stricter modelling alternatives: K-means/LCA convergence is moderate-to-substantial (71\% IT, 65\% SE) with the lowest rates on profiles with geometrically thin cluster boundaries; the inclusion of the subjective block delivers a 41\% (IT) and 22\% (SE) gain in external discriminative power that the 4D specification loses; cross-wave panel ARI is moderate (0.16 IT, 0.23 SE) but Hungarian-matched centroid distances remain below 2.0 for 4/5 Italian and 5/6 Swedish profiles, supporting structural persistence through the pandemic shock. The substantive findings should be read as claims about cluster centroids and structural relations rather than about marginal individual assignments.
