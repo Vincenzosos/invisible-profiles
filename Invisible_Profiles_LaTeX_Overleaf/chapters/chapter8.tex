@@ -1,4 +1,4 @@
-\chaptertitlepage{The Italian Silver Atlas}{From typology to an operational instrument for the social-mediation layer}
+\chaptertitlepage{The Italian Silver Atlas}{An operational instrument for the social-mediation layer}
 \label{ch:atlas}
 
 \section{Overview}
@@ -6,79 +6,71 @@
 
 The substantive analysis of Chapters~\ref{ch:ch4}--\ref{ch:ch7} identifies a single dominant innovation case for the Italian silver economy: the Moderate Isolated segment (26.9\% of the analytical sample) is autonomous and non-trivially digital yet disengaged from the formal healthcare system, and its binding constraint is the absence of a social-and-informational mediation layer rather than the absence of a digital channel (\S\ref{sec:ch6-product-design-gap}). This chapter documents the operational counterpart of that argument: the \emph{Italian Silver Atlas} (\url{https://invisible-profiles.vercel.app}), a companion platform built as a working prototype of the mediation interface that the Italian welfare regime does not currently provide.
 
-The platform is presented here as an operational artefact and design proposition, not as a tested intervention; empirical validation through user-comprehension studies and B2B field-trials is set out as a future-research direction in \S\ref{sec:ch9-future}. The contribution of the chapter is twofold. First, it translates the academic typology into an instrument that academic, policy and operational audiences can navigate without re-reading the methodology. Second, and more substantively, it develops the statistical machinery that lets the typology be applied to an organisational cohort whose data departs from the SHARE shape --- proxy variables on arbitrary scales, partial coverage of the analytical dimensions, and distributional drift relative to the SHARE reference --- under explicit and honestly reported uncertainty. The methodological core of \S\ref{sec:atlas-scoring} is the chapter's principal claim to a contribution beyond the user interface.
+The platform is presented here as an operational artefact and design proposition, not as a tested intervention; empirical validation through user-comprehension studies and B2B field-trials is set out as a future-research direction in \S\ref{sec:ch9-future}. The chapter first describes what the platform delivers and how an organisation uses it (\S\ref{sec:atlas-delivers}--\S\ref{sec:atlas-action}), and then summarises the statistical machinery that lets the typology be transported to an organisational cohort under explicit uncertainty (\S\ref{sec:atlas-scoring}).
 
 \section{What the platform delivers}
 \label{sec:atlas-delivers}
 
-The Atlas surfaces the headline findings of the empirical chapters as navigable content: per-profile passport pages collect the descriptive signature, the matched-pair gap and the welfare-state translation for each archetype, and a parallel methodology section mirrors the structure of Chapter~\ref{ch:ch3} and exposes the robustness diagnostics of Chapter~\ref{ch:ch7}. This presentation layer makes the typology legible, but it is not where the operational contribution lies.
+The Atlas has two faces. The public face surfaces the academic findings as navigable content --- a per-profile passport page for each archetype (descriptive signature, matched-pair gap, welfare-state translation) and a methodology section mirroring Chapters~\ref{ch:ch3} and~\ref{ch:ch7}. This presentation layer makes the typology legible, but it is not where the operational contribution lies.
 
-The operational core is a B2B cohort-segmentation interface for organisations that hold a senior-population dataset --- a healthcare practice, a pharmacy chain, a municipal social service, an insurer. The interface assigns each record in the organisation's cohort to one of the Italian or Swedish archetypes, reports the cohort's segment composition against the national SHARE baseline, and surfaces the share of the cohort falling into the country-specific configurations identified in the thesis. The instrument occupies a position that population-level segmentation tools (Eurostat, Eurobarometer), commercial silver-economy reports segmenting by age and income alone \citep{vuik2016}, and clinical risk scores do not: a cohort-screening instrument that operationalises a multidimensional academic typology of late-life experience.
+The operational core is a business-to-business cohort-segmentation interface for organisations that hold a senior-population dataset --- the platform names healthcare-practice managers, pharmacy-chain analysts and silver-economy product managers as its intended users. The interface assigns each record in the organisation's cohort to one of the Italian (or Swedish) archetypes, reports the cohort's segment composition against the national SHARE baseline, and surfaces the share of the cohort falling into the country-specific configurations identified in the thesis. The instrument occupies a position that population-level segmentation tools (Eurostat, Eurobarometer), commercial silver-economy reports segmenting by age and income alone \citep{vuik2016}, and clinical risk scores do not: a cohort-screening instrument that operationalises a multidimensional academic typology of late-life experience.
 
-\section{B2B cohort segmentation}
-\label{sec:atlas-cohort}
+\section{The B2B cohort workflow}
+\label{sec:atlas-workflow}
 
-The cohort interface is the operational expression of the social-mediation-layer argument. The user uploads a CSV of senior records, maps the available columns to the analytical variables through a guided wizard, and receives a cohort dashboard structured around four KPI cards --- total records scored, the \emph{Isolation Paradox flag} (the cohort share assigned to the country-specific configuration of \S\ref{sec:ch4-isolation-paradox}), digital addressability, and intermediated-need share. A per-cluster drilldown surfaces the assigned records, the cohort-specific centroid against the national mean, and structured action-card placeholders that articulate the operational form the social-mediation layer would take. Two complementary deliverables sit on top of the assignment: an external-validation explorer over the held-out indicators (life satisfaction, dental-care attendance, forgone care), and a cohort outcome forecast that propagates the within-cluster means onto the user's cohort.
+The user uploads a CSV with one row per individual and maps the available columns to the ten profiler variables through a guided wizard (Figure~\ref{fig:atlas-wizard}). Mappings are auto-detected by name match, fuzzy similarity and value range, with a confidence label beside each suggestion; each profiler variable is presented as a plain-language question with its SHARE coding range and a \emph{typical company-DB proxy} hint (for example, internet use proxied by application-login frequency, financial distress by late-payment count or credit score, quality of life by an NPS or brand-affinity index). A coverage meter reports how many of the ten variables are mapped --- the scoring requires a minimum of three, and unmapped dimensions are simply left out of the subspace rather than defaulted.
 
 \begin{figure}[!htbp]
   \centering
-  \includegraphics[width=\linewidth]{figures/webapp/webapp_04_cohort_kpi_v2.png}\\[6pt]
-  \includegraphics[width=\linewidth]{figures/webapp/webapp_04_cohort_chart_v2.png}
-  \caption[Italian Silver Atlas, cohort dashboard]{Italian Silver Atlas, B2B cohort segmentation dashboard. A test cohort of thirty fictitious Italian senior records uploaded through the CSV interface. Top panel: the four headline KPIs and the cohort-versus-national statistical-fit summary. Bottom panel: the cluster distribution chart, with the cohort share (thick coloured bar) plotted against the SHARE Wave~9 Italian baseline (thin grey bar) for each archetype, and the cohort count, share and percentage-point delta reported on the right. The test cohort reproduces the analytical-sample baseline at the cluster level (Moderate Isolated 26.7\%, against the analytical-sample 26.9\%), with the Isolation Paradox flag surfaced through an amber KPI card.}
-  \label{fig:atlas-cohort}
+  \includegraphics[width=0.9\linewidth]{figures/webapp/webapp_06_mapping_wizard}
+  \caption[Italian Silver Atlas, column-mapping wizard]{Column-mapping wizard. Each of the ten profiler variables is presented as a plain-language question with its SHARE coding range, an auto-detected mapping with a confidence label, a typical company-database proxy, and an optional rank-quantile rescaling control. The coverage meter (here ten of ten) governs how many dimensions enter the scoring subspace.}
+  \label{fig:atlas-wizard}
 \end{figure}
 
-The assignment problem the interface solves is not the assignment problem of Chapter~\ref{ch:ch3}. The analytical pipeline partitions a clean SHARE sample on the full set of within-country standardised variables; the cohort interface must assign organisational records that rarely match the SHARE shape. Three departures recur: proxy columns expressed on arbitrary operational scales rather than the SHARE coding; partial coverage, where only a subset of the analytical variables is present; and distributional drift, where a mapped variable's cohort distribution departs from the SHARE reference. The remainder of the chapter develops the statistical treatment of each, with the conditional-Gaussian imputation of partial coverage as the methodological centre.
+Before scoring, two safeguards are exposed. A missing-value policy lets the user skip incomplete rows (the conservative default) or impute from the cohort's own observed distribution. A \emph{sample-skew check} runs a per-variable two-sample test of the cohort against the SHARE Wave~9 reference and flags, in a non-blocking amber panel, any variable whose distribution departs materially from it --- making the boundary of validity visible rather than enforcing it silently (\S\ref{sec:atlas-scoring}).
 
-\section{Scoring under partial and heterogeneous coverage}
+Scoring produces the cohort dashboard (Figure~\ref{fig:atlas-dashboard}). Four headline cards report the cohort size, the \emph{Isolation Paradox flag} (the share assigned to the Moderate Isolated configuration of \S\ref{sec:ch4-isolation-paradox}), the digitally-addressable share, and the intermediated-need share, each against its national delta. A statistical-fit line reports a Pearson $\chi^2$ test of the cohort distribution against the national baseline, and a cluster-distribution chart plots the cohort share against the SHARE Wave~9 baseline for every archetype.
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.8\linewidth]{figures/webapp/webapp_10_cohort_dashboard}
+  \caption[Italian Silver Atlas, cohort dashboard]{Cohort dashboard for a thirty-record test cohort. Headline cards report cohort size, the Isolation Paradox flag, the digitally-addressable share and the intermediated-need share, each with its delta against the national SHARE baseline; the statistical-fit line reports a Pearson $\chi^2$ test of the cohort against the national distribution; the cluster-distribution chart plots cohort shares (thick bars) against the SHARE Wave~9 baseline (thin bars).}
+  \label{fig:atlas-dashboard}
+\end{figure}
+
+\section{From cohort to action}
+\label{sec:atlas-action}
+
+Clicking any archetype opens a cluster dossier (Figure~\ref{fig:atlas-drilldown}) that turns the segment share into an operational brief: a short ``what this cluster makes visible'' narrative, a per-record confidence summary, the cohort-versus-SHARE signature across all ten variables, the cohort's demographic composition, and the cluster's national-level healthcare-engagement gaps. A complementary per-record table (Figure~\ref{fig:atlas-perrow}) reports, for each individual, the assigned profile, an evidence label, the top-two profile probabilities, the distance percentile, and the cross-country twin.
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.6\linewidth]{figures/webapp/webapp_11_drilldown_moderate_isolated}
+  \caption[Italian Silver Atlas, cluster dossier]{Cluster dossier for the Moderate Isolated segment of the test cohort. The dossier pairs the per-record confidence summary (the evidence ladder of \S\ref{sec:atlas-scoring}) with the cohort-versus-SHARE cluster signature and the segment's national-level healthcare-engagement gaps, translating a population share into an operational brief.}
+  \label{fig:atlas-drilldown}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/webapp/webapp_12_per_row_prediction}
+  \caption[Italian Silver Atlas, per-record prediction]{Per-record prediction table. Each individual is assigned a closest profile, an evidence label (Strong/Moderate/Weak), the top-two profile probabilities from the imputation distribution, a within-cohort distance percentile, and a cross-country twin.}
+  \label{fig:atlas-perrow}
+\end{figure}
+
+The three intended user roles map onto three uses of this output. A healthcare-practice manager reads the Isolation Paradox flag and the dossier's healthcare-engagement gaps to identify the autonomous-but-disengaged patients who slip through standard triage, and targets them with outreach rather than clinical escalation. A pharmacy-chain analyst reads the digitally-addressable split to decide which segments a direct-to-consumer digital service can reach and which require an intermediated channel. A silver-economy product manager reads the aggregate metrics --- in the test cohort, a digitally non-addressable share and a social-mediation-layer-required share of roughly two thirds --- as the market-sizing of the design problem the thesis identifies. In each case the deliverable is the same: a screening instrument that routes a heterogeneous senior cohort to the design logic its empirical signature implies.
+
+\section{How records are scored}
 \label{sec:atlas-scoring}
 
-Scoring operates on a cohort-mappable subset of ten analytical variables expressed in the within-country standardised ($z$) space in which the K-means centroids of Chapters~\ref{ch:ch4} and~\ref{ch:ch5} are defined. A record with complete coverage is assigned deterministically to the nearest centroid in Euclidean distance. The three subsections below treat the departures from that clean case.
+Scoring operates on the ten profiler variables in the within-country standardised ($z$) space in which the K-means centroids of Chapters~\ref{ch:ch4} and~\ref{ch:ch5} are defined; a record with complete coverage is assigned to the nearest centroid in Euclidean distance. Four devices handle the ways an organisational cohort departs from the clean SHARE sample, and they share one design principle: each makes the uncertainty of a transported assignment visible rather than hiding it behind a point estimate.
 
-\subsection{Rank-quantile rescaling of proxy variables}
-\label{sec:atlas-rescaling}
+\emph{Rank-quantile rescaling} maps a proxy column on an arbitrary operational scale onto the SHARE coding through a monotone quantile transform, transporting the cohort's rank information without assuming a parametric proxy-to-target relationship. \emph{Conditional-Gaussian imputation} handles partial coverage: modelling the standardised vector as $z \sim \mathcal{N}(\mathbf{0}, \Sigma)$ with $\Sigma$ the country's empirical correlation matrix from SHARE Wave~9, the missing coordinates $M$ given the observed coordinates $O$ follow a Gaussian with conditional mean $\mu_{M\mid O} = \Sigma_{MO}\,\Sigma_{OO}^{-1} z_O$ and the corresponding Schur-complement covariance. Rather than collapse this to its mean, the platform draws $M = 100$ completions (by Cholesky factorisation of the conditional covariance), classifies each to its nearest centroid, and returns the modal cluster with the share of draws as its probability --- so a record near a boundary returns a genuine distribution over profiles rather than a spurious point assignment. The \emph{Kolmogorov--Smirnov pre-flight} (Figure~\ref{fig:atlas-ks}) compares each mapped variable's cohort distribution to the SHARE reference, $D = \sup_x |F_{\text{cohort}}(x) - F_{\text{SHARE}}(x)|$, and flags material departures. The \emph{evidence ladder} reports a per-record label on a $0$--$10$ scale that adds a coverage component to a decisiveness component (the top-one probability and its margin over the runner-up), so a sharp peak resting on thin coverage is capped below the ``Strong'' band rather than over-trusted.
 
-An organisational column is frequently a proxy for an analytical variable on a scale the SHARE coding does not share --- a net-promoter score for social connectedness, a count of monthly application logins for digital engagement, a late-payment indicator for financial strain. The platform maps such a column onto the SHARE-coded range of its target variable through a monotone rank-quantile transform: the empirical quantile of a proxy value within the cohort (or within a user-supplied operational range) is mapped to the corresponding quantile of the SHARE marginal of the target variable, with a direction toggle for proxies that relate inversely to the target. The transform preserves the ordering of the cohort on the proxy and lands the values in the coded range the centroids expect, without imposing a parametric form on the proxy-to-target relationship. It is a deliberately conservative device: it transports rank information, not cardinal information, and the chapter does not claim that a proxy carries the construct validity of the SHARE item it stands in for.
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.82\linewidth]{figures/webapp/webapp_07_sample_skew_ks}
+  \caption[Italian Silver Atlas, sample-skew pre-flight]{Sample-skew pre-flight. A non-blocking panel reports, for each mapped variable, a two-sample Kolmogorov--Smirnov comparison of the cohort against the SHARE Wave~9 reference, flagging the dimensions on which the transported assignment is least reliable.}
+  \label{fig:atlas-ks}
+\end{figure}
 
-\subsection{Conditional-Gaussian imputation under partial coverage}
-\label{sec:atlas-imputation}
-
-The central methodological problem is partial coverage: an organisational record observes only a subset of the ten analytical variables, and the assignment must integrate over the epistemic uncertainty about the unobserved ones rather than silently setting them to a default. The platform treats this through a conditional-Gaussian imputation model estimated on the SHARE Wave~9 empirical second moments.
-
-Let $z \in \mathbb{R}^{10}$ denote the standardised analytical vector, modelled as $z \sim \mathcal{N}(\mathbf{0}, \Sigma)$, where $\Sigma$ is the country-specific empirical correlation matrix of the ten variables estimated on the SHARE Wave~9 analytical sample and exported from the analysis pipeline. Standardisation places the mean at the origin, so $\Sigma$ in correlation form carries the full second-moment information; the estimated matrices are well conditioned in both countries, with off-diagonal correlations ranging from $-0.56$ to $+0.51$ in Italy and from $-0.45$ to $+0.35$ in Sweden and a minimum eigenvalue bounded away from zero. Partition the index set into the observed coordinates $O$ and the missing coordinates $M$, and block $\Sigma$ accordingly:
-\[
-\Sigma =
-\begin{pmatrix}
-\Sigma_{OO} & \Sigma_{OM} \\
-\Sigma_{MO} & \Sigma_{MM}
-\end{pmatrix}.
-\]
-Under the Gaussian model the conditional distribution of the missing coordinates given the observed ones is itself Gaussian, $z_M \mid z_O \sim \mathcal{N}(\mu_{M\mid O}, \Sigma_{M\mid O})$, with
-\begin{align}
-\mu_{M \mid O} &= \Sigma_{MO}\,\Sigma_{OO}^{-1}\, z_O, \label{eq:atlas-condmean}\\
-\Sigma_{M \mid O} &= \Sigma_{MM} - \Sigma_{MO}\,\Sigma_{OO}^{-1}\,\Sigma_{OM}, \label{eq:atlas-condcov}
-\end{align}
-where $\Sigma_{M\mid O}$ is the Schur complement of $\Sigma_{OO}$ in $\Sigma$. The regressor matrix $K = \Sigma_{MO}\Sigma_{OO}^{-1}$ is obtained by solving the symmetric positive-definite system $\Sigma_{OO} K^{\top} = \Sigma_{OM}$ rather than by explicit inversion, and a small ridge ($10^{-6}$) is added to the diagonal of $\Sigma_{OO}$ and $\Sigma_{M\mid O}$ to guarantee positive-definiteness under near-collinear observed sets.
-
-The assignment then integrates over the conditional distribution by Monte Carlo rather than collapsing it to its mean. The platform draws $M = 100$ completed vectors $z^{(m)}$, with the missing block sampled as
-\begin{equation}
-z_M^{(m)} = \mu_{M \mid O} + L\, y^{(m)}, \qquad y^{(m)} \sim \mathcal{N}(\mathbf{0}, I_{|M|}), \qquad L L^{\top} = \Sigma_{M \mid O}, \label{eq:atlas-draw}
-\end{equation}
-where $L$ is the Cholesky factor of the conditional covariance and the standard-normal innovations $y^{(m)}$ are generated by the Box--Muller transform. Each completed vector $z^{(m)}$ is classified to its nearest K-means centroid, and the record's modal cluster is the one selected by the plurality of the $M$ draws. The share of draws assigned to each cluster is reported as the record's imputation-distribution probability, so that a record near a cluster boundary returns a genuine distribution over profiles --- $0.62$ Moderate Isolated, $0.31$ Fragile Depressed, say --- rather than a spurious point assignment. Conditioning the completion on the observed coordinates through the empirical $\Sigma$ is what distinguishes the procedure from mean-imputation: a record observed to be high on financial strain and low on digital engagement has its missing social and health coordinates drawn from the region of the distribution those observations imply, not from the population centre.
-
-\subsection{Kolmogorov--Smirnov pre-flight diagnostics}
-\label{sec:atlas-ks}
-
-Conditioning on the SHARE second moments is only defensible if the cohort's mapped variables are drawn from a distribution comparable to the SHARE reference. Before scoring, the platform runs a per-variable two-sample Kolmogorov--Smirnov pre-flight: each mapped continuous variable's cohort distribution is compared to the SHARE Wave~9 reference, shipped as $500$ equally spaced empirical quantiles per variable per country, through the KS statistic $D = \sup_x |F_{\text{cohort}}(x) - F_{\text{SHARE}}(x)|$ with the asymptotic two-sample $p$-value; binary variables are compared by proportion difference. Variables whose cohort distribution departs materially from the SHARE reference are surfaced in a non-blocking amber panel, flagging the dimensions on which the transported assignment is least reliable. The pre-flight does not halt scoring --- it makes the boundary of validity visible to the user rather than enforcing it silently.
-
-\subsection{The evidence ladder}
-\label{sec:atlas-evidence}
-
-Coverage and decisiveness are distinct sources of confidence, and conflating them is the characteristic failure of a softmax-style assignment: a record observed on three of ten variables can produce a sharp peak inside that three-variable subspace while resting on 30\% of the available evidence. The platform reports a per-record evidence label that trades the two explicitly. A compound score on $[0, 10]$ combines a coverage component, $5 \times (\text{observed}/\text{total})$, with a decisiveness component, $2.5 \times (p_{(1)} + (p_{(1)} - p_{(2)}))$, where $p_{(1)}$ and $p_{(2)}$ are the top two imputation-distribution probabilities; records scoring at least $7$ are labelled \emph{Strong}, at least $4.5$ \emph{Moderate}, and below that \emph{Weak}. A confident peak on thin coverage is thereby capped at the moderate band, and only records that are both well-covered and decisively assigned reach the strong band.
-
-\section{Design rationale and status}
-\label{sec:atlas-rationale}
-
-The four devices share a design principle: each makes the uncertainty of a transported assignment visible rather than hiding it behind a point estimate. Rank-quantile rescaling transports only ordinal information; conditional-Gaussian imputation returns a distribution over profiles rather than a single label; the Kolmogorov--Smirnov pre-flight flags the variables on which the SHARE conditioning is least defensible; and the evidence ladder caps confidence on thin coverage. The platform is honest about what it does not establish: the typology is descriptive of the SHARE sample partition (\S\ref{sec:ch3-preprocessing}), the proxy mappings transport rank rather than construct validity, and the cohort assignments are provisional screening signals rather than diagnoses.
-
-So framed, the Atlas is the operational instrument through which the central substantive finding of the thesis --- that the Italian silver-economy gap is a missing social-and-informational mediation layer, not a missing digital channel (\S\ref{sec:ch6-product-design-gap}) --- is made usable by the organisations positioned to close it. The platform is currently supported analytically and untested in field; the two natural validation routes, a qualitative comprehension study with Italian senior participants spanning the five clusters and a B2B field-trial that observes how the cohort dashboard and action-card placeholders translate into operational workflows, are developed in \S\ref{sec:ch9-future}.
+The platform is honest about what it does not establish: the typology is descriptive of the SHARE sample partition (\S\ref{sec:ch3-preprocessing}), the proxy mappings transport rank rather than construct validity, and the cohort assignments are provisional screening signals rather than diagnoses. So framed, the Atlas is the operational instrument through which the central finding of the thesis --- that the Italian silver-economy gap is a missing social-and-informational mediation layer, not a missing digital channel (\S\ref{sec:ch6-product-design-gap}) --- is made usable by the organisations positioned to close it. The platform is currently supported analytically and untested in field; the two validation routes, a qualitative comprehension study and a B2B field-trial, are developed in \S\ref{sec:ch9-future}.
