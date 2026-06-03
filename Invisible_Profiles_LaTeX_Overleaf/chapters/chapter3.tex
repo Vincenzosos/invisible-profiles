@@ -36,7 +36,7 @@ The empirical strategy of this thesis rests on three commitments. The first is m
     \draw[arr] (km.east) -| (rob.north);
     \draw[arr] (lca) -- (rob);
   \end{tikzpicture}
-  \caption[Analytical pipeline]{Analytical pipeline. Data (SHARE Wave~9) flows through sample restriction, listwise deletion with Mahalanobis screening, and within-country rank-and-z standardisation; the harmonised analytical matrix feeds two parallel paths. The interpretive path performs factor analysis on the standardised inputs as a pre-clustering diagnostic and feeds the K-means estimation that recovers the segmentation core. The triangulation path estimates a Latent Class Analysis on the same input matrix to support cross-method validation. The K-means partition supplies the centroids on which the cross-country Hungarian-matched alignment of Chapter~\ref{ch:ch6} operates; both K-means and LCA feed the robustness battery of Chapter~\ref{ch:ch7}, which tests the partition against imputation sensitivity, internal validity, external validity (life satisfaction and healthcare utilisation), cross-method agreement, and the pre-pandemic Wave~8 reference.}
+  \caption[Analytical pipeline]{Analytical pipeline. The SHARE Wave~9 sample passes through restriction, listwise deletion with Mahalanobis screening, and within-country rank-and-z standardisation; the harmonised matrix then feeds two parallel paths. The interpretive path runs factor analysis as a pre-clustering diagnostic and feeds the K-means estimation; the triangulation path estimates a Latent Class Analysis on the same matrix for cross-method validation. K-means supplies the centroids for the cross-country Hungarian matching of Chapter~\ref{ch:ch6}, and both K-means and LCA feed the robustness battery of Chapter~\ref{ch:ch7}.}
   \label{fig:ch3-pipeline}
 \end{figure}
 
@@ -216,7 +216,7 @@ The convergence pattern itself carries methodological information. The corner ar
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.95\linewidth]{figures/03_data_methods/fig_kmeans_lca_convergence.png}
-  \caption[Cross-method convergence, K-means vs LCA]{Cross-method convergence between K-means and LCA, by profile and country. Bars report the share of K-means cluster members whose LCA modal class coincides with the K-means assignment; the dashed line at 50\% is a deliberately conservative reference --- a majority of a cluster's members in the same LCA modal class --- not a canonical cutoff, and lies far above the 20\% (Italy) / 17\% (Sweden) levels expected under random assignment. Corner archetypes converge well above the 50\% bar (95.6\% Fragile Resigned, 86.9\% Connected Wealthy SE); middle-stratum profiles converge near it (49.3--54.6\%) in regions where cluster boundaries are intrinsically fuzzy.}
+  \caption[Cross-method convergence, K-means vs LCA]{Cross-method convergence between K-means and LCA, by profile and country. Bars report the share of K-means cluster members whose LCA modal class coincides with the K-means assignment. The dashed 50\% line is a deliberately conservative reference (a majority of a cluster's members in the same LCA class), not a canonical cutoff, and lies far above the 20\% (Italy) and 17\% (Sweden) levels expected under random assignment.}
   \label{fig:ch3-lca-convergence}
 \end{figure}
 
