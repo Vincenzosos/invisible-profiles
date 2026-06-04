@@ -58,7 +58,9 @@
 \usepackage{amsmath, amssymb}
 
 % --- Hyperlinks & TOC ---
-\usepackage[hidelinks, breaklinks=true]{hyperref}
+% colorlinks with everything black by default (same look as hidelinks for TOC,
+% cross-references and citations), then only external URLs are tinted below.
+\usepackage[colorlinks=true, allcolors=black, breaklinks=true]{hyperref}
 \hypersetup{
   pdftitle={Invisible Profiles: A Multidimensional Segmentation of the Elderly Population in Italy and Sweden --- Evidence from SHARE Wave 9},
   pdfauthor={Vincenzo Pio Silvestri},
@@ -69,6 +71,9 @@
 % --- Code listings (R) ---
 \usepackage{xcolor}
 \definecolor{thesisaccent}{HTML}{185FA5} % accent for comparison-table dividers/headers
+% Tint only external hyperlinks (\href / \url) in the thesis-accent blue, so the
+% data/code-availability links are visibly clickable while internal links stay black.
+\hypersetup{urlcolor=thesisaccent}
 \usepackage{listings}
 \lstset{
   language=R,
