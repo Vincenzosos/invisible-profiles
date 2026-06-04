@@ -242,6 +242,21 @@
 
 % ===== Appendices =====
 \appendix
+% Compact chapter heading for the appendices only (the main chapters open with
+% the custom \chaptertitlepage and never call \@makechapterhead; the bibliography
+% uses \chapter* / \@makeschapterhead). This reclaims the ~1/3-page of vertical
+% space the default report heading consumes, so a short appendix's intro and its
+% table sit together on the opening page instead of sprawling across two.
+\makeatletter
+\renewcommand\@makechapterhead[1]{%
+  \vspace*{4pt}%
+  {\parindent\z@\raggedright\normalfont
+   \interlinepenalty\@M
+   \Large\bfseries \@chapapp\space\thechapter
+   \par\nobreak\vskip 6\p@
+   \Huge\bfseries #1\par\nobreak
+   \vskip 16\p@}}
+\makeatother
 \include{chapters/appendix_sensitivities}
 
 % ===== Bibliography =====

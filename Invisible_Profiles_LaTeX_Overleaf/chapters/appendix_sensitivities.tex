@@ -49,23 +49,24 @@ The two zero-variance variables are re-included with a small Gaussian perturbati
 
 Table~\ref{tab:appx-sens-summary} reports the four sensitivity analyses against the interpretive thresholds stated in the preceding sections. The 29-versus-31 variable asymmetry is closed empirically. The outlier-threshold sensitivity is read as a moderate concern at the boundary-observation level and as robust at the macro-profile level. The distance-metric and binary-weighting sensitivity is examined through a three-component analysis (Gower-PAM as an alternative metric, profile-level confusion, and binary down-weighting): the deployed partition is sensitive to both the distance metric and the weighting of the binary indicators, and the unit-weighted Euclidean specification is retained on the substantive grounds stated in \S\ref{sec:appx-sens-gower} rather than as a claim of invariance to these choices. The factor-extraction sensitivity is resolved in the deployed pipeline: Sweden adopts maximum-likelihood extraction (\S\ref{sec:appx-sens-fa}), which removes the Heywood case at unchanged fit and leaves the clustering invariant.
 
-\begin{table}[ht]
+\begin{table}[t]
 \centering
 \caption[Phase 2 sensitivity analyses summary]{Phase 2 sensitivity analyses: summary against interpretive thresholds.}
 \label{tab:appx-sens-summary}
-\small
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
 \setlength{\tabcolsep}{6pt}
-\begin{tabular}{p{0.42\textwidth} p{0.36\textwidth} p{0.12\textwidth}}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.30\textwidth} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.155\textwidth}@{}}
 \toprule
 \textbf{Analysis} & \textbf{Metric (vs.\ threshold)} & \textbf{Verdict} \\
 \midrule
 Outlier exclusion threshold (Sweden, $\alpha = 0.0001$ / $\alpha = 0$) &
 ARI = 0.654 / 0.551 vs.\ 0.80; profile-purity = 0.822 / 0.727 &
-Concern (macro robust) \\
+Concern (macro-robust) \\
 \addlinespace
 Distance metric and binary weighting (Gower-PAM; profile-level confusion; binary down-weight $w = 0.5$ / $w = 1/\sqrt{2}$), Italy / Sweden &
 Gower-PAM ARI 0.205 / 0.091 (purity 0.52 / 0.38). Down-weight ARI ($w{=}0.5$) 0.370 / 0.335, ($w{=}1/\sqrt{2}$) 0.401 / 0.379; profile purity 0.60--0.69. Sensitive to metric and binary weight &
-Concern (defended, three-prong) \\
+Concern (defended) \\
 \addlinespace
 Heywood case, Sweden FA (deployed PA $\to$ ML; alternatives PA-31v / minres-31v / PA-30v) &
 Deployed ML: Heywood FALSE, RMSEA 0.033. Alternatives Heywood TRUE / TRUE / FALSE; RMSEA 0.033 / 0.034 / 0.029; ARI on clustering input 1.000 / 1.000 / 0.518 &
@@ -75,7 +76,7 @@ Italian 29-vs-31 variable asymmetry (perturbed re-inclusion) &
 ARI = 0.977 vs.\ 0.80; Heywood = FALSE &
 Pass \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 \chapter{Unweighted versus Post-stratified Cluster Shares}
@@ -83,11 +84,13 @@ Pass \\
 
 The segmentation is estimated on the unweighted analytical sample (\S\ref{sec:ch3-preprocessing}). To document the empirical magnitude of the SHARE survey design, a post-hoc projection re-weights the within-sample cluster fractions using the SHARE Wave~9 calibrated cross-sectional individual weight (\texttt{cciw\_w9}), computing each profile's weighted share as $\sum_{i \in C} w_i / \sum_i w_i$, under the additional assumption that the proxy-interview exclusion of the analytical sample does not bias the weighted-share estimate. Table~\ref{tab:ch3-weighted-shares} reports the Italian and Swedish cluster shares under the deployed unweighted specification and under this post-hoc re-weighting. The differences are uniformly within 3.2 percentage points across all eleven profiles, so the descriptive cluster shares of Chapters~\ref{ch:ch4} and~\ref{ch:ch5} are broadly stable under the weighting adjustment; the national-population projection of Figure~\ref{fig:ch4-shares} applies these weighted post-hoc shares to the 2024 Istat over-65 estimate.
 
-\begin{table}[!htbp]
+\begin{table}[ht]
 \centering
 \caption[Unweighted vs weighted cluster shares]{Cluster shares under deployed unweighted specification and post-hoc weighted re-projection}
 \label{tab:ch3-weighted-shares}
 \small
+\renewcommand{\arraystretch}{1.25}
+\setlength{\tabcolsep}{10pt}
 \begin{tabular}{llrrr}
 \toprule
 \textbf{Country} & \textbf{Profile} & \textbf{Unweighted (\%)} & \textbf{Weighted (\%)} & \textbf{$\Delta$ pp} \\
