@@ -4,6 +4,17 @@
 % uniform framed screenshot helper (thin grey rule + even inner padding)
 \newcommand{\atlasshot}[2]{{\setlength{\fboxsep}{5pt}\setlength{\fboxrule}{0.5pt}\fcolorbox{black!22}{white}{\includegraphics[width=#2]{#1}}}}
 
+% Suspend the per-section FloatBarrier (placeins) for this chapter only: the wide
+% web-app screenshots are otherwise flushed to half-empty float pages at each
+% section boundary. With the barrier off, a screenshot can sit at the top of a
+% page with the following prose (incl. the next section) running beneath it.
+% Restored at the end of the chapter; \include issues a \clearpage at the chapter
+% boundary, so no float escapes into Chapter~9.
+\makeatletter
+\let\IPsavedFloatBarrier\FloatBarrier
+\renewcommand{\FloatBarrier}{}
+\makeatother
+
 \section{Overview}
 \label{sec:atlas-overview}
 
@@ -79,3 +90,8 @@ Scoring operates on the ten profiler variables in the within-country standardise
 \end{figure}
 
 The platform is honest about what it does not establish: the typology is descriptive of the SHARE sample partition (\S\ref{sec:ch3-preprocessing}), the proxy mappings transport rank rather than construct validity, and the cohort assignments are provisional screening signals rather than diagnoses. Because the interface processes individual-level records of a potentially vulnerable population, any operational deployment would also have to satisfy data-protection requirements (a GDPR lawful basis, data minimisation, and the right not to be subject to solely automated profiling) that lie outside the scope of this prototype, which is run here only on synthetic test data. So framed, the Atlas is the operational instrument through which the central finding of the thesis, that the Italian silver-economy gap is a missing social-and-informational mediation layer rather than a missing digital channel (\S\ref{sec:ch6-product-design-gap}), is made usable by the organisations positioned to close it. The platform is currently supported analytically and untested in field; the two validation routes, a qualitative comprehension study and a B2B field-trial, are developed in \S\ref{sec:ch9-future}.
+
+% Restore the per-section FloatBarrier for the remaining chapters.
+\makeatletter
+\let\FloatBarrier\IPsavedFloatBarrier
+\makeatother
