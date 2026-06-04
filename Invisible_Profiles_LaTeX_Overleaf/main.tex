@@ -47,6 +47,14 @@
 \setcounter{topnumber}{3}
 \setcounter{bottomnumber}{3}
 \setcounter{totalnumber}{4}
+% Top-align figures on dedicated float pages (e.g. full-UI screenshots in Ch.8):
+% without this, a lone figure on a float page is vertically centred, leaving
+% white space both above and below. These lengths anchor it to the top.
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{12pt plus 1fil}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother
 \usepackage{amsmath, amssymb}
 
 % --- Hyperlinks & TOC ---
