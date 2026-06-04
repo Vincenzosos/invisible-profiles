@@ -53,7 +53,7 @@ The analytical sample is restricted to respondents aged 65 or older at the date 
 
 All data used here are de-identified SHARE microdata, released under the survey's research-use conditions and collected under its harmonised ethics and informed-consent governance \citep{borschsupan2013}. No individual is identifiable in the analytical sample or in any reported result: the substantive findings are stated at the level of cluster centroids and aggregate shares (\S\ref{sec:ch3-kmeans}).
 
-\begin{table}[H]
+\begin{table}[!htbp]
   \centering
   \caption[Analytical sample by country and stage]{Analytical sample, by country and stage}
   \label{tab:ch3-sample-sizes}
@@ -81,7 +81,7 @@ All data used here are de-identified SHARE microdata, released under the survey'
 
 Thirty-one analytical variables span five conceptual dimensions, following the SHARE conceptual framework on the multidimensional measurement of late-life experience \citep{wahrendorfsiegrist2010, jivraj2020}. Where multiple SHARE items operationalise the same construct (for example, mobility limitations, ADL and IADL for functional health), all candidate items are retained and dimensionality reduction is delegated to the preprocessing and to the clustering algorithm itself; the full inventory is listed in Table~\ref{tab:ch3-variables}. Income, wealth and pension are imputed via the SHARE multiple-imputation procedure. Two cultural-engagement binary indicators (\texttt{ac035d4}, \texttt{ac035d7}) have zero variance in the Italian analytical sample and are dropped at the variance-screening stage, accounting for the 29-versus-31 active-variable asymmetry across countries (\S\ref{sec:ch3-kmeans}). The cognitive items are near-complete in both samples; the principal source of listwise loss reported in \S\ref{sec:ch3-data} is item-level missingness on the subjective and social-engagement block (self-rated survival, CASP-12, the social-integration index, and the cultural-participation items), which carries the highest item-level missingness in both countries.
 
-\begin{table}[H]
+\begin{table}[!htbp]
   \centering
   \caption[Analytical variable inventory]{Analytical variable inventory by conceptual dimension}
   \label{tab:ch3-variables}
@@ -111,7 +111,7 @@ The preprocessing pipeline operates in four stages (sample selection, variable s
 
 Listwise deletion removes a respondent if any of the 31 analytical variables is missing. SHARE imputes income, wealth and pension ex ante \citep{christelis2011}, so the principal source of listwise loss is non-response on cognitive and subjective items. Multiple-imputation pooling across replicates is not used at the segmentation stage: the K-means objective is not invariant to imputation noise, and Rubin-style consensus algorithms for high-dimensional clustering are not yet well established \citep{vermuntmagidson2002}; the analytical sample therefore uses the first imputation (\S\ref{sec:ch3-data}) and the diagnostics of \S\ref{sec:ch7-imputation} quantify the residual sensitivity to the imputation draw. After listwise deletion, the sample is screened for multivariate outliers using Mahalanobis distance, with respondents above the chi-squared critical value at $p = 0.001$ excluded (the resulting losses by country are reported in \S\ref{sec:ch3-data}). The sensitivity of the partition to the $\alpha = 0.001$ threshold is quantified at the profile level in \S\ref{sec:ch7-outlier-robustness}, with the full robustness battery documented in \S\ref{sec:appx-sens-outlier}.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.95\linewidth]{figures/03_data_methods/fig_mahalanobis_distribution_v2.png}
   \caption[Mahalanobis distance distribution, Italy and Sweden]{Mahalanobis distance distribution, Italy and Sweden. Kernel density on the country-specific standardised analytical matrix; dashed line marks the chi-squared critical value at $p = 0.001$ used for outlier exclusion. Italy loses 53 (2.2\%); Sweden loses 44 (2.4\%) in the right tail.}
@@ -137,7 +137,7 @@ where $\mathbf{\Lambda}$ is the $p \times m$ matrix of factor loadings on $m$ la
 
 The Kaiser--Meyer--Olkin (KMO) measure is 0.832 in Italy and 0.808 in Sweden, both well above the 0.700 threshold conventionally taken as ``good'' adequacy \citep{kaiser1974}; the Bartlett test of sphericity \citep{bartlett1950} rejects the null in both countries ($p < 0.001$). The number of factors is selected by joint reading of three criteria: parallel analysis \citep{horn1965}, BIC for $m$ between 2 and 8, and substantive interpretability of the rotated loadings. The country-level BIC decreases across the tested range, reaching its within-range minimum at $m = 8$ (Italy, principal-axis) and $m = 6$--$7$ (Sweden, maximum-likelihood); the parallel-analysis criterion suggests $m = 6$ (Italy) and $m = 8$ (Sweden); substantive interpretability is highest at $m = 6$ in both countries. The six-factor solution is therefore retained on cross-country-comparability and interpretability grounds; it is conservative relative to the BIC minimum in Italy ($m = 8$) and at the lower edge of the BIC range in Sweden ($m = 6$--$7$). The RMSEA at $m = 6$ is 0.054 in Italy and 0.033 in Sweden, against 0.040 and 0.029 at the respective within-range BIC minimum. Figure~\ref{fig:ch3-fa-fit} reports the four fit indices for $m$ between 4 and 8.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \centering
   \includegraphics[width=\linewidth]{figures/03_data_methods/fig_3_3_fa_fit_comparison_v2.png}
   \caption[Factor-analysis fit indices across $m$]{Factor-analysis fit indices across number of factors. Four indices (RMSR, TLI, RMSEA, BIC) reported for $m = 4$ to 8 factors, separately for Italy (principal-axis) and Sweden (maximum-likelihood). Dashed reference line marks the $m = 6$ design choice.}
@@ -146,7 +146,7 @@ The Kaiser--Meyer--Olkin (KMO) measure is 0.832 in Italy and 0.808 in Sweden, bo
 
 Loadings are rotated by varimax \citep{kaiser1958}. Figure~\ref{fig:ch3-fa-loadings} reports the Italian and Swedish solutions side by side; the six factors carry the substantive labels Factor~1 \emph{physical and functional fragility}, Factor~2 \emph{subjective burden}, Factor~3 \emph{quality of life and engagement}, Factor~4 \emph{social integration}, Factor~5 \emph{household income}, Factor~6 \emph{household wealth}.\footnote{The R \texttt{psych} package outputs the same factors in variance-explained order as PA1, PA5, PA2, PA3, PA4, PA6 respectively. The substantive renumbering used throughout the thesis preserves the conceptual progression from objective fragility to economic resources via subjective and social dimensions.} The Swedish solution recovers the same six-factor structure with broadly similar loadings on the health, social and economic blocks; cross-country differences in the subjective and digital factors are developed in Chapter~6. The six factors jointly explain 38.4\% of the variance in the 29-variable Italian active set.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.95\linewidth]{figures/03_data_methods/fig_3_3_NEW_v3.png}
   \caption[Factor loadings matrix, Italy and Sweden]{Factor loadings matrix, Italy and Sweden. Six factors with varimax rotation, extracted by principal-axis factoring (Italy) and maximum-likelihood factoring (Sweden); cell entries are loadings $\geq 0.30$ (smaller values suppressed). Variable ordering follows the dominant Italian factor. KMO = 0.832 (IT), 0.808 (SE).}
@@ -215,7 +215,7 @@ Figure~\ref{fig:ch3-lca-convergence} reports the agreement between the K-means h
 
 The convergence pattern itself carries methodological information. The corner archetypes occupy regions of the input space that are dense and well separated from the rest of the population: K-means draws their boundaries by Euclidean compactness around a centroid, LCA recovers them as high-probability latent classes under a categorical mixture model, and the two converge because the underlying configurations are unambiguous. The middle-stratum profiles, Moderate Isolated in Italy and Wealthy Digital in Sweden, sit instead in transitional regions of the latent space, where the cluster boundary is geometrically thin and the assignment of marginal respondents is intrinsically uncertain. The lower convergence (49.3--54.6\%) on these profiles is therefore not a failure of either algorithm but a substantive finding: it identifies the segments for which classification is most sensitive to the modelling choice, and for which any policy or product application should anticipate non-trivial assignment uncertainty. The robustness diagnostics in \S\ref{sec:ch7-cross-method} and \S\ref{sec:ch7-cross-wave} quantify this uncertainty using cross-method assignment stability and bootstrap resampling.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.95\linewidth]{figures/03_data_methods/fig_kmeans_lca_convergence.png}
   \caption[Cross-method convergence, K-means vs LCA]{Cross-method convergence between K-means and LCA, by profile and country. Bars report the share of K-means cluster members whose LCA modal class coincides with the K-means assignment. The dashed 50\% line is a deliberately conservative reference (a majority of a cluster's members in the same LCA class), not a canonical cutoff, and lies far above the 20\% (Italy) and 17\% (Sweden) levels expected under random assignment.}
@@ -230,7 +230,7 @@ A central methodological choice of this thesis is that the five subjective measu
 \label{sec:ch3-subjective-empirical}
 The empirical justification for the commitment is a 4D-versus-5D sensitivity test that re-runs the pipeline with the subjective block removed, holding all other parameters constant. External discriminative power is measured by the F-statistic of a one-way ANOVA of life satisfaction (SHARE item AC012, eleven-point scale) on cluster membership; life satisfaction is external to both specifications. The Adjusted Rand Index between the 5D and 4D partitions measures the magnitude of individual reassignment.
 
-\begin{table}[H]
+\begin{table}[!htbp]
   \centering
   \caption[Subjective-block sensitivity, 4D vs 5D]{Sensitivity to the subjective block: 4D versus 5D specifications}
   \label{tab:ch3-4d-5d-sensitivity}
@@ -254,7 +254,7 @@ The empirical justification for the commitment is a 4D-versus-5D sensitivity tes
   \end{minipage}
 \end{table}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.95\linewidth]{figures/03_data_methods/fig_3_7_NEW.png}
   \caption[Segmentation sensitivity to the subjective block]{Sensitivity of the segmentation to the inclusion of the subjective block. Bar chart of the ANOVA F-statistic on life satisfaction (external outcome) under the 5D specification (with subjective inputs) and the 4D specification (objective inputs only). The 41\% reduction in Italy and 22\% reduction in Sweden quantify the discriminative gain attributable to the subjective dimensions.}
