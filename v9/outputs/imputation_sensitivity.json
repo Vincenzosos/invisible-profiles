@@ -1,0 +1,6 @@
+{
+  "description": "Imputation-replicate sensitivity (App A.5). ARI and cluster purity between K-means partitions under SHARE imputation draws implicat 2/3 vs implicat 1, identical pipeline (nstart=100).",
+  "italy":  {"k": 5, "ari_imp2_vs_imp1": 0.917, "purity_imp2_vs_imp1": 0.971, "ari_imp3_vs_imp1": 0.878, "purity_imp3_vs_imp1": 0.955, "ari_imp3_vs_imp2": 0.868, "n_common": 2378, "anchor_repro_vs_deployed": 1.000},
+  "sweden": {"k": 6, "ari_imp2_vs_imp1": 0.855, "purity_imp2_vs_imp1": 0.942, "ari_imp3_vs_imp1": 0.875, "purity_imp3_vs_imp1": 0.951, "ari_imp3_vs_imp2": 0.915, "n_common": 1786, "anchor_repro_vs_deployed": 1.000}
+}
+
