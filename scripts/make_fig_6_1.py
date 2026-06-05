@@ -78,7 +78,7 @@ def main():
     SE_COLOR = "#6fa8dc"   # light blue
     RED_RING = "#c0392b"
 
-    fig, ax = plt.subplots(figsize=(11, 7.5), dpi=200)
+    fig, ax = plt.subplots(figsize=(11.5, 8.0), dpi=200)
 
     # --- 1. Connecting lines for matched pairs (drawn first, behind markers)
     for pair_name, it_label, se_label in pairs:
@@ -128,7 +128,7 @@ def main():
     # --- 3. Pair-name annotations at the midpoint of each connecting line
     # Manual nudge per pair so annotations don't sit on top of the line itself
     pair_nudges = {
-        "Fragile":           ( 0.00,  0.10),
+        "Fragile":           (-0.26,  0.11),   # pushed up-left into open space, clear of the Fragile Resigned label
         "Declining":         (-0.10,  0.04),
         "Connected":         (-0.08, -0.06),   # pushed below-left to clear cluster
         "Socially-oriented": (-0.15,  0.10),   # pushed up-left to clear Social Decline label
@@ -155,7 +155,7 @@ def main():
         is_unmatched = label in unmatched_it
         txt = ax.text(
             x, y, label,
-            fontsize=9, color=(RED_RING if is_unmatched else IT_COLOR),
+            fontsize=8, color=(RED_RING if is_unmatched else IT_COLOR),
             fontweight=("bold" if is_unmatched else "normal"),
             bbox=dict(
                 facecolor="white",
@@ -169,7 +169,7 @@ def main():
         is_unmatched = label in unmatched_se
         txt = ax.text(
             x, y, label,
-            fontsize=9, color=(RED_RING if is_unmatched else "#1c5a8a"),
+            fontsize=8, color=(RED_RING if is_unmatched else "#1c5a8a"),
             fontweight=("bold" if is_unmatched else "normal"),
             bbox=dict(
                 facecolor="white",
@@ -182,9 +182,10 @@ def main():
 
     adjust_text(
         texts, ax=ax,
-        expand=(1.4, 1.6),
-        force_text=(0.6, 0.9),
-        force_static=(0.4, 0.6),
+        expand=(2.0, 2.4),
+        force_text=(1.3, 1.7),
+        force_static=(0.8, 1.1),
+        force_pull=(0.005, 0.005),
         arrowprops=dict(
             arrowstyle="-",
             color="#888888",
@@ -229,10 +230,13 @@ def main():
     # --- 7. Set axis limits with margin
     xs = [v[0] for v in list(it.values()) + list(se.values())]
     ys = [v[1] for v in list(it.values()) + list(se.values())]
-    xpad = 0.35
-    ypad = 0.25
-    ax.set_xlim(min(xs) - xpad, max(xs) + xpad)
-    ax.set_ylim(min(ys) - ypad, max(ys) + ypad)
+    xpad = 0.45
+    ypad = 0.35
+    # Extra room on the lower-left, where four low-fragility/low-burden centroids
+    # (Connected Active, Connected Wealthy, Traditional Social, Moderate Isolated)
+    # crowd together — gives adjustText space to spread their labels outward.
+    ax.set_xlim(min(xs) - (xpad + 0.35), max(xs) + xpad)
+    ax.set_ylim(min(ys) - (ypad + 0.28), max(ys) + ypad)
 
     plt.tight_layout()
 
