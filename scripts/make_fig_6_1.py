@@ -218,7 +218,7 @@ def main():
                markersize=10, label="Italy (k = 5)"),
         Line2D([0], [0], marker="o", color="w", markerfacecolor=SE_COLOR,
                markersize=10, label="Sweden (k = 6)"),
-        Line2D([0], [0], color=MATCH_LINE, lw=1.8, label="Hungarian-matched pair"),
+        Line2D([0], [0], color=MATCH_LINE, lw=1.8, label="Matched pair"),
         Line2D([0], [0], marker="o", color="w",
                markerfacecolor="white", markeredgecolor=RED_RING, markeredgewidth=1.6,
                markersize=12, label="Country-specific (unmatched)"),

@@ -24,7 +24,7 @@ The empirical strategy of this thesis rests on three commitments. The first is m
     \node[pre, below left=6mm and 6mm of std] (fa) {Factor analysis\\\footnotesize 6 factors, varimax\\\footnotesize KMO 0.83 IT, 0.81 SE};
     \node[seg, below right=6mm and 6mm of std] (lca) {LCA triangulation\\\footnotesize same $k$, modal\\\footnotesize class assignment};
     \node[seg, below=8mm of fa] (km) {K-means\\\footnotesize $k = 5$ IT, $k = 6$ SE\\\footnotesize seed 42, 100 starts};
-    \node[val, below=8mm of km] (cc) {Cross-country\\\footnotesize Hungarian matching\\\footnotesize ($d \leq 2.0$ threshold)};
+    \node[val, below=8mm of km] (cc) {Cross-country\\\footnotesize matched comparison\\\footnotesize (diagnostic correspondence)};
     \node[rob, right=18mm of cc] (rob) {Robustness battery (Ch.~7)\\\footnotesize imputation, internal validity, external,\\\footnotesize cross-method, cross-wave W8\,$\leftrightarrow$\,W9};
     %
     \draw[arr] (data) -- (sample);
@@ -36,7 +36,7 @@ The empirical strategy of this thesis rests on three commitments. The first is m
     \draw[arr] (km.east) -| (rob.north);
     \draw[arr] (lca) -- (rob);
   \end{tikzpicture}
-  \caption[Analytical pipeline]{Analytical pipeline. The SHARE Wave~9 sample passes through restriction, listwise deletion with Mahalanobis screening, and within-country rank-and-z standardisation; the harmonised matrix then feeds two parallel paths. The interpretive path runs factor analysis as a pre-clustering diagnostic and feeds the K-means estimation; the triangulation path estimates a Latent Class Analysis on the same matrix for cross-method validation. K-means supplies the centroids for the cross-country Hungarian matching of Chapter~\ref{ch:ch6}, and both K-means and LCA feed the robustness battery of Chapter~\ref{ch:ch7}.}
+  \caption[Analytical pipeline]{Analytical pipeline. The SHARE Wave~9 sample passes through restriction, listwise deletion with Mahalanobis screening, and within-country rank-and-z standardisation; the harmonised matrix then feeds two parallel paths. The interpretive path runs factor analysis as a pre-clustering diagnostic and feeds the K-means estimation; the triangulation path estimates a Latent Class Analysis on the same matrix for cross-method validation. K-means supplies the centroids for the cross-country matched comparison of Chapter~\ref{ch:ch6}, and both K-means and LCA feed the robustness battery of Chapter~\ref{ch:ch7}.}
   \label{fig:ch3-pipeline}
 \end{figure}
 
