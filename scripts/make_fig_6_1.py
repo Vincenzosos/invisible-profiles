@@ -61,7 +61,7 @@ def main():
     it = {p["name"]: project(p, it_vars) for p in d["italy_full"]["profiles"]}
     se = {p["name"]: project(p, se_vars) for p in d["sweden_full"]["profiles"]}
 
-    # Hungarian-matched pairs (from §6.2 / Table 6.1)
+    # Matched pairs by diagnostic correspondence (from §6.2 / Table 6.1)
     pairs = [
         ("Fragile",          "Fragile Resigned",   "Fragile"),
         ("Declining",        "Fragile Depressed",  "Moderate"),
