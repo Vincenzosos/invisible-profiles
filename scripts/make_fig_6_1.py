@@ -77,6 +77,7 @@ def main():
     IT_COLOR = "#1f3a5f"   # dark navy
     SE_COLOR = "#6fa8dc"   # light blue
     RED_RING = "#c0392b"
+    MATCH_LINE = "#1b9e77"  # teal-green: distinct from the two blues and the red
 
     fig, ax = plt.subplots(figsize=(11.5, 8.0), dpi=200)
 
@@ -86,7 +87,7 @@ def main():
         x2, y2 = se[se_label]
         ax.plot(
             [x1, x2], [y1, y2],
-            color="#999999", lw=1.0, alpha=0.6, zorder=1,
+            color=MATCH_LINE, lw=1.8, alpha=0.9, zorder=1,
         )
 
     # --- 2. Markers
@@ -130,7 +131,7 @@ def main():
     pair_nudges = {
         "Fragile":           (-0.26,  0.11),   # pushed up-left into open space, clear of the Fragile Resigned label
         "Declining":         (-0.10,  0.04),
-        "Connected":         (-0.08, -0.06),   # pushed below-left to clear cluster
+        "Connected":         (-0.34, -0.02),   # pushed well left into open space, clear of the Connected Wealthy label
         "Socially-oriented": (-0.15,  0.10),   # pushed up-left to clear Social Decline label
     }
     for pair_name, it_label, se_label in pairs:
@@ -217,7 +218,7 @@ def main():
                markersize=10, label="Italy (k = 5)"),
         Line2D([0], [0], marker="o", color="w", markerfacecolor=SE_COLOR,
                markersize=10, label="Sweden (k = 6)"),
-        Line2D([0], [0], color="#999999", lw=1.0, label="Hungarian-matched pair"),
+        Line2D([0], [0], color=MATCH_LINE, lw=1.8, label="Hungarian-matched pair"),
         Line2D([0], [0], marker="o", color="w",
                markerfacecolor="white", markeredgecolor=RED_RING, markeredgewidth=1.6,
                markersize=12, label="Country-specific (unmatched)"),
