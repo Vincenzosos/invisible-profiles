@@ -1,7 +1,7 @@
 \chapter{Sensitivity Analyses}
 \label{ch:appx-sens}
 
-This appendix documents the four sensitivity analyses run on the deployed pipeline in response to the second phase of the Trentini review. Each analysis perturbs one methodological choice of the Italian or Swedish branch of the pipeline, re-derives the resulting partition, and reports the adjusted Rand index against the deployed partition together with relevant fit diagnostics. The interpretive thresholds are stated upfront for each analysis; the verdicts in Table~\ref{tab:appx-sens-summary} are read against those thresholds rather than as absolute statements of correctness. Detail tables for each analysis are available in the project archive as comma-separated value files under \texttt{v9/outputs/sensitivities/}.
+This appendix documents the four sensitivity analyses run on the deployed pipeline in response to the second phase of the Trentini review. Each analysis perturbs one methodological choice of the Italian or Swedish branch of the pipeline, re-derives the resulting partition, and reports the adjusted Rand index against the deployed partition together with relevant fit diagnostics. The interpretive thresholds are stated upfront for each analysis; the verdicts in Table~\ref{tab:appx-sens-summary} are read against those thresholds rather than as absolute statements of correctness. The quantitative detail of the distance-metric and factor-extraction analyses is tabulated in Tables~\ref{tab:appx-distance-weighting} and~\ref{tab:appx-fa-extraction}; fuller per-analysis outputs are additionally archived as comma-separated value files under \texttt{v9/outputs/sensitivities/}.
 
 
 \section{Outlier exclusion threshold (Sweden)}
@@ -23,7 +23,35 @@ Profile-level analysis of the Gower partition confirms that the disagreement is 
 
 A complementary sensitivity holds the Euclidean K-means specification but down-weights the binary indicators, to probe the amplification that within-country $z$-standardisation introduces on low-prevalence binary variables. The 11 binary indicators in the Swedish active set (9 in the Italian active set, after the zero-variance exclusion of \texttt{ac035d4} and \texttt{ac035d7}) are re-scaled by a factor $w < 1$, leaving the 20 rank-transformed non-binary variables unchanged, and the K-means partition at the deployed $k$ is re-derived under each weighting. The unit-weight case $w = 1$ reproduces the deployed partition exactly. At $w = 0.5$ the adjusted Rand index against the deployed partition is 0.370 for Italy and 0.335 for Sweden, and at $w = 1/\sqrt{2}$ it is 0.401 for Italy and 0.379 for Sweden. The binary indicators therefore carry substantial partition-determining weight: down-weighting them reassigns a non-trivial share of respondents. At the profile level the macro-typology is more stable than the adjusted Rand index alone implies, with the deployed profiles retaining dominant homes at a purity of 0.64--0.67 (Italy) and 0.60--0.64 (Sweden) across the two weightings, but the sensitivity is real and is not read as robustness. The deployed unit-weighted specification is retained on two substantive grounds the down-weighting clarifies rather than refutes. The binary indicators of digital and social engagement are constitutive of the profiles the typology is built to recover (the Wealthy Digital and Connected configurations are defined precisely by these items), so down-weighting them dissolves distinctions the analysis is designed to capture. Any down-weight magnitude, moreover, is a free parameter with no measurement-theoretic anchor, whereas unit-weighted $z$-standardisation preserves the interpretation of cluster centroids as deviations on a single common scale across binary and non-binary indicators.
 
-Taken together, the three components (Gower-PAM as an alternative metric, the profile-level breakdown of the disagreement, and binary down-weighting as a parametric alternative) converge on a single reading: the partition is sensitive to both the distance metric and the weighting of the binary indicators. That sensitivity reinforces, rather than undermines, the scope condition stated in \S\ref{sec:ch7-synthesis}, namely that the substantive findings are claims about the centroid configuration of the profiles and the relations among them, not about the assignment of marginal respondents, which is the level at which the metric and weighting choices exert their influence.
+Taken together, the three components (Gower-PAM as an alternative metric, the profile-level breakdown of the disagreement, and binary down-weighting as a parametric alternative; Table~\ref{tab:appx-distance-weighting}) converge on a single reading: the partition is sensitive to both the distance metric and the weighting of the binary indicators. That sensitivity reinforces, rather than undermines, the scope condition stated in \S\ref{sec:ch7-synthesis}, namely that the substantive findings are claims about the centroid configuration of the profiles and the relations among them, not about the assignment of marginal respondents, which is the level at which the metric and weighting choices exert their influence.
+
+\begin{table}[!htbp]
+  \centering
+  \small
+  \caption[Distance-metric and binary-weighting sensitivity]{Distance-metric and binary-weighting sensitivity: adjusted Rand index and profile purity against the deployed partition}
+  \label{tab:appx-distance-weighting}
+  \renewcommand{\arraystretch}{1.2}
+  \setlength{\tabcolsep}{6pt}
+  \begin{tabular}{@{}lrrrr@{}}
+    \toprule
+     & \multicolumn{2}{c}{\textbf{ARI vs deployed}} & \multicolumn{2}{c}{\textbf{Profile purity}} \\
+    \cmidrule(lr){2-3}\cmidrule(lr){4-5}
+    \textbf{Specification} & \textbf{Italy} & \textbf{Sweden} & \textbf{Italy} & \textbf{Sweden} \\
+    \midrule
+    \multicolumn{5}{@{}l}{\textit{Alternative distance metric}} \\
+    Gower dissimilarity $+$ PAM      & 0.205 & 0.091 & 0.52       & 0.38 \\
+    \addlinespace
+    \multicolumn{5}{@{}l}{\textit{Euclidean K-means, binary indicators down-weighted by $w$}} \\
+    $w = 1$ (deployed)               & 1.000 & 1.000 & ---        & --- \\
+    $w = 1/\sqrt{2}$                 & 0.401 & 0.379 & 0.64--0.67 & 0.60--0.64 \\
+    $w = 0.5$                        & 0.370 & 0.335 & 0.64--0.67 & 0.60--0.64 \\
+    \bottomrule
+  \end{tabular}
+  \par\medskip
+  \begin{minipage}{\linewidth}
+    \footnotesize\textit{Note.} ARI is computed against the deployed unit-weighted Euclidean K-means partition ($k = 5$ Italy, $k = 6$ Sweden). Reference thresholds: 0.70 for cross-metric convergence and 0.80 for substantive partition robustness. The Gower dissimilarity (\texttt{cluster::daisy}) declares all binary indicators asymmetric and is paired with partitioning-around-medoids (PAM). Profile purity for the two down-weightings is reported as the range across them (\S\ref{sec:appx-sens-gower}).
+  \end{minipage}
+\end{table}
 
 
 \section{Alternative factor extraction methods (Sweden)}
@@ -31,7 +59,30 @@ Taken together, the three components (Gower-PAM as an alternative metric, the pr
 
 The deployed factor analysis for Sweden (\S\ref{sec:ch3-fa}) extracts six factors via maximum-likelihood factoring on the 31 active variables, with varimax rotation. An earlier principal-axis specification produced a Heywood case on \texttt{social\_integration} (loading $1.11$, communality $h^2 = 1.38$), which the maximum-likelihood specification resolves cleanly. Three alternative specifications are reported here to document the fit and clustering stability of the deployed choice. The first re-extracts the six factors via principal-axis factoring on the same 31 variables (the prior deployed specification); the second substitutes minimum-residual factoring; the third reverts to principal-axis factoring but on the 30 variables that exclude \texttt{social\_integration}.
 
-The principal-axis specification on the 31 variables, the prior deployed choice, retains the Heywood case on \texttt{social\_integration}, with RMSEA = 0.033 and TLI = 0.897. The minimum-residual specification likewise retains the Heywood case, with RMSEA = 0.034 and TLI = 0.890, as expected from a principal-axis-type estimator. The deployed maximum-likelihood specification eliminates the Heywood case at effectively identical fit (RMSEA = 0.033, TLI = 0.897), indicating that the Heywood loading is specification-dependent rather than data-pathological. The 30-variable principal-axis specification, which drops \texttt{social\_integration}, also eliminates the Heywood case and returns the best overall fit of the alternatives (RMSEA = 0.029, TLI = 0.908, KMO = 0.830 versus 0.808 on the 31-variable input). The factor structure is therefore not unique: the choice of extraction method and the inclusion of \texttt{social\_integration} each shape whether the Heywood case appears, while every specification yields a defensible six-factor solution under standard fit criteria.
+The principal-axis specification on the 31 variables, the prior deployed choice, retains the Heywood case on \texttt{social\_integration}, with RMSEA = 0.033 and TLI = 0.897. The minimum-residual specification likewise retains the Heywood case, with RMSEA = 0.034 and TLI = 0.890, as expected from a principal-axis-type estimator. The deployed maximum-likelihood specification eliminates the Heywood case at effectively identical fit (RMSEA = 0.033, TLI = 0.897), indicating that the Heywood loading is specification-dependent rather than data-pathological. The 30-variable principal-axis specification, which drops \texttt{social\_integration}, also eliminates the Heywood case and returns the best overall fit of the alternatives (RMSEA = 0.029, TLI = 0.908, KMO = 0.830 versus 0.808 on the 31-variable input). The factor structure is therefore not unique: the choice of extraction method and the inclusion of \texttt{social\_integration} each shape whether the Heywood case appears, while every specification yields a defensible six-factor solution under standard fit criteria (Table~\ref{tab:appx-fa-extraction}).
+
+\begin{table}[!htbp]
+  \centering
+  \small
+  \caption[Swedish factor-extraction comparison]{Alternative factor-extraction specifications for Sweden: fit and clustering stability}
+  \label{tab:appx-fa-extraction}
+  \renewcommand{\arraystretch}{1.2}
+  \setlength{\tabcolsep}{6pt}
+  \begin{tabular}{@{}lrrrcr@{}}
+    \toprule
+    \textbf{Specification} & \textbf{RMSEA} & \textbf{TLI} & \textbf{KMO} & \textbf{Heywood} & \textbf{ARI vs deployed} \\
+    \midrule
+    ML, 31 vars (deployed)              & 0.033 & 0.897 & 0.808 & No  & --- \\
+    PA, 31 vars                         & 0.033 & 0.897 & 0.808 & Yes & 1.000 \\
+    MinRes, 31 vars                     & 0.034 & 0.890 & 0.808 & Yes & 1.000 \\
+    PA, 30 vars (drop social-integ.)    & 0.029 & 0.908 & 0.830 & No  & 0.518 \\
+    \bottomrule
+  \end{tabular}
+  \par\medskip
+  \begin{minipage}{\linewidth}
+    \footnotesize\textit{Note.} All specifications extract six factors with varimax rotation on the Swedish active set. ML = maximum-likelihood, PA = principal-axis, MinRes = minimum-residual. KMO is a property of the input correlation matrix and is therefore identical across the three 31-variable specifications. ARI is computed between each specification's K-means partition and the deployed partition; it is unity for the 31-variable specifications because the clustering input is invariant to the factor extraction (\S\ref{sec:appx-sens-fa}).
+  \end{minipage}
+\end{table}
 
 The implication for the deployed clustering is independent of the factor choice for the three 31-variable specifications. The K-means routine operates on the standardised variable space and is invariant to the factor extraction by construction: the adjusted Rand index of the principal-axis and minimum-residual specifications against the deployed maximum-likelihood partition is unity, since the cluster input is identical. The 30-variable principal-axis specification does alter the K-means input space, and the resulting ARI is 0.518: the removal of \texttt{social\_integration} from the cluster input induces a substantively different partition over the Swedish sample. The deployed specification (ML, 31 variables, \texttt{social\_integration} retained) is therefore defensible on two grounds that the alternatives clarify rather than challenge. The factor analysis is descriptive and does not propagate into the clustering, which is invariant to the extraction method. The inclusion of \texttt{social\_integration}, in turn, is required by the Isolation Paradox reading in Chapter~\ref{ch:ch4}, which the maximum-likelihood extraction now preserves without incurring the Heywood case of the principal-axis alternative.
 
