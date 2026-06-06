@@ -69,8 +69,7 @@ p_fa <- loadings_long %>%
                        breaks = c(-1, -0.5, 0, 0.5, 1)) +
   scale_y_discrete(labels = function(v) relabel(v)) +  # codes -> readable labels
   facet_wrap(~ country, scales = "free_x") +
-  labs(x = "Factor", y = NULL, fill = "Loading",
-       caption = "Cells with |loading| < 0.30 are suppressed for readability. Both countries: 6-factor solution, varimax rotation.\nVariable ordering follows the dominant Italian factor for cross-country comparability. KMO = 0.832 (IT); 0.808 (SE); Bartlett p < 0.001 in both countries.") +
+  labs(x = "Factor", y = NULL, fill = "Loading") +
   theme(panel.grid = element_blank(),
         strip.background = element_rect(fill = "gray95", color = NA),
         legend.position = "right",
