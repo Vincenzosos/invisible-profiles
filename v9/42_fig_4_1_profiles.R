@@ -1,8 +1,9 @@
 # ==============================================================================
 # FIG 4.1 — Italian profile signatures, 8 bar panels.
-# Adds a shared profile legend at the bottom (bars were colour-coded by profile
-# but had neither legend nor x labels). Values are the deployed figures, copied
-# verbatim (no recomputation) so the data is unchanged.
+# Profile names on the x-axis of the bottom-row panels (matching the Sweden
+# Fig 5.1 style); no legend. Bars were colour-coded by profile but had neither
+# legend nor x labels. Values are the deployed figures, copied verbatim (no
+# recomputation) so the data is unchanged.
 # OUTPUT: Invisible_Profiles_LaTeX_Overleaf/figures/04_italy/fig_4_1_NEW.png
 # ==============================================================================
 suppressMessages({ library(ggplot2); library(patchwork) })
@@ -25,32 +26,41 @@ panels <- list(
   list("Mobility limitations",         c(6.2,2.7,0.6,0.9,1.1),      FALSE)
 )
 
-mk <- function(name, vals, pct) {
-  d <- data.frame(profile = factor(prof, levels = prof), value = vals)
-  lab <- if (pct) sprintf("%.1f%%", vals) else sprintf("%.1f", vals)
-  ggplot(d, aes(profile, value, fill = profile)) +
-    geom_col(width = 0.80) +
-    geom_text(aes(label = lab), vjust = -0.4, size = 3.0, family = "Times",
-              colour = "grey15") +
-    scale_fill_manual(values = pal, breaks = prof, name = NULL) +
-    scale_y_continuous(expand = expansion(mult = c(0, 0.16))) +
-    labs(x = NULL, y = name) +
-    theme_minimal(base_family = "Times", base_size = 11) +
-    theme(axis.text.x = element_blank(),
-          axis.ticks.x = element_blank(),
-          panel.grid.major.x = element_blank(),
-          panel.grid.minor = element_blank(),
-          axis.title.y = element_text(size = 10.5, margin = margin(r = 4)),
-          plot.margin = margin(6, 8, 2, 4))
-}
+# Single faceted plot (matches Sweden Fig 5.1): one panel per metric, strip
+# title carries the metric name, a shared y-axis title, free_y scales. With
+# scales = "free_y" the x-axis is shared, so the profile labels are drawn only
+# on the bottom row and every panel is the same size (rows stay aligned).
+df <- do.call(rbind, lapply(seq_along(panels), function(i) {
+  p <- panels[[i]]
+  data.frame(metric = p[[1]],
+             profile = prof,
+             value = p[[2]],
+             label = if (p[[3]]) sprintf("%.1f%%", p[[2]]) else sprintf("%.1f", p[[2]]),
+             stringsAsFactors = FALSE)
+}))
+df$metric  <- factor(df$metric, levels = vapply(panels, `[[`, "", 1))
+df$profile <- factor(df$profile, levels = prof)
 
-plots <- lapply(panels, function(p) mk(p[[1]], p[[2]], p[[3]]))
-combined <- wrap_plots(plots, nrow = 2) +
-  plot_layout(guides = "collect") &
-  theme(legend.position = "bottom",
-        legend.text = element_text(family = "Times", size = 11)) &
-  guides(fill = guide_legend(nrow = 1, override.aes = list(size = 0)))
+combined <- ggplot(df, aes(profile, value, fill = profile)) +
+  geom_col(width = 0.80) +
+  geom_text(aes(label = label), vjust = -0.4, size = 2.8, family = "Times",
+            colour = "grey15") +
+  facet_wrap(~ metric, scales = "free_y", nrow = 2) +
+  scale_fill_manual(values = pal, breaks = prof, name = NULL) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.16))) +
+  labs(x = NULL, y = "Cluster mean on raw scale") +
+  theme_minimal(base_family = "Times", base_size = 11) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1, size = 8, family = "Times"),
+        axis.ticks.x = element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.title.y = element_text(size = 10.5, margin = margin(r = 4)),
+        strip.text = element_text(size = 10),
+        strip.background = element_rect(fill = "grey92", colour = NA),
+        panel.spacing = unit(0.8, "lines"),
+        legend.position = "none",
+        plot.margin = margin(6, 8, 2, 4))
 
 out <- file.path(base, "Invisible_Profiles_LaTeX_Overleaf/figures/04_italy/fig_4_1_NEW.png")
-ggsave(out, combined, width = 13, height = 6.6, dpi = 220, bg = "white")
+ggsave(out, combined, width = 13, height = 7.0, dpi = 220, bg = "white")
 cat("Saved:", out, "\n")
