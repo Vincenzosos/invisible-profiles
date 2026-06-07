@@ -6,7 +6,11 @@
 # OUTPUT: Invisible_Profiles_LaTeX_Overleaf/figures/04_italy/fig_fingerprint_facet_italy.png
 # ==============================================================================
 suppressMessages({ library(ggplot2); library(dplyr) })
-has_ggtext <- requireNamespace("ggtext", quietly = TRUE)
+# ggtext::element_markdown does not render in this environment even when ggtext
+# is attached (the literal <span ...> HTML prints through), so we use plain
+# black x-axis labels. The coloured dimension headers and the grey alternating
+# bands already convey the grouping.
+has_ggtext <- FALSE
 
 base <- "/Users/vincenzosilvestri/SHARE_DATASET/DATASET RESEARCH"
 prof <- c("Fragile Resigned","Fragile Depressed","Moderate Isolated",
