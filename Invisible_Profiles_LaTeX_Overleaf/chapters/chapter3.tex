@@ -31,12 +31,13 @@ The empirical strategy of this thesis rests on three commitments. The first is m
     \draw[arr] (sample) -- (std);
     \draw[arr] (std.south) -- ++(0,-2mm) -| (fa.north);
     \draw[arr] (std.south) -- ++(0,-2mm) -| (lca.north);
-    \draw[arr] (fa) -- (km);
+    \draw[arr] (std.west) -| ([xshift=-8mm]km.west) -- (km.west);
+    \draw[arr, dashed] (fa) -- (km) node[midway, right=1pt, font=\scriptsize\sffamily, align=left, text=gray!55!black] {informs\\interpretation};
     \draw[arr] (km) -- (cc);
     \draw[arr] (km.east) -| (rob.north);
     \draw[arr] (lca) -- (rob);
   \end{tikzpicture}
-  \caption[Analytical pipeline]{Analytical pipeline. The SHARE Wave~9 sample passes through restriction, listwise deletion with Mahalanobis screening, and within-country rank-and-z standardisation; the harmonised matrix then feeds two parallel paths. The interpretive path runs factor analysis as a pre-clustering diagnostic and feeds the K-means estimation; the triangulation path estimates a Latent Class Analysis on the same matrix for cross-method validation. K-means supplies the centroids for the cross-country matched comparison of Chapter~\ref{ch:ch6}, and both K-means and LCA feed the robustness battery of Chapter~\ref{ch:ch7}.}
+  \caption[Analytical pipeline]{Analytical pipeline. The SHARE Wave~9 sample passes through restriction, listwise deletion with Mahalanobis screening, and within-country rank-and-z standardisation; the harmonised matrix then feeds the K-means estimation directly. Factor analysis is run on the same matrix as a pre-clustering diagnostic that informs the interpretation of the solution (dashed link) rather than supplying its input; the triangulation path estimates a Latent Class Analysis on the same matrix for cross-method validation. K-means supplies the centroids for the cross-country matched comparison of Chapter~\ref{ch:ch6}, and both K-means and LCA feed the robustness battery of Chapter~\ref{ch:ch7}.}
   \label{fig:ch3-pipeline}
 \end{figure}
 
