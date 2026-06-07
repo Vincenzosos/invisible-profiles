@@ -1,0 +1,2 @@
+"variant","n_vars_variant","n_vars_deployed","k","perturbation_sd_pre_std","fa_converged","fa_heywood","fa_rmsea","ari_vs_deployed"
+"italy_31v_perturbed_vs_deployed_29v",31,29,5,0.05,TRUE,FALSE,0.049296636408891,0.977112599532264

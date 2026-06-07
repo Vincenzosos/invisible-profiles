@@ -1,0 +1,39 @@
+================================================================================
+FASE 2 SENSITIVITY ANALYSES — SUMMARY
+================================================================================
+Run completed: 2026-05-28 15:17:56
+Elapsed:       3.0 min
+
+Deployed pipeline reference:
+  Italy  K-means k=5 su 29 var std (ac035d4/ac035d7 zero-var escluse), n=2378
+  Sweden K-means k=6 su 31 var std (social_integration inclusa, Heywood accettato), n=1787
+
+Soglie interpretative:
+  Sens 1: ARI > 0.80 = robusto all'alpha threshold
+  Sens 2: ARI > 0.70 = Euclidean justified vs Gower
+  Sens 3: defensible se ogni alternativa o produce Heywood o ARI > 0.75
+  Sens 4: ARI > 0.80 = asymmetry 29-vs-31 IT non altera la struttura
+
+================================================================================
+Sensitivity                                        | Metric                                                  | Verdict
+----------------------------------------------------------------------------------------------------------------------------------
+1. Sweden outlier alpha (a=0.0001 / a=0)           | ARI a=0.654/b=0.551  Purity a=0.822/b=0.727             | CONCERN
+2. Gower PAM vs KMeans (IT k=5 / SE k=6)           | ARI(IT)=0.2047  ARI(SE)=0.0914                          | CONCERN
+3. Heywood alt FA Sweden (minres/ml/pa-30v)        | ARI: a=1.0000 b=1.0000 c=0.5182 | Hey: a=TRUE b=FALSE c=FALSE | CONCERN
+4. Italy 29-vs-31 vars (perturbed re-include)      | ARI=0.9771  Heywood=FALSE                               | PASS
+----------------------------------------------------------------------------------------------------------------------------------
+
+Detail CSVs:
+  sens1_sweden_outlier_alpha.csv
+  sens2_gower_pam.csv
+  sens3_heywood_alternatives.csv
+  sens4_italy_29_vs_31.csv
+================================================================================
+
+--------------------------------------------------------------------------------
+5. Binary down-weight (w=0.5 / w=1/sqrt(2)) -- Trentini #2/#10 (3rd prong)
+   Specifica: K-means euclideo deployato, binarie down-pesate di w (std space).
+   ARI vs deployed  Italy : w=0.5 0.3702 / w=1/sqrt(2) 0.4012
+   ARI vs deployed  Sweden: w=0.5 0.3346 / w=1/sqrt(2) 0.3787
+   Detail CSV: sens5_binary_downweight.csv
+================================================================================ 
