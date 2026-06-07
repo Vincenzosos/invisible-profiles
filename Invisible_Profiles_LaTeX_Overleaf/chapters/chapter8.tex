@@ -84,14 +84,16 @@ Scoring operates on the ten profiler variables in the within-country standardise
 
 This procedure rests on two assumptions the platform cannot verify from the cohort alone: that the analytical vector is approximately Gaussian in $z$-space, so that the conditional law takes the form above, and that the missingness is ignorable given the observed coordinates. Where either fails (markedly non-Gaussian dimensions, or coverage that is itself informative about the missing values), the imputation distribution is mis-calibrated, and the resulting profile probabilities are to be read together with the coverage-and-skew diagnostics below rather than on their own. A direct held-out calibration check---comparing the draw-based profile probabilities against known assignments on a labelled hold-out sample, where the Gaussian and ignorability assumptions are most exposed---is the natural first empirical test of this layer, and is left to the validation work of \S\ref{sec:ch9-future}.
 
-The \emph{Kolmogorov--Smirnov pre-flight} (Figure~\ref{fig:atlas-ks}) compares each mapped variable's cohort distribution to the SHARE reference, $D = \sup_x |F_{\text{cohort}}(x) - F_{\text{SHARE}}(x)|$, and flags material departures. The \emph{evidence ladder} reports a per-record label on a $0$--$10$ scale that adds a coverage component to a decisiveness component (the top-one probability and its margin over the runner-up), so a sharp peak resting on thin coverage is capped below the ``Strong'' band rather than over-trusted.
+The \emph{Kolmogorov--Smirnov pre-flight} (Figure~\ref{fig:atlas-ks}) compares each mapped variable's cohort distribution to the SHARE reference, $D = \sup_x |F_{\text{cohort}}(x) - F_{\text{SHARE}}(x)|$, and flags material departures.
 
-\begin{figure}[!htbp]
+\begin{figure}[H]
   \centering
   \atlasshot{figures/webapp/webapp_07_sample_skew_ks}{0.9\linewidth}
   \caption[Italian Silver Atlas, sample-skew pre-flight]{Sample-skew pre-flight. A non-blocking panel reports, for each mapped variable, a two-sample Kolmogorov--Smirnov comparison of the cohort against the SHARE Wave~9 reference, flagging the dimensions on which the transported assignment is least reliable.}
   \label{fig:atlas-ks}
 \end{figure}
+
+The \emph{evidence ladder} reports a per-record label on a $0$--$10$ scale that adds a coverage component to a decisiveness component (the top-one probability and its margin over the runner-up), so a sharp peak resting on thin coverage is capped below the ``Strong'' band rather than over-trusted.
 
 The platform is honest about what it does not establish: the typology is descriptive of the SHARE sample partition (\S\ref{sec:ch3-preprocessing}), the proxy mappings transport rank rather than construct validity, and the cohort assignments are provisional screening signals rather than diagnoses. Because the interface processes individual-level records of a potentially vulnerable population, any operational deployment would also have to satisfy data-protection requirements (a GDPR lawful basis, data minimisation, and the right not to be subject to solely automated profiling) that lie outside the scope of this prototype, which is run here only on synthetic test data. So framed, the Atlas is the operational instrument through which the central finding of the thesis, that the Italian silver-economy gap is a missing social-and-informational mediation layer rather than a missing digital channel (\S\ref{sec:ch6-product-design-gap}), is made usable by the organisations positioned to close it. The platform is currently supported analytically and untested in field; the two validation routes, a qualitative comprehension study and a B2B field-trial, are developed in \S\ref{sec:ch9-future}.
 
