@@ -1,0 +1,13 @@
+n = 2188
+LR chi^2 (20) = 763.68, p = 7.18e-149
+McFadden  pseudo-R^2 = 0.114
+Cox-Snell pseudo-R^2 = 0.295
+Nagelkerke pseudo-R^2 = 0.309
+
+Reference category: Moderate Isolated.
+Predictors:
+  age_c     age - 75 (years)
+  female    1 if gender == 2 (female), else 0
+  yedu_c    yedu - 8 (years of education centred at sample mean)
+  single    1 if living alone, else 0
+  home_own  1 if homeowner, else 0

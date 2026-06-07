@@ -64,9 +64,9 @@ def main():
     # Matched pairs by diagnostic correspondence (from §6.2 / Table 6.1)
     pairs = [
         ("Fragile",          "Fragile Resigned",   "Fragile"),
-        ("Declining",        "Fragile Depressed",  "Moderate"),
+        ("Declining",        "Fragile Depressed",  "Social Decline"),
         ("Connected",        "Connected Active",   "Connected Wealthy"),
-        ("Socially-oriented", "Traditional Social", "Social Decline"),
+        ("Socially-oriented", "Traditional Social", "Moderate"),
     ]
     # Unmatched (country-specific) profiles
     unmatched_it = {"Moderate Isolated"}
