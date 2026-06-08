@@ -34,7 +34,7 @@ The operational core is a business-to-business cohort-segmentation interface for
 
 The user uploads a CSV with one row per individual and maps the available columns to the ten profiler variables through a guided wizard (Figure~\ref{fig:atlas-wizard}). Mappings are auto-detected by name match, fuzzy similarity and value range, with a confidence label beside each suggestion; each profiler variable is presented as a plain-language question with its SHARE coding range and a \emph{typical company-DB proxy} hint (for example, internet use proxied by application-login frequency, financial distress by late-payment count or credit score, quality of life by an NPS or brand-affinity index). A coverage meter reports how many of the ten variables are mapped; the scoring requires a minimum of three, and unmapped dimensions are simply left out of the subspace rather than defaulted.
 
-\begin{figure}[!htbp]
+\begin{figure}[H]
   \centering
   \atlasshot{figures/webapp/webapp_06_mapping_wizard}{0.72\linewidth}
   \caption[Italian Silver Atlas, column-mapping wizard]{Column-mapping wizard. Each of the ten profiler variables is presented as a plain-language question with its SHARE coding range, an auto-detected mapping with a confidence label, a typical company-database proxy, and an optional rank-quantile rescaling control. The coverage meter (here ten of ten) governs how many dimensions enter the scoring subspace.}
@@ -45,7 +45,7 @@ Before scoring, two safeguards are exposed. A missing-value policy lets the user
 
 Scoring produces the cohort dashboard (Figure~\ref{fig:atlas-dashboard}). Four headline cards report the cohort size, the \emph{Isolation Paradox flag} (the share assigned to the Moderate Isolated configuration of \S\ref{sec:ch4-isolation-paradox}), the digitally addressable share, and the intermediated-need share, each against its national delta. A statistical-fit line reports a Pearson $\chi^2$ test of the cohort distribution against the national baseline, and a cluster-distribution chart plots the cohort share against the SHARE Wave~9 baseline for every archetype.
 
-\begin{figure}[!htbp]
+\begin{figure}[H]
   \centering
   \atlasshot{figures/webapp/webapp_10_cohort_dashboard}{0.62\linewidth}
   \caption[Italian Silver Atlas, cohort dashboard]{Cohort dashboard for a thirty-record test cohort. The four headline cards report cohort size, the Isolation Paradox flag, the digitally addressable share and the intermediated-need share, each against the national SHARE baseline. The statistical-fit line reports a Pearson $\chi^2$ test against the national distribution, and the cluster-distribution chart plots cohort shares (thick bars) against the SHARE Wave~9 baseline (thin bars).}
@@ -57,14 +57,14 @@ Scoring produces the cohort dashboard (Figure~\ref{fig:atlas-dashboard}). Four h
 
 \looseness=-1 Clicking any archetype opens a cluster dossier (Figure~\ref{fig:atlas-drilldown}) that turns the segment share into an operational brief: a short ``what this cluster makes visible'' narrative, a per-record confidence summary, the cohort-versus-SHARE signature across all ten variables, the cohort's demographic composition, and the cluster's national-level healthcare-engagement gaps. A complementary per-record table (Figure~\ref{fig:atlas-perrow}) reports, for each individual, the assigned profile, an evidence label, the top-two profile probabilities, the distance percentile, and the cross-country twin.
 
-\begin{figure}[!htbp]
+\begin{figure}[H]
   \centering
   \atlasshot{figures/webapp/webapp_11_drilldown_moderate_isolated}{0.52\linewidth}
   \caption[Italian Silver Atlas, cluster dossier]{Cluster dossier for the Moderate Isolated segment of the test cohort. The dossier pairs the per-record confidence summary (the evidence ladder of \S\ref{sec:atlas-scoring}) with the cohort-versus-SHARE cluster signature and the segment's national-level healthcare-engagement gaps, translating a population share into an operational brief.}
   \label{fig:atlas-drilldown}
 \end{figure}
 
-\begin{figure}[!htbp]
+\begin{figure}[H]
   \centering
   \atlasshot{figures/webapp/webapp_12_per_row_prediction}{0.9\linewidth}
   \caption[Italian Silver Atlas, per-record prediction]{Per-record prediction table. Each individual is assigned a closest profile, an evidence label (Strong/Moderate/Weak), the top-two profile probabilities from the imputation distribution, a within-cohort distance percentile, and a cross-country twin. The cross-country twin is the nearest profile in the other country computed per record in the standardised analytical space, and need not coincide with the profile-level matched pairs of \S\ref{sec:ch6-matched-pairs} (for example, a Fragile Depressed record may have the Swedish Fragile profile as its nearest twin rather than the Declining-pair counterpart Social Decline).}
@@ -86,7 +86,7 @@ This procedure rests on two assumptions the platform cannot verify from the coho
 
 The \emph{Kolmogorov--Smirnov pre-flight} (Figure~\ref{fig:atlas-ks}) compares each mapped variable's cohort distribution to the SHARE reference, $D = \sup_x |F_{\text{cohort}}(x) - F_{\text{SHARE}}(x)|$, and flags material departures.
 
-\begin{figure}[!htbp]
+\begin{figure}[H]
   \centering
   \atlasshot{figures/webapp/webapp_07_sample_skew_ks}{0.9\linewidth}
   \caption[Italian Silver Atlas, sample-skew pre-flight]{Sample-skew pre-flight. A non-blocking panel reports, for each mapped variable, a two-sample Kolmogorov--Smirnov comparison of the cohort against the SHARE Wave~9 reference, flagging the dimensions on which the transported assignment is least reliable.}
