@@ -4,7 +4,7 @@
 \section{Empirical strategy}
 \label{sec:ch3-empirical-strategy}
 
-The empirical strategy of this thesis rests on three commitments. The first is methodological: the multidimensional structure of late-life experience is recovered from a data-driven segmentation on a harmonised analytical set, not from a manual partition of cross-tabulations. The second is comparative: two segmentations are estimated independently in Italy and Sweden, the leading Mediterranean-familistic and Nordic-universalistic cases, and compared on structurally meaningful axes. The third is conceptual: the analytical set includes both objective dimensions (health, economic resources, digital and social integration, cognitive function) and subjective dimensions (CASP-12, loneliness, hope for the future, interest, expected survival), with the latter entering as constituent inputs rather than external validation outcomes.
+The empirical strategy of this thesis rests on three commitments. The first is methodological: the multidimensional structure of late-life experience is recovered from a data-driven segmentation on a harmonised analytical set, not from a manual partition of cross-tabulations. The second is comparative: two segmentations are estimated independently in Italy and Sweden, the leading Mediterranean-familistic and Nordic-universalistic cases, and compared on structurally meaningful axes. The third is conceptual: the analytical set includes both objective dimensions (health, economic resources, digital and social integration, cognitive function) and subjective dimensions (CASP-12, loneliness, hope for the future, interest, expected survival), with the latter entering as constituent inputs rather than external validation outcomes. These commitments are operationalised through the pipeline summarised in Figure~\ref{fig:ch3-pipeline}.
 
 \begin{figure}[!htbp]
   \centering
@@ -41,7 +41,7 @@ The empirical strategy of this thesis rests on three commitments. The first is m
   \label{fig:ch3-pipeline}
 \end{figure}
 
-This chapter sets out the operational implementation of the pipeline summarised in Figure~\ref{fig:ch3-pipeline}. Internal validity, multi-algorithm comparison, and cross-wave stability are reported in Chapter~\ref{ch:ch7}.
+This chapter sets out the operational implementation of that pipeline.
 
 \section{Data and analytical sample}
 \label{sec:ch3-data}
@@ -205,8 +205,7 @@ The number of clusters $k$ is selected on three criteria. The within-cluster sum
   \end{minipage}
 \end{table}
 
-The mean silhouette values of 0.069 (Italy) and 0.060 (Sweden) are low in absolute terms, below the 0.250 threshold conventionally taken as indicative of a cohesive cluster structure \citep{kaufman1990}. This is a routine consequence of clustering on a high-dimensional input matrix spanning the six factor subspaces of \S\ref{sec:ch3-fa}, where Euclidean compactness is intrinsically limited and within-cluster heterogeneity remains material along the dimensions on which the partition does not separate. The Duda--Hart pseudo-$T^2$ peak and the substantive interpretability of the profiles therefore carry decisive weight in the choice of $k$, with the full silhouette decomposition by cluster reported in Chapter~7. Given these values, the K-means solution is framed less as a discovery of natural clusters than as a structured segmentation of a continuous multidimensional space. Accordingly, the findings of Chapters~\ref{ch:ch4}--\ref{ch:ch7} are stated as claims about centroid configurations and structural relations among profiles, not about the assignment of marginal individual respondents.
-
+The mean silhouette values of 0.069 (Italy) and 0.060 (Sweden) are low in absolute terms, below the 0.250 threshold conventionally taken as indicative of a cohesive cluster structure \citep{kaufman1990}. This is a routine consequence of clustering on a high-dimensional input matrix spanning the six factor subspaces of \S\ref{sec:ch3-fa}, where Euclidean compactness is intrinsically limited and within-cluster heterogeneity remains material along the dimensions on which the partition does not separate. The Duda--Hart pseudo-$T^2$ peak and the substantive interpretability of the profiles therefore carry decisive weight in the choice of $k$, with the full silhouette decomposition by cluster reported in Chapter~7. Given these values, the K-means solution is framed less as a discovery of natural clusters than as a structured segmentation of a continuous multidimensional space.
 \section{Latent Class Analysis triangulation}
 \label{sec:ch3-lca}
 
@@ -259,14 +258,14 @@ The empirical justification for the commitment is a 4D-versus-5D sensitivity tes
   \end{minipage}
 \end{table}
 
+Dropping the subjective block raises internal-validity indices modestly (the routine consequence of clustering on a smaller space) but reduces external discriminative power on life satisfaction by 41\% in Italy and 22\% in Sweden (Figure~\ref{fig:ch3-4d-5d-discrimination}). The 4D--5D ARI is 0.41 in Italy and 0.52 in Sweden, indicating only moderate agreement between the two partitions, well below the 0.80 level conventionally taken as substantive equivalence; the subjective block therefore materially reshapes the partition. The substantive cost in Italy is the collapse of the Fragile Resigned vs Fragile Depressed contrast (\S\ref{sec:ch4-profile-descriptions}) into a single fragile cluster, eliminating an affective distinction the 5D solution preserves. The asymmetry ($-41\%$ vs $-22\%$) is consistent with the cross-country finding that subjective well-being gaps are wider than objective ones (Chapter~\ref{ch:ch6}).
+
 \begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.95\linewidth]{figures/03_data_methods/fig_3_7_NEW.png}
   \caption[Segmentation sensitivity to the subjective block]{Sensitivity of the segmentation to the inclusion of the subjective block. Bar chart of the ANOVA F-statistic on life satisfaction (external outcome) under the 5D specification (with subjective inputs) and the 4D specification (objective inputs only). The 41\% reduction in Italy and 22\% reduction in Sweden quantify the discriminative gain attributable to the subjective dimensions.}
   \label{fig:ch3-4d-5d-discrimination}
 \end{figure}
-
-Dropping the subjective block raises internal-validity indices modestly (the routine consequence of clustering on a smaller space) but reduces external discriminative power on life satisfaction by 41\% in Italy and 22\% in Sweden (Figure~\ref{fig:ch3-4d-5d-discrimination}). The 4D--5D ARI is 0.41 in Italy and 0.52 in Sweden, indicating only moderate agreement between the two partitions, well below the 0.80 level conventionally taken as substantive equivalence; the subjective block therefore materially reshapes the partition. The substantive cost in Italy is the collapse of the Fragile Resigned vs Fragile Depressed contrast (\S\ref{sec:ch4-profile-descriptions}) into a single fragile cluster, eliminating an affective distinction the 5D solution preserves. The asymmetry ($-41\%$ vs $-22\%$) is consistent with the cross-country finding that subjective well-being gaps are wider than objective ones (Chapter~\ref{ch:ch6}).
 
 \label{sec:ch3-subjective-circularity}
 The circularity objection, that the typology cannot be validly evaluated against subjective outcomes because subjective measures enter as inputs, rests on a predictive framing the analysis does not adopt. The strategy is descriptive: the typology partitions multidimensional configurations of late-life experience with all dimensions on equal footing, rather than predicting subjective well-being from objective state. The 4D--5D test against life satisfaction (an outcome correlated with but not identical to the five subjective inputs, administered in a separate questionnaire block) is therefore closer to construct validity than to a tautology. Two features sharpen the distinction. Life satisfaction is a single global evaluation, whereas the subjective block enters as five specific facets (CASP-12, loneliness, hope, interest, expected survival). The 41\% (Italy) and 22\% (Sweden) drop in its discrimination when the block is removed therefore reflects shared late-life content rather than mechanical overlap. The healthcare-utilisation outcomes, moreover, share no measurement channel with the subjective inputs at all, so the relevant validity argument is the convergent reading across a measurement-adjacent outcome (life satisfaction) and measurement-independent outcomes (healthcare utilisation), not either alone. Genuinely external validation against life satisfaction (\S\ref{sec:ch7-external-validation-lifesat}) and healthcare utilisation (\S\ref{sec:ch7-external-validation-healthcare}) uses outcomes entirely separate from the clustering inputs; further external validations are listed in \S\ref{sec:ch9-future}.
