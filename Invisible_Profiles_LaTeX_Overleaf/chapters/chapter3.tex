@@ -206,7 +206,7 @@ The mean silhouette values of 0.069 (Italy) and 0.060 (Sweden) are low in absolu
 \section{Latent Class Analysis triangulation}
 \label{sec:ch3-lca}
 
-The K-means hard assignment is triangulated using Latent Class Analysis fitted on a discretised representation of the input variables: continuous and ordinal items are partitioned at country-level tertile cut-points into three-category ordinal variables; binary items are passed through unchanged. LCA assumes that the joint distribution of the $J$ observed categorical items $\mathbf{Y} = (Y_1,\ldots,Y_J)$ arises from a finite mixture of $K$ latent classes:
+The K-means hard assignment is triangulated using Latent Class Analysis fitted on a discretised representation of the input variables: continuous and ordinal items are partitioned at country-level tertile cut-points into three-category ordinal variables, with items whose distribution is dominated by a single modal value ($\geq 50\%$ of the mass) instead split at the mode (modal versus above-modal categories) to avoid degenerate cells; binary items are passed through unchanged. LCA assumes that the joint distribution of the $J$ observed categorical items $\mathbf{Y} = (Y_1,\ldots,Y_J)$ arises from a finite mixture of $K$ latent classes:
 \begin{equation}
   \Pr(\mathbf{Y} = \mathbf{y}) = \sum_{k=1}^{K} \pi_k \prod_{j=1}^{J} \Pr(Y_j = y_j \mid C = k),
 \end{equation}
