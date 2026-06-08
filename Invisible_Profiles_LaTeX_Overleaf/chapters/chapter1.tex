@@ -43,4 +43,50 @@ The fourth contribution is operational: framing the silver-economy design proble
 
 \looseness=-1 The thesis is organised in nine chapters. Chapter~\ref{ch:ch2} reviews the five strands of literature that anchor the strategy: comparative welfare regimes, gerontological subjective dimensions, segmentation methodology, silver economy and gerontechnology, and European typological studies. Chapter~\ref{ch:ch3} sets out the pipeline: SHARE Wave~9 sample preparation, factor-analytic preprocessing, K-means clustering ($k = 5$ Italy, $k = 6$ Sweden), Latent Class Analysis triangulation, and the empirical justification of the subjective block as input.
 
-Chapters~\ref{ch:ch4} and~\ref{ch:ch5} report the parallel typologies: Chapter~\ref{ch:ch4} develops the Italian typology of five archetypes and the Isolation Paradox, Chapter~\ref{ch:ch5} the Swedish typology of six archetypes and the three structural contrasts that distinguish it. Chapter~\ref{ch:ch6} integrates the two through the matched cross-country reading and its implications for silver-economy market structure. Chapter~\ref{ch:ch7} reports the robustness battery (imputation, internal validity, external validation, cross-method convergence, cross-wave stability). Chapter~\ref{ch:atlas} presents the operational deliverable, the Italian Silver Atlas platform and its cohort-scoring machinery; Chapter~\ref{ch:ch9} synthesises the findings, contributions, limitations, and future-research directions.
+Chapters~\ref{ch:ch4} and~\ref{ch:ch5} report the parallel typologies: Chapter~\ref{ch:ch4} develops the Italian typology of five archetypes and the Isolation Paradox, Chapter~\ref{ch:ch5} the Swedish typology of six archetypes and the three structural contrasts that distinguish it. Chapter~\ref{ch:ch6} integrates the two through the matched cross-country reading and its implications for silver-economy market structure. Chapter~\ref{ch:ch7} reports the robustness battery (imputation, internal validity, external validation, cross-method convergence, cross-wave stability). Chapter~\ref{ch:atlas} presents the operational deliverable, the Italian Silver Atlas platform and its cohort-scoring machinery; Chapter~\ref{ch:ch9} synthesises the findings, contributions, limitations, and future-research directions. Figure~\ref{fig:ch1-structure} maps this organisation.
+
+\begin{figure}[!b]
+  \centering
+  \begin{tikzpicture}[
+    node distance=5mm and 7mm,
+    chip/.style={draw, rounded corners=2pt, align=center, minimum width=3.15cm, minimum height=0.95cm, font=\small\sffamily, inner sep=3pt},
+    found/.style={chip, fill=blue!4},
+    core/.style={chip, fill=blue!10},
+    payoff/.style={chip, fill=thesisaccent, text=white},
+    applic/.style={chip, fill=gray!8},
+    band/.style={draw=gray!45, rounded corners=4pt, inner sep=3.4mm},
+    cband/.style={draw=thesisaccent, line width=0.7pt, rounded corners=4pt, inner sep=3.4mm},
+    blabel/.style={font=\footnotesize\itshape, text=gray!55!black},
+    appx/.style={align=center, font=\footnotesize\sffamily, text=gray!30!black,
+                 inner sep=4pt, text width=8.6cm},
+    arr/.style={-{Stealth[length=2.6mm]}, semithick, gray!60!black},
+    carr/.style={-{Stealth[length=2.2mm]}, thick, thesisaccent}
+  ]
+    % chapter chips
+    \node[found] (c2) {Ch.~2 $\cdot$ Literature\\\footnotesize the analytical gap};
+    \node[found, left=of c2] (c1) {Ch.~1 $\cdot$ Introduction\\\footnotesize problem \& questions};
+    \node[found, right=of c2] (c3) {Ch.~3 $\cdot$ Methodology\\\footnotesize the pipeline};
+    \node[core, below=19mm of c2] (e5) {Ch.~5 $\cdot$ Sweden\\\footnotesize bridge};
+    \node[core, left=of e5] (e4) {Ch.~4 $\cdot$ Italy\\\footnotesize anchor};
+    \node[payoff, right=of e5] (e6) {Ch.~6 $\cdot$ Cross-country\\\footnotesize comparison $\cdot$ payoff};
+    \node[applic, below=20mm of e5, xshift=-20mm] (v7) {Ch.~7 $\cdot$ Robustness\\\footnotesize confirms the partition};
+    \node[applic, right=of v7] (v8) {Ch.~8 $\cdot$ Silver Atlas\\\footnotesize operational tool};
+    \node[found, below=18mm of v7, xshift=20mm] (c9) {Ch.~9 $\cdot$ Conclusions\\\footnotesize contributions \& limits};
+    % phase containers (outlines over the chips) with header labels
+    \node[band, fit=(c1)(c2)(c3), label={[blabel]above left:Foundations}] (band1) {};
+    \node[cband, fit=(e4)(e5)(e6), label={[blabel]above left:Empirical core}] (band2) {};
+    \node[band, fit=(v7)(v8), label={[blabel]above left:Validation \& application}] (band3) {};
+    \node[band, fit=(c9), label={[blabel]above left:Synthesis}] (band4) {};
+    % supporting material
+    \node[appx, below=10mm of band4] (ap) {\textit{Appendices}\, $\cdot$\, sensitivity analyses, alternative distance metrics, weighted post-hoc shares, and the SHARE data \& funding acknowledgement};
+    % phase-to-phase flow (centred on the chapter column)
+    \draw[arr] (band1.south -| e5) -- (band2.north -| e5);
+    \draw[arr] (band2.south -| e5) -- (band3.north -| e5);
+    \draw[arr] (band3.south -| e5) -- (band4.north -| e5);
+    \draw[carr] (e4) -- (e5);
+    \draw[carr] (e5) -- (e6);
+    \draw[densely dashed, gray!55, semithick] (band4.south -| e5) -- (ap.north -| e5);
+  \end{tikzpicture}
+  \caption[Structure of the thesis]{Structure of the thesis. The nine chapters progress from the foundations (Chapters~\ref{ch:ch1}--\ref{ch:ch3}) through the empirical core, where the Italian typology (anchor) and the Swedish typology (bridge) feed the cross-country comparison (Chapter~\ref{ch:ch6}); the partition is then validated and operationalised (Chapters~\ref{ch:ch7}--\ref{ch:atlas}) and synthesised in Chapter~\ref{ch:ch9}; the appendices collect the supporting sensitivity analyses and data documentation. The through-line is the welfare regime as the structuring institution of the late-life partition, with the Italian Isolation Paradox as its headline.}
+  \label{fig:ch1-structure}
+\end{figure}
