@@ -18,14 +18,14 @@ library(tidyr)
 data_path <- "~/Desktop/SHARE DATASET/DATASET RESEARCH"
 cat("Data path:", data_path, "\n")
 
-if (!file.exists(file.path(data_path, "sharew8_rel9-0-0_gv_imputations.dta"))) {
+if (!file.exists(file.path(data_path, "_share_data", "sharew8_rel9-0-0_gv_imputations.dta"))) {
   stop("File .dta non trovati in: ", data_path, "\nControlla il path!")
 }
 cat("  File .dta trovati — OK\n")
 
 load_module <- function(module_name) {
   fname <- paste0("sharew8_rel9-0-0_", module_name, ".dta")
-  fpath <- file.path(data_path, fname)
+  fpath <- file.path(data_path, "_share_data", fname)
   if (!file.exists(fpath)) stop(paste("File non trovato:", fpath))
   cat("  Loading", fname, "...")
   df <- read_dta(fpath)

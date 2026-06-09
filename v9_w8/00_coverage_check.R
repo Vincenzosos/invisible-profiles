@@ -13,7 +13,7 @@ suppressPackageStartupMessages({
 data_path <- "/Users/vincenzosilvestri/Desktop/SHARE DATASET/DATASET RESEARCH/"
 
 # --- 1. Load coverscreen (per country + age) ---
-cv <- read_dta(paste0(data_path, "sharew8_rel9-0-0_cv_r.dta"))
+cv <- read_dta(paste0(data_path, "_share_data/sharew8_rel9-0-0_cv_r.dta"))
 cat("Coverscreen rows:", nrow(cv), "\n")
 cat("Country var present:", "country" %in% names(cv), "\n")
 cat("Age var candidates:", grep("age", names(cv), value = TRUE, ignore.case = TRUE), "\n\n")
@@ -24,12 +24,12 @@ age_candidates <- grep("^age|yrbirth", names(cv), value = TRUE, ignore.case = TR
 cat("Age/birth candidates in cv_r:", age_candidates, "\n\n")
 
 # --- 2. Load Big Five ---
-big5 <- read_dta(paste0(data_path, "sharew8_rel9-0-0_gv_big5.dta"))
+big5 <- read_dta(paste0(data_path, "_share_data/sharew8_rel9-0-0_gv_big5.dta"))
 cat("Big5 rows:", nrow(big5), "\n")
 cat("Big5 vars:", paste(grep("^bfi10", names(big5), value = TRUE), collapse = ", "), "\n\n")
 
 # --- 3. Load expectations (trust, risk aversion, planning) ---
-ex <- read_dta(paste0(data_path, "sharew8_rel9-0-0_ex.dta"))
+ex <- read_dta(paste0(data_path, "_share_data/sharew8_rel9-0-0_ex.dta"))
 cat("Expectations rows:", nrow(ex), "\n")
 
 # --- 4. Merge on mergeid ---

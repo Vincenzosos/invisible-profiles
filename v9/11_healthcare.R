@@ -57,7 +57,7 @@ cat("============================================================\n")
 cat("PART A: ESTRAZIONE SHARE HEALTHCARE VARIABLES\n")
 cat("============================================================\n\n")
 
-hc_file <- file.path(data_path, "sharew9_rel9-0-0_hc.dta")
+hc_file <- file.path(data_path, "_share_data", "sharew9_rel9-0-0_hc.dta")
 hc_raw <- read_dta(hc_file, col_select = c(
   "mergeid", "country",
   "hc010_",  # dentist

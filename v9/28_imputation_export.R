@@ -20,9 +20,10 @@ suppressPackageStartupMessages({
   library(jsonlite)
 })
 
-data_path <- "~/Desktop/SHARE DATASET/DATASET RESEARCH"
-out_dir   <- file.path(data_path, "v9", "outputs")
-json_out  <- file.path(data_path, "webapp", "src", "data", "imputation.json")
+# Paths are resolved relative to this script's directory (v9/).
+# Run as: cd <repo>/v9 && Rscript 28_imputation_export.R
+out_dir  <- "outputs"
+json_out <- file.path("..", "webapp", "src", "data", "imputation.json")
 
 # These two .rds files contain the standardised numeric subset used by
 # the K-means engine; same inputs as in 22_export_centroids.R.

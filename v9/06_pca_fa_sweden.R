@@ -27,7 +27,7 @@ library(dplyr)
 library(psych)       # fa(), parallel(), KMO()
 library(ggplot2)
 
-data_path <- "~/Desktop/SHARE DATASET/DATASET RESEARCH"
+data_path <- "/Users/vincenzosilvestri/SHARE_DATASET/DATASET RESEARCH"
 
 # Self-contained pipeline: tutta la PCA/FA qui sotto usa psych::fa e base R,
 # senza dipendere da Functions_20570.R del corso.
@@ -229,7 +229,7 @@ cat("--- Parallel Analysis ---\n")
 cat("  (Determina il numero ottimale di fattori)\n")
 
 set.seed(42)
-pa_result <- fa.parallel(X_fa, fm = "pa", fa = "fa", n.iter = 100,
+pa_result <- fa.parallel(X_fa, fm = "ml", fa = "fa", n.iter = 100,
                          main = "Parallel Analysis — Sweden",
                          show.legend = TRUE)
 
@@ -259,7 +259,7 @@ cat("--- Factor Analysis: 6 fattori, PA extraction, varimax rotation ---\n\n")
 # Svezia (loading 1.09 > 1). psych::fa dà warning ma procede. Gestiamo con
 # withCallingHandlers per catturare il warning senza bloccare l'esecuzione.
 fa_result <- withCallingHandlers(
-  fa(X_fa, nfactors = 6, rotate = "varimax", fm = "pa",
+  fa(X_fa, nfactors = 6, rotate = "varimax", fm = "ml",
      scores = "regression", n.iter = 1),
   warning = function(w) {
     if (grepl("Heywood|ultra-Heywood", w$message, ignore.case = TRUE)) {
@@ -471,7 +471,7 @@ cat("  ", paste(rep("-", 52), collapse = ""), "\n")
 for (nf in 4:8) {
   tryCatch({
     fa_test <- withCallingHandlers(
-      fa(X_fa, nfactors = nf, rotate = "varimax", fm = "pa",
+      fa(X_fa, nfactors = nf, rotate = "varimax", fm = "ml",
          warnings = FALSE),
       warning = function(w) {
         if (grepl("Heywood|ultra-Heywood", w$message, ignore.case = TRUE)) {

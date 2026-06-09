@@ -56,7 +56,7 @@ cat("  Loaded step4_sweden_w8_clean.rds:", nrow(sweden_clean), "rows\n\n")
 
 # --- Estrazione lifesat dal raw SHARE (ac012_) ---
 # ac012_ = "On a scale 0-10, how satisfied with your life overall?" (post-rev)
-ac_file <- file.path(data_path, "sharew8_rel9-0-0_ac.dta")
+ac_file <- file.path(data_path, "_share_data", "sharew8_rel9-0-0_ac.dta")
 sweden_clean_enriched <- sweden_clean
 
 if (file.exists(ac_file)) {
