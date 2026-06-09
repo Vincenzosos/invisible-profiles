@@ -2,7 +2,8 @@
 \label{ch:atlas}
 
 % uniform framed screenshot helper (thin grey rule + even inner padding)
-\newcommand{\atlasshot}[2]{{\setlength{\fboxsep}{5pt}\setlength{\fboxrule}{0.5pt}\fcolorbox{black!22}{white}{\includegraphics[width=#2]{#1}}}}
+% #2 is the TOTAL framed width: subtract 2*(fboxsep+fboxrule)=11pt so the frame never overflows.
+\newcommand{\atlasshot}[2]{{\setlength{\fboxsep}{5pt}\setlength{\fboxrule}{0.5pt}\fcolorbox{black!22}{white}{\includegraphics[width=\dimexpr#2-11pt\relax]{#1}}}}
 
 % Suspend the per-section FloatBarrier (placeins) for this chapter only: the wide
 % web-app screenshots are otherwise flushed to half-empty float pages at each
@@ -36,8 +37,19 @@ The user uploads a CSV with one row per individual and maps the available column
 
 \begin{figure}[H]
   \centering
-  \atlasshot{figures/webapp/webapp_06_mapping_wizard}{0.72\linewidth}
-  \caption[Italian Silver Atlas, column-mapping wizard]{Column-mapping wizard. Each of the ten profiler variables is presented as a plain-language question with its SHARE coding range, an auto-detected mapping with a confidence label, a typical company-database proxy, and an optional rank-quantile rescaling control. The coverage meter (here ten of ten) governs how many dimensions enter the scoring subspace.}
+  \begin{subfigure}[t]{0.47\linewidth}
+    \centering
+    \atlasshot{figures/webapp/webapp_06_mapping_wizard_top}{\linewidth}
+    \caption{Coverage meter and the first five variables.}
+    \label{fig:atlas-wizard-a}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.47\linewidth}
+    \centering
+    \atlasshot{figures/webapp/webapp_06_mapping_wizard_bottom}{\linewidth}
+    \caption{The remaining five variables.}
+    \label{fig:atlas-wizard-b}
+  \end{subfigure}
+  \caption[Italian Silver Atlas, column-mapping wizard]{Column-mapping wizard, shown across its two scroll regions: panel~(a) gives the coverage meter and the first five variables, panel~(b) the remaining five. Each of the ten profiler variables is presented as a plain-language question with its SHARE coding range, an auto-detected mapping with a confidence label, a typical company-database proxy, and an optional rank-quantile rescaling control. The coverage meter (here ten of ten) governs how many dimensions enter the scoring subspace.}
   \label{fig:atlas-wizard}
 \end{figure}
 

@@ -78,15 +78,16 @@ Chapters~\ref{ch:ch4} and~\ref{ch:ch5} report the parallel typologies: Chapter~\
     \node[band, fit=(v7)(v8), label={[blabel]above left:Validation \& application}] (band3) {};
     \node[band, fit=(c9), label={[blabel]above left:Synthesis}] (band4) {};
     % supporting material
-    \node[appx, below=10mm of band4] (ap) {\textit{Appendices}\, $\cdot$\, sensitivity analyses, alternative distance metrics, weighted post-hoc shares, and the SHARE data \& funding acknowledgement};
+    \node[appx, below=12mm of band4] (ap) {sensitivity analyses, alternative distance metrics, weighted post-hoc shares, and the SHARE data \& funding acknowledgement};
+    \node[band, fit=(ap), label={[blabel]above left:Appendices}] (band5) {};
     % phase-to-phase flow (centred on the chapter column)
     \draw[arr] (band1.south -| e5) -- (band2.north -| e5);
     \draw[arr] (band2.south -| e5) -- (band3.north -| e5);
     \draw[arr] (band3.south -| e5) -- (band4.north -| e5);
     \draw[carr] (e4) -- (e5);
     \draw[carr] (e5) -- (e6);
-    \draw[densely dashed, gray!55, semithick] (band4.south -| e5) -- (ap.north -| e5);
+    \draw[densely dashed, gray!55, semithick] (band4.south -| e5) -- (band5.north -| e5);
   \end{tikzpicture}
-  \caption[Structure of the thesis]{Structure of the thesis. The nine chapters progress from the foundations (Chapters~\ref{ch:ch1}--\ref{ch:ch3}) through the empirical core, where the Italian typology (anchor) and the Swedish typology (bridge) feed the cross-country comparison (Chapter~\ref{ch:ch6}); the partition is then validated and operationalised (Chapters~\ref{ch:ch7}--\ref{ch:atlas}) and synthesised in Chapter~\ref{ch:ch9}; the appendices collect the supporting sensitivity analyses and data documentation. The through-line is the welfare regime as the structuring institution of the late-life partition, with the Italian Isolation Paradox as its headline.}
+  \caption[Structure of the thesis]{Structure of the thesis. The nine chapters move from the foundations through the empirical core---where the Italian (anchor) and Swedish (bridge) typologies feed the cross-country comparison---to validation, operationalisation, and synthesis, with the appendices collecting the supporting analyses and data documentation. The through-line is the welfare regime as the structuring institution of the late-life partition, with the Italian Isolation Paradox as its headline.}
   \label{fig:ch1-structure}
 \end{figure}
