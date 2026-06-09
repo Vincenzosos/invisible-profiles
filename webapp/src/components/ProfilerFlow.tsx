@@ -88,8 +88,8 @@ function ModePicker({
         <ModeCard
           active={mode === 'single'}
           eyebrow="Quiz · single profile"
-          title="Ten plain-language questions."
-          desc="A short questionnaire across health, economics, digital reach, social network and subjective wellbeing. Returns the closest profile and a soft-membership distribution. Use on yourself or to demo the model on a single record."
+          title="Ten dimensions, fifteen questions."
+          desc="A short questionnaire across health, economics, digital reach, social network and subjective wellbeing — ten profile dimensions in fifteen quick questions. Returns the closest profile and a soft-membership distribution. Use on yourself or to demo the model on a single record."
           onClick={() => setMode('single')}
         />
         <ModeCard

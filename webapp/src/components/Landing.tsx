@@ -13,8 +13,8 @@ export default function Landing({ onSelectCountry }: Props) {
           Try the engine on yourself or a customer.
         </h1>
         <p className="text-lg text-zinc-700 leading-relaxed">
-          Ten questions across health, economics, digital reach, social network
-          and subjective wellbeing. Returns a hard match (closest profile) and
+          Fifteen questions across ten profile dimensions — health, economics,
+          digital reach, social network and subjective wellbeing. Returns a hard match (closest profile) and
           a soft membership distribution &mdash; the two outputs an operator
           would consume in a propensity-scoring pipeline.
         </p>

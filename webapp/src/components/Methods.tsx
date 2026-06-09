@@ -188,7 +188,7 @@ export default function Methods({ onNavigate }: Props) {
             OK, now try the model.
           </p>
           <p className="mt-3 text-base text-zinc-700 leading-relaxed max-w-3xl">
-            Score yourself with ten plain-language questions, or upload a CSV
+            Score yourself with fifteen plain-language questions, or upload a CSV
             of your cohort and get the full segmentation in one go: smart
             column mapping, per-row enrichment, cohort vs SHARE benchmark.
           </p>

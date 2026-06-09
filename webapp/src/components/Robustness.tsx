@@ -173,7 +173,7 @@ export default function Robustness({ onNavigate }: Props) {
             OK, now try the model.
           </p>
           <p className="mt-3 text-base text-zinc-700 leading-relaxed max-w-3xl">
-            Score yourself with ten plain-language questions, or upload a CSV
+            Score yourself with fifteen plain-language questions, or upload a CSV
             of your cohort and get the full segmentation in one go.
           </p>
           <p className="mt-6 text-sm font-medium text-blue-700 group-hover:translate-x-1 transition-transform inline-flex items-center gap-2">
