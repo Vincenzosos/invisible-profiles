@@ -82,3 +82,12 @@ v9_w8/**/*.rds
 v9_w8/**/*.csv
 v9_w8/**/*.pdf
 v9_w8/**/*.png
+
+# ---- Scratch / local exports (never commit) ------------------------------
+*.bak_*
+*_FINAL.pdf
+*.docx
+main_check*
+# dated exports (e.g. Briefing_..._2026-05-04.pdf, Cut_analysis_..._2026-06-07.md)
+*_2026-*.pdf
+*_2026-*.md
