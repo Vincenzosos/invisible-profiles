@@ -127,7 +127,7 @@ export default function Home({ onNavigate }: Props) {
                   metric="Mean CASP-12 difference, Sweden Fragile − Italy Fragile (matched pair). Positive sign means Swedish counterparts score higher quality of life on the 12–48 scale."
                   source="SHARE W9 subjective module · Cross-country pipeline output"
                 >
-                  +5.7 points
+                  +5.8 points
                 </Cite>{' '}
                 for the Fragile pair,{' '}
                 <Cite
