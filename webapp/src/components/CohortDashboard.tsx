@@ -332,19 +332,15 @@ export default function CohortDashboard({
         onSelect={onSelectCluster}
       />
 
-      {/* (c) Drill-down — slide-over via ClusterDossier (reused) +
-          B2B action card with placeholder operational moves. */}
+      {/* (c) Drill-down — slide-over via ClusterDossier (reused). */}
       {selectedCluster && (
-        <>
-          <ClusterDossier
-            country={country}
-            cluster={selectedCluster}
-            rows={rows}
-            unmappedColumns={unmappedColumns}
-            onClose={() => onSelectCluster(null)}
-          />
-          <ActionCard cluster={selectedCluster} />
-        </>
+        <ClusterDossier
+          country={country}
+          cluster={selectedCluster}
+          rows={rows}
+          unmappedColumns={unmappedColumns}
+          onClose={() => onSelectCluster(null)}
+        />
       )}
 
       {/* (c2) Cohort outcome forecast on held-out validators */}
@@ -848,111 +844,6 @@ function Metric({
         <p className="text-[11px] text-zinc-500 mt-2 leading-relaxed">{subtitle}</p>
       )}
     </div>
-  );
-}
-
-// ============================================================================
-//  Action card — operational moves on the selected cluster (placeholders).
-// ============================================================================
-
-function ActionCard({ cluster }: { cluster: string }) {
-  const noop = () => {
-    // Placeholder. Real handlers (CRM push, calendar invite, segment
-    // export) live behind the B2B contract layer, not in the open-web
-    // demo. The buttons disable themselves visually to signal preview
-    // status without breaking the SaaS-like layout.
-  };
-  const actions: { title: string; sub: string; icon: React.ReactNode }[] = [
-    {
-      title: 'Plan outreach for this segment',
-      sub: 'Compose a campaign brief tailored to the cluster signature, including channel, register and timing recommendations.',
-      icon: <ActionIcon kind="megaphone" />,
-    },
-    {
-      title: 'Export segment list',
-      sub: 'Download the row IDs assigned to this cluster as a clean CSV, ready for ingestion in your CRM or outreach platform.',
-      icon: <ActionIcon kind="download" />,
-    },
-    {
-      title: 'Schedule follow-up',
-      sub: 'Book a re-scoring window once new data arrives, so the segment composition stays current under demographic drift.',
-      icon: <ActionIcon kind="calendar" />,
-    },
-  ];
-  return (
-    <article className="rounded-2xl border border-blue-300 bg-blue-50/50 p-6 space-y-5">
-      <div className="flex items-baseline justify-between gap-3 flex-wrap">
-        <div>
-          <p className="eyebrow text-blue-700">Operational moves · {cluster}</p>
-          <p className="text-sm text-zinc-700 mt-1 max-w-2xl">
-            Placeholders — the open-web build does not push to external
-            systems. Wire your CRM, outreach tool or calendar to these
-            handlers in a private deployment.
-          </p>
-        </div>
-        <span className="rounded-full bg-white border border-zinc-300 text-zinc-600 text-[10px] uppercase tracking-wider px-2 py-0.5">
-          preview
-        </span>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        {actions.map((a) => (
-          <button
-            key={a.title}
-            type="button"
-            onClick={noop}
-            className="text-left rounded-xl bg-white border border-zinc-200 p-4 hover:border-blue-400 transition-colors space-y-2 group"
-          >
-            <div className="flex items-center gap-2 text-blue-700 group-hover:text-blue-900">
-              {a.icon}
-              <span className="text-sm font-medium text-slate-900">
-                {a.title}
-              </span>
-            </div>
-            <p className="text-xs text-zinc-600 leading-relaxed">{a.sub}</p>
-          </button>
-        ))}
-      </div>
-    </article>
-  );
-}
-
-function ActionIcon({ kind }: { kind: 'megaphone' | 'download' | 'calendar' }) {
-  const common = {
-    width: 18,
-    height: 18,
-    viewBox: '0 0 24 24',
-    fill: 'none',
-    stroke: 'currentColor',
-    strokeWidth: 2,
-    strokeLinecap: 'round' as const,
-    strokeLinejoin: 'round' as const,
-    className: 'shrink-0',
-    'aria-hidden': true,
-  };
-  if (kind === 'megaphone') {
-    return (
-      <svg {...common}>
-        <path d="m3 11 18-5v12L3 14v-3z" />
-        <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
-      </svg>
-    );
-  }
-  if (kind === 'download') {
-    return (
-      <svg {...common}>
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-        <polyline points="7 10 12 15 17 10" />
-        <line x1="12" y1="15" x2="12" y2="3" />
-      </svg>
-    );
-  }
-  return (
-    <svg {...common}>
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-      <line x1="16" y1="2" x2="16" y2="6" />
-      <line x1="8" y1="2" x2="8" y2="6" />
-      <line x1="3" y1="10" x2="21" y2="10" />
-    </svg>
   );
 }
 
