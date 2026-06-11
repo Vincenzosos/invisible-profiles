@@ -10,11 +10,6 @@
           "profile": "Connected Active",
           "rationale": "25.4% of the Italian analytical sample, highest income and digital reach (75% internet penetration). Strongest willingness-to-pay signal; primary target for digital-first dental + private specialist bundle.",
           "fit_score": 9.5,
-          "addressable_market_eur_m_per_year": {
-            "low": 162,
-            "central": 324,
-            "high": 540
-          },
           "addressable_market_eur_assumption": "30% conversion × €150-500 / year average dental premium (sourced range from Italian individual private dental insurance market). Lower bound: basic prevention-only product. Upper bound: comprehensive senior dental incl. implants/orthodontics.",
           "sources": ["private_dental_premiums", "andi_2024", "gimbe_2025"]
         },
@@ -22,11 +17,6 @@
           "profile": "Moderate Isolated",
           "rationale": "26.9% of the Italian analytical sample (the largest single cluster), asset-rich (90% home owners). Only 21% dentist uptake vs Traditional Social's 48%. Largest absolute behavioural-gap target if paired with a navigator-mediated channel (e.g. community pharmacy, GP referral).",
           "fit_score": 8.0,
-          "addressable_market_eur_m_per_year": {
-            "low": 114,
-            "central": 229,
-            "high": 381
-          },
           "addressable_market_eur_assumption": "20% conversion × €150-500 / year. Lower conversion than Connected Active reflects the navigator-channel build cost.",
           "sources": ["private_dental_premiums", "gimbe_2025"]
         },
@@ -34,11 +24,6 @@
           "profile": "Traditional Social",
           "rationale": "7.7% of the Italian analytical sample (smallest cluster) but 48% dentist uptake — the highest of any Italian profile, indicating community-channel receptivity (associations, parishes, broker network). Best fit for traditional broker-channel insurance products.",
           "fit_score": 6.5,
-          "addressable_market_eur_m_per_year": {
-            "low": 41,
-            "central": 82,
-            "high": 137
-          },
           "addressable_market_eur_assumption": "25% conversion × €150-500 / year via community-broker channel.",
           "sources": ["private_dental_premiums"]
         }
@@ -83,11 +68,6 @@
           "profile": "Connected Active",
           "rationale": "Highest mean net wealth and digital reach in the Italian typology (cluster centroid). Best fit for digital-native robo-advisor + private banking hybrid platforms, succession planning tools, longevity-linked products.",
           "fit_score": 9.8,
-          "addressable_market_eur_m_per_year": {
-            "low": 280,
-            "central": 560,
-            "high": 933
-          },
           "addressable_market_eur_assumption": "Illustrative B2B sizing: 5% AUM penetration on €30k median investable per individual × 0.5-1.5% all-in fee load (range from fee-only / robo to full-service hybrid), applied to the cluster's projected Istat 2024 reference scale as illustrative scenario, not as a probabilistic generalisation of the descriptive K-means partition.",
           "sources": ["aipb_2024", "asset_mgmt_fees_2024", "bankitalia_wealth_2024"]
         },
@@ -95,11 +75,6 @@
           "profile": "Moderate Isolated",
           "rationale": "Second-highest mean net wealth in the Italian typology, 90% home-ownership, but only 34% internet. Hybrid-channel wealth management with branch + digital-light interface and navigator support is the white-space.",
           "fit_score": 8.7,
-          "addressable_market_eur_m_per_year": {
-            "low": 191,
-            "central": 381,
-            "high": 572
-          },
           "addressable_market_eur_assumption": "4% AUM penetration on €25k median investable × 0.5-1.5% fee, hybrid-channel ramp.",
           "sources": ["aipb_2024", "asset_mgmt_fees_2024"]
         },
@@ -107,11 +82,6 @@
           "profile": "Traditional Social",
           "rationale": "Third-highest mean net wealth in the Italian typology, concentrated in property and family-decided savings. Traditional broker / family-office channel still dominant. Differentiator: succession + intergenerational planning.",
           "fit_score": 7.0,
-          "addressable_market_eur_m_per_year": {
-            "low": 82,
-            "central": 165,
-            "high": 247
-          },
           "addressable_market_eur_assumption": "Higher fee (1-2%) but smaller segment; family-mediated channel.",
           "sources": ["aipb_2024", "asset_mgmt_fees_2024"]
         }
@@ -155,11 +125,6 @@
           "profile": "Moderate Isolated",
           "rationale": "Highest fit by far: 90% home-owners with low social network + low digital + adequate health. Selling proposition is community + navigator + maintained autonomy, not assisted living.",
           "fit_score": 9.2,
-          "addressable_market_eur_m_per_year": {
-            "low": 686,
-            "central": 1143,
-            "high": 1715
-          },
           "addressable_market_eur_assumption": "1% scaled penetration × €1,500-3,000 / month × 12 months. Range covers entry-tier to mid-tier senior-living products.",
           "sources": ["rsa_costs_2024"]
         },
@@ -167,11 +132,6 @@
           "profile": "Traditional Social",
           "rationale": "Smaller segment but high social-engagement preference. Fit for cohousing, age-friendly community platforms, parish-mediated services.",
           "fit_score": 7.5,
-          "addressable_market_eur_m_per_year": {
-            "low": 158,
-            "central": 264,
-            "high": 395
-          },
           "addressable_market_eur_assumption": "1% scaled penetration × €1,500-3,000 / month × 12 months in cohousing model.",
           "sources": ["rsa_costs_2024"]
         },
@@ -179,11 +139,6 @@
           "profile": "Connected Active",
           "rationale": "Premium tier: digitally-managed services (smart home, on-demand companion, telehealth). Smaller share of segment but highest margin.",
           "fit_score": 7.0,
-          "addressable_market_eur_m_per_year": {
-            "low": 130,
-            "central": 216,
-            "high": 324
-          },
           "addressable_market_eur_assumption": "Premium subscription €100-300 / month at 5% penetration (smart-home + telehealth + on-demand companion bundle).",
           "sources": ["rsa_costs_2024"]
         }
@@ -227,11 +182,6 @@
           "profile": "Fragile Depressed",
           "rationale": "Highest chronic load, highest depressive load, caregiver-mediated. OTC, mental-health-adjacent, adherence packaging products. Distribution via family + community pharmacy.",
           "fit_score": 8.9,
-          "addressable_market_eur_m_per_year": {
-            "low": 228,
-            "central": 379,
-            "high": 683
-          },
           "addressable_market_eur_assumption": "€60-180 / individual / year on adherence packaging + OTC adjacencies × 100% segment.",
           "sources": ["aifa_osmed_2024"]
         },
@@ -239,11 +189,6 @@
           "profile": "Connected Active",
           "rationale": "Self-managing customer, digital-native. Telehealth-enabled prescription, longevity products, premium OTC e-commerce.",
           "fit_score": 8.0,
-          "addressable_market_eur_m_per_year": {
-            "low": 216,
-            "central": 360,
-            "high": 648
-          },
           "addressable_market_eur_assumption": "€60-180 / individual / year on premium OTC + telehealth subscription × 100% segment.",
           "sources": ["aifa_osmed_2024"]
         },
@@ -251,11 +196,6 @@
           "profile": "Moderate Isolated",
           "rationale": "Under-served by digital channels; community pharmacy is the natural touch-point. Adherence interventions can leverage the navigator-service investment.",
           "fit_score": 7.4,
-          "addressable_market_eur_m_per_year": {
-            "low": 229,
-            "central": 381,
-            "high": 686
-          },
           "addressable_market_eur_assumption": "€60-180 / individual / year on adherence + chronic-care OTC via pharmacy navigator × 100% segment.",
           "sources": ["aifa_osmed_2024"]
         }
