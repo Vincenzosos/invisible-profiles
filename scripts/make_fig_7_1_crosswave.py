@@ -101,9 +101,14 @@ def main():
 
     # Threshold line
     ax.axvline(THRESHOLD, color="#999999", ls="--", lw=1.0, zorder=1)
-    ax.text(THRESHOLD + 0.08, rows[-1][0] - 0.4,
+    # Caption placed in the free gap between the two country blocks (just right of
+    # the dashed line), with a white bbox, so it no longer collides with the
+    # Asset Rich row that runs out to d = 5.90.
+    gap_y = (rows[len(ITALY) - 1][0] + rows[len(ITALY)][0]) / 2.0
+    ax.text(THRESHOLD + 0.12, gap_y,
             "structural-match\nthreshold  $d = 2.0$",
-            fontsize=8.5, color="#666666", ha="left", va="bottom")
+            fontsize=8.5, color="#666666", ha="left", va="center", zorder=4,
+            bbox=dict(boxstyle="round,pad=0.25", fc="white", ec="none", alpha=0.95))
 
     # Cosmetics
     ax.set_xlabel("Hungarian-matched centroid distance, Wave 8 $\\rightarrow$ Wave 9 "

@@ -95,11 +95,34 @@ At the country-aggregate level, healthcare utilisation shows a consistent patter
 \subsection{Matched-pair gaps}
 \label{sec:ch6-pair-gaps}
 
-The matched-pair analysis isolates the cross-country gaps within structurally comparable profiles; all gaps are in percentage points (pp) on the corresponding raw indicator, with a negative forgone-care gap indicating \emph{less} unmet need in Sweden. The Fragile pair (IT Fragile Resigned vs SE Fragile): dental 55~pp (19.8\% against 74.6\%, 95\% CI [48, 62]~pp), forgone care $-7$~pp (15.2\% against 7.8\%), internet use 55~pp (8.6\% against 63.6\%). The Connected pair (IT Connected Active vs SE Connected Wealthy): dental 39~pp (49.3\% against 88.0\%, 95\% CI [34, 44]~pp), forgone care $-3$~pp (3.8\% against 0.9\%), internet use 24~pp (74.8\% against 98.5\%). The Socially-oriented pair (IT Traditional Social vs SE Moderate): dental 39~pp (47.8\% against 86.6\%), forgone care $-4$~pp (5.4\% against 1.0\%). The Declining pair (IT Fragile Depressed vs SE Social Decline) reports the largest gaps, dental 60~pp (22.0\% against 82.4\%) and forgone care $-16$~pp (19.2\% against 3.4\%), consistent with the residual character of the Swedish Social Decline cluster (\S\ref{sec:ch5-five-autonomous}).
+The matched-pair analysis isolates the cross-country gaps within structurally comparable profiles. All gaps are in percentage points on the corresponding raw indicator, and the gap is Sweden minus Italy, so a negative forgone-care gap indicates \emph{less} unmet need in Sweden; Table~\ref{tab:ch6-pairgaps} reports the dental-care, forgone-care and internet-use gaps for the four matched pairs.
 
-\looseness=-1 The gaps are systematic: across all four pairs Italian profiles report lower dental-care attendance and higher forgone-care prevalence than their Swedish twins, with magnitudes that scale with the substantive content of the pair, largest in the Declining and Fragile pairs (60 and 55 percentage points on dental attendance) and smaller in the Connected and Socially-oriented pairs (39 percentage points in both; Figure~\ref{fig:ch6-healthcare-gap}). The cross-country gap is thus not a uniform shift but a structurally graduated one that widens at the lower end of the resource-and-engagement gradient, consistent with a welfare-regime reading in which the Italian system's healthcare-access deficits are co-located with the fragile and declining segments of the population.
+\begin{table}[!htbp]
+  \centering
+  \small
+  \caption[Matched-pair healthcare and digital gaps, Italy versus Sweden]{Matched-pair gaps on dental attendance, forgone care and internet use, Italy versus Sweden}
+  \label{tab:ch6-pairgaps}
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{@{}lrrcrrrrrr@{}}
+    \toprule
+    & \multicolumn{3}{c}{\textbf{Dental attendance}} & \multicolumn{3}{c}{\textbf{Forgone care}} & \multicolumn{3}{c}{\textbf{Internet use}} \\
+    \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+    \textbf{Pair (IT vs SE)} & IT\% & SE\% & Gap pp & IT\% & SE\% & Gap pp & IT\% & SE\% & Gap pp \\
+    \midrule
+    Fragile (FR vs F)       & 19.8 & 74.6 & 55 [48, 62] & 15.2 & 7.8 & $-7$  & 8.6  & 63.6 & 55 \\
+    Declining (FD vs SD)    & 22.0 & 82.4 & 60          & 19.2 & 3.4 & $-16$ & --   & --   & -- \\
+    Socially-or.\ (TS vs M) & 47.8 & 86.6 & 39          & 5.4  & 1.0 & $-4$  & --   & --   & -- \\
+    Connected (CA vs CW)    & 49.3 & 88.0 & 39 [34, 44] & 3.8  & 0.9 & $-3$  & 74.8 & 98.5 & 24 \\
+    \bottomrule
+  \end{tabular}
+  \par\medskip
+  \begin{minipage}{\linewidth}
+    \footnotesize\textit{Note.} Gap $=$ Sweden $-$ Italy, in percentage points on the corresponding raw indicator; a negative forgone-care gap indicates less unmet need in Sweden. Bootstrap 95\% confidence intervals are given in brackets for the dental gaps reported with intervals in the text. ``--'' indicates not reported in this section.
+  \end{minipage}
+\end{table}
 
-These cross-country gaps are descriptive differences between structurally matched profiles, reported without further covariate adjustment. The cross-country matching aligns the profiles on the eleven analytical dimensions, but residual compositional differences within a matched pair---for instance in age or chronic-condition load---are not partialled out; the gaps are therefore read as regime-consistent associations rather than as covariate-adjusted or causal estimates, and a fully adjusted cross-country specification is left to future work (\S\ref{sec:ch9-future}). This is the cross-country counterpart of the within-country adjustment applied to the Italian Isolation Paradox in Table~\ref{tab:ch4-isolation-regression}.
+The Declining pair (IT Fragile Depressed vs SE Social Decline) carries the largest gaps in the table, consistent with the residual character of the Swedish Social Decline cluster (\S\ref{sec:ch5-five-autonomous}).
 
 \begin{figure}[!htbp]
   \centering
@@ -107,6 +130,10 @@ These cross-country gaps are descriptive differences between structurally matche
   \caption[Cross-country healthcare utilisation, matched pairs]{Cross-country healthcare utilisation across the four matched profile pairs. Italy (dark blue) and Sweden (light blue) cluster means on four indicators: preventive dental attendance and forgone care for cost (both over the past twelve months), specialist contacts per year, and CASP-12 quality of life. On the Socially-oriented pair the Italian profile is marginally higher on CASP-12 (38.5 against 37.1).}
   \label{fig:ch6-healthcare-gap}
 \end{figure}
+
+\looseness=-1 The gaps are systematic: across all four pairs Italian profiles report lower dental-care attendance and higher forgone-care prevalence than their Swedish twins, with magnitudes that scale with the substantive content of the pair, largest in the Declining and Fragile pairs (60 and 55 percentage points on dental attendance) and smaller in the Connected and Socially-oriented pairs (39 percentage points in both; Figure~\ref{fig:ch6-healthcare-gap}). The cross-country gap is thus not a uniform shift but a structurally graduated one that widens at the lower end of the resource-and-engagement gradient, consistent with a welfare-regime reading in which the Italian system's healthcare-access deficits are co-located with the fragile and declining segments of the population.
+
+These cross-country gaps are descriptive differences between structurally matched profiles, reported without further covariate adjustment. The cross-country matching aligns the profiles on the eleven analytical dimensions, but residual compositional differences within a matched pair---for instance in age or chronic-condition load---are not partialled out; the gaps are therefore read as regime-consistent associations rather than as covariate-adjusted or causal estimates, and a fully adjusted cross-country specification is left to future work (\S\ref{sec:ch9-future}). This is the cross-country counterpart of the within-country adjustment applied to the Italian Isolation Paradox in Table~\ref{tab:ch4-isolation-regression}.
 
 \subsection{The Isolation Paradox in cross-country perspective}
 \label{sec:ch6-isolation-paradox-comparative}
