@@ -387,7 +387,7 @@ function SignatureRow({
         {benchmark !== null && (
           <div className="relative h-1.5 bg-zinc-50 rounded-full overflow-hidden">
             <div
-              className="absolute inset-y-0 left-0 bg-zinc-400 rounded-full"
+              className="absolute inset-y-0 left-0 bg-zinc-300 rounded-full"
               style={{ width: `${benchPct.toFixed(1)}%` }}
             />
           </div>

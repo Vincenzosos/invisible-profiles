@@ -70,9 +70,9 @@ type Props = {
 };
 
 const EVIDENCE_COLORS: Record<Evidence, string> = {
-  strong: 'bg-blue-100 text-blue-800',
-  moderate: 'bg-amber-100 text-amber-800',
-  weak: 'bg-rose-100 text-rose-800',
+  strong: 'bg-blue-50 text-blue-800 border border-blue-200',
+  moderate: 'bg-amber-50 text-amber-800 border border-amber-200',
+  weak: 'bg-rose-50 text-rose-700 border border-rose-200',
 };
 
 const SOURCE_LABEL: Record<MappingSource, string> = {
@@ -1055,8 +1055,8 @@ function MappingCard({
               className={[
                 'rounded-full px-4 py-1.5 text-xs border transition-colors',
                 missingStrategy === s
-                  ? 'bg-slate-900 text-white border-slate-900'
-                  : 'bg-white text-zinc-700 border-zinc-300 hover:border-slate-500',
+                  ? 'bg-blue-50 text-blue-800 border-blue-700'
+                  : 'bg-white text-zinc-700 border-zinc-200 hover:border-slate-500',
               ].join(' ')}
             >
               {s === 'skip' && 'Skip rows with issues'}
@@ -1086,7 +1086,7 @@ function MappingCard({
           type="button"
           onClick={onScore}
           disabled={!canScore}
-          className="rounded-xl bg-slate-900 text-white px-6 py-2.5 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className="rounded-full bg-slate-900 text-white px-6 py-2.5 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
           Score {parsed.rows.length.toLocaleString()} rows
         </button>

@@ -23,6 +23,7 @@ import {
 } from '../lib/external-validation';
 import type { Country } from '../lib/profiler';
 import type { Evidence } from '../lib/evidence';
+import { clusterColor } from '../lib/clusterColors';
 
 type Confidence = 'confident' | 'borderline' | 'weak';
 
@@ -77,21 +78,6 @@ const CATEGORIES: Record<
     digital: ['Connected Wealthy', 'Wealthy Digital', 'Asset Rich', 'Moderate'],
     intermediated: ['Fragile', 'Social Decline'],
   },
-};
-
-// Cluster colours — keep aligned with the rest of the app palette.
-const CLUSTER_COLOR: Record<string, string> = {
-  'Fragile Resigned':   '#7c2d12',  // deep red-brown
-  'Fragile Depressed':  '#b91c1c',  // red
-  'Moderate Isolated':  '#d97706',  // amber (the paradox highlight)
-  'Traditional Social': '#0891b2',  // cyan
-  'Connected Active':   '#1d4ed8',  // blue (anchor of digital pole)
-  'Fragile':            '#7c2d12',
-  'Social Decline':     '#b91c1c',
-  'Moderate':           '#d97706',
-  'Asset Rich':         '#0891b2',
-  'Wealthy Digital':    '#1d4ed8',
-  'Connected Wealthy':  '#1e40af',
 };
 
 export default function CohortDashboard({
@@ -588,7 +574,7 @@ function DistributionChart({
           const benchPct = d.benchmarkShare * 100;
           const dPp = d.deltaPp;
           const isSelected = selected === d.name;
-          const colour = CLUSTER_COLOR[d.name] ?? '#3b82f6';
+          const colour = clusterColor(d.name);
           return (
             <button
               type="button"
@@ -622,7 +608,7 @@ function DistributionChart({
                 </div>
                 <div className="relative h-1.5 bg-zinc-50 rounded-full overflow-hidden">
                   <div
-                    className="absolute inset-y-0 left-0 bg-zinc-400 rounded-full"
+                    className="absolute inset-y-0 left-0 bg-zinc-300 rounded-full"
                     style={{ width: `${(benchPct / (max * 100)) * 100}%` }}
                   />
                 </div>
@@ -871,14 +857,14 @@ function ExportPanel({
         <button
           type="button"
           onClick={onDownloadCsv}
-          className="rounded-xl bg-blue-600 text-white px-5 py-2.5 hover:bg-blue-700 transition-colors text-sm"
+          className="rounded-full bg-slate-900 text-white px-5 py-2.5 hover:bg-slate-700 transition-colors text-sm"
         >
           Export full results CSV
         </button>
         <button
           type="button"
           onClick={onPrintReport}
-          className="rounded-xl border border-zinc-300 bg-white px-5 py-2.5 hover:border-slate-500 transition-colors text-sm text-slate-900"
+          className="rounded-full border border-zinc-300 bg-white px-5 py-2.5 hover:border-slate-500 transition-colors text-sm text-slate-900"
         >
           Download cohort report PDF
         </button>

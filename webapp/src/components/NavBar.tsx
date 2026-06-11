@@ -21,7 +21,7 @@ type Props = {
 
 export default function NavBar({ active, onNavigate }: Props) {
   return (
-    <nav className="border-b border-zinc-200 bg-zinc-50/95 backdrop-blur sticky top-0 z-10">
+    <nav className="border-b border-zinc-200 bg-zinc-50/95 backdrop-blur-sm sticky top-0 z-10">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="flex items-center justify-between py-4">
           <button
@@ -49,7 +49,7 @@ export default function NavBar({ active, onNavigate }: Props) {
                   'px-4 sm:px-5 py-3 text-sm border-b-2 -mb-px transition-colors',
                   isActive
                     ? 'border-blue-700 text-slate-900 font-medium'
-                    : 'border-transparent text-zinc-600 hover:text-slate-900',
+                    : 'border-transparent text-zinc-500 hover:text-zinc-700',
                 ].join(' ')}
               >
                 {s.label}
