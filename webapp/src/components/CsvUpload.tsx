@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import centroidsData from '../data/centroids.json';
 import questionsData from '../data/profiler_questions.json';
 import sampleCohortCsv from '../data/test_cohort.csv?raw';
@@ -17,7 +17,7 @@ import {
   type MappingSource,
   type RescalingRule,
 } from '../lib/csv-mapping';
-import { VAR_LIST, VAR_SPECS, varLabel } from '../lib/var-specs';
+import { VAR_LIST, VAR_SPECS, varLabel, varDetail } from '../lib/var-specs';
 import CohortDashboard from './CohortDashboard';
 import {
   autoBuckets,
@@ -912,7 +912,7 @@ function MappingCard({
     });
   };
   return (
-    <article className="rounded-2xl bg-white border border-zinc-200 p-6 space-y-5">
+    <article data-card="mapping" className="rounded-2xl bg-white border border-zinc-200 p-6 space-y-5">
       <div>
         <p className="eyebrow">Map your columns</p>
         <p className="text-sm text-zinc-600 mt-2 max-w-2xl">
@@ -978,6 +978,7 @@ function MappingCard({
           return (
             <div
               key={kv.var}
+              data-varrow={kv.var}
               className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-start"
             >
               <div className="sm:col-span-5">
@@ -1134,7 +1135,7 @@ function PreflightPanel({ preflight }: { preflight: Preflight }) {
       e.kind !== 'insufficient' && (e.severity === 'warn' || e.severity === 'strong'),
   );
   return (
-    <div className="rounded-2xl bg-amber-50 border border-amber-200 p-5 space-y-3">
+    <div data-panel="sample-skew" className="rounded-2xl bg-amber-50 border border-amber-200 p-5 space-y-3">
       <p className="eyebrow text-amber-800">Sample-skew check</p>
       <p className="text-sm font-medium text-amber-900">
         {failing.length} of {preflight.tested} mapped variables differ from
@@ -1158,42 +1159,42 @@ function PreflightPanel({ preflight }: { preflight: Preflight }) {
                 : 'bg-amber-100 text-amber-800';
             const label =
               e.severity === 'strong' ? 'differs significantly' : 'differs';
+            const badge = (
+              <span
+                className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${tone} whitespace-nowrap`}
+              >
+                {label}
+              </span>
+            );
             if (e.kind === 'ks') {
               return (
-                <li key={e.var} className="flex items-baseline justify-between gap-3">
-                  <span className="text-zinc-800">
-                    <span className="font-medium">{varLabel(e.var)}</span>
-                    <span className="font-mono text-[10px] text-zinc-400 ml-1" title="SHARE Wave 9 codename">
-                      {e.var}
-                    </span>{' '}
-                    · D = {e.D.toFixed(3)}, p = {e.p < 1e-4 ? e.p.toExponential(2) : e.p.toFixed(4)}
-                  </span>
-                  <span
-                    className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${tone} whitespace-nowrap`}
-                  >
-                    {label}
-                  </span>
-                </li>
+                <PreflightRow
+                  key={e.var}
+                  code={e.var}
+                  badge={badge}
+                  stats={
+                    <>
+                      · D = {e.D.toFixed(3)}, p ={' '}
+                      {e.p < 1e-4 ? e.p.toExponential(2) : e.p.toFixed(4)}
+                    </>
+                  }
+                />
               );
             }
             // binary
             return (
-              <li key={e.var} className="flex items-baseline justify-between gap-3">
-                <span className="text-zinc-800">
-                  <span className="font-medium">{varLabel(e.var)}</span>
-                  <span className="font-mono text-[10px] text-zinc-400 ml-1" title="SHARE Wave 9 codename">
-                    {e.var}
-                  </span>{' '}
-                  · cohort {(e.cohortRate * 100).toFixed(0)}% vs SHARE{' '}
-                  {(e.shareRate * 100).toFixed(0)}% (Δ{' '}
-                  {(e.absDiff * 100).toFixed(0)} pp)
-                </span>
-                <span
-                  className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${tone} whitespace-nowrap`}
-                >
-                  {label}
-                </span>
-              </li>
+              <PreflightRow
+                key={e.var}
+                code={e.var}
+                badge={badge}
+                stats={
+                  <>
+                    · cohort {(e.cohortRate * 100).toFixed(0)}% vs SHARE{' '}
+                    {(e.shareRate * 100).toFixed(0)}% (Δ{' '}
+                    {(e.absDiff * 100).toFixed(0)} pp)
+                  </>
+                }
+              />
             );
           })}
         </ul>
@@ -1204,6 +1205,40 @@ function PreflightPanel({ preflight }: { preflight: Preflight }) {
         via proportion difference instead.
       </p>
     </div>
+  );
+}
+
+// One sample-skew row: clean human label (never truncated) with the SHARE
+// coding range + codename available as a native tooltip and an expandable
+// secondary line revealed on click.
+function PreflightRow({
+  code,
+  stats,
+  badge,
+}: {
+  code: string;
+  stats: ReactNode;
+  badge: ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <li className="space-y-0.5">
+      <div className="flex items-baseline justify-between gap-3">
+        <span className="text-zinc-800">
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            title={varDetail(code)}
+            className="font-medium text-left hover:text-slate-900 cursor-help"
+          >
+            {varLabel(code)}
+          </button>{' '}
+          {stats}
+        </span>
+        {badge}
+      </div>
+      {open && <p className="text-[10px] text-zinc-500">{varDetail(code)}</p>}
+    </li>
   );
 }
 

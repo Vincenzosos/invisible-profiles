@@ -9,7 +9,7 @@
 //   - Welfare-gap matched-pair (when applicable)
 //   - Confidence-bucket distribution within the cluster
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import killer from '../data/killer_numbers.json';
 import {
   healthcareFingerprint,
@@ -18,7 +18,7 @@ import {
   type HealthcareIndicator,
   type WelfareGapDimension,
 } from '../lib/cluster-insights';
-import { VAR_LIST, VAR_SPECS, varLabelWithRange } from '../lib/var-specs';
+import { VAR_LIST, VAR_SPECS, varLabel, varDetail } from '../lib/var-specs';
 import type { Country } from '../lib/profiler';
 
 type Confidence = 'confident' | 'borderline' | 'weak';
@@ -112,7 +112,7 @@ export default function ClusterDossier({
   const deltaPp = (inClusterPct - benchmarkPct) * 100;
 
   return (
-    <article className="rounded-2xl bg-zinc-50 border border-blue-300 p-6 space-y-6">
+    <article data-card="dossier" className="rounded-2xl bg-zinc-50 border border-blue-300 p-6 space-y-6">
       <header className="flex items-baseline justify-between gap-4 flex-wrap">
         <div className="space-y-1">
           <p className="eyebrow text-blue-700">Cluster dossier · {country}</p>
@@ -201,7 +201,8 @@ export default function ClusterDossier({
                 <SignatureRow
                   key={v.var}
                   varName={v.var}
-                  label={varLabelWithRange(v.var)}
+                  label={varLabel(v.var)}
+                  detail={varDetail(v.var)}
                   cohort={cohortMean}
                   benchmark={bench}
                   isPct={
@@ -349,16 +350,19 @@ function buildDemographics(
 function SignatureRow({
   varName,
   label,
+  detail,
   cohort,
   benchmark,
   isPct,
 }: {
   varName: string;
   label: string;
+  detail: string;
   cohort: number;
   benchmark: number | null;
   isPct: boolean;
 }) {
+  const [open, setOpen] = useState(false);
   const fmt = (v: number | null) =>
     v === null
       ? '—'
@@ -374,11 +378,20 @@ function SignatureRow({
   const benchPct = benchmark === null ? 0 : (benchmark / max) * 100;
   return (
     <div className="grid grid-cols-12 gap-3 items-center">
-      <div
-        className="col-span-5 text-sm text-zinc-700 truncate"
-        title={`${label} · SHARE: ${varName}`}
-      >
-        {label}
+      <div className="col-span-5 text-sm text-zinc-700">
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          title={detail}
+          className="text-left leading-snug hover:text-slate-900 cursor-help"
+        >
+          {label}
+        </button>
+        {open && (
+          <div className="text-[11px] text-zinc-500 mt-0.5 leading-snug">
+            {detail}
+          </div>
+        )}
       </div>
       <div className="col-span-5 space-y-1">
         <div className="relative h-2 bg-zinc-100 rounded-full overflow-hidden">

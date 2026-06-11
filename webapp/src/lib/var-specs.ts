@@ -132,17 +132,20 @@ export const VAR_LIST: VarSpec[] = Object.values(VAR_SPECS);
 // Use these everywhere a SHARE codename would otherwise be shown to a user.
 // The codename (e.g. "sphus") is kept available for tooltips / secondary text.
 
-/** Human-readable label, e.g. "Self-rated health". Falls back to the code. */
+/** Human-readable label, e.g. "Self-rated health". Falls back to the code.
+ *  This is the only string shown inline to users; never truncate it. */
 export function varLabel(code: string): string {
   return VAR_SPECS[code]?.label ?? code;
 }
 
-/** Label with the SHARE coding range in parentheses, e.g.
- *  "Self-rated health (1 (excellent) — 5 (poor))". Falls back to the code. */
-export function varLabelWithRange(code: string): string {
+/** Secondary detail line for tooltip / expandable row: coding range (with the
+ *  inner parentheses flattened, so no nested brackets) plus the SHARE codename,
+ *  e.g. "0 no symptoms — 12 severe · SHARE: eurod". Falls back to the code. */
+export function varDetail(code: string): string {
   const spec = VAR_SPECS[code];
   if (!spec) return code;
-  return `${spec.label} (${spec.rangeHint})`;
+  const range = spec.rangeHint.replace(/[()]/g, '').replace(/\s+/g, ' ').trim();
+  return `${range} · SHARE: ${code}`;
 }
 
 // Synonym tokens used by the auto-mapper to resolve common header
