@@ -28,6 +28,10 @@
    * stock for negatives and warnings. */
   --color-blue-50:  #eef3f9;
   --color-blue-100: #dce7f3;
+  --color-blue-200: #c3d4e9;
+  --color-blue-300: #9db8d9;
+  --color-blue-400: #5f86b8;
+  --color-blue-500: #3a64a0;
   --color-blue-600: #2a5391;
   --color-blue-700: #1b3f73;
   --color-blue-800: #143e72;
@@ -36,9 +40,12 @@
   --color-zinc-100: #f3f1ed;
   --color-zinc-200: #e7e4de;
   --color-zinc-300: #d6d2ca;
+  --color-zinc-400: #a8a294;
   --color-zinc-500: #79756d;
   --color-zinc-600: #5d594f;
   --color-zinc-700: #44413a;
+  --color-slate-500: #5a6b85;
+  --color-slate-700: #2e405e;
   --color-slate-900: #16243a;
 }
 
