@@ -91,3 +91,29 @@ main_check*
 # dated exports (e.g. Briefing_..._2026-05-04.pdf, Cut_analysis_..._2026-06-07.md)
 *_2026-*.pdf
 *_2026-*.md
+
+# ---- Microdata hardening (NEVER commit raw or row-level microdata) --------
+# Global guard: R / Stata / SPSS / columnar binary data formats, anywhere.
+*.rds
+*.RData
+*.dta
+*.sav
+*.parquet
+
+# Recursive guard for per-row CSV exports under the R pipeline. CSVs in v9/
+# subtrees are assumed to be microdata unless explicitly excepted below.
+v9/**/*.csv
+# Explicit exceptions: aggregated, non-microdata tables intentionally tracked
+# (confusion matrices, sensitivity summaries, a regression-coefficient table).
+!v9/outputs/sensitivities/sens1_sweden_outlier_alpha.csv
+!v9/outputs/sensitivities/sens1a_confusion_alpha_0.0001.csv
+!v9/outputs/sensitivities/sens1b_confusion_alpha_0.csv
+!v9/outputs/sensitivities/sens2_gower_confusion_italy.csv
+!v9/outputs/sensitivities/sens2_gower_confusion_sweden.csv
+!v9/outputs/sensitivities/sens2_gower_pam.csv
+!v9/outputs/sensitivities/sens3_heywood_alternatives.csv
+!v9/outputs/sensitivities/sens4_italy_29_vs_31.csv
+!v9/outputs/sensitivities/sens5_binary_downweight.csv
+!v9/outputs/step46_isolation_regression.csv
+# Synthetic 30-row demo cohort used by the webapp (not microdata).
+!webapp/src/data/test_cohort.csv
