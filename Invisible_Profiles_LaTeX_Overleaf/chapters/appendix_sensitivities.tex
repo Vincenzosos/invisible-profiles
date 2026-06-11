@@ -1,7 +1,7 @@
 \chapter{Sensitivity Analyses}
 \label{ch:appx-sens}
 
-This appendix documents the five sensitivity analyses run on the deployed pipeline in response to the second phase of the Trentini review. Each analysis perturbs one methodological choice of the Italian or Swedish branch of the pipeline, re-derives the resulting partition, and reports the adjusted Rand index against the deployed partition together with relevant fit diagnostics. The interpretive thresholds are stated upfront for each analysis; the verdicts in Table~\ref{tab:appx-sens-summary} are read against those thresholds rather than as absolute statements of correctness. The quantitative detail of the distance-metric and factor-extraction analyses is tabulated in Tables~\ref{tab:appx-distance-weighting} and~\ref{tab:appx-fa-extraction}; fuller per-analysis outputs are additionally archived as comma-separated value files under \href{https://github.com/Vincenzosos/invisible-profiles/tree/main/v9/outputs/sensitivities}{\texttt{v9/outputs/sensitivities/}}.
+This appendix documents the five sensitivity analyses run on the deployed pipeline in response to the supervisor's methodological review. Each analysis perturbs one methodological choice of the Italian or Swedish branch of the pipeline, re-derives the resulting partition, and reports the adjusted Rand index against the deployed partition together with relevant fit diagnostics. The interpretive thresholds are stated upfront for each analysis; the verdicts in Table~\ref{tab:appx-sens-summary} are read against those thresholds rather than as absolute statements of correctness. The quantitative detail of the distance-metric and factor-extraction analyses is tabulated in Tables~\ref{tab:appx-distance-weighting} and~\ref{tab:appx-fa-extraction}; fuller per-analysis outputs are additionally archived as comma-separated value files under \href{https://github.com/Vincenzosos/invisible-profiles/tree/main/v9/outputs/sensitivities}{\texttt{v9/outputs/sensitivities/}}.
 
 
 \section{Outlier exclusion threshold (Sweden)}
@@ -9,7 +9,7 @@ This appendix documents the five sensitivity analyses run on the deployed pipeli
 
 The deployed Mahalanobis outlier-exclusion routine for Sweden (\S\ref{sec:ch3-preprocessing}) operates at $\alpha = 0.001$, the conventional $\chi^2$ cutoff at the 99.9th percentile. The procedure removes 44 respondents from the post-listwise Swedish sub-sample of 1{,}831, equivalent to 2.4\% (Table~\ref{tab:ch3-sample-sizes}, \S\ref{sec:ch3-data}). The robustness check re-runs the full pipeline under two alternative thresholds, $\alpha = 0.0001$ (more conservative; outliers removed = 14) and $\alpha = 0$ (no exclusion). The K-means partition at $k = 6$ is recomputed under each variant on the 31-variable standardised input space with the same seed and initialisation count of the deployed routine, and the adjusted Rand index is computed against the deployed partition over the intersection of the two samples. The resulting ARI values are 0.654 at $\alpha = 0.0001$ ($+30$ rows retained) and 0.551 at $\alpha = 0$ ($+44$ rows retained). The values lie below the 0.80 reference threshold for substantive partition robustness.
 
-A profile-level purity calculation qualifies the lower-than-threshold ARI. Each variant cluster is mapped to the dominant deployed profile, and purity is the proportion of observations in the majority-profile column. The purity is 0.822 at $\alpha = 0.0001$ and 0.727 at $\alpha = 0$. The six macro-profiles of the deployed typology survive both perturbations: the Wealthy Digital, Connected Wealthy, Fragile and Asset Rich clusters retain identifiable variant-cluster homes under both alternatives, while the boundary observations between contiguous profiles (Moderate, Social Decline) migrate across cluster assignments at the higher rate observed at $\alpha = 0$. The choice of $\alpha = 0.001$ is retained as the conventional threshold. The partition is read as robust at the macro-profile level under the stricter alternative and as moderately less robust under the no-exclusion alternative. The profile-level confusion against the stricter $\alpha = 0.0001$ alternative is reported in \S\ref{sec:ch7-outlier-robustness} (Table~\ref{tab:ch7-outlier-robustness}).
+A profile-level purity calculation qualifies the lower-than-threshold ARI. Each variant cluster is mapped to the dominant deployed profile, and purity is the proportion of observations in the majority-profile column. The purity is 0.822 at $\alpha = 0.0001$ and 0.727 at $\alpha = 0$. Four of the six macro-profiles retain identifiable variant-cluster homes under both alternatives, while the boundary observations between contiguous profiles (Moderate, Social Decline) migrate at the higher rate observed at $\alpha = 0$. The choice of $\alpha = 0.001$ is retained as the conventional threshold. The partition is read as robust at the macro-profile level under the stricter alternative and as moderately less robust under the no-exclusion alternative. The profile-level confusion against the stricter $\alpha = 0.0001$ alternative is reported in \S\ref{sec:ch7-outlier-robustness} (Table~\ref{tab:ch7-outlier-robustness}).
 
 
 \section{Distance metric: Gower versus Euclidean}
@@ -44,7 +44,7 @@ Taken together, the three components (Gower-PAM as an alternative metric, the pr
     Gower dissimilarity $+$ PAM      & 0.205 & 0.091 & 0.52       & 0.38 \\
     \addlinespace
     \multicolumn{5}{@{}l}{\textit{Euclidean K-means, binary indicators down-weighted by $w$}} \\
-    $w = 1$ (deployed)               & 1.000 & 1.000 & ---        & --- \\
+    $w = 1$ (deployed)               & 1.000 & 1.000 &---       &---\\
     $w = 1/\sqrt{2}$                 & 0.401 & 0.379 & 0.64--0.67 & 0.60--0.64 \\
     $w = 0.5$                        & 0.370 & 0.335 & 0.64--0.67 & 0.60--0.64 \\
     \bottomrule
@@ -74,7 +74,7 @@ The principal-axis specification on the 31 variables, the prior deployed choice,
     \toprule
     \textbf{Specification} & \textbf{RMSEA} & \textbf{TLI} & \textbf{KMO} & \textbf{Heywood} & \textbf{ARI vs deployed} \\
     \midrule
-    ML, 31 vars (deployed)              & 0.033 & 0.897 & 0.808 & No  & --- \\
+    ML, 31 vars (deployed)              & 0.033 & 0.897 & 0.808 & No  &---\\
     PA, 31 vars                         & 0.033 & 0.897 & 0.808 & Yes & 1.000 \\
     MinRes, 31 vars                     & 0.034 & 0.890 & 0.808 & Yes & 1.000 \\
     PA, 30 vars (drop social-integ.)    & 0.029 & 0.908 & 0.830 & No  & 0.518 \\
@@ -92,9 +92,9 @@ The implication for the deployed clustering is independent of the factor choice 
 \section{Italian 29-versus-31 variable asymmetry}
 \label{sec:appx-sens-29-31}
 
-The Italian analytical sample exhibits zero variance on the two activity-indicator variables \texttt{ac035d4} and \texttt{ac035d7}, which are consequently dropped from the active variable set, yielding 29 active variables against the 31 active variables of the Swedish branch (\S\ref{sec:ch3-fa}). The 29-versus-31 asymmetry is documented in the main text; this section reports the preemptive robustness check that quantifies the impact of the asymmetry on the deployed Italian partition.
+The Italian analytical sample exhibits zero variance on the two activity-indicator variables \texttt{ac035d4} and \texttt{ac035d7}, which are consequently dropped from the active variable set, yielding 29 active variables against the 31 active variables of the Swedish branch (\S\ref{sec:ch3-preprocessing}). The 29-versus-31 asymmetry is documented in the main text; this section reports the preemptive robustness check that quantifies the impact of the asymmetry on the deployed Italian partition.
 
-The two zero-variance variables are re-included with a small Gaussian perturbation ($\sigma = 0.05$ on the standardised scale) drawn under the deployed seed; the perturbation magnitude is calibrated to introduce non-degenerate variance without injecting structure. The full pipeline is re-derived on the 31-variable input space, with principal-axis factor analysis at six factors and varimax rotation, K-means clustering at $k = 5$, and identical seed and initialisation specifications. The factor analysis converges cleanly with no Heywood case (RMSEA = 0.049, RMS = 0.027). The adjusted Rand index between the 31-variable variant partition and the deployed 29-variable partition is 0.977. The 29-versus-31 asymmetry is read as empirically benign: the deployed Italian partition is structurally identical, up to a negligible boundary perturbation, to the partition that would have been derived had the two zero-variance variables not been dropped.
+The two zero-variance variables are re-included with a small Gaussian perturbation ($\sigma = 0.05$ on the standardised scale) drawn under the deployed seed; the perturbation magnitude is calibrated to introduce non-degenerate variance without injecting structure. The full pipeline is re-derived on the 31-variable input space, with principal-axis factor analysis at six factors and varimax rotation, K-means clustering at $k = 5$, and identical seed and initialisation specifications. The factor analysis converges cleanly with no Heywood case (RMSEA = 0.049, RMSR = 0.027). The adjusted Rand index between the 31-variable variant partition and the deployed 29-variable partition is 0.977. The 29-versus-31 asymmetry is read as empirically benign: the deployed Italian partition is structurally identical, up to a negligible boundary perturbation, to the partition that would have been derived had the two zero-variance variables not been dropped.
 
 
 \section{Imputation-replicate sensitivity}
@@ -112,7 +112,7 @@ Table~\ref{tab:appx-sens-summary} reports the five sensitivity analyses against 
 
 \begin{table}[H]
 \centering
-\caption[Phase 2 sensitivity analyses summary]{Phase 2 sensitivity analyses: summary against interpretive thresholds.}
+\caption[Sensitivity analyses: summary against interpretive thresholds]{Sensitivity analyses: summary against interpretive thresholds.}
 \label{tab:appx-sens-summary}
 \footnotesize
 \renewcommand{\arraystretch}{1.1}
@@ -176,7 +176,7 @@ Sweden & Connected Wealthy   & 30.0 & 29.0 & $-1.0$ \\
 \end{tabular}
 \par\medskip
 \begin{minipage}{\linewidth}
-\footnotesize\textit{Note.} Unweighted shares are within-sample cluster fractions. Weighted shares are computed as $\sum_{i \in C} w_i / \sum_i w_i$ using the SHARE Wave~9 calibrated cross-sectional individual weight (\texttt{cciw\_w9}). The population projection in Figure~\ref{fig:ch4-shares} applies the weighted shares to the Istat 2024 Italian over-65 population estimate (14.18~million).
+\footnotesize\textit{Note.} Unweighted shares are within-sample cluster fractions. Weighted shares are computed as $\sum_{i \in C} w_i / \sum_i w_i$ using the SHARE Wave~9 calibrated cross-sectional individual weight (\texttt{cciw\_w9}). The population projection in Figure~\ref{fig:ch4-shares} applies the weighted shares to the Istat 2024 Italian over-65 population estimate (14.18~million). Differences computed on unrounded shares.
 \end{minipage}
 \end{table}
 
@@ -184,6 +184,6 @@ Sweden & Connected Wealthy   & 30.0 & 29.0 & $-1.0$ \\
 \chapter{SHARE Data and Funding Acknowledgement}
 \label{ch:appx-share-funding}
 
-The empirical analysis uses data from SHARE Wave~9 (DOI: 10.6103/SHARE.w9.900) and, for the cross-wave analysis of \S\ref{sec:ch7-cross-wave}, SHARE Wave~8 (DOI: 10.6103/SHARE.w8.900), release version 9.0.0 \citep{share_w9_2024, share_w8_2024}; see \citet{borschsupan2013} for methodological details. The funding acknowledgement below is reproduced in full as required by the SHARE-ERIC Conditions of Use.
+The empirical analysis uses data from SHARE Wave~9 (DOI: 10.6103/SHARE.w9.900) \citep{share_w9_2024} and, for the cross-wave analysis of \S\ref{sec:ch7-cross-wave}, SHARE Wave~8 (DOI: 10.6103/SHARE.w8.900) \citep{share_w8_2024}, release version 9.0.0; see \citet{borschsupan2013} for methodological details. The funding acknowledgement below is reproduced in full as required by the SHARE-ERIC Conditions of Use.
 
 The SHARE data collection has been funded by the European Commission, DG RTD through FP5 (QLK6-CT-2001-00360), FP6 (SHARE-I3: RII-CT-2006-062193, COMPARE: CIT5-CT-2005-028857, SHARELIFE: CIT4-CT-2006-028812), FP7 (SHARE-PREP: GA no.~211909, SHARE-LEAP: GA no.~227822, SHARE M4: GA no.~261982, DASISH: GA no.~283646) and Horizon 2020 (SHARE-DEV3: GA no.~676536, SHARE-COHESION: GA no.~870628, SERISS: GA no.~654221, SSHOC: GA no.~823782, SHARE-COVID19: GA no.~101015924) and by DG Employment, Social Affairs \& Inclusion through VS~2015/0195, VS~2016/0135, VS~2018/0285, VS~2019/0332, VS~2020/0313, SHARE-EUCOV: GA no.~101052589 and EUCOVII: GA no.~101102412. Additional funding from the German Federal Ministry of Research, Technology and Space, the Max Planck Society for the Advancement of Science, the U.S. National Institute on Aging (U01\_AG09740-13S2, P01\_AG005842, P01\_AG08291, P30\_AG12815, R21\_AG025169, Y1-AG-4553-01, IAG\_BSR06-11, OGHA\_04-064, BSR12-04, R01\_AG052527-02, R01\_AG056329-02, R01\_AG063944, HHSN271201300071C, RAG052527A) and from various national funding sources is gratefully acknowledged (see \url{https://www.share-eric.eu}).
