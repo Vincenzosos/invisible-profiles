@@ -18,7 +18,7 @@ import {
   type HealthcareIndicator,
   type WelfareGapDimension,
 } from '../lib/cluster-insights';
-import { VAR_LIST, VAR_SPECS } from '../lib/var-specs';
+import { VAR_LIST, VAR_SPECS, varLabelWithRange } from '../lib/var-specs';
 import type { Country } from '../lib/profiler';
 
 type Confidence = 'confident' | 'borderline' | 'weak';
@@ -201,7 +201,7 @@ export default function ClusterDossier({
                 <SignatureRow
                   key={v.var}
                   varName={v.var}
-                  label={`${v.var} (${VAR_SPECS[v.var].rangeHint})`}
+                  label={varLabelWithRange(v.var)}
                   cohort={cohortMean}
                   benchmark={bench}
                   isPct={
@@ -374,7 +374,10 @@ function SignatureRow({
   const benchPct = benchmark === null ? 0 : (benchmark / max) * 100;
   return (
     <div className="grid grid-cols-12 gap-3 items-center">
-      <div className="col-span-5 text-sm text-zinc-700 truncate" title={label}>
+      <div
+        className="col-span-5 text-sm text-zinc-700 truncate"
+        title={`${label} · SHARE: ${varName}`}
+      >
         {label}
       </div>
       <div className="col-span-5 space-y-1">

@@ -17,7 +17,7 @@ import {
   type MappingSource,
   type RescalingRule,
 } from '../lib/csv-mapping';
-import { VAR_LIST, VAR_SPECS } from '../lib/var-specs';
+import { VAR_LIST, VAR_SPECS, varLabel } from '../lib/var-specs';
 import CohortDashboard from './CohortDashboard';
 import {
   autoBuckets,
@@ -982,11 +982,19 @@ function MappingCard({
             >
               <div className="sm:col-span-5">
                 <p className="text-sm font-medium text-slate-900">
-                  <span className="font-mono text-xs text-blue-700 mr-2">
+                  {kv.label}
+                  <span
+                    className="font-mono text-[11px] text-zinc-400 ml-2"
+                    title="SHARE Wave 9 codename"
+                  >
                     {kv.var}
                   </span>
-                  {QUESTION_PROMPTS[kv.var] ?? kv.var}
                 </p>
+                {QUESTION_PROMPTS[kv.var] && (
+                  <p className="text-xs text-zinc-600 mt-0.5">
+                    {QUESTION_PROMPTS[kv.var]}
+                  </p>
+                )}
                 <p className="text-xs text-zinc-500 mt-0.5">
                   {kv.dim} · {kv.rangeHint}
                 </p>
@@ -1154,8 +1162,11 @@ function PreflightPanel({ preflight }: { preflight: Preflight }) {
               return (
                 <li key={e.var} className="flex items-baseline justify-between gap-3">
                   <span className="text-zinc-800">
-                    <span className="font-mono">{e.var}</span> · D ={' '}
-                    {e.D.toFixed(3)}, p = {e.p < 1e-4 ? e.p.toExponential(2) : e.p.toFixed(4)}
+                    <span className="font-medium">{varLabel(e.var)}</span>
+                    <span className="font-mono text-[10px] text-zinc-400 ml-1" title="SHARE Wave 9 codename">
+                      {e.var}
+                    </span>{' '}
+                    · D = {e.D.toFixed(3)}, p = {e.p < 1e-4 ? e.p.toExponential(2) : e.p.toFixed(4)}
                   </span>
                   <span
                     className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${tone} whitespace-nowrap`}
@@ -1169,8 +1180,11 @@ function PreflightPanel({ preflight }: { preflight: Preflight }) {
             return (
               <li key={e.var} className="flex items-baseline justify-between gap-3">
                 <span className="text-zinc-800">
-                  <span className="font-mono">{e.var}</span> · cohort{' '}
-                  {(e.cohortRate * 100).toFixed(0)}% vs SHARE{' '}
+                  <span className="font-medium">{varLabel(e.var)}</span>
+                  <span className="font-mono text-[10px] text-zinc-400 ml-1" title="SHARE Wave 9 codename">
+                    {e.var}
+                  </span>{' '}
+                  · cohort {(e.cohortRate * 100).toFixed(0)}% vs SHARE{' '}
                   {(e.shareRate * 100).toFixed(0)}% (Δ{' '}
                   {(e.absDiff * 100).toFixed(0)} pp)
                 </span>
@@ -1203,7 +1217,7 @@ function RescalePanel({
   onClose,
   canClose,
 }: {
-  spec: { var: string; min: number; max: number; rangeHint: string };
+  spec: { var: string; label: string; min: number; max: number; rangeHint: string };
   columnName: string;
   values: string[];
   rule: RescalingRule | undefined;
@@ -1232,7 +1246,7 @@ function RescalePanel({
       <div className="flex items-baseline justify-between gap-2">
         <p className="text-xs font-medium text-teal-900">
           Rescale <span className="font-mono">{columnName}</span> to{' '}
-          <span className="font-mono">{spec.var}</span> (SHARE range {spec.min}
+          <span className="font-medium">{spec.label}</span> (SHARE range {spec.min}
           –{spec.max})
         </p>
         {canClose && (
@@ -1250,7 +1264,7 @@ function RescalePanel({
         codes, highest become highest. Order-preserving.
       </p>
       <p className="text-[11px] text-zinc-600 italic">
-        {spec.var}: {spec.rangeHint}
+        {spec.label}: {spec.rangeHint}
       </p>
       <div className="flex flex-wrap items-center gap-2">
         <span className="text-[11px] text-zinc-600">Direction:</span>

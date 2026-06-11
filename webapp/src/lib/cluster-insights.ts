@@ -8,22 +8,8 @@
 import killer from '../data/killer_numbers.json';
 import passport from '../data/profile_passport.json';
 import type { CentroidsJson, Country } from './profiler';
-
-// Friendly labels for the variables that matter most to a non-specialist
-// reader. We surface up to 3 strengths and 3 pressure points; the rest
-// stay implicit.
-const VAR_LABEL: Record<string, { label: string; higherIsBetter: boolean }> = {
-  sphus:        { label: 'Self-rated health',     higherIsBetter: false }, // 1 best, 5 worst
-  eurod:        { label: 'Depression score',      higherIsBetter: false },
-  iadl:         { label: 'IADL limitations',      higherIsBetter: false },
-  fdistress:    { label: 'Financial ease',        higherIsBetter: true  },
-  internet:     { label: 'Internet use',          higherIsBetter: true  },
-  sn_size_w9:   { label: 'Social network size',   higherIsBetter: true  },
-  fluency:      { label: 'Verbal fluency',        higherIsBetter: true  },
-  casp:         { label: 'Quality of life (CASP)',higherIsBetter: true  },
-  loneliness:   { label: 'Loneliness',            higherIsBetter: false },
-  hope_future:  { label: 'Hope for the future',   higherIsBetter: true  },
-};
+// Single source of truth for human-readable labels + orientation.
+import { VAR_SPECS } from './var-specs';
 
 // ---- Strengths / pressure points -------------------------------------------
 
@@ -51,7 +37,7 @@ export function clusterTraits(
 
   const traits: ClusterTrait[] = order.map((v, i) => {
     const z = center[i];
-    const meta = VAR_LABEL[v];
+    const meta = VAR_SPECS[v];
     const sign = meta?.higherIsBetter ? 1 : -1;
     return {
       variable: v,
@@ -106,7 +92,7 @@ export function withinClusterPercentile(
     const resid = userZ - center[i];
     const z = resid / SIGMA_WITHIN;
     const pct = normalCdf(z) * 100;
-    const meta = VAR_LABEL[v];
+    const meta = VAR_SPECS[v];
     return {
       variable: v,
       label: meta?.label ?? v,
