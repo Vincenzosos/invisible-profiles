@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import playbooks from '../data/playbooks.json';
 import killer from '../data/killer_numbers.json';
-import { formatIndividuals } from '../lib/format';
+import { formatPct } from '../lib/format';
 import { downloadFile, writeCSV } from '../lib/csv';
 
 type Vertical = (typeof playbooks.verticals)[number];
@@ -87,11 +87,13 @@ export default function OpportunityExplorer() {
           Each playbook ranks the five Italian profiles by qualitative
           commercial fit, names the targets to skip, and exports the criteria
           you can plug into a CRM. We do not multiply premium × conversion ×
-          segment to produce a single addressable € figure: the conversion
-          assumption would not survive scrutiny. Instead we report the{' '}
+          segment to produce a single addressable € figure, and we do not
+          project segment shares onto population counts: neither assumption
+          would survive scrutiny. Instead we report the{' '}
           <span className="text-blue-700 font-medium">sourced market premium ranges</span>{' '}
-          and the segment size in individuals, and leave the multiplication
-          to the operator who owns their conversion assumptions.
+          and each segment's unweighted sample share, and leave any population
+          sizing to the operator who owns both the population frame and their
+          conversion assumptions.
         </p>
         <button
           type="button"
@@ -140,7 +142,9 @@ function PlaybookView({ vertical: v }: { vertical: Vertical }) {
 
       <section className="space-y-4">
         <h3 className="display-3 text-slate-900">Top targets, ranked by fit</h3>
-        {v.targets.map((t, i) => (
+        {v.targets.map((t, i) => {
+          const prof = killer.italy_profiles.find((p) => p.profile === t.profile);
+          return (
           <article
             key={t.profile}
             className={[
@@ -157,15 +161,18 @@ function PlaybookView({ vertical: v }: { vertical: Vertical }) {
                 </p>
                 <h4 className="display-3 text-slate-900 mt-1">{t.profile}</h4>
               </div>
-              <p className="text-sm text-zinc-500 tabular-nums">
-                {formatIndividuals(t.addressable_market_individuals)} individuals
-              </p>
+              {prof && (
+                <p className="text-sm text-zinc-500 tabular-nums">
+                  {formatPct(prof.share_of_country_pct)} of sample · n = {prof.n_sample}
+                </p>
+              )}
             </header>
             <p className="text-sm text-zinc-700 leading-relaxed">
               {t.rationale}
             </p>
           </article>
-        ))}
+          );
+        })}
       </section>
 
       {v.skip.length > 0 && (

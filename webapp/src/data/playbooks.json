@@ -10,7 +10,6 @@
           "profile": "Connected Active",
           "rationale": "25.4% of the Italian analytical sample, highest income and digital reach (75% internet penetration). Strongest willingness-to-pay signal; primary target for digital-first dental + private specialist bundle.",
           "fit_score": 9.5,
-          "addressable_market_individuals": 3601600,
           "addressable_market_eur_m_per_year": {
             "low": 162,
             "central": 324,
@@ -23,7 +22,6 @@
           "profile": "Moderate Isolated",
           "rationale": "26.9% of the Italian analytical sample (the largest single cluster), asset-rich (90% home owners). Only 21% dentist uptake vs Traditional Social's 48%. Largest absolute behavioural-gap target if paired with a navigator-mediated channel (e.g. community pharmacy, GP referral).",
           "fit_score": 8.0,
-          "addressable_market_individuals": 3810400,
           "addressable_market_eur_m_per_year": {
             "low": 114,
             "central": 229,
@@ -36,7 +34,6 @@
           "profile": "Traditional Social",
           "rationale": "7.7% of the Italian analytical sample (smallest cluster) but 48% dentist uptake — the highest of any Italian profile, indicating community-channel receptivity (associations, parishes, broker network). Best fit for traditional broker-channel insurance products.",
           "fit_score": 6.5,
-          "addressable_market_individuals": 1097200,
           "addressable_market_eur_m_per_year": {
             "low": 41,
             "central": 82,
@@ -86,7 +83,6 @@
           "profile": "Connected Active",
           "rationale": "Highest mean net wealth and digital reach in the Italian typology (cluster centroid). Best fit for digital-native robo-advisor + private banking hybrid platforms, succession planning tools, longevity-linked products.",
           "fit_score": 9.8,
-          "addressable_market_individuals": 3601600,
           "addressable_market_eur_m_per_year": {
             "low": 280,
             "central": 560,
@@ -99,7 +95,6 @@
           "profile": "Moderate Isolated",
           "rationale": "Second-highest mean net wealth in the Italian typology, 90% home-ownership, but only 34% internet. Hybrid-channel wealth management with branch + digital-light interface and navigator support is the white-space.",
           "fit_score": 8.7,
-          "addressable_market_individuals": 3810400,
           "addressable_market_eur_m_per_year": {
             "low": 191,
             "central": 381,
@@ -112,7 +107,6 @@
           "profile": "Traditional Social",
           "rationale": "Third-highest mean net wealth in the Italian typology, concentrated in property and family-decided savings. Traditional broker / family-office channel still dominant. Differentiator: succession + intergenerational planning.",
           "fit_score": 7.0,
-          "addressable_market_individuals": 1097200,
           "addressable_market_eur_m_per_year": {
             "low": 82,
             "central": 165,
@@ -161,7 +155,6 @@
           "profile": "Moderate Isolated",
           "rationale": "Highest fit by far: 90% home-owners with low social network + low digital + adequate health. Selling proposition is community + navigator + maintained autonomy, not assisted living.",
           "fit_score": 9.2,
-          "addressable_market_individuals": 3810400,
           "addressable_market_eur_m_per_year": {
             "low": 686,
             "central": 1143,
@@ -174,7 +167,6 @@
           "profile": "Traditional Social",
           "rationale": "Smaller segment but high social-engagement preference. Fit for cohousing, age-friendly community platforms, parish-mediated services.",
           "fit_score": 7.5,
-          "addressable_market_individuals": 1097200,
           "addressable_market_eur_m_per_year": {
             "low": 158,
             "central": 264,
@@ -187,7 +179,6 @@
           "profile": "Connected Active",
           "rationale": "Premium tier: digitally-managed services (smart home, on-demand companion, telehealth). Smaller share of segment but highest margin.",
           "fit_score": 7.0,
-          "addressable_market_individuals": 3601600,
           "addressable_market_eur_m_per_year": {
             "low": 130,
             "central": 216,
@@ -236,7 +227,6 @@
           "profile": "Fragile Depressed",
           "rationale": "Highest chronic load, highest depressive load, caregiver-mediated. OTC, mental-health-adjacent, adherence packaging products. Distribution via family + community pharmacy.",
           "fit_score": 8.9,
-          "addressable_market_individuals": 3792500,
           "addressable_market_eur_m_per_year": {
             "low": 228,
             "central": 379,
@@ -249,7 +239,6 @@
           "profile": "Connected Active",
           "rationale": "Self-managing customer, digital-native. Telehealth-enabled prescription, longevity products, premium OTC e-commerce.",
           "fit_score": 8.0,
-          "addressable_market_individuals": 3601600,
           "addressable_market_eur_m_per_year": {
             "low": 216,
             "central": 360,
@@ -262,7 +251,6 @@
           "profile": "Moderate Isolated",
           "rationale": "Under-served by digital channels; community pharmacy is the natural touch-point. Adherence interventions can leverage the navigator-service investment.",
           "fit_score": 7.4,
-          "addressable_market_individuals": 3810400,
           "addressable_market_eur_m_per_year": {
             "low": 229,
             "central": 381,

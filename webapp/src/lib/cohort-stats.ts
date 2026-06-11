@@ -7,15 +7,14 @@
 
 import killer from '../data/killer_numbers.json';
 
-export type ProfileShare = { name: string; share: number; n_population: number };
+export type ProfileShare = { name: string; share: number };
 
 export function benchmarkShares(country: 'italy' | 'sweden'): ProfileShare[] {
   const profiles =
     country === 'italy' ? killer.italy_profiles : killer.sweden_profiles;
   return profiles.map((p) => ({
     name: p.profile,
-    share: p.share_of_country_pct,           // 0–1 fraction
-    n_population: p.market_size_individuals ?? 0,
+    share: p.share_of_country_pct,           // 0–1 fraction (unweighted sample share)
   }));
 }
 

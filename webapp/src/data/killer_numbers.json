@@ -81,8 +81,6 @@
       "profile": "Fragile Resigned",
       "n_sample": 315,
       "share_of_country_pct": 0.1325,
-      "market_size_individuals": 1878343,
-      "market_size_thousands": 1878.3,
       "median_income_eur": 15900.0,
       "median_income_eur_ci": [
         14402.0,
@@ -127,8 +125,6 @@
       "profile": "Fragile Depressed",
       "n_sample": 636,
       "share_of_country_pct": 0.2675,
-      "market_size_individuals": 3792464,
-      "market_size_thousands": 3792.5,
       "median_income_eur": 13571.0,
       "median_income_eur_ci": [
         13200.0,
@@ -173,8 +169,6 @@
       "profile": "Moderate Isolated",
       "n_sample": 639,
       "share_of_country_pct": 0.2687,
-      "market_size_individuals": 3810353,
-      "market_size_thousands": 3810.4,
       "median_income_eur": 14400.0,
       "median_income_eur_ci": [
         13527.0,
@@ -219,8 +213,6 @@
       "profile": "Traditional Social",
       "n_sample": 184,
       "share_of_country_pct": 0.0774,
-      "market_size_individuals": 1097191,
-      "market_size_thousands": 1097.2,
       "median_income_eur": 24604.0,
       "median_income_eur_ci": [
         21950.0,
@@ -265,8 +257,6 @@
       "profile": "Connected Active",
       "n_sample": 604,
       "share_of_country_pct": 0.254,
-      "market_size_individuals": 3601648,
-      "market_size_thousands": 3601.6,
       "median_income_eur": 26562.0,
       "median_income_eur_ci": [
         25323.0,
@@ -313,8 +303,6 @@
       "profile": "Fragile",
       "n_sample": 206,
       "share_of_country_pct": 0.1153,
-      "market_size_individuals": 236894,
-      "market_size_thousands": 236.9,
       "median_income_eur": 19682.0,
       "median_income_eur_ci": [
         18599.0,
@@ -359,8 +347,6 @@
       "profile": "Social Decline",
       "n_sample": 149,
       "share_of_country_pct": 0.0834,
-      "market_size_individuals": 171346,
-      "market_size_thousands": 171.3,
       "median_income_eur": 47227.0,
       "median_income_eur_ci": [
         41074.0,
@@ -405,8 +391,6 @@
       "profile": "Moderate",
       "n_sample": 417,
       "share_of_country_pct": 0.2334,
-      "market_size_individuals": 479538,
-      "market_size_thousands": 479.5,
       "median_income_eur": 41833.0,
       "median_income_eur_ci": [
         39432.0,
@@ -451,8 +435,6 @@
       "profile": "Asset Rich",
       "n_sample": 341,
       "share_of_country_pct": 0.1908,
-      "market_size_individuals": 392140,
-      "market_size_thousands": 392.1,
       "median_income_eur": 23808.0,
       "median_income_eur_ci": [
         21171.0,
@@ -497,8 +479,6 @@
       "profile": "Wealthy Digital",
       "n_sample": 138,
       "share_of_country_pct": 0.0772,
-      "market_size_individuals": 158696,
-      "market_size_thousands": 158.7,
       "median_income_eur": 41399.0,
       "median_income_eur_ci": [
         38189.0,
@@ -543,8 +523,6 @@
       "profile": "Connected Wealthy",
       "n_sample": 536,
       "share_of_country_pct": 0.2999,
-      "market_size_individuals": 616385,
-      "market_size_thousands": 616.4,
       "median_income_eur": 50749.0,
       "median_income_eur_ci": [
         48049.0,
@@ -591,8 +569,6 @@
       "matched_pair_label": "Fragile",
       "italian_profile": "Fragile Resigned",
       "swedish_profile": "Fragile",
-      "italian_market_size_individuals": 1878343,
-      "italian_market_size_thousands": 1878.3,
       "dimensions": [
         {
           "dimension": "dentist_12m",
@@ -712,8 +688,6 @@
       "matched_pair_label": "Declining",
       "italian_profile": "Fragile Depressed",
       "swedish_profile": "Social Decline",
-      "italian_market_size_individuals": 3792464,
-      "italian_market_size_thousands": 3792.5,
       "dimensions": [
         {
           "dimension": "dentist_12m",
@@ -833,8 +807,6 @@
       "matched_pair_label": "Socially-oriented",
       "italian_profile": "Traditional Social",
       "swedish_profile": "Moderate",
-      "italian_market_size_individuals": 1097191,
-      "italian_market_size_thousands": 1097.2,
       "dimensions": [
         {
           "dimension": "dentist_12m",
@@ -954,8 +926,6 @@
       "matched_pair_label": "Connected",
       "italian_profile": "Connected Active",
       "swedish_profile": "Connected Wealthy",
-      "italian_market_size_individuals": 3601648,
-      "italian_market_size_thousands": 3601.6,
       "dimensions": [
         {
           "dimension": "dentist_12m",

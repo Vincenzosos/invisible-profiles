@@ -1,8 +1,8 @@
 import killer from '../data/killer_numbers.json';
 import signals from '../data/business_signals.json';
 import {
-  formatIndividuals,
   formatNum,
+  formatPct,
   formatPP,
 } from '../lib/format';
 import type { View } from '../types';
@@ -85,9 +85,9 @@ export default function Benchmark({ onNavigate }: Props) {
 
       <p className="text-xs text-zinc-500 max-w-3xl leading-relaxed">
         Source: SHARE Wave 9 release 9.0.0 (fielded 2021–2022) for all per-pair
-        metrics. Italian market size for each pair is the SHARE share applied
-        to the Istat 2024 over-65 total (14.18M individuals). Gap CIs from
-        2,000-iteration percentile bootstrap (seed = 42).
+        metrics. Segment shares are descriptive of the SHARE Wave 9 analytical
+        sample (unweighted) and are deliberately not projected to population
+        counts. Gap CIs from 2,000-iteration percentile bootstrap (seed = 42).
       </p>
 
       {onNavigate && (
@@ -115,6 +115,9 @@ export default function Benchmark({ onNavigate }: Props) {
 }
 
 function PairCard({ pair }: { pair: Pair }) {
+  const itProfile = killer.italy_profiles.find(
+    (p) => p.profile === pair.italian_profile,
+  );
   return (
     <article className="rounded-2xl bg-white border border-zinc-200 p-6 space-y-4">
       <header className="flex items-baseline justify-between flex-wrap gap-2">
@@ -125,9 +128,12 @@ function PairCard({ pair }: { pair: Pair }) {
             {pair.swedish_profile}
           </h3>
         </div>
-        <p className="text-sm text-zinc-500 tabular-nums">
-          IT segment: {formatIndividuals(pair.italian_market_size_individuals)}
-        </p>
+        {itProfile && (
+          <p className="text-sm text-zinc-500 tabular-nums">
+            IT segment: {formatPct(itProfile.share_of_country_pct)} of sample · n ={' '}
+            {itProfile.n_sample}
+          </p>
+        )}
       </header>
 
       <div className="overflow-x-auto -mx-2">

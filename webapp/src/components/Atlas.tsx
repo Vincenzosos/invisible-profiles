@@ -44,7 +44,9 @@ export default function Atlas({ onNavigate, openProfile = null, onOpenProfile }:
     const aHero = HERO_PROFILES.has(a.profile) ? 1 : 0;
     const bHero = HERO_PROFILES.has(b.profile) ? 1 : 0;
     if (aHero !== bHero) return bHero - aHero;
-    return b.market_size_individuals - a.market_size_individuals;
+    // Order by sample share (monotone in the old population-size ordering, so
+    // the visual order is unchanged) — no per-segment population projection.
+    return b.share_of_country_pct - a.share_of_country_pct;
   });
 
   const heroes = sorted.filter((p) => HERO_PROFILES.has(p.profile));
@@ -59,13 +61,15 @@ export default function Atlas({ onNavigate, openProfile = null, onOpenProfile }:
         </h1>
         <p className="text-lg text-zinc-700 leading-relaxed max-w-3xl">
           K-means clustering with k=5 on 29 standardised SHARE Wave 9
-          indicators (n = {killer.country_aggregates.italy.n_sample}). Profile
-          shares projected to{' '}
+          indicators (n = {killer.country_aggregates.italy.n_sample}). Italy's
+          over-65 population is{' '}
           {formatIndividuals(
             killer.country_aggregates.italy.national_over65_individuals,
           )}{' '}
-          Italian over-65 individuals (Istat 2024). Click any segment for the
-          full passport: economics, healthcare, welfare-state translation.
+          (Istat 2024). Segment shares are descriptive of the SHARE Wave 9
+          analytical sample (unweighted); precise population counts are
+          deliberately not projected. Click any segment for the full passport:
+          economics, healthcare, welfare-state translation.
         </p>
       </header>
 
@@ -154,8 +158,8 @@ function ProfileCard({
     >
       <header className="space-y-2">
         <p className="eyebrow">
-          {formatPct(p.share_of_country_pct)} ·{' '}
-          {formatIndividuals(p.market_size_individuals)} individuals
+          {formatPct(p.share_of_country_pct)} of the analytical sample · n ={' '}
+          {p.n_sample}
         </p>
         <h2
           className={[
@@ -289,8 +293,7 @@ function DrilldownModal({
               ) : (
                 <>
                   <p className="eyebrow">
-                    {formatPct(p.share_of_country_pct)} ·{' '}
-                    {formatIndividuals(p.market_size_individuals)} individuals · sample n = {p.n_sample}
+                    {formatPct(p.share_of_country_pct)} of the analytical sample · n = {p.n_sample}
                   </p>
                   <h2 className="display-2 text-slate-900">{p.profile}</h2>
                 </>
@@ -407,8 +410,7 @@ function ProfileColumn({
       {showColumnHeader && (
         <header className="space-y-2">
           <p className="eyebrow">
-            {formatPct(p.share_of_country_pct)} ·{' '}
-            {formatIndividuals(p.market_size_individuals)} individuals · n = {p.n_sample}
+            {formatPct(p.share_of_country_pct)} of the analytical sample · n = {p.n_sample}
           </p>
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
             <h3 className="display-3 text-slate-900">{p.profile}</h3>
