@@ -207,6 +207,11 @@
 \setcounter{page}{1}
 \pagestyle{plain}
 
+% The 4 mandatory leading pages can be suppressed for the native-link variant
+% (\def\nofrontblanks{1}); page counter jumps to 5 so printed folios stay 5->101.
+\ifdefined\nofrontblanks
+  \setcounter{page}{5}%
+\else
 % Page 1: blank
 \thispagestyle{empty}\null\clearpage
 % Page 2: blank
@@ -216,6 +221,7 @@
 \clearpage
 % Page 4: blank
 \thispagestyle{empty}\null\clearpage
+\fi
 
 % From page 5: TOC, LoF, LoT
 \tableofcontents
