@@ -110,13 +110,15 @@ The partition is stable across the imputation replicates in both countries. For 
 
 Table~\ref{tab:appx-sens-summary} reports the five sensitivity analyses against the interpretive thresholds stated in the preceding sections. Two analyses close empirically: the 29-versus-31 variable asymmetry and the imputation-replicate check, each reproducing the deployed partition at an adjusted Rand index well above the 0.80 reference (\S\ref{sec:appx-sens-imputation}). The outlier-threshold and the distance-metric and binary-weighting analyses are read as concerns that hold at the macro-profile level and are retained on the substantive grounds of \S\ref{sec:appx-sens-gower} rather than as claims of invariance. The Heywood case is resolved in the deployed pipeline by maximum-likelihood extraction (\S\ref{sec:appx-sens-fa}), which removes it at unchanged fit and leaves the clustering invariant.
 
+{\setlength{\intextsep}{2pt}\setlength{\textfloatsep}{2pt}%
 \begin{table}[H]
 \centering
+\setlength{\abovecaptionskip}{3pt}\setlength{\belowcaptionskip}{2pt}
 \caption[Sensitivity analyses: summary against interpretive thresholds]{Sensitivity analyses: summary against interpretive thresholds.}
 \label{tab:appx-sens-summary}
 \footnotesize
-\renewcommand{\arraystretch}{1.1}
-\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{0.85}
+\setlength{\tabcolsep}{4pt}
 \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.30\textwidth} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.155\textwidth}@{}}
 \toprule
 \textbf{Analysis} & \textbf{Metric (vs.\ threshold)} & \textbf{Verdict} \\
@@ -124,25 +126,21 @@ Table~\ref{tab:appx-sens-summary} reports the five sensitivity analyses against 
 Outlier exclusion threshold (Sweden, $\alpha = 0.0001$ / $\alpha = 0$) &
 ARI 0.654 / 0.551 vs.\ 0.80; purity 0.822 / 0.727 (Table~\ref{tab:ch7-outlier-robustness}) &
 Concern (macro-robust) \\
-\addlinespace
 Distance metric and binary weighting, Italy / Sweden &
 ARI 0.09--0.40 across the metric and weighting variants, below the 0.70 / 0.80 thresholds (Table~\ref{tab:appx-distance-weighting}) &
 Concern (defended) \\
-\addlinespace
 Heywood case, Sweden factor extraction (PA $\to$ ML) &
 RMSEA 0.029--0.034, all six-factor solutions defensible; ML removes the Heywood case, clustering ARI 1.000 on the 31-variable input (Table~\ref{tab:appx-fa-extraction}) &
 Resolved (ML deployed) \\
-\addlinespace
 Italian 29-vs-31 variable asymmetry (perturbed re-inclusion) &
 ARI 0.977 vs.\ 0.80; no Heywood case &
 Pass \\
-\addlinespace
 Imputation replicate (\texttt{implicat} 2/3), Italy / Sweden &
 ARI 0.88--0.92 (Italy) / 0.86--0.88 (Sweden) vs.\ 0.80; purity 0.94--0.97 (\S\ref{sec:appx-sens-imputation}) &
 Pass \\
 \bottomrule
 \end{tabularx}
-\end{table}
+\end{table}}
 
 \chapter{Unweighted versus Post-stratified Cluster Shares}
 \label{ch:appx-weighted-shares}

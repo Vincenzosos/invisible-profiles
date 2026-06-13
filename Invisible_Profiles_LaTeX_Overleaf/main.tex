@@ -15,7 +15,7 @@
 
 % --- Spacing ---
 \usepackage{setspace}
-\setstretch{1.3}
+\setstretch{1.4}
 \setlength{\parindent}{1.27cm}
 
 % --- Loosen line-breaking tolerance to absorb compound-word overflow
@@ -33,6 +33,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage[section]{placeins}
+\usepackage{needspace}
 \usepackage{tabularx}
 \usepackage{threeparttable}
 \usepackage{caption}
@@ -149,7 +150,7 @@
   \label{chap:\thechapter:start}%
   \thispagestyle{plain}%
   % Compact chapter opening — no full title page.
-  \vspace*{1.2cm}
+  \vspace*{0.6cm}
   \noindent{\large\bfseries Chapter \thechapter\par}
   \vspace{0.4cm}
   \noindent{\Huge\bfseries #1\par}
@@ -222,6 +223,19 @@
 % Page 4: blank
 \thispagestyle{empty}\null\clearpage
 \fi
+
+% Raise starred-chapter titles (Contents / List of Figures /
+% List of Tables / Bibliography). Default report \@makeschapterhead uses
+% \vspace*{50pt} above and \vskip 40pt below; compact them uniformly so the
+% List of Figures fits on a single page. Title stays airy, never at the edge.
+\makeatletter
+\renewcommand\@makeschapterhead[1]{%
+  \vspace*{10\p@}%
+  {\parindent\z@ \raggedright \normalfont
+   \interlinepenalty\@M
+   \Huge\bfseries #1\par\nobreak
+   \vskip 20\p@}}
+\makeatother
 
 % From page 5: TOC, LoF, LoT
 \tableofcontents

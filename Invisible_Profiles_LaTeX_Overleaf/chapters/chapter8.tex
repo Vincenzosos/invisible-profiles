@@ -37,13 +37,13 @@ The user uploads a CSV with one row per individual and maps the available column
 
 \begin{figure}[H]
   \centering
-  \begin{subfigure}[t]{0.47\linewidth}
+  \begin{subfigure}[t]{0.50\linewidth}
     \centering
     \atlasshot{figures/webapp/webapp_06_mapping_wizard_top}{\linewidth}
     \caption{Coverage meter and the first five variables.}
     \label{fig:atlas-wizard-a}
   \end{subfigure}\hfill
-  \begin{subfigure}[t]{0.47\linewidth}
+  \begin{subfigure}[t]{0.50\linewidth}
     \centering
     \atlasshot{figures/webapp/webapp_06_mapping_wizard_bottom}{\linewidth}
     \caption{The remaining five variables.}
@@ -71,18 +71,19 @@ Scoring produces the cohort dashboard (Figure~\ref{fig:atlas-dashboard}). Four h
 
 \begin{figure}[H]
   \centering
-  \atlasshot{figures/webapp/webapp_11_drilldown_moderate_isolated}{0.52\linewidth}
+  \atlasshot{figures/webapp/webapp_11_drilldown_moderate_isolated}{0.47\linewidth}
   \caption[Italian Silver Atlas, cluster dossier]{Cluster dossier for the Moderate Isolated segment of the test cohort. The dossier pairs the per-record confidence summary (the evidence ladder of \S\ref{sec:atlas-scoring}) with the cohort-versus-SHARE cluster signature and the segment's national-level healthcare-engagement gaps, translating a population share into an operational brief.}
   \label{fig:atlas-drilldown}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-  \atlasshot{figures/webapp/webapp_12_per_row_prediction}{0.9\linewidth}
+  \atlasshot{figures/webapp/webapp_12_per_row_prediction}{0.63\linewidth}
   \caption[Italian Silver Atlas, per-record prediction]{Per-record prediction table. Each individual is assigned a closest profile, an evidence label (Strong/Moderate/Weak), the top-two profile probabilities from the imputation distribution, a within-cohort distance percentile, and a cross-country twin. The cross-country twin is the nearest profile in the other country computed per record in the standardised analytical space, and need not coincide with the profile-level matched pairs of \S\ref{sec:ch6-matched-pairs} (for example, a Fragile Depressed record may have the Swedish Fragile profile as its nearest twin rather than the Declining-pair counterpart Social Decline).}
   \label{fig:atlas-perrow}
 \end{figure}
 
+\needspace{4\baselineskip}%
 The three intended user roles map onto three uses of this output. A healthcare-practice manager reads the Isolation Paradox flag and the dossier's healthcare-engagement gaps to identify the autonomous-but-disengaged patients who slip through standard triage, and targets them with outreach rather than clinical escalation. A pharmacy-chain analyst reads the digitally addressable split to decide which segments a direct-to-consumer digital service can reach and which require an intermediated channel. A silver-economy product manager reads the aggregate addressability metrics (\S\ref{sec:ch6-addressability}) as an estimate of the size of the design problem the thesis identifies. In each case the deliverable is the same: a screening instrument that routes a heterogeneous senior cohort to the design logic its empirical signature implies.
 
 \section{How records are scored}

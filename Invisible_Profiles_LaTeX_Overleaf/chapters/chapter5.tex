@@ -13,14 +13,14 @@ All centroid coordinates are reported as z-scores within Sweden on the analytica
 
 The K-means partition ($k = 6$), estimated on the 31 active analytical variables, groups the 1,787 Swedish respondents into six clusters. Figure~\ref{fig:ch5-profiles} reports cluster mean values on eight diagnostic variables, with profiles ordered from most fragile (left) to most connected (right). Table~\ref{tab:ch5-archetypes} lists the archetypes with their headline signature and sample shares.
 
-\begin{figure}[!t]
+\begin{figure}[!htbp]
   \centering
   \makebox[\textwidth][c]{\includegraphics[width=1.12\textwidth,keepaspectratio]{figures/05_sweden/fig_5_1_profile_characteristics_sweden.png}}
   \caption[Profile characteristics, Sweden]{Profile characteristics, Sweden. Cluster means on eight key dimensions: age, CASP-12, internet use (\%), social network size, hope for the future (\%), loneliness (UCLA-3), EURO-D, mobility limitations. Profiles ordered from most fragile to most connected. $n = 1{,}787$.}
   \label{fig:ch5-profiles}
 \end{figure}
 
-\begin{table}[!t]
+\begin{table}[!htbp]
   \centering
   \small
   \caption[Headline signature, Swedish archetypes]{Headline signature of the six Swedish archetypes}
@@ -44,6 +44,7 @@ The K-means partition ($k = 6$), estimated on the 31 active analytical variables
     \footnotesize\textit{Note.} Headline values are raw means of the diagnostic variables of Figure~\ref{fig:ch5-profiles}. Standardised centroid coordinates are reported in \S\ref{sec:ch5-profile-descriptions}. Shares may not sum to 100\% due to rounding.
   \end{minipage}
 \end{table}
+\FloatBarrier
 
 Two raw-scale observations from Figure~\ref{fig:ch5-profiles} anchor the descriptions that follow. First, the Fragile cluster is the only profile with non-trivial functional burden (mobility 3.79, ADL 0.69, IADL 1.54); the remaining five profiles are all in the autonomous range (mobility $\leq 1.55$, ADL $\leq 0.10$). Second, only the Fragile cluster is below 75\% internet use (63.6\%); the other five profiles span 75.1\% to 98.7\%. Neither observation has a parallel in the Italian typology, and both are developed as substantive findings in \S\ref{sec:ch5-distinctive-features}.
 
@@ -91,12 +92,13 @@ The substantive point is not that Sweden is more digitally adopted on average, b
 
 The Swedish high-resource pole is not occupied by a single archetype across the late-life trajectory. Figure~\ref{fig:ch5-rotation} plots the within-age-band share of the two well-resourced profiles in each country across the 65--74, 75--84, 85+ bands.
 
-\begin{figure}[!htbp]
+\begin{figure}[H]
   \centering
-  \includegraphics[width=0.82\linewidth]{figures/05_sweden/fig_5_C_age_prosperity_rotation.png}
+  \includegraphics[width=0.74\linewidth]{figures/05_sweden/fig_5_C_age_prosperity_rotation.png}
   \caption[Well-resourced profiles by age band, Italy and Sweden]{Share of well-resourced profiles within age band, Italy and Sweden. Italy (left) shows both Connected Active and Traditional Social declining in parallel with age. Sweden (right) shows Connected Wealthy contracting (41\%$\to$7\%) while Asset Rich expands (14\%$\to$31\%): the high-resource pole rotates from a digital-engagement anchor (young-old) to a wealth-accumulation anchor (oldest-old).}
   \label{fig:ch5-rotation}
 \end{figure}
+\FloatBarrier
 
 In Sweden the Connected Wealthy share declines from 41\% to 7\% across the three bands while the Asset Rich share rises from 14\% to 31\%, crossing over in the 75--84 band: the high-resource pole rotates from a digital-engagement anchor (Connected Wealthy, young-old) to a wealth-accumulation anchor (Asset Rich, oldest-old) as the cohort ages. The Italian typology has no analogue: both well-resourced profiles decline in parallel (Connected Active 31\%$\to$11\%, Traditional Social 9\%$\to$3\%). Because the design is cross-sectional, this age-band gradient is a between-cohort comparison rather than an observed within-cohort transition. One alternative to the ageing-trajectory reading is compositional: the wealth-anchored profile may simply survive into advanced age at a higher rate than the digitally anchored one. The two accounts cannot be separated without panel data (\S\ref{sec:ch9-limitations}). The regime reading is developed in \S\ref{sec:ch6-age-rotation}.
 
@@ -111,6 +113,7 @@ Life satisfaction (SHARE Wave~9 item AC012, eleven-point scale), administered in
   \caption[Life satisfaction by profile, Sweden]{Life satisfaction by profile, Sweden. Boxplots of SHARE Wave~9 item AC012 (eleven-point scale, 0--10) by cluster membership; diamonds report cluster means. One-way ANOVA: $F(5, 1779) = 44.3$, $p < .001$. Life satisfaction is external to the K-means input set. $n = 1{,}785$.}
   \label{fig:ch5-lifesat}
 \end{figure}
+\FloatBarrier
 
 Mean life satisfaction is 7.42 in Fragile, against 8.06 (Moderate), 8.47 (Wealthy Digital), 8.48 (Asset Rich), 8.51 (Social Decline), and 8.88 (Connected Wealthy). The F-statistic of 44.3 on $(5, 1779)$ degrees of freedom ($p < 0.001$) confirms significant discriminative power but at less than half the Italian magnitude ($F(4, 2183) = 124.6$; \S\ref{sec:ch4-external-validation}). Because $F$ is not comparable across partitions with different cluster counts, the effect size is reported as $\eta^2$: the typology accounts for approximately 19\% of the life-satisfaction variance in Italy against 11\% in Sweden. The non-fragile Swedish clusters span only 0.82 points (8.06--8.88), and even the most adverse Swedish segment (7.42) exceeds the means of both Italian fragile profiles (6.5 and 7.2). This pattern is consistent with the universal-welfare baseline compressing between-cluster variation in subjective well-being, in line with the welfare-regime literature on the de-commodification of late-life well-being under universal-access institutions \citep{espingandersen1990}. As in Italy (\S\ref{sec:ch4-external-validation}), life satisfaction is external in measurement terms but conceptually adjacent to the subjective block (CASP-12, loneliness, hope) that enters the partition as input. It is therefore best read as a construct-validity check on a partially overlapping latent dimension. Measurement-independent validation is supplied by the healthcare-utilisation outcomes of \S\ref{sec:ch6-healthcare} and \S\ref{sec:ch7-external-validation-healthcare}.
 
@@ -119,12 +122,13 @@ Mean life satisfaction is 7.42 in Fragile, against 8.06 (Moderate), 8.47 (Wealth
 
 Figure~\ref{fig:ch5-demographics} reports profile composition by gender (panel~a) and age band (panel~b), each as a 100\% stacked bar; the age-prosperity rotation visible in panel~(b) is analysed in \S\ref{sec:ch5-age-prosperity-rotation}.
 
-\begin{figure}[!t]
+\begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.95\linewidth]{figures/05_sweden/fig_5_5_demographics_sweden.png}
   \caption[Profile composition by gender and age, Sweden]{Profile composition by gender and age band, Sweden. Each column shows the percentage of the demographic group falling in each archetype; columns sum to 100\%. Panel (b) shows the age-prosperity rotation discussed in \S\ref{sec:ch5-age-prosperity-rotation}. Legend on panel (b) applies to both panels.}
   \label{fig:ch5-demographics}
 \end{figure}
+\FloatBarrier
 
 A gender gradient in late-life socio-economic position is present in Sweden but materially attenuated relative to Italy. The two profiles outside the high-resource and middle strata, Fragile (low functional health) and Social Decline (moderate income, not declining engagement), together account for 23\% of Swedish women (13.9\% Fragile + 9.3\% Social Decline) against 16\% of men (8.8\% + 7.2\%), a 7-percentage-point gap against the 15-percentage-point gap observed in Italy (\S\ref{sec:ch4-demographics}). The high-resource profiles (Asset Rich, Wealthy Digital, Connected Wealthy) account for 60\% of men against 54\% of women, again a smaller asymmetry than in Italy. The reading is consistent with the welfare-regime literature on the de-familisation of elderly care in the Nordic countries \citep{anttonen1996}: where institutional care provision is universal, the gender gap in late-life socio-economic outcomes is partially absorbed by public-service substitution rather than amplified by intra-household care obligations.
 

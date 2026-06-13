@@ -13,7 +13,7 @@ All centroid coordinates are reported as z-scores within Italy on the analytical
 
 The K-means partition ($k = 5$) groups the 2,378 Italian respondents into five clusters. Figure~\ref{fig:ch4-profiles} reports cluster mean values on eight diagnostic variables, with profiles ordered from most fragile (left) to most connected (right). Table~\ref{tab:ch4-archetypes} lists the archetypes with their headline signature and sample shares.
 
-\begin{figure}[!t]
+\begin{figure}[!htbp]
   \centering
   \makebox[\textwidth][c]{\includegraphics[width=1.12\textwidth,keepaspectratio]{figures/04_italy/fig_4_1_NEW.png}}
   \caption[Profile characteristics, Italy]{Profile characteristics, Italy. Cluster means on eight key dimensions: age, CASP-12, internet use (\%), social network size, hope for the future (\%), loneliness (UCLA-3), EURO-D, mobility limitations. Profiles ordered from most fragile to most connected. $n = 2{,}378$.}
@@ -43,6 +43,7 @@ The K-means partition ($k = 5$) groups the 2,378 Italian respondents into five c
     \footnotesize\textit{Note.} Headline values are raw means of the diagnostic variables of Figure~\ref{fig:ch4-profiles}. Standardised centroid coordinates are reported in \S\ref{sec:ch4-profile-descriptions}. Shares may not sum to 100\% due to rounding.
   \end{minipage}
 \end{table}
+\FloatBarrier
 
 Two raw-scale observations from Figure~\ref{fig:ch4-profiles} anchor the standardised description that follows. First, the age gradient: the Fragile Resigned cluster has a mean age of 81.5 years, against 77.3 (Fragile Depressed), 72.8 (Moderate Isolated), 73.8 (Traditional Social) and 73.9 (Connected Active). The Fragile Resigned are on average approximately seven years older than the four other archetypes, identifying the oldest-old segment of the population. Second, the digital divide: 8.6\% in Fragile Resigned versus 74.8\% in Connected Active, a near nine-fold gap on a single behavioural indicator. From the silver-economy perspective, this gap defines a boundary. On one side are segments served by digital products; on the other, those for whom traditional welfare and family-based provision remain the only operational channel.
 
@@ -99,12 +100,13 @@ The two figures provide complementary readings. The fingerprint (Figure~\ref{fig
 
 Life satisfaction (SHARE Wave~9 item AC012, eleven-point scale), administered in a separate questionnaire block from the analytical input set, provides an external validation outcome (\S\ref{sec:ch3-subjective-circularity}). Figure~\ref{fig:ch4-lifesat} reports the distribution across the five Italian archetypes; the F-statistic of a one-way ANOVA is reported in the caption.
 
+{\setlength{\intextsep}{2pt}%
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\linewidth]{figures/04_italy/fig_lifesat_anova_italy.png}
-  \caption[Life satisfaction by profile, Italy]{Life satisfaction by profile, Italy. Boxplots of SHARE Wave~9 item AC012 (eleven-point scale, 0--10) by cluster membership; diamonds report cluster means. One-way ANOVA: $F(4, 2183) = 124.6$, $p < .001$. The contrast is principally between fragile (6.5--7.2) and non-fragile profiles (8.1--8.2). Life satisfaction is external to the K-means input set. $n = 2{,}188$.}
+  \includegraphics[width=0.80\linewidth]{figures/04_italy/fig_lifesat_anova_italy.png}
+  \caption[Life satisfaction by profile, Italy]{Life satisfaction by profile, Italy. Boxplots of SHARE Wave~9 item AC012 (eleven-point scale, 0--10) by cluster membership. One-way ANOVA: $F(4, 2183) = 124.6$, $p < .001$. The contrast is principally between fragile (6.5--7.2) and non-fragile profiles (8.1--8.2). $n = 2{,}188$.}
   \label{fig:ch4-lifesat}
-\end{figure}
+\end{figure}}
 
 Mean life satisfaction is 6.5 in Fragile Resigned, 7.2 in Fragile Depressed, and clusters around 8.1--8.2 in the three non-fragile profiles, which are close in mean and not separated in the boxplot distributions. The F-statistic of 124.6 on (4, 2183) degrees of freedom ($p < 0.001$) confirms substantial discriminative power of the typology on an outcome external to the input set, mainly along the fragile/non-fragile divide. The life-satisfaction outcome detects principally the binary contrast between fragile and non-fragile profiles (a gap of between one and one-and-a-half points on the eleven-point scale); the within-non-fragile contrasts are minor, consistent with the observation that life satisfaction in older age is dominated by the absence of major health and affective burdens. This supports including the affective and evaluative subjective block as a constituent input: it preserves the within-fragile contrast (Fragile Resigned vs Fragile Depressed) that life satisfaction alone would fail to detect.
 
@@ -115,7 +117,7 @@ Life satisfaction is external in measurement terms (administered in a separate q
 
 The five archetypes are not uniformly distributed across gender and age. Figure~\ref{fig:ch4-demographics} reports profile composition by gender (panel a) and by age band 65--74, 75--84, 85+ (panel b), each as a 100\% stacked bar.
 
-\begin{figure}[!t]
+\begin{figure}[!htbp]
   \centering
   \makebox[\textwidth][c]{%
     \begin{minipage}{1.12\textwidth}
@@ -136,6 +138,7 @@ The five archetypes are not uniformly distributed across gender and age. Figure~
   \caption[Profile composition by gender and age, Italy]{Profile composition by gender and age band, Italy. Each column shows the percentage of the demographic group falling in each archetype; columns sum to 100\%. Panel (b) reports the age gradient discussed in \S\ref{sec:ch4-demographics}. Legend on panel (b) applies to both panels.}
   \label{fig:ch4-demographics}
 \end{figure}
+\FloatBarrier
 
 Two patterns emerge. First, the feminisation of fragility: 47\% of Italian over-65 women fall in one of the two fragile profiles (16\% Fragile Resigned + 31\% Fragile Depressed), against 32\% of men (10\% + 22\%). Symmetrically, 39\% of men are in the high-resource profiles (28\% Connected Active + 11\% Traditional Social), against 28\% of women. The pattern is consistent with the broader epidemiological literature on the differential ageing of Italian women: longer life expectancy paired with higher widowhood rates, lower lifetime labour-market attachment, and lower individual pension income.
 
@@ -148,7 +151,7 @@ Beyond gender and age, two further demographic dimensions vary systematically ac
 
 To quantify how much of the typological structure recovered in \S\ref{sec:ch4-profile-descriptions} is reducible to standard demographic stratifiers, a multinomial logistic regression of cluster membership on age, gender, years of education, living-alone status and homeownership is estimated on the $n = 2{,}188$ Italian respondents with complete predictor coverage (the same complete-case subsample as \S\ref{sec:ch4-external-validation}). The per-cluster counts in Table~\ref{tab:ch4-multinomial} are therefore the complete-predictor subset and lie below the full cluster sizes of \S\ref{sec:ch4-five-archetypes} (for example, Moderate Isolated $n = 548$ against a full-cluster $n = 639$). Moderate Isolated is set as the reference category to mirror the focus of \S\ref{sec:ch4-isolation-paradox} on the Isolation Paradox. Table~\ref{tab:ch4-multinomial} reports the resulting odds ratios with 95\% confidence intervals.
 
-\begin{table}[ht]
+\begin{table}[!htbp]
 \centering
 \caption[Multinomial regression of cluster membership, Italy]{Multinomial logistic regression of cluster membership on demographic predictors, Italy ($n = 2{,}188$)}
 \label{tab:ch4-multinomial}
@@ -197,6 +200,7 @@ $n$ in cluster & 313 & 607 & 170 & 550 \\
 \footnotesize
 \textit{Note.} Reference category is Moderate Isolated ($n = 548$). Cells report the odds ratio of cluster membership relative to Moderate Isolated for a one-unit change in the predictor, with 95\% confidence intervals in brackets. Age is centred at 75 years (sample median) and years of education at 8 years (sample mean rounded). Female, Living alone and Homeowner are 0/1 binary indicators. Nagelkerke pseudo-$R^{2} = 0.309$ (Cox--Snell $0.295$, McFadden $0.114$); likelihood-ratio $\chi^{2}(20) = 763.7$, $p < .001$. Significance: $^{***} p < .001$, $^{**} p < .01$, $^{*} p < .05$.
 \end{table}
+\FloatBarrier
 
 The likelihood-ratio test rejects the null of demographic non-association at a very large margin: $\chi^{2}(20) = 763.7$, $p < .001$. The fit measures, however, locate the bulk of the typological variability outside the demographic input set. Nagelkerke pseudo-$R^{2} = 0.309$ indicates that approximately one third of the cluster distribution is captured by age, gender, education, living arrangement and homeownership combined. The remaining two thirds reflect the conceptual structure of the segmentation: factor-analytic dimensions of physical health, subjective burden, digital and social engagement (\S\ref{sec:ch3-fa}, \S\ref{sec:ch4-profile-descriptions}). The typology is therefore demographically structured but not demographically reducible.
 
