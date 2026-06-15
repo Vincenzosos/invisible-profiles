@@ -222,6 +222,8 @@
 \clearpage
 % Page 4: blank
 \thispagestyle{empty}\null\clearpage
+% Bocconi §10.3.1: printed numbering starts at 1 on the first content page (TOC)
+\setcounter{page}{1}
 \fi
 
 % Raise starred-chapter titles (Contents / List of Figures /
@@ -237,7 +239,7 @@
    \vskip 20\p@}}
 \makeatother
 
-% From page 5: TOC, LoF, LoT
+% From page 1
 \tableofcontents
 \clearpage
 \listoffigures
